@@ -1,7 +1,5 @@
 package seedu.lifeasier;
 
-import java.util.Scanner;
-
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day faster than traditional
  * GUI based apps if they can type fast
@@ -23,6 +21,9 @@ public class LifEasier {
         ui.showWelcomeMessage();
 
         while (!isFinished) {
+            String fullCommand = ui.readCommand();
+            Command userCommand = Parser.parse(fullCommand);
+
         }
     }
 
