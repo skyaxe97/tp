@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Ui {
 
     public static final String SEPARATOR = "=========================================================================";
-
     public static final String LOGO = "\n"
             + "  _      _  __ ______          _           \n"
             + " | |    (_)/ _|  ____|        (_)          \n"
@@ -17,8 +16,15 @@ public class Ui {
             + " | |____| | | | |___| (_| \\__ \\ |  __/ |   \n"
             + " |______|_|_| |______\\__,_|___/_|\\___|_|   \n"
             + "\n";
+
+    //Error messages
     public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for " +
             "a list of available commands";
+
+    //General UI messages
+    public static final String MESSAGE_GOODBYE = "Goodbye, hope to see you again soon!";
+    public static final String MESSAGE_GREETING = "Hello [NAME], what can I do for you today?";
+    public static final String MESSAGE_HELP_COMMAND = " -Type 'help' for a list the list of available commands";
 
     public void printSeparator() {
         System.out.println(SEPARATOR);
@@ -30,6 +36,12 @@ public class Ui {
         printLogo();
         printSeparator();
         printSeparator();
+        showGreetingMessage();
+    }
+
+    private void showGreetingMessage() {
+        System.out.println(MESSAGE_GREETING);
+        System.out.println(MESSAGE_HELP_COMMAND);
     }
 
     private void printLogo() {
@@ -47,5 +59,9 @@ public class Ui {
 
     public void showInvalidCommandError() {
         System.out.println(ERROR_INVALID_COMMAND);
+    }
+
+    public void showGoodbyeMessage() {
+        System.out.println(MESSAGE_GOODBYE);
     }
 }
