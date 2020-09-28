@@ -22,8 +22,9 @@ public class LifEasier {
 
         while (!isFinished) {
             String fullCommand = ui.readCommand();
-            Command userCommand = Parser.parse(fullCommand);
-
+            Command userCommand = Parser.parseCommand(fullCommand);
+            userCommand.execute(ui);
+            isFinished = userCommand.isFinished();
         }
     }
 

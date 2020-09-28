@@ -17,6 +17,8 @@ public class Ui {
             + " | |____| | | | |___| (_| \\__ \\ |  __/ |   \n"
             + " |______|_|_| |______\\__,_|___/_|\\___|_|   \n"
             + "\n";
+    public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for " +
+            "a list of available commands";
 
     public void printSeparator() {
         System.out.println(SEPARATOR);
@@ -41,5 +43,9 @@ public class Ui {
         Scanner fullCommand = new Scanner(System.in);
 
         return fullCommand.nextLine();
+    }
+
+    public void showInvalidCommandError() {
+        System.out.println(ERROR_INVALID_COMMAND);
     }
 }
