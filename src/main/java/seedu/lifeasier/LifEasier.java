@@ -26,12 +26,14 @@ public class LifEasier {
             userCommand.execute(ui);
             isFinished = userCommand.isFinished();
         }
+
+        ui.showGoodbyeMessage();
     }
 
     /**
      * Main entry-point for the java.lifeasier.LifEasier application.
      */
     public static void main(String[] args) {
-        new LifEasier("saveFile.txt");
+        new LifEasier("saveFile.txt").run();
     }
 }
