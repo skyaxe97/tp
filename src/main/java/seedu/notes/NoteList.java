@@ -2,8 +2,9 @@ package seedu.notes;
 
 import java.util.ArrayList;
 
+
 public class NoteList {
-    private ArrayList<Note> notes;
+    private final ArrayList<Note> notes;
 
     public NoteList(ArrayList<Note> notes) {
         this.notes = notes;
@@ -18,8 +19,11 @@ public class NoteList {
         return notes.get(index);
     }
 
-    public void addNotes(Note note) {
+    public void add(Note note) {
         notes.add(note);
     }
 
+    public int size() {
+        return notes.size();
+    }
 }

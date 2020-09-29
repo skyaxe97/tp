@@ -8,7 +8,6 @@ import seedu.notes.*;
 public class LifEasier {
 
     private Ui ui;
-    private NoteList notes;
 
     public LifEasier(String filePath) {
 
@@ -20,14 +19,14 @@ public class LifEasier {
      */
     public void run() {
         boolean isFinished = false;
-        notes = new NoteList();
+        NoteList notes = new NoteList();
 
         ui.showWelcomeMessage();
 
         while (!isFinished) {
             String fullCommand = ui.readCommand();
             Command userCommand = Parser.parseCommand(fullCommand);
-            userCommand.execute(ui);
+            userCommand.execute(ui, notes);
             isFinished = userCommand.isFinished();
         }
 

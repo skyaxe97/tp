@@ -20,6 +20,6 @@ public class Note {
 
     public String toString() {
         return "Title: " + title +
-                "\n" + description;
+                "\n\n" + description;
     }
 }
