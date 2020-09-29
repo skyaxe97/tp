@@ -1,4 +1,5 @@
 package seedu.lifeasier;
+import seedu.notes.*;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day faster than traditional
@@ -7,8 +8,10 @@ package seedu.lifeasier;
 public class LifEasier {
 
     private Ui ui;
+    private NoteList notes;
 
     public LifEasier(String filePath) {
+
         ui = new Ui();
     }
 
@@ -17,6 +20,7 @@ public class LifEasier {
      */
     public void run() {
         boolean isFinished = false;
+        notes = new NoteList();
 
         ui.showWelcomeMessage();
 
