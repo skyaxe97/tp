@@ -17,7 +17,7 @@ public class Command {
     }
 
     /**
-     * Executes the user command
+     * Executes the user command.
      */
     public void execute(Ui ui, NoteList notes) {
         switch (commandType) {
@@ -51,7 +51,7 @@ public class Command {
     }
 
     /**
-     * Returns status of whether the program has been terminated
+     * Returns status of whether the program has been terminated.
      */
     public boolean isFinished() {
         return isTerminated;

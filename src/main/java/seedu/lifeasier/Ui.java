@@ -3,7 +3,7 @@ package seedu.lifeasier;
 import java.util.Scanner;
 
 /**
- * The Ui class deals with all interactions with the user
+ * The Ui class deals with all interactions with the user.
  */
 public class Ui {
 
@@ -49,7 +49,7 @@ public class Ui {
     }
 
     /**
-     * Returns read user command
+     * Returns read user command.
      */
     public String readCommand() {
         Scanner fullCommand = new Scanner(System.in);

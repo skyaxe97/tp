@@ -3,7 +3,7 @@ import seedu.notes.*;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day faster than traditional
- * GUI based apps if they can type fast
+ * GUI based apps if they can type fast.
  */
 public class LifEasier {
 
@@ -15,7 +15,7 @@ public class LifEasier {
     }
 
     /**
-     * Runs the LifEasier program infinitely until termination by the user
+     * Runs the LifEasier program infinitely until termination by the user.
      */
     public void run() {
         boolean isFinished = false;
@@ -34,7 +34,7 @@ public class LifEasier {
     }
 
     /**
-     * Main entry-point for the java.lifeasier.LifEasier application
+     * Main entry-point for the java.lifeasier.LifEasier application.
      */
     public static void main(String[] args) {
         new LifEasier("saveFile.txt").run();
