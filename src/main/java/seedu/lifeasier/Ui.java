@@ -64,4 +64,12 @@ public class Ui {
     public void showGoodbyeMessage() {
         System.out.println(MESSAGE_GOODBYE);
     }
+
+    public void showNoteTitleMessage() {
+        System.out.println("Please put in a title:\n");
+    }
+
+    public void showNoteDescriptionMessage() {
+        System.out.println("Alright! Please fill in your notes.\n");
+    }
 }
