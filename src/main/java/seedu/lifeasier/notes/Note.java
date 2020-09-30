@@ -1,4 +1,4 @@
-package seedu.notes;
+package seedu.lifeasier.notes;
 
 public class Note {
     private String title;

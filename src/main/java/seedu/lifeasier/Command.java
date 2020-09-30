@@ -1,5 +1,5 @@
 package seedu.lifeasier;
-import seedu.notes.*;
+import seedu.lifeasier.notes.*;
 
 
 /**

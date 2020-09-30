@@ -1,4 +1,4 @@
-package seedu.notes;
+package seedu.lifeasier.notes;
 
 import java.util.ArrayList;
 

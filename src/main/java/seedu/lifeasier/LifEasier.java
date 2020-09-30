@@ -1,5 +1,5 @@
 package seedu.lifeasier;
-import seedu.notes.*;
+import seedu.lifeasier.notes.*;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day faster than traditional
