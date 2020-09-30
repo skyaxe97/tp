@@ -18,8 +18,8 @@ public class Ui {
             + "\n";
 
     //Error messages
-    public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for " +
-            "a list of available commands";
+    public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for "
+            + "a list of available commands";
 
     //General UI messages
     public static final String MESSAGE_GOODBYE = "Goodbye, hope to see you again soon!";
