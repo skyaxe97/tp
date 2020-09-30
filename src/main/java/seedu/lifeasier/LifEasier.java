@@ -31,7 +31,7 @@ public class LifEasier {
     }
 
     /**
-     * Main entry-point for the java.lifeasier.LifEasier application.
+     * Main entry-point for the java.lifeasier.LifEasier application
      */
     public static void main(String[] args) {
         new LifEasier("saveFile.txt").run();
