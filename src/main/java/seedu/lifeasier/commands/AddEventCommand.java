@@ -2,14 +2,14 @@ package seedu.lifeasier.commands;
 
 import java.time.LocalDateTime;
 
-public class AddLessonCommand extends Command {
+public class AddEventCommand extends Command{
 
-    private String moduleCode;
+    private String description;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public AddLessonCommand(String moduleCode, LocalDateTime startTime, LocalDateTime endTime) {
-        this.moduleCode = moduleCode;
+    public AddEventCommand(String description, LocalDateTime startTime, LocalDateTime endTime) {
+        this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
     }
