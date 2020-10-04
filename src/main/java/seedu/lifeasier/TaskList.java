@@ -21,39 +21,39 @@ public class TaskList {
         taskList.add(task);
     }
 
-    public static void addNewEvent (String args) {
+    //addEvent EVENT_NAME /date DATE /time START /to END
+    public static void addEvent (String args) {
         try {
-            //parser function to return description, dateTime and duration as string array
-            String description = Parser.parseEventAndLessonCommand(args)[0];
-            String dateTimeString = Parser.parseEventAndLessonCommand(args)[1];
-            LocalDateTime dateTime = Parser.getDateTime(dateTimeString);
-            String duration = Parser.parseEventAndLessonCommand(args)[2];
-            Event event = new Event(args, dateTime, duration);
+            //parser function to return description, start, end
+            String description = Parser.magicParser(args);
+            LocalDateTime start = Parser.magicParser(args);
+            LocalDateTime end = Parser.magicParser(args);
+            Event event = new Event(args, start, end);
         } catch (StringIndexOutOfBoundsException e) {
             System.err.println(e);
         }
     }
 
-    public static void addNewLesson (String args) {
+    //addLesson /code MODULE_CODE /date DATE /time START /to END
+    public static void addLesson (String args) {
         try {
-            //parser function to return description, dateTime and duration as string array
-            String description = Parser.parseEventAndLessonCommand(args)[0];
-            String dateTimeString = Parser.parseEventAndLessonCommand(args)[1];
-            LocalDateTime dateTime = Parser.getDateTime(dateTimeString);
-            String duration = Parser.parseEventAndLessonCommand(args)[2];
-            Lesson lesson = new Lesson(args, dateTime, duration);
+            //parser function to return description, start, end
+            String description = Parser.magicParser(args);
+            LocalDateTime start = Parser.magicParser(args);
+            LocalDateTime end = Parser.magicParser(args);
+            Lesson lesson = new Lesson(args, start, end);
         } catch (StringIndexOutOfBoundsException e) {
             System.err.println(e);
         }
     }
 
-    public static void addNewDeadline (String args) {
+    //addDeadline DEADLINE_NAME /by DATETIME
+    public static void addDeadline (String args) {
         try {
-            //parser function to return description and dateTime as string array
-            String description = Parser.parseDeadlineCommand(args)[0];
-            String dateTimeString = Parser.parseDeadlineCommand(args)[1];
-            LocalDateTime dateTime = Parser.getDateTime(dateTimeString);
-            Deadline deadline = new Deadline(args, dateTime);
+            //parser function to return description and by
+            String description = Parser.magicParser(args);
+            LocalDateTime by = Parser.magicParser(args);
+            Deadline deadline = new Deadline(args, by);
         } catch (StringIndexOutOfBoundsException e) {
             System.err.println(e);
         }
