@@ -2,7 +2,7 @@ package seedu.lifeasier.commands;
 
 import java.time.LocalDateTime;
 
-public class AddEventCommand extends Command{
+public class AddEventCommand extends Command {
 
     private String description;
     private LocalDateTime startTime;

@@ -2,7 +2,7 @@ package seedu.lifeasier.commands;
 
 import java.time.LocalDateTime;
 
-public class AddDeadlineCommand extends Command{
+public class AddDeadlineCommand extends Command {
 
     private String description;
     private LocalDateTime by;
