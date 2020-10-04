@@ -1,30 +1,34 @@
 package seedu.tasks;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 public class Lesson extends Task {
-    protected LocalDateTime time;
-    protected String duration;
-    private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm");
+    protected LocalDateTime start;
+    protected LocalDateTime end;
 
-    public LocalDateTime getTime() {
-        return this.time;
+    public LocalDateTime getStart() {
+        return start;
     }
 
-    public Lesson(String description, LocalDateTime time, String duration) {
-        super(description);
-        this.time = time;
-        this.duration = duration;
+    public LocalDateTime getEnd() {
+        return end;
     }
-    public Lesson(String description, LocalDateTime time,String duration, boolean isDone) {
+
+    public Lesson(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
-        this.time = time;
-        this.duration = duration;
+        this.start = start;
+        this.end = end;
+    }
+
+    public Lesson(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
+        super(description);
+        this.start = start;
+        this.end = end;
         this.isDone = isDone;
     }
     @Override
     public String toString() {
-        return ".[E]" + super.toString() + " (" + time.format(format) + ")";
+        return ".[E]" + super.toString() + " (" + start + "  " + end + ")";
     }
 }
