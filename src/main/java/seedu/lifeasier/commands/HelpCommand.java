@@ -1,4 +1,4 @@
 package seedu.lifeasier.commands;
 
-public class HelpCommand {
+public class HelpCommand extends Command {
 }

@@ -9,7 +9,7 @@ import seedu.notes.*;
 public class Command {
 
     private String commandType;
-    private boolean isTerminated;
+    protected boolean isTerminated;
 
     public Command() {
         this.commandType = null;

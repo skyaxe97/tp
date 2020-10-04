@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 public class AddLessonCommand extends Command {
 
     private String moduleCode;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
-    public AddLessonCommand(String moduleCode, LocalDateTime startTime, LocalDateTime endTime) {
+    public AddLessonCommand(String moduleCode, LocalDateTime start, LocalDateTime end) {
         this.moduleCode = moduleCode;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.start = start;
+        this.end = end;
     }
 
 }

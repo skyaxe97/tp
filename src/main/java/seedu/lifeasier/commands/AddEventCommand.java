@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 public class AddEventCommand extends Command {
 
     private String description;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
-    public AddEventCommand(String description, LocalDateTime startTime, LocalDateTime endTime) {
+    public AddEventCommand(String description, LocalDateTime start, LocalDateTime end) {
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.start = start;
+        this.end = end;
     }
 
 }
