@@ -1,7 +1,7 @@
 package seedu.lifeasier;
+
 import seedu.notes.Note;
 import seedu.notes.NoteList;
-
 
 /**
  * The Command class will handle all the commands input from the user.
@@ -22,9 +22,12 @@ public class Command {
      */
     public void execute(Ui ui, NoteList notes) {
         switch (commandType) {
+        case "help":
+            ui.showHelp();
+            break;
         case "showNotes":
             System.out.println("Please select the notes you want to view:\n");
-            for (int i = 0 ; i < notes.size(); i++) {
+            for (int i = 0; i < notes.size(); i++) {
                 System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
             }
             int noteNumber = Integer.parseInt(ui.readCommand());

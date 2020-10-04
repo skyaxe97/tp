@@ -1,4 +1,5 @@
 package seedu.lifeasier;
+
 import seedu.notes.NoteList;
 
 /**
