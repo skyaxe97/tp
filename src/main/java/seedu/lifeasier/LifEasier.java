@@ -1,5 +1,7 @@
 package seedu.lifeasier;
 import seedu.lifeasier.commands.Command;
+import seedu.lifeasier.parser.Parser;
+import seedu.lifeasier.parser.ParserException;
 import seedu.notes.*;
 
 /**
@@ -9,10 +11,12 @@ import seedu.notes.*;
 public class LifEasier {
 
     private Ui ui;
+    private Parser parser;
 
     public LifEasier(String filePath) {
 
         ui = new Ui();
+        parser = new Parser();
     }
 
     /**
@@ -26,9 +30,16 @@ public class LifEasier {
 
         while (!isFinished) {
             String fullCommand = ui.readCommand();
-            Command userCommand = Parser.parseCommand(fullCommand);
-            userCommand.execute(ui, notes);
-            isFinished = userCommand.isFinished();
+            try {
+
+                Command userCommand = parser.parseCommand(fullCommand);
+                userCommand.execute(ui, notes);
+                isFinished = userCommand.isFinished();
+
+            } catch (ParserException e) {
+                System.out.println("There's been an error understanding your input! Please double check your input!");
+            }
+
         }
 
         ui.showGoodbyeMessage();
