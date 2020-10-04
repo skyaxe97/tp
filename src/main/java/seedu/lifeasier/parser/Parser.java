@@ -24,36 +24,10 @@ public class Parser {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
-    private boolean isAddLessonCommand(String input) {
-        return input.startsWith(PARAM_ADD_LESSON);
-    }
+    private String getCommandType(String input) {
+        int indexOfFirstSpace = input.indexOf(" ");
+        return input.substring(0, indexOfFirstSpace);
 
-    private boolean isAddEventCommand(String input) {
-        return input.startsWith(PARAM_ADD_EVENT);
-    }
-
-    private boolean isAddDeadlineCommand(String input) {
-        return input.startsWith(PARAM_ADD_DEADLINE);
-    }
-
-    private boolean isAddNotesCommand(String input) {
-        return input.startsWith(PARAM_ADD_NOTES);
-    }
-
-    private boolean isShowNotesCommand(String input) {
-        return input.startsWith(PARAM_SHOW_NOTES);
-    }
-
-    private boolean isDisplayScheduleCommand(String input) {
-        return input.startsWith(PARAM_DISPLAY);
-    }
-
-    private boolean isHelpCommand(String input) {
-        return input.equals(PARAM_HELP);
-    }
-
-    private boolean isExitCommand(String input) {
-        return input.equals(PARAM_EXIT);
     }
 
     private Command parseAddLessonCommand(String input) {
@@ -134,31 +108,35 @@ public class Parser {
 
     public Command parseCommand(String input) throws ParserException {
 
-        if (isAddLessonCommand(input)) {
+        String commandType = getCommandType(input);
+
+        switch(commandType) {
+
+        case(PARAM_ADD_LESSON):
             return parseAddLessonCommand(input);
 
-        } else if (isAddEventCommand(input)) {
+        case(PARAM_ADD_EVENT):
             return parseAddEventCommand(input);
 
-        } else if (isAddDeadlineCommand(input)) {
+        case(PARAM_ADD_DEADLINE):
             return parseAddDeadlineCommand(input);
 
-        } else if (isAddNotesCommand(input)) {
+        case(PARAM_ADD_NOTES):
             return parseAddNotesCommand(input);
 
-        } else if (isShowNotesCommand(input)) {
+        case(PARAM_SHOW_NOTES):
             return parseShowNotesCommand(input);
 
-        } else if (isDisplayScheduleCommand(input)) {
+        case(PARAM_DISPLAY):
             return parseDisplayScheduleCommand(input);
 
-        } else if (isHelpCommand(input)) {
+        case(PARAM_HELP):
             return new HelpCommand();
 
-        } else if (isExitCommand(input)) {
+        case(PARAM_EXIT):
             return new ExitCommand();
 
-        } else {
+        default:
             throw new ParserException();
         }
     }
