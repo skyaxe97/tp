@@ -27,7 +27,7 @@ public class Command {
                 System.out.println(i+1 + ". " + notes.get(i).getTitle() + "\n");
             }
             int noteNumber = Integer.parseInt(ui.readCommand());
-            System.out.println(notes.get(noteNumber-1).toString());
+            System.out.println("\n" + notes.get(noteNumber-1).toString());
             break;
         case "addNotes":
             ui.showNoteTitleMessage();
