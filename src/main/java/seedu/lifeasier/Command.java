@@ -1,9 +1,10 @@
 package seedu.lifeasier;
-import seedu.notes.*;
+import seedu.notes.Note;
+import seedu.notes.NoteList;
 
 
 /**
- * The Command class will handle all the commands input from the user
+ * The Command class will handle all the commands input from the user.
  */
 public class Command {
 
@@ -23,11 +24,11 @@ public class Command {
         switch (commandType) {
         case "showNotes":
             System.out.println("Please select the notes you want to view:\n");
-            for (int i=0 ; i<notes.size(); i++) {
-                System.out.println(i+1 + ". " + notes.get(i).getTitle() + "\n");
+            for (int i = 0 ; i < notes.size(); i++) {
+                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
             }
             int noteNumber = Integer.parseInt(ui.readCommand());
-            System.out.println(notes.get(noteNumber-1).toString());
+            System.out.println(notes.get(noteNumber - 1).toString());
             break;
         case "addNotes":
             ui.showNoteTitleMessage();
