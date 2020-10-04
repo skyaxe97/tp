@@ -1,4 +1,5 @@
 package seedu.lifeasier;
+import seedu.lifeasier.commands.Command;
 import seedu.notes.*;
 
 /**

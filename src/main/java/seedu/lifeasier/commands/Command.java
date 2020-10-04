@@ -1,4 +1,5 @@
-package seedu.lifeasier;
+package seedu.lifeasier.commands;
+import seedu.lifeasier.Ui;
 import seedu.notes.*;
 
 
@@ -10,6 +11,10 @@ public class Command {
     private String commandType;
     private boolean isTerminated;
 
+    public Command() {
+        this.commandType = null;
+        this.isTerminated = false;
+    }
 
     public Command(String commandType) {
         this.commandType = commandType;
