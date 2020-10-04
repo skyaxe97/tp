@@ -1,5 +1,8 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.Ui;
+import seedu.notes.NoteList;
+
 import java.time.LocalDateTime;
 
 public class AddDeadlineCommand extends Command {
@@ -12,4 +15,8 @@ public class AddDeadlineCommand extends Command {
         this.by = by;
     }
 
+    @Override
+    public void execute(Ui ui, NoteList notes) {
+
+    }
 }

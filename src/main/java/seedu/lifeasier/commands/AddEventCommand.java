@@ -1,5 +1,8 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.Ui;
+import seedu.notes.NoteList;
+
 import java.time.LocalDateTime;
 
 public class AddEventCommand extends Command {
@@ -14,4 +17,8 @@ public class AddEventCommand extends Command {
         this.end = end;
     }
 
+    @Override
+    public void execute(Ui ui, NoteList notes) {
+
+    }
 }
