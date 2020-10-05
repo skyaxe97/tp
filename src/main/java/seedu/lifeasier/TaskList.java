@@ -1,5 +1,6 @@
 package seedu.lifeasier;
 
+import seedu.lifeasier.parser.Parser;
 import seedu.tasks.Deadline;
 import seedu.tasks.Event;
 import seedu.tasks.Lesson;
