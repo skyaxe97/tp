@@ -17,9 +17,7 @@ public class Note {
         return description;
     }
 
-
     public String toString() {
-        return "Title: " + title +
-                "\n\n" + description;
+        return "Title: " + title + "\n\n" + description;
     }
 }
