@@ -1,5 +1,9 @@
 package seedu.lifeasier;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 /**
@@ -71,5 +75,30 @@ public class Ui {
 
     public void showNoteDescriptionMessage() {
         System.out.println("Alright! Please fill in your notes.\n");
+    }
+
+    public void displayWeekSchedule(LocalDateTime startOfWeek) {
+        for (int i = 0; i < 7; i++) {
+            System.out.println(getCurrDayOfWeek(i));
+            displayDaySchedule(startOfWeek.plus(i, ChronoUnit.DAYS).toLocalDate());
+            System.out.println();
+        }
+    }
+
+    public void displayDaySchedule(LocalDate date) {
+        for(Task t: taskList) {
+            if (t.getDateTime().toLocalDate().equals(date)) {
+                System.out.println(getTimeStamp(t.getDateTime()) + " " + t.toString());
+            }
+        }
+    }
+
+    public String getTimeStamp(LocalDateTime timedItem) {
+        return timedItem.toLocalTime().toString();
+    }
+
+    public DayOfWeek getCurrDayOfWeek(int dayCount) {
+        LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
+        return currDay.getDayOfWeek();
     }
 }
