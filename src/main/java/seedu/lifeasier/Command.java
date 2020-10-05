@@ -1,7 +1,7 @@
 package seedu.lifeasier;
 
-import seedu.notes.Note;
-import seedu.notes.NoteList;
+import seedu.lifeasier.notes.Note;
+import seedu.lifeasier.notes.NoteList;
 
 /**
  * The Command class will handle all the commands input from the user.
@@ -31,7 +31,7 @@ public class Command {
                 System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
             }
             int noteNumber = Integer.parseInt(ui.readCommand());
-            System.out.println(notes.get(noteNumber - 1).toString());
+            System.out.println("\n" + notes.get(noteNumber-1).toString());
             break;
         case "addNotes":
             ui.showNoteTitleMessage();
