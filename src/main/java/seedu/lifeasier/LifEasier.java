@@ -1,8 +1,11 @@
 package seedu.lifeasier;
+
 import seedu.lifeasier.commands.Command;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.Ui;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day faster than traditional
@@ -12,11 +15,15 @@ public class LifEasier {
 
     private Ui ui;
     private Parser parser;
+    private TaskList tasks;
+    private NoteList notes;
 
     public LifEasier(String filePath) {
 
         ui = new Ui();
         parser = new Parser();
+        tasks = new TaskList();
+        notes = new NoteList();
     }
 
     /**
@@ -24,7 +31,6 @@ public class LifEasier {
      */
     public void run() {
         boolean isFinished = false;
-        NoteList notes = new NoteList();
 
         ui.showWelcomeMessage();
 
@@ -33,7 +39,7 @@ public class LifEasier {
             try {
 
                 Command userCommand = parser.parseCommand(fullCommand);
-                userCommand.execute(ui, notes);
+                userCommand.execute(ui, notes, tasks);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {

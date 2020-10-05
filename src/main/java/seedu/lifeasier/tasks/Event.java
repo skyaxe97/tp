@@ -1,4 +1,4 @@
-package seedu.tasks;
+package seedu.lifeasier.tasks;
 
 import java.time.LocalDateTime;
 

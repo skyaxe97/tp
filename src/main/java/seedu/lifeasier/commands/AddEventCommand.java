@@ -1,6 +1,7 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.Ui;
+import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class AddEventCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks) {
 
     }
 }

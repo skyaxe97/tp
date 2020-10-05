@@ -1,10 +1,11 @@
 package seedu.lifeasier.commands;
-import seedu.lifeasier.Ui;
+import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
 
 /**
- * The Command class will handle all the commands input from the user
+ * The Command class will handle all the commands input from the user.
  */
 public abstract class Command {
 
@@ -14,21 +15,13 @@ public abstract class Command {
         this.isTerminated = false;
     }
 
-    public Command(String commandType) {
-        this.isTerminated = false;
-    }
-
     /**
-     * Executes the user command
+     * Executes the user command.
      */
-    public abstract void execute(Ui ui, NoteList notes);
-
-    public void setExit() {
-        isTerminated = true;
-    }
+    public abstract void execute(Ui ui, NoteList notes, TaskList tasks);
 
     /**
-     * Returns status of whether the program has been terminated
+     * Returns status of whether the program has been terminated.
      */
     public boolean isFinished() {
         return isTerminated;

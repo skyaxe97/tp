@@ -1,4 +1,4 @@
-package seedu.lifeasier;
+package seedu.lifeasier.ui;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

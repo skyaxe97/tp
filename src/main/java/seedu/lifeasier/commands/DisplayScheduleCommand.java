@@ -1,6 +1,7 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.Ui;
+import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
 public class DisplayScheduleCommand extends Command {
@@ -12,7 +13,7 @@ public class DisplayScheduleCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks) {
 
     }
 }
