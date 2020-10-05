@@ -1,7 +1,7 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.Ui;
-import seedu.notes.NoteList;
+import seedu.lifeasier.notes.NoteList;
 
 public class ExitCommand extends Command {
 
