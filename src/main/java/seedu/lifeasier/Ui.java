@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 /**
- * The Ui class deals with all interactions with the user
+ * The Ui class deals with all interactions with the user.
  */
 public class Ui {
 
@@ -22,13 +22,32 @@ public class Ui {
             + "\n";
 
     //Error messages
-    public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for " +
-            "a list of available commands";
+    public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for "
+            + "a list of available commands";
 
     //General UI messages
     public static final String MESSAGE_GOODBYE = "Goodbye, hope to see you again soon!";
     public static final String MESSAGE_GREETING = "Hello [NAME], what can I do for you today?";
     public static final String MESSAGE_HELP_COMMAND = " -Type 'help' for a list the list of available commands";
+
+    //Help message
+    public static final String HELP_MESSAGE = "These are the commands that are available:\n"
+            + "Notes about the command format:\n"
+            + " * Words in UPPER_CASE are the parameters to be supplied by the user\n"
+            + " * Items in square brackets are optional, e.g [DATE]\n"
+            + "\n"
+            + "COMMANDS\n"
+            + "*************************************************************************\n"
+            + "help ---------------------------------------- Displays available commands\n"
+            + "addLesson /code MODULE_CODE /date DATE /time START /to END -- Adds lesson\n"
+            + "addEvent EVENT_NAME /date DATE /time START /to END -------- Adds an event\n"
+            + "addDeadline DEADLINE_NAME /by DATETIME ------------------ Adds a deadline\n"
+            + "addNotes TITLE ------------------------------------------ Adds a new note\n"
+            + "showNotes TITLE ------------------------------------- Shows selected note\n"
+            + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
+            + "exit --------------------------------------- Closes the LifEasier program\n"
+            + "*************************************************************************\n"
+            + "For more detailed information, please visit the online user guide at:\n";
 
     public void printSeparator() {
         System.out.println(SEPARATOR);
@@ -52,8 +71,14 @@ public class Ui {
         System.out.println(LOGO);
     }
 
+    public void showHelp() {
+        System.out.println(SEPARATOR);
+        System.out.println(HELP_MESSAGE);
+        System.out.println(SEPARATOR);
+    }
+
     /**
-     * Returns read user command
+     * Returns read user command.
      */
     public String readCommand() {
         Scanner fullCommand = new Scanner(System.in);
