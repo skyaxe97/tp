@@ -1,4 +1,4 @@
-package seedu.tasks;
+package seedu.lifeasier.tasks;
 
 public class Task {
     protected String description;

@@ -1,10 +1,11 @@
-package seedu.lifeasier;
+package seedu.lifeasier.tasks;
 
 import seedu.lifeasier.parser.Parser;
-import seedu.tasks.Deadline;
-import seedu.tasks.Event;
-import seedu.tasks.Lesson;
-import seedu.tasks.Task;
+import seedu.lifeasier.tasks.Deadline;
+import seedu.lifeasier.tasks.Event;
+import seedu.lifeasier.tasks.Lesson;
+import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
