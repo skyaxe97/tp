@@ -20,17 +20,13 @@ public class LifEasier {
     private NoteList notes;
     private FileStorage storage;
 
-    private String fileName;
-
-    public LifEasier(String fileName) {
+    public LifEasier(String fileNameTasks, String fileNameNotes) {
 
         ui = new Ui();
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
-        storage = new FileStorage(fileName, ui);
-
-        this.fileName = fileName;
+        storage = new FileStorage(fileNameTasks, fileNameNotes, ui);
     }
 
     /**
@@ -39,7 +35,7 @@ public class LifEasier {
     public void run() {
         boolean isFinished = false;
 
-        storage.readSaveFile();
+        storage.readTaskSaveFile();
 
         ui.showWelcomeMessage();
 
@@ -61,9 +57,9 @@ public class LifEasier {
     }
 
     /**
-     * Main entry-point for the java.lifeasier.LifEasier application
+     * Main entry-point for the LifEasier application
      */
     public static void main(String[] args) {
-        new LifEasier("saveFile.txt").run();
+        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run();
     }
 }

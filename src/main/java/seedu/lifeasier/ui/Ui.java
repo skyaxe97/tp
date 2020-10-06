@@ -136,7 +136,7 @@ public class Ui {
     }
 
     public void showNewDirectoryCreated() {
-        System.out.println("New save directory named 'Saves' created!");
+        System.out.println("New save directory named 'LifEasierSaves' created!");
     }
 
     public void showNewDirectoryFailCreated() {
@@ -144,7 +144,10 @@ public class Ui {
     }
 
     public void showCreatingNewSaveFile() {
-        System.out.println("Creating new save file in /Saves/saveFile.txt");
+        System.out.println("Creating new save saveFileTasks.txt");
+    }
+    public void showCreatingNewNotesSaveFile() {
+        System.out.println("Creating new save saveFileNotes.txt");
     }
 
     public void showFileCreationSuccess() {
