@@ -1,5 +1,6 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.Note;
@@ -14,12 +15,16 @@ public class AddNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         ui.showNoteTitleMessage();
         String noteTitle = ui.readCommand();
+
         ui.showNoteDescriptionMessage();
         String noteDescription = ui.readCommand();
+
         notes.add(new Note(noteTitle,noteDescription));
         System.out.println("Ok! I've taken note of this note!\n");
+
+        storage.writeToNoteSaveFile();
     }
 }

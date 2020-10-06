@@ -26,7 +26,7 @@ public class LifEasier {
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
-        storage = new FileStorage(fileNameTasks, fileNameNotes, ui);
+        storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes);
     }
 
     /**
@@ -44,7 +44,7 @@ public class LifEasier {
             try {
 
                 Command userCommand = parser.parseCommand(fullCommand);
-                userCommand.execute(ui, notes, tasks);
+                userCommand.execute(ui, notes, tasks, storage);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
