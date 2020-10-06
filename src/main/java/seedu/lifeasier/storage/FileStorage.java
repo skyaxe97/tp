@@ -31,7 +31,7 @@ public class FileStorage {
     }
 
     /**
-     * Reads and loads the stored information on the save file. If no save file exists, the method will create a new
+     * Reads and loads the stored information on the save file. If save files are missing, the method will create a new
      * save file and directory.
      */
     public void readSaveFiles() {
@@ -42,7 +42,34 @@ public class FileStorage {
             createNewSaves(saveFileTasks, saveFileNotes);
         } else {
             System.out.println("Reading your save data...");
+            readNotesSave();
+        }
+    }
 
+    private void readNotesSave() {
+        try {
+            File saveFile = new File(filePathNotes);
+
+            Scanner fileScanner = new Scanner(saveFile);
+            createNoteList(fileScanner);
+
+            System.out.println("Notes save file successfully read!");
+
+        } catch (IOException e) {
+            System.out.println("Something went wrong, unable to read from notes save file...");
+        }
+
+    }
+
+    private void createNoteList(Scanner fileScanner) {
+        while (fileScanner.hasNext()) {
+            String noteInformation = fileScanner.nextLine();
+
+            String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
+            String noteTitle = noteComponents[0];
+            String noteDescription = noteComponents[1];
+
+            notes.add(new Note(noteTitle, noteDescription));
         }
     }
 
