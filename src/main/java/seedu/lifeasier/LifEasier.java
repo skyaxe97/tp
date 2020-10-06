@@ -4,6 +4,7 @@ import seedu.lifeasier.commands.Command;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
@@ -17,13 +18,19 @@ public class LifEasier {
     private Parser parser;
     private TaskList tasks;
     private NoteList notes;
+    private FileStorage storage;
 
-    public LifEasier(String filePath) {
+    private String fileName;
+
+    public LifEasier(String fileName) {
 
         ui = new Ui();
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
+        storage = new FileStorage(fileName, ui);
+
+        this.fileName = fileName;
     }
 
     /**
@@ -31,6 +38,8 @@ public class LifEasier {
      */
     public void run() {
         boolean isFinished = false;
+
+        storage.readSaveFile();
 
         ui.showWelcomeMessage();
 

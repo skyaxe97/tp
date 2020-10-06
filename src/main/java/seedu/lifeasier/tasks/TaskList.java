@@ -23,43 +23,43 @@ public class TaskList {
         taskList.add(task);
     }
 
-    //addEvent EVENT_NAME /date DATE /time START /to END
-    public static void addEvent (String args) {
-        try {
-            //parser function to return description, start, end
-            String description = Parser.magicParser(args);
-            LocalDateTime start = Parser.magicParser(args);
-            LocalDateTime end = Parser.magicParser(args);
-            Event event = new Event(args, start, end);
-        } catch (StringIndexOutOfBoundsException e) {
-            System.err.println(e);
-        }
-    }
-
-    //addLesson /code MODULE_CODE /date DATE /time START /to END
-    public static void addLesson (String args) {
-        try {
-            //parser function to return description, start, end
-            String description = Parser.magicParser(args);
-            LocalDateTime start = Parser.magicParser(args);
-            LocalDateTime end = Parser.magicParser(args);
-            Lesson lesson = new Lesson(args, start, end);
-        } catch (StringIndexOutOfBoundsException e) {
-            System.err.println(e);
-        }
-    }
-
-    //addDeadline DEADLINE_NAME /by DATETIME
-    public static void addDeadline (String args) {
-        try {
-            //parser function to return description and by
-            String description = Parser.magicParser(args);
-            LocalDateTime by = Parser.magicParser(args);
-            Deadline deadline = new Deadline(args, by);
-        } catch (StringIndexOutOfBoundsException e) {
-            System.err.println(e);
-        }
-    }
+//    //addEvent EVENT_NAME /date DATE /time START /to END
+//    public static void addEvent (String args) {
+//        try {
+//            //parser function to return description, start, end
+//            String description = Parser.magicParser(args);
+//            LocalDateTime start = Parser.magicParser(args);
+//            LocalDateTime end = Parser.magicParser(args);
+//            Event event = new Event(args, start, end);
+//        } catch (StringIndexOutOfBoundsException e) {
+//            System.err.println(e);
+//        }
+//    }
+//
+//    //addLesson /code MODULE_CODE /date DATE /time START /to END
+//    public static void addLesson (String args) {
+//        try {
+//            //parser function to return description, start, end
+//            String description = Parser.magicParser(args);
+//            LocalDateTime start = Parser.magicParser(args);
+//            LocalDateTime end = Parser.magicParser(args);
+//            Lesson lesson = new Lesson(args, start, end);
+//        } catch (StringIndexOutOfBoundsException e) {
+//            System.err.println(e);
+//        }
+//    }
+//
+//    //addDeadline DEADLINE_NAME /by DATETIME
+//    public static void addDeadline (String args) {
+//        try {
+//            //parser function to return description and by
+//            String description = Parser.magicParser(args);
+//            LocalDateTime by = Parser.magicParser(args);
+//            Deadline deadline = new Deadline(args, by);
+//        } catch (StringIndexOutOfBoundsException e) {
+//            System.err.println(e);
+//        }
+//    }
 
     public static void deleteItem(String index) {
         //delete
