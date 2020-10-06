@@ -34,7 +34,7 @@ public class FileStorage {
      * Reads and loads the stored information on the save file. If no save file exists, the method will create a new
      * save file and directory.
      */
-    public void readTaskSaveFile() {
+    public void readSaveFiles() {
         File saveFileTasks = new File(filePathTasks);
         File saveFileNotes = new File(filePathNotes);
 

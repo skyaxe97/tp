@@ -35,7 +35,7 @@ public class LifEasier {
     public void run() {
         boolean isFinished = false;
 
-        storage.readTaskSaveFile();
+        storage.readSaveFiles();
 
         ui.showWelcomeMessage();
 
