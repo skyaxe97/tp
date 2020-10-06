@@ -2,6 +2,7 @@ package seedu.lifeasier.storage;
 
 import seedu.lifeasier.notes.Note;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.tasks.*;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
@@ -22,12 +23,14 @@ public class FileStorage {
     private String filePathNotes;
     private Ui ui;
     private NoteList notes;
+    private TaskList tasks;
 
-    public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes) {
+    public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes, TaskList tasks) {
         this.filePathTasks = DIRECTORY_PATH + fileNameTasks;
         this.filePathNotes = DIRECTORY_PATH + fileNameNotes;
         this.ui = ui;
         this.notes = notes;
+        this.tasks = tasks;
     }
 
     /**
@@ -46,6 +49,20 @@ public class FileStorage {
         }
     }
 
+    /**
+     * Checks if both save files exist.
+     *
+     * @param saveFileTasks File object with file path to the save file which contains saved task information.
+     * @param saveFileNotes File object with file path to the save file which contains saved note information.
+     * @return True when both files exist.
+     */
+    private boolean fileExists(File saveFileTasks, File saveFileNotes) {
+        return saveFileTasks.exists() && saveFileNotes.exists();
+    }
+
+    /**
+     * Reads and loads all saved note information.
+     */
     private void readNotesSave() {
         try {
             File saveFile = new File(filePathNotes);
@@ -82,8 +99,48 @@ public class FileStorage {
         FileWriter fileWriter = new FileWriter(filePathTasks, true);
         clearSaveFile(filePathTasks);
 
+        String dataToSave;
+        ArrayList<Task> taskList = tasks.getTaskList();
+        //Append each tasks information into save file for tasks
+        for (Task task : taskList) {
+            String taskType = task.getType();
+            switch (taskType) {
+            case "deadline":
+                dataToSave = generateDeadlineSave(task, taskType);
+                break;
+            case "event":
+                dataToSave = generateEventSave(task, taskType);
+                break;
+            case "lesson":
+                dataToSave = generateLessonSave(task, taskType);
+                break;
+            default:
+                System.out.println("Something went wrong while saving the tasks...");
+                dataToSave = "";
+                break;
+            }
+            fileWriter.write(dataToSave);
+        }
+        fileWriter.close();
     }
 
+    private String generateLessonSave(Task task, String taskType) {
+        Lesson lesson = (Lesson) task;
+        return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER + lesson.getStart().toString()
+                + SAVE_DELIMITER + lesson.getEnd().toString() + System.lineSeparator();
+    }
+
+    private String generateEventSave(Task task, String taskType) {
+        Event event = (Event) task;
+        return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER + event.getStart().toString()
+                + SAVE_DELIMITER + event.getEnd().toString() + System.lineSeparator();
+    }
+
+    private String generateDeadlineSave(Task task, String taskType) {
+        Deadline deadline = (Deadline) task;
+        return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER + deadline.getBy().toString()
+                + System.lineSeparator();
+    }
 
     /**
      * Writes information from the notes onto the notes save file for storage when there is a change to the notes.
@@ -110,6 +167,11 @@ public class FileStorage {
         return note.getTitle() + SAVE_DELIMITER + note.getDescription() + System.lineSeparator();
     }
 
+    /**
+     * Clears all data from the specified save file.
+     *
+     * @param filePath File path to which file to clear information.
+     */
     private void clearSaveFile(String filePath) {
         try {
             FileWriter fileClear = new FileWriter(filePath);
@@ -118,10 +180,6 @@ public class FileStorage {
         } catch (IOException e) {
             System.out.println("Something went wrong while clearing the file...");
         }
-    }
-
-    private boolean fileExists(File saveFileTasks, File saveFileNotes) {
-        return saveFileTasks.exists() && saveFileNotes.exists();
     }
 
     /**

@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     protected LocalDateTime by;
 
+    private static final String TYPE = "deadline";
+
     public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
@@ -20,6 +22,10 @@ public class Deadline extends Task {
         return by;
     }
 
+    @Override
+    public String getType() {
+        return TYPE;
+    }
 
     @Override
     public String toString() {

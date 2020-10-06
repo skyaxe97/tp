@@ -7,6 +7,8 @@ public class Event extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
 
+    private static final String TYPE = "event";
+
     public LocalDateTime getStart() {
         return start;
     }
@@ -20,12 +22,19 @@ public class Event extends Task {
         this.start = start;
         this.end = end;
     }
+
     public Event(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
         super(description);
         this.start = start;
         this.end = end;
         this.isDone = isDone;
     }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
     @Override
     public String toString() {
         return ".[E]" + super.toString() + " (" + start + "  " +  end + ")";

@@ -7,6 +7,8 @@ public class Lesson extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
 
+    private static final String TYPE = "lesson";
+
     public LocalDateTime getStart() {
         return start;
     }
@@ -27,6 +29,12 @@ public class Lesson extends Task {
         this.end = end;
         this.isDone = isDone;
     }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
     @Override
     public String toString() {
         return ".[E]" + super.toString() + " (" + start + "  " + end + ")";
