@@ -102,6 +102,7 @@ public class Ui {
         System.out.println("Alright! Please fill in your notes.\n");
     }
 
+    /*
     public void displayWeekSchedule(LocalDateTime startOfWeek) {
         for (int i = 0; i < 7; i++) {
             System.out.println(getCurrDayOfWeek(i));
@@ -126,4 +127,5 @@ public class Ui {
         LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
         return currDay.getDayOfWeek();
     }
+    */
 }
