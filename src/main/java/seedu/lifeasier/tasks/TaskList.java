@@ -18,6 +18,9 @@ public class TaskList {
         return taskCount;
     }
 
+    public static void addTask (Task task) {
+        taskList.add(task);
+        taskCount++;
     }
     /**
      * Add new event to taskList
