@@ -20,6 +20,6 @@ public class AddLessonCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks) {
-
+        tasks.addLesson(moduleCode, start, end);
     }
 }

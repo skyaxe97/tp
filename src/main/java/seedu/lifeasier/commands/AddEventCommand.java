@@ -20,6 +20,6 @@ public class AddEventCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks) {
-
+        tasks.addEvent(description, start, end);
     }
 }
