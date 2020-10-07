@@ -48,15 +48,17 @@ public class TaskStorage {
 
                 String[] taskComponents = taskInformation.split(SAVE_DELIMITER);
                 String taskType = taskComponents[0];
+                String taskDescription = taskComponents[2];
+                Boolean taskStatus = fileCommand.convertToBoolean(taskComponents[1]);
                 switch (taskType) {
                 case "deadline":
-                    rebuildDeadline(taskComponents, taskList);
+                    rebuildDeadline(taskComponents, taskList, taskDescription, taskStatus);
                     break;
                 case "event":
-                    rebuildEvent(taskComponents, taskList);
+                    rebuildEvent(taskComponents, taskList, taskDescription, taskStatus);
                     break;
                 case "lesson":
-                    rebuildLesson(taskComponents, taskList);
+                    rebuildLesson(taskComponents, taskList, taskDescription, taskStatus);
                     break;
                 default:
                     System.out.println("Something went wrong while determining the tasks...");
@@ -68,22 +70,30 @@ public class TaskStorage {
         }
     }
 
-    private void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList) {
-    }
-
-    private void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList)
+    private void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
-        
+        LocalDateTime lessonStartTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
+        LocalDateTime lessonEndTime = fileCommand.convertToLocalDateTime(taskComponents[4]);
+
+        //Create new event in tasks
+        taskList.add(new Lesson(description, lessonStartTime, lessonEndTime, status));
     }
 
-    private void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList)
+    private void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
+            throws ArrayIndexOutOfBoundsException {
+        LocalDateTime eventStartTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
+        LocalDateTime eventEndTime = fileCommand.convertToLocalDateTime(taskComponents[4]);
+
+        //Create new event in tasks
+        taskList.add(new Event(description, eventStartTime, eventEndTime, status));
+    }
+
+    private void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
         LocalDateTime deadlineTimeInfo = fileCommand.convertToLocalDateTime(taskComponents[3]);
-        String deadlineDescription = taskComponents[2];
-        Boolean deadlineStatus = fileCommand.convertToBoolean(taskComponents[1]);
 
         //Create new deadline in tasks
-        taskList.add(new Deadline(deadlineDescription, deadlineTimeInfo, deadlineStatus));
+        taskList.add(new Deadline(description, deadlineTimeInfo, status));
     }
 
     /**

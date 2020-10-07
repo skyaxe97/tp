@@ -43,6 +43,7 @@ public class FileStorage {
             System.out.println("Reading your save data...");
             noteStorage.readNotesSave(filePathNotes);
             taskStorage.readTasksSave(filePathTasks);
+            System.out.println("All save data successfully read!");
         }
     }
 
