@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * The FileStorage class will handle actions related to the reading, writing and creation of the
+ * The FileStorage class is the main entry point to actions related to the reading, writing and creation of the
  * LifEasier save files.
  */
 public class FileStorage {
