@@ -9,8 +9,8 @@ import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 /**
- * LifEasier is a CLI application that allows busy CEG students to schedule their day faster than traditional
- * GUI based apps if they can type fast.
+ * LifEasier is a CLI application that allows busy CEG students to schedule their day.
+ * If you can type fast, LifEasier will get your scheduling done faster than traditional GUI calender apps.
  */
 public class LifEasier {
 
@@ -57,7 +57,7 @@ public class LifEasier {
     }
 
     /**
-     * Main entry-point for the LifEasier application
+     * Main entry-point for the LifEasier application.
      */
     public static void main(String[] args) {
         new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run();

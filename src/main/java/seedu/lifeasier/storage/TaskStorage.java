@@ -1,6 +1,10 @@
 package seedu.lifeasier.storage;
 
-import seedu.lifeasier.tasks.*;
+import seedu.lifeasier.tasks.Deadline;
+import seedu.lifeasier.tasks.Event;
+import seedu.lifeasier.tasks.Lesson;
+import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.TaskList;
 
 import java.io.File;
 import java.io.FileWriter;

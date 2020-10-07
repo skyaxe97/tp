@@ -102,21 +102,23 @@ public class Ui {
         System.out.println("Alright! Please fill in your notes.\n");
     }
 
-//    public void displayWeekSchedule(LocalDateTime startOfWeek) {
-//        for (int i = 0; i < 7; i++) {
-//            System.out.println(getCurrDayOfWeek(i));
-//            displayDaySchedule(startOfWeek.plus(i, ChronoUnit.DAYS).toLocalDate());
-//            System.out.println();
-//        }
-//    }
-//
-//    public void displayDaySchedule(LocalDate date) {
-//        for(Task t: taskList) {
-//            if (t.getDateTime().toLocalDate().equals(date)) {
-//                System.out.println(getTimeStamp(t.getDateTime()) + " " + t.toString());
-//            }
-//        }
-//    }
+    /*
+    public void displayWeekSchedule(LocalDateTime startOfWeek) {
+        for (int i = 0; i < 7; i++) {
+            System.out.println(getCurrDayOfWeek(i));
+            displayDaySchedule(startOfWeek.plus(i, ChronoUnit.DAYS).toLocalDate());
+            System.out.println();
+        }
+    }
+
+    public void displayDaySchedule(LocalDate date) {
+        for(Task t: taskList) {
+            if (t.getDateTime().toLocalDate().equals(date)) {
+                System.out.println(getTimeStamp(t.getDateTime()) + " " + t.toString());
+            }
+        }
+    }
+    */
 
     public String getTimeStamp(LocalDateTime timedItem) {
         return timedItem.toLocalTime().toString();
@@ -146,6 +148,7 @@ public class Ui {
     public void showCreatingNewSaveFile() {
         System.out.println("Creating new save saveFileTasks.txt");
     }
+
     public void showCreatingNewNotesSaveFile() {
         System.out.println("Creating new save saveFileNotes.txt");
     }
