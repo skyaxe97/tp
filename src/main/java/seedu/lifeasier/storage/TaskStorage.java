@@ -5,6 +5,7 @@ import seedu.lifeasier.tasks.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,10 +18,12 @@ public class TaskStorage {
 
     private TaskList tasks;
     private String filePathTasks;
+    private FileCommand fileCommand;
 
     public TaskStorage(TaskList tasks, String filePathTasks) {
         this.tasks = tasks;
         this.filePathTasks = filePathTasks;
+        this.fileCommand = new FileCommand();
     }
 
     protected void readTasksSave(String filePathTasks) {
@@ -37,37 +40,50 @@ public class TaskStorage {
     }
 
     private void createTaskList(Scanner fileScanner) {
-        while (fileScanner.hasNext()) {
-            String taskInformation = fileScanner.nextLine();
+        ArrayList<Task> taskList = tasks.getTaskList();
 
-            String[] taskComponents = taskInformation.split(SAVE_DELIMITER);
-            String taskType = taskComponents[0];
-            switch (taskType) {
-            case "deadline":
-                rebuildDeadline(taskComponents, tasks);
-                break;
-            case "event":
-                rebuildEvent(taskComponents, tasks);
-                break;
-            case "lesson":
-                rebuildLesson(taskComponents, tasks);
-                break;
-            default:
-                System.out.println("Something went wrong while determining the tasks...");
-                break;
+        try {
+            while (fileScanner.hasNext()) {
+                String taskInformation = fileScanner.nextLine();
+
+                String[] taskComponents = taskInformation.split(SAVE_DELIMITER);
+                String taskType = taskComponents[0];
+                switch (taskType) {
+                case "deadline":
+                    rebuildDeadline(taskComponents, taskList);
+                    break;
+                case "event":
+                    rebuildEvent(taskComponents, taskList);
+                    break;
+                case "lesson":
+                    rebuildLesson(taskComponents, taskList);
+                    break;
+                default:
+                    System.out.println("Something went wrong while determining the tasks...");
+                    break;
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Encountered an error while reading from the save file - Data missing");
         }
     }
 
-    private void rebuildLesson(String[] taskComponents, TaskList tasks) {
+    private void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList) {
     }
 
-    private void rebuildEvent(String[] taskComponents, TaskList tasks) {
-
+    private void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList)
+            throws ArrayIndexOutOfBoundsException {
+        
     }
 
-    private void rebuildDeadline(String[] taskComponents, TaskList tasks) {
+    private void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList)
+            throws ArrayIndexOutOfBoundsException {
+        LocalDateTime deadlineTimeInfo = fileCommand.convertToLocalDateTime(taskComponents[3]);
+        String deadlineDescription = taskComponents[2];
+        Boolean deadlineStatus = fileCommand.convertToBoolean(taskComponents[1]);
 
+        //Create new deadline in tasks
+        taskList.add(new Deadline(deadlineDescription, deadlineTimeInfo, deadlineStatus));
     }
 
     /**
@@ -76,7 +92,6 @@ public class TaskStorage {
      * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToTaskSaveFile() {
-        FileCommand fileCommand = new FileCommand();
         try {
             FileWriter fileWriter = new FileWriter(filePathTasks, true);
             fileCommand.clearSaveFile(filePathTasks);
@@ -111,20 +126,20 @@ public class TaskStorage {
 
     private String generateLessonSave(Task task, String taskType) {
         Lesson lesson = (Lesson) task;
-        return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER + lesson.getStart().toString()
-                + SAVE_DELIMITER + lesson.getEnd().toString() + System.lineSeparator();
+        return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
+                + lesson.getStart().toString() + SAVE_DELIMITER + lesson.getEnd().toString() + System.lineSeparator();
     }
 
     private String generateEventSave(Task task, String taskType) {
         Event event = (Event) task;
-        return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER + event.getStart().toString()
-                + SAVE_DELIMITER + event.getEnd().toString() + System.lineSeparator();
+        return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
+                + event.getStart().toString() + SAVE_DELIMITER + event.getEnd().toString() + System.lineSeparator();
     }
 
     private String generateDeadlineSave(Task task, String taskType) {
         Deadline deadline = (Deadline) task;
-        return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER + deadline.getBy().toString()
-                + System.lineSeparator();
+        return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
+                + deadline.getBy().toString() + System.lineSeparator();
     }
 
 }

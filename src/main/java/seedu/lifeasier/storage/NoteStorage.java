@@ -18,10 +18,12 @@ public class NoteStorage {
 
     private NoteList notes;
     private String filePathNotes;
+    private FileCommand fileCommand;
 
     public NoteStorage(NoteList notes, String filePathNotes) {
         this.notes = notes;
         this.filePathNotes = filePathNotes;
+        this.fileCommand = new FileCommand();
     }
 
     /**
@@ -60,7 +62,6 @@ public class NoteStorage {
      * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToNoteSaveFile() {
-        FileCommand fileCommand = new FileCommand();
         try {
             FileWriter fileWriter = new FileWriter(filePathNotes, true);
             fileCommand.clearSaveFile(filePathNotes);

@@ -24,6 +24,10 @@ public abstract class Task {
         return description;
     }
 
+    public boolean getStatus() {
+        return isDone;
+    }
+
     public abstract String getType();
 
     @Override
