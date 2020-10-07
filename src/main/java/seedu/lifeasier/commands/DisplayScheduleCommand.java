@@ -1,7 +1,10 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.Deadline;
+import seedu.lifeasier.tasks.Event;
+import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
@@ -39,8 +42,17 @@ public class DisplayScheduleCommand extends Command {
     public static void displayDaySchedule(LocalDate date, TaskList tasks) {
         for (int i = 0; i < tasks.getTaskCount(); i++) {
             Task t = tasks.getTask(i);
-            if (t.getDateTime().toLocalDate().equals(date)) {
-                System.out.println(getTimeStamp(t.getDateTime()) + " " + t.toString());
+            LocalDateTime dateTime;
+            if (t instanceof Deadline) {
+                dateTime = ((Deadline) t).getBy();
+            } else if (t instanceof Lesson) {
+                dateTime = ((Lesson) t).getStart();
+            } else {
+                dateTime = ((Event) t).getStart();
+            }
+
+            if (dateTime.toLocalDate().equals(date)) {
+                System.out.println(getTimeStamp(dateTime) + " " + t.toString());
             }
         }
     }

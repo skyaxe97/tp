@@ -27,6 +27,7 @@ public class Lesson extends Task {
         this.end = end;
         this.isDone = isDone;
     }
+
     @Override
     public String toString() {
         return ".[E]" + super.toString() + " (" + start + "  " + end + ")";
