@@ -60,9 +60,10 @@ public class NoteStorage {
      * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToNoteSaveFile() {
+        FileCommand fileCommand = new FileCommand();
         try {
             FileWriter fileWriter = new FileWriter(filePathNotes, true);
-            clearSaveFile(filePathNotes);
+            fileCommand.clearSaveFile(filePathNotes);
             ArrayList<Note> noteList = notes.getNotes();
             //Append note information into save file for notes
             for (Note note : noteList) {
@@ -79,18 +80,4 @@ public class NoteStorage {
         return note.getTitle() + SAVE_DELIMITER + note.getDescription() + System.lineSeparator();
     }
 
-    /**
-     * Clears all data from the specified save file.
-     *
-     * @param filePath File path to which file to clear information.
-     */
-    private void clearSaveFile(String filePath) {
-        try {
-            FileWriter fileClear = new FileWriter(filePath);
-            fileClear.write("");
-            fileClear.close();
-        } catch (IOException e) {
-            System.out.println("Something went wrong while clearing the file...");
-        }
-    }
 }

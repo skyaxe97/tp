@@ -23,6 +23,10 @@ public class TaskList {
         taskList.add(task);
     }
 
+    public ArrayList<Task> getTaskList() {
+        return taskList;
+    }
+
 //    //addEvent EVENT_NAME /date DATE /time START /to END
 //    public static void addEvent (String args) {
 //        try {

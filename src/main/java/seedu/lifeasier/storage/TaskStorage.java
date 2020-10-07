@@ -76,9 +76,10 @@ public class TaskStorage {
      * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToTaskSaveFile() {
+        FileCommand fileCommand = new FileCommand();
         try {
             FileWriter fileWriter = new FileWriter(filePathTasks, true);
-            clearSaveFile(filePathTasks);
+            fileCommand.clearSaveFile(filePathTasks);
 
             String dataToSave;
             ArrayList<Task> taskList = tasks.getTaskList();
@@ -126,18 +127,4 @@ public class TaskStorage {
                 + System.lineSeparator();
     }
 
-    /**
-     * Clears all data from the specified save file.
-     *
-     * @param filePath File path to which file to clear information.
-     */
-    private void clearSaveFile(String filePath) {
-        try {
-            FileWriter fileClear = new FileWriter(filePath);
-            fileClear.write("");
-            fileClear.close();
-        } catch (IOException e) {
-            System.out.println("Something went wrong while clearing the file...");
-        }
-    }
 }
