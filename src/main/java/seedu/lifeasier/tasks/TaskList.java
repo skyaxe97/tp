@@ -21,6 +21,8 @@ public class TaskList {
 
     public static void addNewTask (Task task) {
         taskList.add(task);
+    public static ArrayList<Task> getTaskList() {
+        return taskList;
     }
 
     //addEvent EVENT_NAME /date DATE /time START /to END
@@ -34,6 +36,8 @@ public class TaskList {
         } catch (StringIndexOutOfBoundsException e) {
             System.err.println(e);
         }
+    public static int getTaskCount() {
+        return taskCount;
     }
 
     //addLesson /code MODULE_CODE /date DATE /time START /to END
