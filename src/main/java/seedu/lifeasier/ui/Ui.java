@@ -49,6 +49,12 @@ public class Ui {
             + "*************************************************************************\n"
             + "For more detailed information, please visit the online user guide at:\n";
 
+    private Scanner conversation;
+
+    public Ui() {
+        this.conversation = new Scanner(System.in);
+    }
+
     public void printSeparator() {
         System.out.println(SEPARATOR);
     }
@@ -81,9 +87,7 @@ public class Ui {
      * Returns read user command.
      */
     public String readCommand() {
-        Scanner fullCommand = new Scanner(System.in);
-
-        return fullCommand.nextLine();
+        return conversation.nextLine();
     }
 
     public void showInvalidCommandError() {
