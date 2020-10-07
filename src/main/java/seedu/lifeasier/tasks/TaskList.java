@@ -19,10 +19,10 @@ public class TaskList {
         taskList = new ArrayList<>();
     }
 
-    public static void addNewTask (Task task) {
+    public static void addNewTask(Task task) {
         taskList.add(task);
     }
-/*
+    /*
     //addEvent EVENT_NAME /date DATE /time START /to END
     public static void addEvent (String args) {
         try {
