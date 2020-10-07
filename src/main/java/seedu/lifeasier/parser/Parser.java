@@ -117,7 +117,7 @@ public class Parser {
 
         String commandType = getCommandType(input);
 
-        switch(commandType) {
+        switch (commandType) {
 
         case(PARAM_ADD_LESSON):
             return parseAddLessonCommand(input);
