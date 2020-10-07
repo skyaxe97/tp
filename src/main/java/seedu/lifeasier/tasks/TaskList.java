@@ -19,7 +19,7 @@ public class TaskList {
         taskList = new ArrayList<>();
     }
 
-    public static void addNewTask (Task task) {
+    public static void addNewTask(Task task) {
         taskList.add(task);
     }
 
