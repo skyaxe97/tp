@@ -10,6 +10,9 @@ import java.time.format.DateTimeParseException;
  */
 public class FileCommand {
 
+    public static final String BLANK_STRING = "";
+    public static final String DEFAULT_DATETIME = "9999-12-30T00:00:00";
+
     /**
      * Clears all data from the specified save file.
      *
@@ -18,7 +21,7 @@ public class FileCommand {
     protected void clearSaveFile(String filePath) {
         try {
             FileWriter fileClear = new FileWriter(filePath);
-            fileClear.write("");
+            fileClear.write(BLANK_STRING);
             fileClear.close();
         } catch (IOException e) {
             System.out.println("Something went wrong while clearing the file...");
@@ -39,7 +42,7 @@ public class FileCommand {
         } catch (DateTimeParseException e) {
             System.out.println("Encountered a problem reading the date and time of the task...");
             //Set as default time
-            taskDateTime = LocalDateTime.parse("9999-12-30T00:00:00");
+            taskDateTime = LocalDateTime.parse(DEFAULT_DATETIME);
         }
         return taskDateTime;
     }

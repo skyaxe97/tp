@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class TaskStorage {
 
     private static final String SAVE_DELIMITER = "=-=";
+    public static final String DEFAULT_DATA = "\n";
 
     private TaskList tasks;
     private String filePathTasks;
@@ -123,7 +124,7 @@ public class TaskStorage {
                     break;
                 default:
                     System.out.println("Something went wrong while determining the tasks...");
-                    dataToSave = "";
+                    dataToSave = DEFAULT_DATA;
                     break;
                 }
                 fileWriter.write(dataToSave);
