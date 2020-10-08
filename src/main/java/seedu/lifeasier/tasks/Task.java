@@ -24,4 +24,8 @@ public class Task {
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + description;
     }
+
+    public String toScheduleFormatString() {
+        return "[" + this.getStatusIcon() + "] " + description;
+    }
 }

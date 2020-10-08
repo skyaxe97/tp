@@ -1,6 +1,7 @@
 package seedu.lifeasier;
 
 import seedu.lifeasier.commands.Command;
+import seedu.lifeasier.commands.DisplayScheduleCommand;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
