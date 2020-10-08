@@ -8,28 +8,39 @@ import seedu.lifeasier.notes.NoteList;
 public class AddNotesCommand extends Command {
 
     private String title;
+    private boolean isEmpty = true;
+
 
     public AddNotesCommand(String title) {
         this.title = title;
     }
 
+    public String checkForEmpty(Ui ui) {
+        String input = ui.readCommand();
+        if (input.trim().length() > 0) {
+            isEmpty = false;
+        } else {
+            System.out.println("Empty description! =O\n");
+        }
+        return input;
+    }
+
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks) {
+        String noteTitle = null;
+        String noteDescription = null;
+
         ui.showNoteTitleMessage();
-        String noteTitle = ui.readCommand();
-
-        while (noteTitle.trim().length() == 0) {
-            System.out.println("Empty description! =O\n");
-            noteTitle = ui.readCommand();
+        while (isEmpty) {
+            noteTitle = checkForEmpty(ui);
         }
+        isEmpty = true;
+
         ui.showNoteDescriptionMessage();
-        String noteDescription = ui.readCommand();
-
-        while (noteDescription.trim().length() == 0) {
-            System.out.println("Empty description! =O\n");
-            noteDescription = ui.readCommand();
+        while (isEmpty) {
+            noteDescription = checkForEmpty(ui);
         }
-        notes.add(new Note(noteTitle,noteDescription));
+        notes.add(new Note(noteTitle, noteDescription));
         System.out.println("Ok! I've taken note of this note!\n");
     }
 }
