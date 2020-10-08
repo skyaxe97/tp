@@ -28,6 +28,8 @@ public class NoteStorage {
 
     /**
      * Reads and loads all saved note information.
+     *
+     * @param filePathNotes File object containing the file path of the notes save file.
      */
     protected void readNotesSave(String filePathNotes) {
         try {
@@ -68,7 +70,7 @@ public class NoteStorage {
             ArrayList<Note> noteList = notes.getNotes();
             //Append note information into save file for notes
             for (Note note : noteList) {
-                String noteToSave = generateNoteSave(note);
+                String noteToSave = convertNoteToString(note);
                 fileWriter.write(noteToSave);
             }
             fileWriter.close();
@@ -77,7 +79,7 @@ public class NoteStorage {
         }
     }
 
-    private String generateNoteSave(Note note) {
+    private String convertNoteToString(Note note) {
         return note.getTitle() + SAVE_DELIMITER + note.getDescription() + System.lineSeparator();
     }
 

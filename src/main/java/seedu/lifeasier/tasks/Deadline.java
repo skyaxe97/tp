@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     protected LocalDateTime by;
 
-    private static final String TYPE = "deadline";
+    private String type = "deadline";
 
     public Deadline(String description, LocalDateTime by) {
         super(description);
@@ -24,7 +24,7 @@ public class Deadline extends Task {
 
     @Override
     public String getType() {
-        return TYPE;
+        return type;
     }
 
     @Override

@@ -14,6 +14,8 @@ import java.io.IOException;
 public class FileStorage {
 
     private static final String DIRECTORY_PATH = "/LifEasierSaves/";
+    private static final String TASK_FILE_TYPE = "taskSave";
+    private static final String NOTE_FILE_TYPE = "noteSave";
 
     private String filePathTasks;
     private String filePathNotes;
@@ -37,7 +39,8 @@ public class FileStorage {
         File saveFileTasks = new File(filePathTasks);
         File saveFileNotes = new File(filePathNotes);
 
-        if (!fileExists(saveFileTasks, saveFileNotes)) {
+        //Check if both saves present. If they are, proceed to read data, else determine which saves to create
+        if (!checkIfBothFilesExists(saveFileTasks, saveFileNotes)) {
             createNewSaves(saveFileTasks, saveFileNotes);
         } else {
             System.out.println("Reading your save data...");
@@ -54,30 +57,39 @@ public class FileStorage {
      * @param saveFileNotes File object with file path to the save file which contains saved note information.
      * @return True when both files exist.
      */
-    private boolean fileExists(File saveFileTasks, File saveFileNotes) {
+    private boolean checkIfBothFilesExists(File saveFileTasks, File saveFileNotes) {
         return saveFileTasks.exists() && saveFileNotes.exists();
     }
 
-    /**
-     * Determines if save directory and files are existent, before creating new save files and directories.
-     */
     private void createNewSaves(File saveFileTasks, File saveFileNotes) {
         File fileDirectory = new File(DIRECTORY_PATH);
 
-        //If directory exists, create missing save files
         if (directoryExists(fileDirectory)) {
-            ui.showDirectoryDetected();
-
-            if (!saveFileTasks.exists()) {
-                createTaskSaveFile(saveFileTasks);
-            }
-
-            if (!saveFileNotes.exists()) {
-                createNoteSaveFile(saveFileNotes);
-            }
-
+            //Directory exists, check individual save files and create the missing files.
+            handleExistingSaveDirectory(saveFileTasks, saveFileNotes);
         } else {
+            //Directory missing, create new directory
             handleMissingSaveDirectory(fileDirectory, saveFileTasks, saveFileNotes);
+        }
+    }
+
+    private void handleExistingSaveDirectory(File saveFileTasks, File saveFileNotes) {
+        ui.showDirectoryDetected();
+        checkForTaskSaveFile(saveFileTasks);
+        checkForNotesSaveFile(saveFileNotes);
+    }
+
+    private void checkForNotesSaveFile(File saveFileNotes) {
+        //Create new save file if task save file does not exist
+        if (!saveFileNotes.exists()) {
+            createNewSaveFile(saveFileNotes, NOTE_FILE_TYPE);
+        }
+    }
+
+    private void checkForTaskSaveFile(File saveFileTasks) {
+        //Create new notes save file if notes save file does not exist
+        if (!saveFileTasks.exists()) {
+            createNewSaveFile(saveFileTasks, TASK_FILE_TYPE);
         }
     }
 
@@ -85,18 +97,13 @@ public class FileStorage {
         return fileDirectory.exists();
     }
 
-    /**
-     * Handles when no save directory is detected and creates a new directory.
-     *
-     * @param fileDirectory File object which holds the directory path to be created.
-     */
     private void handleMissingSaveDirectory(File fileDirectory, File saveFileTasks, File saveFileNotes) {
         ui.showNoDirectoryDetected();
         //Attempt creation of new save directory to hold save files
         if (createNewDirectory(fileDirectory)) {
             ui.showNewDirectoryCreated();
-            createTaskSaveFile(saveFileTasks);
-            createNoteSaveFile(saveFileNotes);
+            createNewSaveFile(saveFileTasks, TASK_FILE_TYPE);
+            createNewSaveFile(saveFileNotes, NOTE_FILE_TYPE);
         } else {
             ui.showNewDirectoryFailCreated();
         }
@@ -106,33 +113,21 @@ public class FileStorage {
         return fileDirectory.mkdir();
     }
 
-    /**
-     * Creates a new save file for storing tasks at the specified path.
-     *
-     * @param saveFileTasks File object which holds the path at which the save file is to be created.
-     */
-    private void createTaskSaveFile(File saveFileTasks) {
-        ui.showCreatingNewSaveFile();
-
-        try {
-            if (saveFileTasks.createNewFile()) {
-                ui.showFileCreationSuccess();
-            }
-        } catch (IOException e) {
-            ui.showFileCreationError();
+    private void createNewSaveFile(File saveFile, String saveFileType) {
+        switch (saveFileType) {
+        case "taskSave":
+            ui.showCreatingNewSaveFile();
+            break;
+        case "noteSave":
+            ui.showCreatingNewNotesSaveFile();
+            break;
+        default:
+            System.out.println("There was an error determining the save file type missing... Continue to create file");
+            break;
         }
-    }
-
-    /**
-     * Creates a new save file for storing notes at the specified path.
-     *
-     * @param saveFileNotes File object which holds the path at which the save file is to be created.
-     */
-    private void createNoteSaveFile(File saveFileNotes) {
-        ui.showCreatingNewNotesSaveFile();
 
         try {
-            if (saveFileNotes.createNewFile()) {
+            if (saveFile.createNewFile()) {
                 ui.showFileCreationSuccess();
             }
         } catch (IOException e) {

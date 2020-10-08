@@ -51,7 +51,7 @@ public class FileCommand {
      * Converts a string to boolean form.
      *
      * @param string String to be parsed into a boolean.
-     * @return Boolean true if string is true, and false for all over cases.
+     * @return Boolean true if string is "true", and false for all other cases.
      */
     public Boolean convertToBoolean(String string) {
         return Boolean.parseBoolean(string);

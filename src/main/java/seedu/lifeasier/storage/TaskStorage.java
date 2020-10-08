@@ -118,13 +118,13 @@ public class TaskStorage {
                 String taskType = task.getType();
                 switch (taskType) {
                 case "deadline":
-                    dataToSave = generateDeadlineSave(task, taskType);
+                    dataToSave = convertDeadlineToString(task, taskType);
                     break;
                 case "event":
-                    dataToSave = generateEventSave(task, taskType);
+                    dataToSave = convertEventToString(task, taskType);
                     break;
                 case "lesson":
-                    dataToSave = generateLessonSave(task, taskType);
+                    dataToSave = convertLessonToString(task, taskType);
                     break;
                 default:
                     System.out.println("Something went wrong while determining the tasks...");
@@ -139,19 +139,19 @@ public class TaskStorage {
         }
     }
 
-    private String generateLessonSave(Task task, String taskType) {
+    private String convertLessonToString(Task task, String taskType) {
         Lesson lesson = (Lesson) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + lesson.getStart().toString() + SAVE_DELIMITER + lesson.getEnd().toString() + System.lineSeparator();
     }
 
-    private String generateEventSave(Task task, String taskType) {
+    private String convertEventToString(Task task, String taskType) {
         Event event = (Event) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + event.getStart().toString() + SAVE_DELIMITER + event.getEnd().toString() + System.lineSeparator();
     }
 
-    private String generateDeadlineSave(Task task, String taskType) {
+    private String convertDeadlineToString(Task task, String taskType) {
         Deadline deadline = (Deadline) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + deadline.getBy().toString() + System.lineSeparator();

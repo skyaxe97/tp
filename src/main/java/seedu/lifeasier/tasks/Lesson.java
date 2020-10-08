@@ -7,7 +7,7 @@ public class Lesson extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
 
-    private static final String TYPE = "lesson";
+    private String type = "lesson";
 
     public LocalDateTime getStart() {
         return start;
@@ -32,7 +32,7 @@ public class Lesson extends Task {
 
     @Override
     public String getType() {
-        return TYPE;
+        return type;
     }
 
     @Override
