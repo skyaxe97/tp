@@ -8,7 +8,6 @@ import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -31,15 +30,20 @@ public class DisplayScheduleCommand extends Command {
         }
     }
 
-    public static void displayWeekSchedule(LocalDate startOfWeek, TaskList tasks) {
+    public void displayWeekSchedule(LocalDate startOfWeek, TaskList tasks) {
         for (int i = 0; i < 7; i++) {
-            System.out.println(getDayOfWeek(i));
+            displayDayOfWeek(i);
             displayDaySchedule(startOfWeek.plus(i, ChronoUnit.DAYS), tasks);
             System.out.println();
         }
     }
 
-    public static void displayDaySchedule(LocalDate date, TaskList tasks) {
+    public void displayDayOfWeek(int i) {
+        LocalDateTime datePointer = LocalDateTime.now().plus(i, ChronoUnit.DAYS);
+        System.out.println(datePointer.getDayOfWeek());
+    }
+
+    public void displayDaySchedule(LocalDate date, TaskList tasks) {
         for (int i = 0; i < tasks.getTaskCount(); i++) {
             Task t = tasks.getTask(i);
             LocalDateTime startDateTime = getStart(t);
@@ -50,13 +54,13 @@ public class DisplayScheduleCommand extends Command {
         }
     }
 
-    public static void printWithScheduleFormat(Task t, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public void printWithScheduleFormat(Task t, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         String startDateTimeString = getTimeStamp(startDateTime);
         String endDateTimeString = (endDateTime == null) ? "" : ("-" + getTimeStamp(startDateTime));
         System.out.println(startDateTimeString + endDateTimeString + "   " + t.toScheduleFormatString());
     }
 
-    private static LocalDateTime getStart(Task t) {
+    public LocalDateTime getStart(Task t) {
         if (t instanceof Lesson) {
             return ((Lesson) t).getStart();
         } else if (t instanceof Event) {
@@ -65,7 +69,7 @@ public class DisplayScheduleCommand extends Command {
         return ((Deadline) t).getBy();
     }
 
-    private static LocalDateTime getEnd(Task t) {
+    public LocalDateTime getEnd(Task t) {
         if (t instanceof Lesson) {
             return ((Lesson) t).getEnd();
         } else if (t instanceof Event) {
@@ -74,12 +78,7 @@ public class DisplayScheduleCommand extends Command {
         return null;
     }
 
-    public static String getTimeStamp(LocalDateTime timedItem) {
+    public String getTimeStamp(LocalDateTime timedItem) {
         return timedItem.toLocalTime().toString();
-    }
-
-    public static DayOfWeek getDayOfWeek(int dayCount) {
-        LocalDateTime dateTime = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
-        return dateTime.getDayOfWeek();
     }
 }
