@@ -21,6 +21,6 @@ public class AddEventCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
-
+        tasks.addEvent(description, start, end);
     }
 }
