@@ -7,7 +7,8 @@ import seedu.lifeasier.commands.HelpCommand;
 
 import java.time.format.DateTimeParseException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParserTest {
 
@@ -28,8 +29,7 @@ class ParserTest {
     @Test
     void parseCommand_inputInvalidCommand_ParserException()  throws ParserException {
         Parser parser = new Parser();
-        assertThrows(ParserException.class, () ->
-        {
+        assertThrows(ParserException.class, () -> {
             parser.parseCommand("I want to add a lesson");
         });
     }
@@ -37,8 +37,7 @@ class ParserTest {
     @Test
     void parseCommand_inputInvalidDateTime_ParserException()  throws ParserException {
         Parser parser = new Parser();
-        assertThrows(DateTimeParseException.class, () ->
-        {
+        assertThrows(DateTimeParseException.class, () -> {
             parser.parseCommand("addDeadline do homework /by 10-30-40 24:67");
         });
     }
