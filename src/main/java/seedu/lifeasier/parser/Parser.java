@@ -117,7 +117,7 @@ public class Parser {
     }
 
 
-    public Command parseCommand(String input) throws ParserException {
+    public Command parseCommand(String input) throws ParserException, IndexOutOfBoundsException {
 
         String commandType = getCommandType(input);
 

@@ -127,4 +127,21 @@ public class Ui {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
+    public void showParseUnknownCommandMessage() {
+        System.out.println("I'm sorry! I don't understand that command!");
+        printSeparator();
+    }
+
+    public void showParseIncorrectCommandFormatMessage() {
+        System.out.println("I'm sorry! Please double check the input of your format!");
+        System.out.println("Use the help command for formats of all the commands!");
+        printSeparator();
+    }
+
+    public void showParseIncorrectDateTimeMessage() {
+        System.out.println("I'm sorry! Please ensure your dates are in the format dd-mm-yy,");
+        System.out.println("and your times are in the format hh:mm!");
+        printSeparator();
+    }
+
 }
