@@ -128,6 +128,11 @@ public class Ui {
         System.out.println("Save directory detected!");
     }
 
+    public DayOfWeek getCurrDayOfWeek(int dayCount) {
+        LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
+        return currDay.getDayOfWeek();
+    }
+
     public void showNoDirectoryDetected() {
         System.out.println("No save directory detected, creating new save directory...");
     }

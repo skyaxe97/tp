@@ -9,7 +9,6 @@ import seedu.lifeasier.commands.DisplayScheduleCommand;
 import seedu.lifeasier.commands.ExitCommand;
 import seedu.lifeasier.commands.HelpCommand;
 import seedu.lifeasier.commands.ShowNotesCommand;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
