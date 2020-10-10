@@ -19,6 +19,10 @@ public class TaskList {
         return taskCount;
     }
 
+    public static Task getTask(int index) {
+        return taskList.get(index);
+    }
+
     public static void addTask(Task task) {
         taskList.add(task);
         taskCount++;

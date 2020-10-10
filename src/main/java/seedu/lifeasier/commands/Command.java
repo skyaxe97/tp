@@ -5,7 +5,6 @@ import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
-
 /**
  * The Command class will handle all the commands input from the user.
  */
