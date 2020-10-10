@@ -33,7 +33,11 @@ public class Parser {
 
     private String getCommandType(String input) {
         int indexOfFirstSpace = input.indexOf(" ");
-        return input.substring(0, indexOfFirstSpace);
+        if (indexOfFirstSpace > 0) {
+            return input.substring(0, indexOfFirstSpace);
+        } else {
+            return input;
+        }
 
     }
 
