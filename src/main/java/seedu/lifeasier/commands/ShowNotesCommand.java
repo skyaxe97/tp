@@ -22,5 +22,4 @@ public class ShowNotesCommand extends Command {
         int noteNumber = Integer.parseInt(ui.readCommand());
         System.out.println(notes.get(noteNumber - 1).toString());
     }
-
 }
