@@ -55,8 +55,8 @@ public class Parser {
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String endTime =  input.substring(lastIndexOfToCommand).trim();
-        LocalDateTime start = LocalDateTime.parse(date + startTime, DATE_TIME_FORMATTER);
-        LocalDateTime end = LocalDateTime.parse(date + endTime, DATE_TIME_FORMATTER);
+        LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
         return new AddLessonCommand(moduleCode, start, end);
     }
@@ -75,8 +75,8 @@ public class Parser {
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String endTime =  input.substring(lastIndexOfToCommand).trim();
-        LocalDateTime start = LocalDateTime.parse(date + startTime, DATE_TIME_FORMATTER);
-        LocalDateTime end = LocalDateTime.parse(date + endTime, DATE_TIME_FORMATTER);
+        LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
         return new AddEventCommand(description, start, end);
     }
