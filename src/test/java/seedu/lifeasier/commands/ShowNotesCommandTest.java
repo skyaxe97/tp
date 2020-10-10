@@ -10,13 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ShowNotesCommandTest {
     private NoteList notes = new NoteList();
 
-
-    @Before
-    public void init() {
-        notes.add(new Note("cat", "i like cats"));
-        notes.add(new Note("dog", "i like dogs"));
-    }
-
     @Test
     void execute() {
         notes.add(new Note("cat", "i like cats"));
