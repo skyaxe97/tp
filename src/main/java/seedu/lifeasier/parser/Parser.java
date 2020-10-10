@@ -13,8 +13,12 @@ import seedu.lifeasier.commands.ShowNotesCommand;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Parser {
+
+    private static Logger LOGGER = Logger.getLogger(Parser.class.getName());
 
     public static final String PARAM_ADD_LESSON = "addLesson";
     public static final String PARAM_ADD_EVENT = "addEvent";
@@ -33,6 +37,9 @@ public class Parser {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
+    public Parser() {
+
+    }
 
     /**
      * Returns the first word entered from the user's input, which represents the command type.
@@ -41,6 +48,7 @@ public class Parser {
      * @return The first word that the user input.
      */
     private String getCommandType(String input) {
+        LOGGER.log(Level.INFO, "Getting command type...");
         int indexOfFirstSpace = input.indexOf(" ");
         if (indexOfFirstSpace > 0) {
             return input.substring(0, indexOfFirstSpace);
@@ -56,6 +64,8 @@ public class Parser {
      * @return AddLessonCommand with the parameters input by the user.
      */
     private Command parseAddLessonCommand(String input) {
+
+        LOGGER.log(Level.INFO, "Parsing addLesson command...");
 
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -83,6 +93,8 @@ public class Parser {
      */
     private Command parseAddEventCommand(String input) {
 
+        LOGGER.log(Level.INFO, "Parsing addEvent command...");
+
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
         int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
@@ -109,6 +121,8 @@ public class Parser {
      */
     private Command parseAddDeadlineCommand(String input) {
 
+        LOGGER.log(Level.INFO, "Parsing addDeadline command...");
+
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
         int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
@@ -128,6 +142,8 @@ public class Parser {
      */
     private Command parseAddNotesCommand(String input) {
 
+        LOGGER.log(Level.INFO, "Parsing addNotes command...");
+
         int lastIndexOfAddNotesCommand = input.indexOf(PARAM_ADD_NOTES) + PARAM_ADD_NOTES.length();
         String title = input.substring(lastIndexOfAddNotesCommand).trim();
 
@@ -141,6 +157,9 @@ public class Parser {
      * @return ShowNotesCommand with the parameters input by the user.
      */
     private Command parseShowNotesCommand(String input) {
+
+        LOGGER.log(Level.INFO, "Parsing showNotes command...");
+
         int lastIndexOfShowNotesCommand = input.indexOf(PARAM_SHOW_NOTES) + PARAM_SHOW_NOTES.length();
         String title = input.substring(lastIndexOfShowNotesCommand).trim();
 
@@ -154,6 +173,9 @@ public class Parser {
      * @return DisplayScheduleCommand with the parameters input by the user.
      */
     private Command parseDisplayScheduleCommand(String input) {
+
+        LOGGER.log(Level.INFO, "Parsing display command...");
+
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
         String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
 
@@ -171,6 +193,8 @@ public class Parser {
      */
     public Command parseCommand(String input) throws
             ParserException, IndexOutOfBoundsException, DateTimeParseException {
+
+        LOGGER.log(Level.INFO, "Parsing user input for command...");
 
         String commandType = getCommandType(input);
 
