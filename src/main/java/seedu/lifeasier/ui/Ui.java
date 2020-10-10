@@ -13,12 +13,12 @@ public class Ui {
 
     public static final String SEPARATOR = "=========================================================================";
     public static final String LOGO = "\n"
-            + "  _      _  __ ______          _           \n"
-            + " | |    (_)/ _|  ____|        (_)          \n"
-            + " | |     _| |_| |__   __ _ ___ _  ___ _ __ \n"
+            + "  _      _  __ ______          _\n"
+            + " | |    (_)/ _|  ____|        (_)\n"
+            + " | |     _| |_| |__   __ _ ___ _  ___ _ __\n"
             + " | |    | |  _|  __| / _` / __| |/ _ \\ '__|\n"
-            + " | |____| | | | |___| (_| \\__ \\ |  __/ |   \n"
-            + " |______|_|_| |______\\__,_|___/_|\\___|_|   \n"
+            + " | |____| | | | |___| (_| \\__ \\ |  __/ |\n"
+            + " |______|_|_| |______\\__,_|___/_|\\___|_|\n"
             + "\n";
 
     //Error messages
@@ -48,6 +48,12 @@ public class Ui {
             + "exit --------------------------------------- Closes the LifEasier program\n"
             + "*************************************************************************\n"
             + "For more detailed information, please visit the online user guide at:\n";
+
+    private Scanner conversation;
+
+    public Ui() {
+        this.conversation = new Scanner(System.in);
+    }
 
     public void printSeparator() {
         System.out.println(SEPARATOR);
@@ -81,9 +87,7 @@ public class Ui {
      * Returns read user command.
      */
     public String readCommand() {
-        Scanner fullCommand = new Scanner(System.in);
-
-        return fullCommand.nextLine();
+        return conversation.nextLine();
     }
 
     public void showInvalidCommandError() {

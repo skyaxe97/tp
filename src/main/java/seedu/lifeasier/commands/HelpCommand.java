@@ -8,6 +8,6 @@ public class HelpCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks) {
-
+        ui.showHelp();
     }
 }

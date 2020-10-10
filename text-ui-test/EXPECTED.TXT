@@ -13,3 +13,25 @@
 =========================================================================
 Hello [NAME], what can I do for you today?
  -Type 'help' for a list the list of available commands
+=========================================================================
+These are the commands that are available:
+Notes about the command format:
+ * Words in UPPER_CASE are the parameters to be supplied by the user
+ * Items in square brackets are optional, e.g [DATE]
+
+COMMANDS
+*************************************************************************
+help ---------------------------------------- Displays available commands
+addLesson /code MODULE_CODE /date DATE /time START /to END -- Adds lesson
+addEvent EVENT_NAME /date DATE /time START /to END -------- Adds an event
+addDeadline DEADLINE_NAME /by DATETIME ------------------ Adds a deadline
+addNotes TITLE ------------------------------------------ Adds a new note
+showNotes TITLE ------------------------------------- Shows selected note
+display WEEK/DAY --------------- Displays either weekly or daily schedule
+exit --------------------------------------- Closes the LifEasier program
+*************************************************************************
+For more detailed information, please visit the online user guide at:
+
+=========================================================================
+There's been an error understanding your input! Please double check your input!
+Goodbye, hope to see you again soon!
