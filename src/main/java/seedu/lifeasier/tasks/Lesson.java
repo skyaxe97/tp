@@ -7,6 +7,8 @@ public class Lesson extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
 
+    private String type = "lesson";
+
     public LocalDateTime getStart() {
         return start;
     }
@@ -26,6 +28,11 @@ public class Lesson extends Task {
         this.start = start;
         this.end = end;
         this.isDone = isDone;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     @Override

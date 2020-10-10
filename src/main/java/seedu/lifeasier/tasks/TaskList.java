@@ -23,6 +23,10 @@ public class TaskList {
         taskList.add(task);
     }
 
+    public ArrayList<Task> getTaskList() {
+        return taskList;
+    }
+
     /*
     //addEvent EVENT_NAME /date DATE /time START /to END
     public static void addEvent (String args) {
@@ -61,12 +65,13 @@ public class TaskList {
             System.err.println(e);
         }
     }
+    */
 
     public static void deleteItem(String index) {
         //delete
     }
 
-    public static void markAsDone (String index) {
+    public static void markAsDone(String index) {
         int taskID = Integer.parseInt(index) - 1;
         try {
             taskList.get(taskID).markAsDone();
@@ -74,6 +79,5 @@ public class TaskList {
             System.err.println(e);
         }
     }
-    */
 
 }

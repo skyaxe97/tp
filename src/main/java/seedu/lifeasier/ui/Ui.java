@@ -122,16 +122,27 @@ public class Ui {
             }
         }
     }
+    */
 
-    public String getTimeStamp(LocalDateTime timedItem) {
-        return timedItem.toLocalTime().toString();
+    public void showDirectoryDetected() {
+        System.out.println("Save directory detected!");
     }
 
     public DayOfWeek getCurrDayOfWeek(int dayCount) {
         LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
         return currDay.getDayOfWeek();
-<<<<<<< HEAD
     }
-    */
+
+    public void showNoDirectoryDetected() {
+        System.out.println("No save directory detected, creating new save directory...");
+    }
+
+    public void showNewDirectoryCreated() {
+        System.out.println("New save directory named 'LifEasierSaves' created!");
+    }
+
+    public void showFileCreationError() {
+        System.out.println("Something went wrong... Save file creation failed...");
+    }
 
 }
