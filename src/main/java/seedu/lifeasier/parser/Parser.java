@@ -52,11 +52,22 @@ public class Parser {
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
 
         String moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
+
+        System.out.println(moduleCode);
+
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+
+        System.out.println(date);
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+
+        System.out.println(startTime);
+
         String endTime =  input.substring(lastIndexOfToCommand).trim();
-        LocalDateTime start = LocalDateTime.parse(date + startTime, DATE_TIME_FORMATTER);
-        LocalDateTime end = LocalDateTime.parse(date + endTime, DATE_TIME_FORMATTER);
+
+        System.out.println(endTime);
+
+        LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
         return new AddLessonCommand(moduleCode, start, end);
     }
@@ -75,8 +86,8 @@ public class Parser {
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String endTime =  input.substring(lastIndexOfToCommand).trim();
-        LocalDateTime start = LocalDateTime.parse(date + startTime, DATE_TIME_FORMATTER);
-        LocalDateTime end = LocalDateTime.parse(date + endTime, DATE_TIME_FORMATTER);
+        LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+        LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
         return new AddEventCommand(description, start, end);
     }
