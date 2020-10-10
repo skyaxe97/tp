@@ -1,5 +1,6 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.Deadline;
@@ -8,6 +9,7 @@ import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,7 +23,7 @@ public class DisplayScheduleCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         LocalDate currDate = LocalDate.now();
         if (isDisplayWeek) {
             displayWeekSchedule(currDate, tasks);

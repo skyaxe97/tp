@@ -1,6 +1,6 @@
 package seedu.lifeasier.tasks;
 
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected static int taskCounter = 0;
@@ -19,6 +19,16 @@ public class Task {
         this.isDone = true;
         taskCounter--;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean getStatus() {
+        return isDone;
+    }
+
+    public abstract String getType();
 
     @Override
     public String toString() {

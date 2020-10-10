@@ -23,12 +23,25 @@ public class TaskList {
         return taskCount;
     }
 
+    public static void addNewTask(Task task) {
+        taskList.add(task);
+    }
+
+    public ArrayList<Task> getTaskList() {
+        return taskList;
+    }
+
     public Task getTask(int i) {
         return taskList.get(i);
     }
 
-    public static void addNewTask(Task task) {
-        taskList.add(task);
+    public static void markAsDone(String index) {
+        int taskID = Integer.parseInt(index) - 1;
+        try {
+            taskList.get(taskID).markAsDone();
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println(e);
+        }
     }
 }
 ////    addEvent EVENT_NAME /date DATE /time START /to END
