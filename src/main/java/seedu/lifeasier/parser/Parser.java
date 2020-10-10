@@ -11,6 +11,7 @@ import seedu.lifeasier.commands.HelpCommand;
 import seedu.lifeasier.commands.ShowNotesCommand;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
 
@@ -31,6 +32,13 @@ public class Parser {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
+
+    /**
+     * Returns the first word entered from the user's input, which represents the command type.
+     *
+     * @param input String containing the user's input.
+     * @return The first word that the user input.
+     */
     private String getCommandType(String input) {
         int indexOfFirstSpace = input.indexOf(" ");
         if (indexOfFirstSpace > 0) {
@@ -38,9 +46,14 @@ public class Parser {
         } else {
             return input;
         }
-
     }
 
+    /**
+     * Parses the addLesson command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return AddLessonCommand with the parameters input by the user.
+     */
     private Command parseAddLessonCommand(String input) {
 
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
@@ -61,6 +74,12 @@ public class Parser {
         return new AddLessonCommand(moduleCode, start, end);
     }
 
+    /**
+     * Parses the addEvent command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return AddEventCommand with the parameters input by the user.
+     */
     private Command parseAddEventCommand(String input) {
 
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
@@ -81,19 +100,31 @@ public class Parser {
         return new AddEventCommand(description, start, end);
     }
 
+    /**
+     * Parses the addDeadline command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return AddDeadlineCommand with the parameters input by the user.
+     */
     private Command parseAddDeadlineCommand(String input) {
 
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
         int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
-        String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand);
+        String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = input.substring(lastIndexOfByCommand).trim();
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
 
         return new AddDeadlineCommand(description, by);
     }
 
+    /**
+     * Parses the addNotes command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return AddNotesCommand with the parameters input by the user.
+     */
     private Command parseAddNotesCommand(String input) {
 
         int lastIndexOfAddNotesCommand = input.indexOf(PARAM_ADD_NOTES) + PARAM_ADD_NOTES.length();
@@ -102,6 +133,12 @@ public class Parser {
         return new AddNotesCommand(title);
     }
 
+    /**
+     * Parses the showNotes command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return ShowNotesCommand with the parameters input by the user.
+     */
     private Command parseShowNotesCommand(String input) {
         int lastIndexOfShowNotesCommand = input.indexOf(PARAM_SHOW_NOTES) + PARAM_SHOW_NOTES.length();
         String title = input.substring(lastIndexOfShowNotesCommand).trim();
@@ -109,6 +146,12 @@ public class Parser {
         return new ShowNotesCommand(title);
     }
 
+    /**
+     * Parses the display command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return DisplayScheduleCommand with the parameters input by the user.
+     */
     private Command parseDisplayScheduleCommand(String input) {
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
         String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
@@ -116,8 +159,17 @@ public class Parser {
         return new DisplayScheduleCommand(toDisplay);
     }
 
-
-    public Command parseCommand(String input) throws ParserException, IndexOutOfBoundsException {
+    /**
+     * Parses the user's input into a Command object that can later be executed.
+     *
+     * @param input String containing the user's input.
+     * @return Command that the user inputs.
+     * @throws ParserException if an invalid command type is input.
+     * @throws IndexOutOfBoundsException if the format of the command is incorrect.
+     * @throws DateTimeParseException if the format of the date or time input is incorrect.
+     */
+    public Command parseCommand(String input) throws
+            ParserException, IndexOutOfBoundsException, DateTimeParseException {
 
         String commandType = getCommandType(input);
 
