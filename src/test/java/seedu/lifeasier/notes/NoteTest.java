@@ -19,6 +19,6 @@ class NoteTest {
 
     @Test
     void testToString() {
-        assertEquals("Title: cat\n\ni like cats\n", new Note("cat", "i like cats" ).toString());
+        assertEquals("Title: cat\n\ni like cats\n", new Note("cat", "i like cats").toString());
     }
 }
