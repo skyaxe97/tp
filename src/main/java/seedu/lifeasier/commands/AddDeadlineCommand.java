@@ -19,6 +19,6 @@ public class AddDeadlineCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
-
+        tasks.addDeadline(description, by);
     }
 }

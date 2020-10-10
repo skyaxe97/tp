@@ -9,7 +9,6 @@ import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
