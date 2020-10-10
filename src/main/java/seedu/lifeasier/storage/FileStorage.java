@@ -46,7 +46,6 @@ public class FileStorage {
             System.out.println("Reading your save data...");
             noteStorage.readNotesSave(filePathNotes);
             taskStorage.readTasksSave(filePathTasks);
-            System.out.println("All save data successfully read!");
         }
     }
 
@@ -74,7 +73,6 @@ public class FileStorage {
     }
 
     private void handleExistingSaveDirectory(File saveFileTasks, File saveFileNotes) {
-        ui.showDirectoryDetected();
         checkForTaskSaveFile(saveFileTasks);
         checkForNotesSaveFile(saveFileNotes);
     }
@@ -98,14 +96,10 @@ public class FileStorage {
     }
 
     private void handleMissingSaveDirectory(File fileDirectory, File saveFileTasks, File saveFileNotes) {
-        ui.showNoDirectoryDetected();
         //Attempt creation of new save directory to hold save files
         if (createNewDirectory(fileDirectory)) {
-            ui.showNewDirectoryCreated();
             createNewSaveFile(saveFileTasks, TASK_FILE_TYPE);
             createNewSaveFile(saveFileNotes, NOTE_FILE_TYPE);
-        } else {
-            ui.showNewDirectoryFailCreated();
         }
     }
 
@@ -114,22 +108,8 @@ public class FileStorage {
     }
 
     private void createNewSaveFile(File saveFile, String saveFileType) {
-        switch (saveFileType) {
-        case "taskSave":
-            ui.showCreatingNewSaveFile();
-            break;
-        case "noteSave":
-            ui.showCreatingNewNotesSaveFile();
-            break;
-        default:
-            System.out.println("There was an error determining the save file type missing... Continue to create file");
-            break;
-        }
-
         try {
-            if (saveFile.createNewFile()) {
-                ui.showFileCreationSuccess();
-            }
+            saveFile.createNewFile();
         } catch (IOException e) {
             ui.showFileCreationError();
         }

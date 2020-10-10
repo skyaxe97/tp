@@ -124,15 +124,6 @@ public class Ui {
     }
     */
 
-    public String getTimeStamp(LocalDateTime timedItem) {
-        return timedItem.toLocalTime().toString();
-    }
-
-    public DayOfWeek getCurrDayOfWeek(int dayCount) {
-        LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
-        return currDay.getDayOfWeek();
-    }
-    
     public void showDirectoryDetected() {
         System.out.println("Save directory detected!");
     }
@@ -143,22 +134,6 @@ public class Ui {
 
     public void showNewDirectoryCreated() {
         System.out.println("New save directory named 'LifEasierSaves' created!");
-    }
-
-    public void showNewDirectoryFailCreated() {
-        System.out.println("Something went wrong... Save directory creation failed.");
-    }
-
-    public void showCreatingNewSaveFile() {
-        System.out.println("Creating new save saveFileTasks.txt");
-    }
-
-    public void showCreatingNewNotesSaveFile() {
-        System.out.println("Creating new save saveFileNotes.txt");
-    }
-
-    public void showFileCreationSuccess() {
-        System.out.println("Success! New save file created!");
     }
 
     public void showFileCreationError() {

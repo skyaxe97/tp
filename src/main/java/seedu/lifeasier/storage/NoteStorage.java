@@ -38,8 +38,6 @@ public class NoteStorage {
             Scanner fileScanner = new Scanner(saveFile);
             createNoteList(fileScanner);
 
-            System.out.println("Notes save file successfully loaded!");
-
         } catch (IOException e) {
             System.out.println("Something went wrong, unable to read from notes save file...");
         }

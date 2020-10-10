@@ -38,7 +38,6 @@ public class TaskStorage {
             Scanner fileScanner = new Scanner(saveFile);
             createTaskList(fileScanner);
 
-            System.out.println("Tasks have been successfully loaded!");
         } catch (IOException e) {
             System.out.println("Something went wrong, unable to read from tasks save file...");
         }
