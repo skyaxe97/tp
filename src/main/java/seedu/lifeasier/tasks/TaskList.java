@@ -22,6 +22,7 @@ public class TaskList {
         taskList.add(task);
         taskCount++;
     }
+
     /**
      * Add new event to taskList
      * @param description description of event
@@ -53,5 +54,4 @@ public class TaskList {
         Deadline deadline = new Deadline(description, by);
         addTask(deadline);
     }
-
 }

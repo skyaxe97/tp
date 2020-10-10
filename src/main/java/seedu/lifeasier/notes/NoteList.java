@@ -14,13 +14,16 @@ public class NoteList {
         this.notes = new ArrayList<>();
     }
 
-
     public Note get(int index) {
         return notes.get(index);
     }
 
     public void add(Note note) {
         notes.add(note);
+    }
+
+    public ArrayList<Note> getNotes() {
+        return notes;
     }
 
     public int size() {

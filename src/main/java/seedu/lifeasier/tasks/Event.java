@@ -4,8 +4,11 @@ import java.time.LocalDateTime;
 
 
 public class Event extends Task {
+
     protected LocalDateTime start;
     protected LocalDateTime end;
+
+    private String type = "event";
 
     public LocalDateTime getStart() {
         return start;
@@ -20,12 +23,19 @@ public class Event extends Task {
         this.start = start;
         this.end = end;
     }
+
     public Event(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
         super(description);
         this.start = start;
         this.end = end;
         this.isDone = isDone;
     }
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return ".[E]" + super.toString() + " (" + start + "  " +  end + ")";
