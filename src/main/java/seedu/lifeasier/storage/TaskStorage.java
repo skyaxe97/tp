@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -42,6 +43,7 @@ public class TaskStorage {
     }
 
     protected void readTasksSave(String filePathTasks) {
+        logger.log(Level.INFO, "Read Tasks save file start");
         try {
             File saveFile = new File(filePathTasks);
 
@@ -50,10 +52,13 @@ public class TaskStorage {
 
         } catch (IOException e) {
             ui.showFileReadError();
+            logger.log(Level.WARNING, "Encountered error reading Tasks save file");
         }
     }
 
     private void createTaskList(Scanner fileScanner) {
+        logger.log(Level.INFO, "Rebuilding tasks list from save file");
+
         ArrayList<Task> taskList = tasks.getTaskList();
 
         try {
@@ -77,11 +82,14 @@ public class TaskStorage {
                 default:
                     throw new StorageException();
                 }
+                logger.log(Level.INFO, "Rebuilt task: " + taskType);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.showSaveDataMissingError();
+            logger.log(Level.WARNING, "Missing data from save file");
         } catch (StorageException e) {
             ui.showUndeterminableTaskError();
+            logger.log(Level.SEVERE, "Read task type failed");
         }
     }
 
@@ -143,14 +151,18 @@ public class TaskStorage {
                     throw new StorageException();
                 }
                 fileWriter.write(dataToSave);
+                logger.log(Level.INFO, "Write task to save: " + taskType);
             }
             fileWriter.close();
         } catch (IOException e) {
             ui.showFileWriteError();
+            logger.log(Level.WARNING, "Unable to write to save file");
         } catch (ClassCastException e) {
             ui.showInvalidCastError();
+            logger.log(Level.SEVERE, "Wrong class type passed, unable to cast");
         } catch (StorageException e) {
             ui.showUndeterminableTaskError();
+            logger.log(Level.SEVERE, "Read task type failed");
         }
     }
 
