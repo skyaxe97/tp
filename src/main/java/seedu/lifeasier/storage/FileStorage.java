@@ -37,11 +37,11 @@ public class FileStorage {
         File saveFileTasks = new File(filePathTasks);
         File saveFileNotes = new File(filePathNotes);
 
+        ui.showDataLoading();
         //Check if both saves present. If they are, proceed to read data, else determine which saves to create
         if (!checkIfBothFilesExists(saveFileTasks, saveFileNotes)) {
             createNewSaves(saveFileTasks, saveFileNotes);
         } else {
-            System.out.println("Reading your save data...");
             noteStorage.readNotesSave(filePathNotes);
             taskStorage.readTasksSave(filePathTasks);
         }

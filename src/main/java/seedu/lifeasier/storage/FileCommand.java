@@ -13,6 +13,8 @@ public class FileCommand {
 
     public static final String BLANK_STRING = "";
     public static final String DEFAULT_DATETIME = "31-12-99 00:00";
+    public static final String TIME_DELIMITER = "T";
+    public static final String WHITE_SPACE = " ";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
     /**
@@ -39,7 +41,7 @@ public class FileCommand {
     public LocalDateTime convertToLocalDateTime(String dateTimeInformation) {
         LocalDateTime taskDateTime;
         try {
-            dateTimeInformation = dateTimeInformation.replace("T", " ");
+            dateTimeInformation = dateTimeInformation.replace(TIME_DELIMITER, WHITE_SPACE);
             taskDateTime = LocalDateTime.parse(dateTimeInformation, DATE_TIME_FORMATTER);
 
         } catch (DateTimeParseException e) {

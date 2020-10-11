@@ -115,4 +115,7 @@ public class Ui {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
+    public void showDataLoading() {
+        System.out.println("Reading your save data. New saves will be created if no saves are found.");
+    }
 }
