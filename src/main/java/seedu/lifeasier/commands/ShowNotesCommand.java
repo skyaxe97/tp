@@ -46,7 +46,8 @@ public class ShowNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) throws IndexOutOfBoundsException, TitleNotFoundException {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) throws
+            IndexOutOfBoundsException, TitleNotFoundException {
         if (title.trim().length() > 0) {        // title is already inputted
             findTitle(ui, notes, title);
         } else {
