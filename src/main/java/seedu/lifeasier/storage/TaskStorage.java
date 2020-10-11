@@ -54,6 +54,7 @@ public class TaskStorage {
             ui.showFileReadError();
             logger.log(Level.WARNING, "Encountered error reading Tasks save file");
         }
+        logger.log(Level.INFO, "Read Tasks save file end");
     }
 
     private void createTaskList(Scanner fileScanner) {
