@@ -32,10 +32,16 @@ public class AddNotesCommand extends Command {
         String noteTitle = null;
         String noteDescription = null;
 
-        ui.showNoteTitleMessage();
-        while (isEmpty) {
-            noteTitle = checkForEmpty(ui);
+        if (title.trim().length() > 0) {        // title is already inputted
+            isEmpty = false;
+            noteTitle = title;
+        } else {
+            ui.showNoteTitleMessage();
+            while (isEmpty) {
+                noteTitle = checkForEmpty(ui);
+            }
         }
+
         isEmpty = true;
         ui.showNoteDescriptionMessage();
 
