@@ -1,7 +1,7 @@
 package seedu.lifeasier;
 
 import seedu.lifeasier.commands.Command;
-import seedu.lifeasier.commands.DisplayScheduleCommand;
+import seedu.lifeasier.exceptions.TitleNotFoundException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
@@ -50,6 +50,10 @@ public class LifEasier {
 
             } catch (ParserException e) {
                 System.out.println("There's been an error understanding your input! Please double check your input!");
+            } catch (IndexOutOfBoundsException e) {
+                ui.showInvalidNumberMessage();
+            } catch (TitleNotFoundException e) {
+                ui.showNoTitleFoundMessage();
             }
 
         }

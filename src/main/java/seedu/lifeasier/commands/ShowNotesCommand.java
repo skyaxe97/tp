@@ -1,5 +1,6 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.exceptions.TitleNotFoundException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
@@ -13,7 +14,7 @@ public class ShowNotesCommand extends Command {
         this.title = title;
     }
 
-    private void findTitle(Ui ui, NoteList notes, String title) {
+    private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
         int noteNumber = -1;
         int matchNumber = 0;
         int x = 1;
@@ -27,8 +28,7 @@ public class ShowNotesCommand extends Command {
 
         switch (matchNumber) {
         case 0:     // no matches
-            System.out.println("No matches for title found! Check the title again.\n");
-            break;
+            throw new TitleNotFoundException();
         case 1:
             System.out.println(notes.get(noteNumber).toString());
             break;
@@ -46,7 +46,7 @@ public class ShowNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) throws IndexOutOfBoundsException, TitleNotFoundException {
         if (title.trim().length() > 0) {        // title is already inputted
             findTitle(ui, notes, title);
         } else {
@@ -55,6 +55,10 @@ public class ShowNotesCommand extends Command {
                 System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
             }
             int noteNumber = Integer.parseInt(ui.readCommand());
+
+            if (noteNumber - 1 > notes.size()) {
+                throw new IndexOutOfBoundsException();
+            }
             System.out.println(notes.get(noteNumber - 1).toString());
         }
     }

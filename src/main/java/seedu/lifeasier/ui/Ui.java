@@ -127,4 +127,11 @@ public class Ui {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
+    public void showInvalidNumberMessage() {
+        System.out.println("The number you inputted is invalid!");
+    }
+
+    public void showNoTitleFoundMessage() {
+        System.out.println("The title you inputted is not found...");
+    }
 }
