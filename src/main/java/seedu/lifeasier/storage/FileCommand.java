@@ -41,8 +41,6 @@ public class FileCommand {
         try {
             dateTimeInformation = dateTimeInformation.replace("T", " ");
             taskDateTime = LocalDateTime.parse(dateTimeInformation, DATE_TIME_FORMATTER);
-            System.out.println(dateTimeInformation);
-            System.out.println(taskDateTime);
 
         } catch (DateTimeParseException e) {
             System.out.println("Encountered a problem reading the date and time of the task...");

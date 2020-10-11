@@ -14,8 +14,6 @@ import java.io.IOException;
 public class FileStorage {
 
     private static final String DIRECTORY_PATH = "/LifEasierSaves/";
-    private static final String TASK_FILE_TYPE = "taskSave";
-    private static final String NOTE_FILE_TYPE = "noteSave";
 
     private String filePathTasks;
     private String filePathNotes;
@@ -80,14 +78,14 @@ public class FileStorage {
     private void checkForNotesSaveFile(File saveFileNotes) {
         //Create new save file if task save file does not exist
         if (!saveFileNotes.exists()) {
-            createNewSaveFile(saveFileNotes, NOTE_FILE_TYPE);
+            createNewSaveFile(saveFileNotes);
         }
     }
 
     private void checkForTaskSaveFile(File saveFileTasks) {
         //Create new notes save file if notes save file does not exist
         if (!saveFileTasks.exists()) {
-            createNewSaveFile(saveFileTasks, TASK_FILE_TYPE);
+            createNewSaveFile(saveFileTasks);
         }
     }
 
@@ -98,8 +96,8 @@ public class FileStorage {
     private void handleMissingSaveDirectory(File fileDirectory, File saveFileTasks, File saveFileNotes) {
         //Attempt creation of new save directory to hold save files
         if (createNewDirectory(fileDirectory)) {
-            createNewSaveFile(saveFileTasks, TASK_FILE_TYPE);
-            createNewSaveFile(saveFileNotes, NOTE_FILE_TYPE);
+            createNewSaveFile(saveFileTasks);
+            createNewSaveFile(saveFileNotes);
         }
     }
 
@@ -107,7 +105,7 @@ public class FileStorage {
         return fileDirectory.mkdir();
     }
 
-    private void createNewSaveFile(File saveFile, String saveFileType) {
+    private void createNewSaveFile(File saveFile) {
         try {
             saveFile.createNewFile();
         } catch (IOException e) {
