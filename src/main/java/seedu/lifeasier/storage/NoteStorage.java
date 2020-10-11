@@ -20,6 +20,9 @@ public class NoteStorage {
     private String filePathNotes;
     private FileCommand fileCommand;
 
+    public NoteStorage() {
+    }
+
     public NoteStorage(NoteList notes, String filePathNotes) {
         this.notes = notes;
         this.filePathNotes = filePathNotes;
@@ -77,8 +80,8 @@ public class NoteStorage {
         }
     }
 
-    private String convertNoteToString(Note note) {
-        return note.getTitle() + SAVE_DELIMITER + note.getDescription() + System.lineSeparator();
+    protected String convertNoteToString(Note note) {
+        return note.getTitle().trim() + SAVE_DELIMITER + note.getDescription().trim() + System.lineSeparator();
     }
 
 }
