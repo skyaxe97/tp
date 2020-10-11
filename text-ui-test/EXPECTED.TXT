@@ -33,5 +33,6 @@ exit --------------------------------------- Closes the LifEasier program
 For more detailed information, please visit the online user guide at:
 
 =========================================================================
-There's been an error understanding your input! Please double check your input!
+I'm sorry! I don't understand that command!
+=========================================================================
 Goodbye, hope to see you again soon!
