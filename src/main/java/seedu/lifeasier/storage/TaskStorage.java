@@ -14,12 +14,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * The TaskStorage class handles the reading and writing of the save file for tasks.
  */
 public class TaskStorage {
 
+    private static Logger logger = Logger.getLogger(TaskStorage.class.getName());
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static final String SAVE_DELIMITER = "=-=";
     public static final String DEFAULT_DATA = "\n";

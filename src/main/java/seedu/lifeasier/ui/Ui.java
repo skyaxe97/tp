@@ -142,4 +142,8 @@ public class Ui {
     public void showUndeterminableTaskError() {
         System.out.println("Something went wrong while determining the tasks...");
     }
+
+    public void showDirectoryCreationFailed() {
+        System.out.println("An error was encountered while creating the save directory...");
+    }
 }
