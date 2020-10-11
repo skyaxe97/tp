@@ -1,5 +1,7 @@
 package seedu.lifeasier.storage;
 
+import seedu.lifeasier.ui.Ui;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -15,7 +17,13 @@ public class FileCommand {
     public static final String DEFAULT_DATETIME = "31-12-99 00:00";
     public static final String TIME_DELIMITER = "T";
     public static final String WHITE_SPACE = " ";
+
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
+    private Ui ui;
+
+    public FileCommand() {
+        this.ui = new Ui();
+    }
 
     /**
      * Clears all data from the specified save file.
@@ -28,7 +36,7 @@ public class FileCommand {
             fileClear.write(BLANK_STRING);
             fileClear.close();
         } catch (IOException e) {
-            System.out.println("Something went wrong while clearing the file...");
+            ui.showFileWriteError();
         }
     }
 
@@ -45,7 +53,7 @@ public class FileCommand {
             taskDateTime = LocalDateTime.parse(dateTimeInformation, DATE_TIME_FORMATTER);
 
         } catch (DateTimeParseException e) {
-            System.out.println("Encountered a problem reading the date and time of the task...");
+            ui.showLocalDateTimeParseError();
             //Set as default time
             taskDateTime = LocalDateTime.parse(DEFAULT_DATETIME, DATE_TIME_FORMATTER);
         }

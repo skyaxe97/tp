@@ -118,4 +118,24 @@ public class Ui {
     public void showDataLoading() {
         System.out.println("Reading your save data. New saves will be created if no saves are found.");
     }
+
+    public void showFileReadError() {
+        System.out.println("Something went wrong, unable to read from save file...");
+    }
+
+    public void showFileWriteError() {
+        System.out.println("Something went wrong while saving your data...");
+    }
+
+    public void showInvalidCastError() {
+        System.out.println("Something went wrong, mismatching task types...");
+    }
+
+    public void showSaveDataMissingError() {
+        System.out.println("Encountered an error while reading from the save file - Data missing/corrupted");
+    }
+
+    public void showLocalDateTimeParseError() {
+        System.out.println("Encountered a problem reading the date and time of the task...");
+    }
 }

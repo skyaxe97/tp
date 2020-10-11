@@ -2,6 +2,7 @@ package seedu.lifeasier.storage;
 
 import seedu.lifeasier.notes.Note;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,6 +20,7 @@ public class NoteStorage {
     private NoteList notes;
     private String filePathNotes;
     private FileCommand fileCommand;
+    private Ui ui;
 
     public NoteStorage() {
     }
@@ -27,6 +29,7 @@ public class NoteStorage {
         this.notes = notes;
         this.filePathNotes = filePathNotes;
         this.fileCommand = new FileCommand();
+        this.ui = new Ui();
     }
 
     /**
@@ -42,7 +45,7 @@ public class NoteStorage {
             createNoteList(fileScanner);
 
         } catch (IOException e) {
-            System.out.println("Something went wrong, unable to read from notes save file...");
+            ui.showFileReadError();
         }
 
     }
@@ -76,7 +79,7 @@ public class NoteStorage {
             }
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("Something went wrong while saving your notes...");
+            ui.showFileWriteError();
         }
     }
 

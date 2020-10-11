@@ -5,6 +5,7 @@ import seedu.lifeasier.tasks.Event;
 import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,6 +27,7 @@ public class TaskStorage {
     private TaskList tasks;
     private String filePathTasks;
     private FileCommand fileCommand;
+    private Ui ui;
 
     public TaskStorage() {
     }
@@ -34,6 +36,7 @@ public class TaskStorage {
         this.tasks = tasks;
         this.filePathTasks = filePathTasks;
         this.fileCommand = new FileCommand();
+        this.ui = new Ui();
     }
 
     protected void readTasksSave(String filePathTasks) {
@@ -44,7 +47,7 @@ public class TaskStorage {
             createTaskList(fileScanner);
 
         } catch (IOException e) {
-            System.out.println("Something went wrong, unable to read from tasks save file...");
+            ui.showFileReadError();
         }
     }
 
@@ -75,7 +78,7 @@ public class TaskStorage {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Encountered an error while reading from the save file - Data missing");
+            ui.showSaveDataMissingError();
         }
     }
 
@@ -140,9 +143,9 @@ public class TaskStorage {
             }
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("Something went wrong while writing to the save file...");
+            ui.showFileWriteError();
         } catch (ClassCastException e) {
-            System.out.println("Something went wrong, mismatching task types...");
+            ui.showInvalidCastError();
         }
     }
 
