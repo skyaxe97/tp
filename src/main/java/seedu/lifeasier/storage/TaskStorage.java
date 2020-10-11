@@ -47,6 +47,8 @@ public class TaskStorage {
         try {
             File saveFile = new File(filePathTasks);
 
+            assert saveFile.exists() : "Save file is supposed to exist";
+
             Scanner fileScanner = new Scanner(saveFile);
             createTaskList(fileScanner);
 
@@ -133,6 +135,9 @@ public class TaskStorage {
 
             String dataToSave;
             ArrayList<Task> taskList = tasks.getTaskList();
+
+            assert taskList.size() > 0 : "taskList cannot be empty when saving";
+
             //Append each tasks information into save file for tasks
             for (Task task : taskList) {
                 String taskType = task.getType();

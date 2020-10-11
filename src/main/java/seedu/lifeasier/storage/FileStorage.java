@@ -47,6 +47,8 @@ public class FileStorage {
             logger.log(Level.INFO, "Save files missing, create save files");
             createNewSaves(saveFileTasks, saveFileNotes);
         } else {
+            assert checkIfBothFilesExists(saveFileTasks, saveFileNotes) : "Both saves are supposed to exist";
+
             logger.log(Level.INFO, "Save files found, read save files");
             noteStorage.readNotesSave(filePathNotes);
             taskStorage.readTasksSave(filePathTasks);
@@ -74,6 +76,8 @@ public class FileStorage {
             logger.log(Level.INFO, "Save directory found");
             handleExistingSaveDirectory(saveFileTasks, saveFileNotes);
         } else {
+            assert !directoryExists(fileDirectory) : "Directory should not exist";
+
             //Directory missing, create new directory
             logger.log(Level.INFO, "Save directory missing, proceed to create");
             handleMissingSaveDirectory(fileDirectory, saveFileTasks, saveFileNotes);

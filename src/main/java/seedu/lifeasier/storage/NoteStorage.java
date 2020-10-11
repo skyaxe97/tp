@@ -47,6 +47,8 @@ public class NoteStorage {
         try {
             File saveFile = new File(filePathNotes);
 
+            assert saveFile.exists() : "Save file is supposed to exist";
+
             Scanner fileScanner = new Scanner(saveFile);
             createNoteList(fileScanner);
 
@@ -93,6 +95,9 @@ public class NoteStorage {
 
             fileCommand.clearSaveFile(filePathNotes);
             ArrayList<Note> noteList = notes.getNotes();
+
+            assert noteList.size() > 0 : "noteList must contain at least 1 item when saving";
+
             //Append note information into save file for notes
             for (Note note : noteList) {
                 String noteToSave = convertNoteToString(note);

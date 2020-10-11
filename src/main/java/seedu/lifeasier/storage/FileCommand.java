@@ -57,6 +57,7 @@ public class FileCommand {
      */
     public LocalDateTime convertToLocalDateTime(String dateTimeInformation) {
         LocalDateTime taskDateTime;
+
         try {
             dateTimeInformation = dateTimeInformation.replace(TIME_DELIMITER, WHITE_SPACE);
             taskDateTime = LocalDateTime.parse(dateTimeInformation, DATE_TIME_FORMATTER);
@@ -67,6 +68,8 @@ public class FileCommand {
             //Set as default time
             taskDateTime = LocalDateTime.parse(DEFAULT_DATETIME, DATE_TIME_FORMATTER);
         }
+        assert taskDateTime != null : "taskDateTime must never be null";
+
         return taskDateTime;
     }
 
