@@ -27,6 +27,9 @@ public class TaskStorage {
     private String filePathTasks;
     private FileCommand fileCommand;
 
+    public TaskStorage() {
+    }
+
     public TaskStorage(TaskList tasks, String filePathTasks) {
         this.tasks = tasks;
         this.filePathTasks = filePathTasks;
@@ -138,24 +141,26 @@ public class TaskStorage {
             fileWriter.close();
         } catch (IOException e) {
             System.out.println("Something went wrong while writing to the save file...");
+        } catch (ClassCastException e) {
+            System.out.println("Something went wrong, mismatching task types...");
         }
     }
 
-    private String convertLessonToString(Task task, String taskType) {
+    protected String convertLessonToString(Task task, String taskType) throws ClassCastException {
         Lesson lesson = (Lesson) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + lesson.getStart().format(DATE_TIME_FORMATTER) + SAVE_DELIMITER
                 + lesson.getEnd().format(DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
-    private String convertEventToString(Task task, String taskType) {
+    protected String convertEventToString(Task task, String taskType) throws ClassCastException {
         Event event = (Event) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + event.getStart().format(DATE_TIME_FORMATTER) + SAVE_DELIMITER
                 + event.getEnd().format(DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
-    private String convertDeadlineToString(Task task, String taskType) {
+    protected String convertDeadlineToString(Task task, String taskType) throws ClassCastException {
         Deadline deadline = (Deadline) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + deadline.getBy().format(DATE_TIME_FORMATTER) + System.lineSeparator();

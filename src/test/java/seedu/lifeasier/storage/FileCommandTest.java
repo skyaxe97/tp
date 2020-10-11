@@ -5,7 +5,7 @@ import seedu.lifeasier.notes.Note;
 
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FileCommandTest {
 
@@ -15,10 +15,12 @@ class FileCommandTest {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private FileCommand fileCommand;
     private NoteStorage noteStorage;
+    private TaskStorage taskStorage;
 
     public FileCommandTest() {
         this.fileCommand = new FileCommand();
         this.noteStorage = new NoteStorage();
+        this.taskStorage = new TaskStorage();
     }
 
     @Test
