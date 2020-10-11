@@ -3,7 +3,7 @@ package test.java.seedu.lifeasier.notes;
 import org.junit.jupiter.api.Test;
 import seedu.lifeasier.notes.Note;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NoteTest {
 
@@ -19,6 +19,6 @@ class NoteTest {
 
     @Test
     void testToString() {
-        assertEquals("Title: cat\n\ni like cats\n", new Note("cat", "i like cats" ).toString());
+        assertEquals("Title: cat\n\ni like cats\n", new Note("cat", "i like cats").toString());
     }
 }
