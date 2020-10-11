@@ -7,6 +7,7 @@ import seedu.lifeasier.ui.Ui;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -51,7 +52,7 @@ public class NoteStorage {
 
         } catch (IOException e) {
             ui.showFileReadError();
-            logger.log(Level.WARNING, "Encountered error reading Notes save file");
+            logger.log(Level.SEVERE, "Encountered error reading Notes save file");
         }
 
         logger.log(Level.INFO, "Read Notes save file end");
@@ -60,15 +61,20 @@ public class NoteStorage {
     private void createNoteList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding notes from save");
 
-        while (fileScanner.hasNext()) {
-            String noteInformation = fileScanner.nextLine();
+        try {
+            while (fileScanner.hasNext()) {
+                String noteInformation = fileScanner.nextLine();
 
-            String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
-            String noteTitle = noteComponents[0];
-            String noteDescription = noteComponents[1];
+                String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
+                String noteTitle = noteComponents[0];
+                String noteDescription = noteComponents[1];
 
-            notes.add(new Note(noteTitle, noteDescription));
-            logger.log(Level.INFO, "New Note added");
+                notes.add(new Note(noteTitle, noteDescription));
+                logger.log(Level.INFO, "New Note added: " + noteTitle);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            ui.showSaveDataMissingError();
+            logger.log(Level.SEVERE, "Missing data from save file");
         }
 
         logger.log(Level.INFO, "Notes rebuilt");

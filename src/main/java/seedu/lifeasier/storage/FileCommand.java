@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The FileCommand class will house similar commands used by both NoteStorage and TaskStorage classes.
@@ -19,6 +21,8 @@ public class FileCommand {
     public static final String WHITE_SPACE = " ";
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
+    private static Logger logger = Logger.getLogger(FileCommand.class.getName());
+
     private Ui ui;
 
     public FileCommand() {
@@ -31,13 +35,18 @@ public class FileCommand {
      * @param filePath File path to which file to clear information.
      */
     protected void clearSaveFile(String filePath) {
+        logger.log(Level.INFO, "Clearing save file");
+
         try {
             FileWriter fileClear = new FileWriter(filePath);
             fileClear.write(BLANK_STRING);
             fileClear.close();
         } catch (IOException e) {
             ui.showFileWriteError();
+            logger.log(Level.SEVERE, "Error encountered clearing save file");
         }
+
+        logger.log(Level.INFO, "Save file cleared");
     }
 
     /**
@@ -54,6 +63,7 @@ public class FileCommand {
 
         } catch (DateTimeParseException e) {
             ui.showLocalDateTimeParseError();
+            logger.log(Level.WARNING, "Error encountered parsing LocalDateTime from save file");
             //Set as default time
             taskDateTime = LocalDateTime.parse(DEFAULT_DATETIME, DATE_TIME_FORMATTER);
         }
