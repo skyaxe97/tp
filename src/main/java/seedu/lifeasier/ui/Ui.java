@@ -138,4 +138,8 @@ public class Ui {
     public void showLocalDateTimeParseError() {
         System.out.println("Encountered a problem reading the date and time of the task...");
     }
+
+    public void showUndeterminableTaskError() {
+        System.out.println("Something went wrong while determining the tasks...");
+    }
 }

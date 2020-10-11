@@ -73,12 +73,13 @@ public class TaskStorage {
                     rebuildLesson(taskComponents, taskList, taskDescription, taskStatus);
                     break;
                 default:
-                    System.out.println("Something went wrong while determining the tasks...");
-                    break;
+                    throw new StorageException();
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.showSaveDataMissingError();
+        } catch (StorageException e) {
+            ui.showUndeterminableTaskError();
         }
     }
 
@@ -135,9 +136,9 @@ public class TaskStorage {
                     dataToSave = convertLessonToString(task, taskType);
                     break;
                 default:
-                    System.out.println("Something went wrong while determining the tasks...");
                     dataToSave = DEFAULT_DATA;
-                    break;
+                    fileWriter.write(dataToSave);
+                    throw new StorageException();
                 }
                 fileWriter.write(dataToSave);
             }
@@ -146,6 +147,8 @@ public class TaskStorage {
             ui.showFileWriteError();
         } catch (ClassCastException e) {
             ui.showInvalidCastError();
+        } catch (StorageException e) {
+            ui.showUndeterminableTaskError();
         }
     }
 
