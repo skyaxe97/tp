@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,6 +19,7 @@ import java.util.Scanner;
  */
 public class TaskStorage {
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static final String SAVE_DELIMITER = "=-=";
     public static final String DEFAULT_DATA = "\n";
 
@@ -102,8 +104,6 @@ public class TaskStorage {
 
     /**
      * Writes information of TaskList onto the save file for storage whenever there is a change.
-     *
-     * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToTaskSaveFile() {
         try {
@@ -141,19 +141,21 @@ public class TaskStorage {
     private String convertLessonToString(Task task, String taskType) {
         Lesson lesson = (Lesson) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + lesson.getStart().toString() + SAVE_DELIMITER + lesson.getEnd().toString() + System.lineSeparator();
+                + lesson.getStart().format(DATE_TIME_FORMATTER) + SAVE_DELIMITER
+                + lesson.getEnd().format(DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
     private String convertEventToString(Task task, String taskType) {
         Event event = (Event) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + event.getStart().toString() + SAVE_DELIMITER + event.getEnd().toString() + System.lineSeparator();
+                + event.getStart().format(DATE_TIME_FORMATTER) + SAVE_DELIMITER
+                + event.getEnd().format(DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
     private String convertDeadlineToString(Task task, String taskType) {
         Deadline deadline = (Deadline) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + deadline.getBy().toString() + System.lineSeparator();
+                + deadline.getBy().format(DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
 }
