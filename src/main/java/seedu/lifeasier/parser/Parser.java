@@ -87,7 +87,7 @@ public class Parser {
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
         int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
-        String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand);
+        String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = input.substring(lastIndexOfByCommand).trim();
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
 
