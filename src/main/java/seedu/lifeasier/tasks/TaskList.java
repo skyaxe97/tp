@@ -5,10 +5,11 @@ import java.util.ArrayList;
 
 public class TaskList {
     protected static ArrayList<Task> taskList;
-    protected static int taskCount = 0;
+    protected static int taskCount;
 
     public TaskList() {
         taskList = new ArrayList<>();
+        taskCount = 0;
     }
 
     public static ArrayList<Task> getTaskList() {
