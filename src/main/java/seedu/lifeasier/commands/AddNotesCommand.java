@@ -45,7 +45,7 @@ public class AddNotesCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         String noteDescription = null;
 
-        String noteTitle = isValidTitle(ui, title);
+        final String noteTitle = isValidTitle(ui, title);
 
         isEmpty = true;
         ui.showNoteDescriptionMessage();
