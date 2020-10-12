@@ -29,11 +29,19 @@ public class AddNotesCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
-        ui.showNoteTitleMessage();
-        String noteTitle = ui.readCommand();
+        String noteTitle = null;
+        String noteDescription = null;
 
+        ui.showNoteTitleMessage();
+        while (isEmpty) {
+            noteTitle = checkForEmpty(ui);
+        }
+        isEmpty = true;
         ui.showNoteDescriptionMessage();
-        String noteDescription = ui.readCommand();
+
+        while (isEmpty) {
+            noteDescription = checkForEmpty(ui);
+        }
 
         notes.add(new Note(noteTitle,noteDescription));
         System.out.println("Ok! I've taken note of this note!\n");
