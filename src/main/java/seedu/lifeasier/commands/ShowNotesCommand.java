@@ -35,7 +35,7 @@ public class ShowNotesCommand extends Command {
             System.out.println("Multiple matches found! Please select the one you are looking for:\n");
             printMultipleMatches(notes, title);
             noteNumber = Integer.parseInt(ui.readCommand());
-            System.out.println(notes.get(noteNumber).toString());
+            System.out.println(notes.get(noteNumber - 1).toString());
         }
 
     }
@@ -63,16 +63,23 @@ public class ShowNotesCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) throws
-            IndexOutOfBoundsException, TitleNotFoundException, NumberFormatException {
+            TitleNotFoundException, NumberFormatException {
         if (title.trim().length() > 0) {        // title is already inputted
             findTitle(ui, notes, title);
         } else {
-            System.out.println("Please select the notes you want to view:\n");
-            printAllNotes(notes);
-            int noteNumber = Integer.parseInt(ui.readCommand());
 
-            checkForIndexOutOfBounds(notes, noteNumber);
-            System.out.println(notes.get(noteNumber - 1).toString());
+            try {
+                System.out.println("Please select the notes you want to view:\n");
+                printAllNotes(notes);
+                int noteNumber = Integer.parseInt(ui.readCommand());
+
+                checkForIndexOutOfBounds(notes, noteNumber);
+                System.out.println(notes.get(noteNumber - 1).toString());
+
+            } catch (IndexOutOfBoundsException e) {
+                ui.showInvalidNumberMessage();
+            }
+
         }
     }
 
