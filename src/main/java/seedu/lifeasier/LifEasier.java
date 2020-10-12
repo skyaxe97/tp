@@ -55,8 +55,6 @@ public class LifEasier {
                 ui.showParseUnknownCommandMessage();
             } catch (IndexOutOfBoundsException e) {
                 ui.showParseIncorrectCommandFormatMessage();
-                ui.showInvalidNumberMessage();
-
             } catch (DateTimeParseException e) {
                 ui.showParseIncorrectDateTimeMessage();
             } catch (NumberFormatException e) {
