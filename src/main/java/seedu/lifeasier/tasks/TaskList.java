@@ -15,11 +15,11 @@ public class TaskList {
         return taskList;
     }
 
-    public static int getTaskCount() {
+    public int getTaskCount() {
         return taskCount;
     }
 
-    public static Task getTask(int index) {
+    public Task getTask(int index) {
         return taskList.get(index);
     }
 
