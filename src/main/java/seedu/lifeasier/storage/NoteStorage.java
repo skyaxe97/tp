@@ -2,28 +2,37 @@ package seedu.lifeasier.storage;
 
 import seedu.lifeasier.notes.Note;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The NoteStorage class handles the reading and writing of the save file for notes.
  */
 public class NoteStorage {
 
+    private static Logger logger = Logger.getLogger(NoteStorage.class.getName());
     private static final String SAVE_DELIMITER = "=-=";
 
     private NoteList notes;
     private String filePathNotes;
     private FileCommand fileCommand;
+    private Ui ui;
+
+    public NoteStorage() {
+    }
 
     public NoteStorage(NoteList notes, String filePathNotes) {
         this.notes = notes;
         this.filePathNotes = filePathNotes;
         this.fileCommand = new FileCommand();
+        this.ui = new Ui();
     }
 
     /**
@@ -32,28 +41,44 @@ public class NoteStorage {
      * @param filePathNotes File object containing the file path of the notes save file.
      */
     protected void readNotesSave(String filePathNotes) {
+        logger.log(Level.INFO, "Read Notes save file start");
+
         try {
             File saveFile = new File(filePathNotes);
+
+            assert saveFile.exists() : "Save file is supposed to exist";
 
             Scanner fileScanner = new Scanner(saveFile);
             createNoteList(fileScanner);
 
         } catch (IOException e) {
-            System.out.println("Something went wrong, unable to read from notes save file...");
+            ui.showFileReadError();
+            logger.log(Level.SEVERE, "Encountered error reading Notes save file");
         }
 
+        logger.log(Level.INFO, "Read Notes save file end");
     }
 
     private void createNoteList(Scanner fileScanner) {
-        while (fileScanner.hasNext()) {
-            String noteInformation = fileScanner.nextLine();
+        logger.log(Level.INFO, "Rebuilding notes from save");
 
-            String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
-            String noteTitle = noteComponents[0];
-            String noteDescription = noteComponents[1];
+        try {
+            while (fileScanner.hasNext()) {
+                String noteInformation = fileScanner.nextLine();
 
-            notes.add(new Note(noteTitle, noteDescription));
+                String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
+                String noteTitle = noteComponents[0];
+                String noteDescription = noteComponents[1];
+
+                notes.add(new Note(noteTitle, noteDescription));
+                logger.log(Level.INFO, "New Note added: " + noteTitle);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            ui.showSaveDataMissingError();
+            logger.log(Level.SEVERE, "Missing data from save file");
         }
+
+        logger.log(Level.INFO, "Notes rebuilt");
     }
 
     /**
@@ -62,23 +87,33 @@ public class NoteStorage {
      * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToNoteSaveFile() {
+        logger.log(Level.INFO, "Write to Notes save start");
+
         try {
             FileWriter fileWriter = new FileWriter(filePathNotes, true);
+
             fileCommand.clearSaveFile(filePathNotes);
             ArrayList<Note> noteList = notes.getNotes();
+
+            assert noteList.size() > 0 : "noteList must contain at least 1 item when saving";
+
             //Append note information into save file for notes
             for (Note note : noteList) {
                 String noteToSave = convertNoteToString(note);
                 fileWriter.write(noteToSave);
+                logger.log(Level.INFO, "New Note saved");
             }
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("Something went wrong while saving your notes...");
+            ui.showFileWriteError();
+            logger.log(Level.SEVERE, "Unable to write to notes save file");
         }
+
+        logger.log(Level.INFO, "Write to Notes save end");
     }
 
-    private String convertNoteToString(Note note) {
-        return note.getTitle() + SAVE_DELIMITER + note.getDescription() + System.lineSeparator();
+    protected String convertNoteToString(Note note) {
+        return note.getTitle().trim() + SAVE_DELIMITER + note.getDescription().trim() + System.lineSeparator();
     }
 
 }
