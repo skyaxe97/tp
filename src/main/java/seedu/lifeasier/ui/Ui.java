@@ -134,4 +134,8 @@ public class Ui {
     public void showNoTitleFoundMessage() {
         System.out.println("The title you inputted is not found...");
     }
+
+    public void showNumberFormatMessage() {
+        System.out.println("\nPlease input only a number!\n");
+    }
 }

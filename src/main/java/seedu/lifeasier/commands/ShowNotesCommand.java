@@ -17,7 +17,6 @@ public class ShowNotesCommand extends Command {
     private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
         int noteNumber = -1;
         int matchNumber = 0;
-        int x = 1;
 
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
@@ -34,19 +33,20 @@ public class ShowNotesCommand extends Command {
             break;
         default:
             System.out.println("Multiple matches found! Please select the one you are looking for:\n");
-            printMultipleMatches(notes, title, x);
+            printMultipleMatches(notes, title);
             noteNumber = Integer.parseInt(ui.readCommand());
             System.out.println(notes.get(noteNumber).toString());
         }
 
     }
 
-    private void printMultipleMatches(NoteList notes, String title, int x) {
+    private void printMultipleMatches(NoteList notes, String title) {
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
-                System.out.println(x++ + ". " + notes.get(i).getTitle() + "\n");
+                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
             }
         }
+
     }
 
     private void printAllNotes(NoteList notes) {
@@ -63,7 +63,7 @@ public class ShowNotesCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) throws
-            IndexOutOfBoundsException, TitleNotFoundException {
+            IndexOutOfBoundsException, TitleNotFoundException, NumberFormatException {
         if (title.trim().length() > 0) {        // title is already inputted
             findTitle(ui, notes, title);
         } else {

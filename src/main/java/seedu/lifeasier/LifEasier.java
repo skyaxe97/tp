@@ -54,6 +54,8 @@ public class LifEasier {
                 ui.showInvalidNumberMessage();
             } catch (TitleNotFoundException e) {
                 ui.showNoTitleFoundMessage();
+            } catch (NumberFormatException e) {
+                ui.showNumberFormatMessage();
             }
 
         }
