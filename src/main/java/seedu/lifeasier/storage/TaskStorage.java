@@ -5,6 +5,7 @@ import seedu.lifeasier.tasks.Event;
 import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,38 +13,53 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The TaskStorage class handles the reading and writing of the save file for tasks.
  */
 public class TaskStorage {
 
+    private static Logger logger = Logger.getLogger(TaskStorage.class.getName());
     private static final String SAVE_DELIMITER = "=-=";
     public static final String DEFAULT_DATA = "\n";
 
     private TaskList tasks;
     private String filePathTasks;
     private FileCommand fileCommand;
+    private Ui ui;
+
+    public TaskStorage() {
+    }
 
     public TaskStorage(TaskList tasks, String filePathTasks) {
         this.tasks = tasks;
         this.filePathTasks = filePathTasks;
         this.fileCommand = new FileCommand();
+        this.ui = new Ui();
     }
 
     protected void readTasksSave(String filePathTasks) {
+        logger.log(Level.INFO, "Read Tasks save file start");
         try {
             File saveFile = new File(filePathTasks);
+
+            assert saveFile.exists() : "Save file is supposed to exist";
 
             Scanner fileScanner = new Scanner(saveFile);
             createTaskList(fileScanner);
 
         } catch (IOException e) {
-            System.out.println("Something went wrong, unable to read from tasks save file...");
+            ui.showFileReadError();
+            logger.log(Level.WARNING, "Encountered error reading Tasks save file");
         }
+        logger.log(Level.INFO, "Read Tasks save file end");
     }
 
     private void createTaskList(Scanner fileScanner) {
+        logger.log(Level.INFO, "Rebuilding tasks list from save file");
+
         ArrayList<Task> taskList = tasks.getTaskList();
 
         try {
@@ -65,12 +81,16 @@ public class TaskStorage {
                     rebuildLesson(taskComponents, taskList, taskDescription, taskStatus);
                     break;
                 default:
-                    System.out.println("Something went wrong while determining the tasks...");
-                    break;
+                    throw new StorageException();
                 }
+                logger.log(Level.INFO, "Rebuilt task: " + taskType);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Encountered an error while reading from the save file - Data missing");
+            ui.showSaveDataMissingError();
+            logger.log(Level.WARNING, "Missing data from save file");
+        } catch (StorageException e) {
+            ui.showUndeterminableTaskError();
+            logger.log(Level.SEVERE, "Read task type failed");
         }
     }
 
@@ -81,6 +101,7 @@ public class TaskStorage {
 
         //Create new event in tasks
         taskList.add(new Lesson(description, lessonStartTime, lessonEndTime, status));
+        tasks.increaseTaskCount();
     }
 
     private void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
@@ -90,6 +111,7 @@ public class TaskStorage {
 
         //Create new event in tasks
         taskList.add(new Event(description, eventStartTime, eventEndTime, status));
+        tasks.increaseTaskCount();
     }
 
     private void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
@@ -98,12 +120,11 @@ public class TaskStorage {
 
         //Create new deadline in tasks
         taskList.add(new Deadline(description, deadlineTimeInfo, status));
+        tasks.increaseTaskCount();
     }
 
     /**
      * Writes information of TaskList onto the save file for storage whenever there is a change.
-     *
-     * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToTaskSaveFile() {
         try {
@@ -112,6 +133,9 @@ public class TaskStorage {
 
             String dataToSave;
             ArrayList<Task> taskList = tasks.getTaskList();
+
+            assert taskList.size() > 0 : "taskList cannot be empty when saving";
+
             //Append each tasks information into save file for tasks
             for (Task task : taskList) {
                 String taskType = task.getType();
@@ -126,34 +150,44 @@ public class TaskStorage {
                     dataToSave = convertLessonToString(task, taskType);
                     break;
                 default:
-                    System.out.println("Something went wrong while determining the tasks...");
                     dataToSave = DEFAULT_DATA;
-                    break;
+                    fileWriter.write(dataToSave);
+                    throw new StorageException();
                 }
                 fileWriter.write(dataToSave);
+                logger.log(Level.INFO, "Write task to save: " + taskType);
             }
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("Something went wrong while writing to the save file...");
+            ui.showFileWriteError();
+            logger.log(Level.WARNING, "Unable to write to save file");
+        } catch (ClassCastException e) {
+            ui.showInvalidCastError();
+            logger.log(Level.SEVERE, "Wrong class type passed, unable to cast");
+        } catch (StorageException e) {
+            ui.showUndeterminableTaskError();
+            logger.log(Level.SEVERE, "Read task type failed");
         }
     }
 
-    private String convertLessonToString(Task task, String taskType) {
+    protected String convertLessonToString(Task task, String taskType) throws ClassCastException {
         Lesson lesson = (Lesson) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + lesson.getStart().toString() + SAVE_DELIMITER + lesson.getEnd().toString() + System.lineSeparator();
+                + lesson.getStart().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER
+                + lesson.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
-    private String convertEventToString(Task task, String taskType) {
+    protected String convertEventToString(Task task, String taskType) throws ClassCastException {
         Event event = (Event) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + event.getStart().toString() + SAVE_DELIMITER + event.getEnd().toString() + System.lineSeparator();
+                + event.getStart().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER
+                + event.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
-    private String convertDeadlineToString(Task task, String taskType) {
+    protected String convertDeadlineToString(Task task, String taskType) throws ClassCastException {
         Deadline deadline = (Deadline) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + deadline.getBy().toString() + System.lineSeparator();
+                + deadline.getBy().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
 }
