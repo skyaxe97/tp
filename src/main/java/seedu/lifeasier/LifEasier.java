@@ -9,6 +9,8 @@ import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
+import java.time.format.DateTimeParseException;
+
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
  * If you can type fast, LifEasier will get your scheduling done faster than traditional GUI calender apps.
@@ -41,23 +43,27 @@ public class LifEasier {
         ui.showWelcomeMessage();
 
         while (!isFinished) {
-            String fullCommand = ui.readCommand();
-            try {
 
+            String fullCommand = ui.readCommand();
+
+            try {
                 Command userCommand = parser.parseCommand(fullCommand);
                 userCommand.execute(ui, notes, tasks, storage);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
-                System.out.println("There's been an error understanding your input! Please double check your input!");
+                ui.showParseUnknownCommandMessage();
             } catch (IndexOutOfBoundsException e) {
+                ui.showParseIncorrectCommandFormatMessage();
                 ui.showInvalidNumberMessage();
-            } catch (TitleNotFoundException e) {
-                ui.showNoTitleFoundMessage();
+
+            } catch (DateTimeParseException e) {
+                ui.showParseIncorrectDateTimeMessage();
             } catch (NumberFormatException e) {
                 ui.showNumberFormatMessage();
+            } catch (TitleNotFoundException e) {
+                ui.showNoTitleFoundMessage();
             }
-
         }
 
         ui.showGoodbyeMessage();
