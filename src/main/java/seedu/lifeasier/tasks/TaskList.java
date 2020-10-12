@@ -28,6 +28,17 @@ public class TaskList {
         taskCount++;
     }
 
+    public void increaseTaskCount() {
+        taskCount++;
+    }
+
+    public void displayTaskList() {
+        System.out.println("This is what is in the taskList:");
+        for (Task task : taskList) {
+            System.out.println(task.toString());
+        }
+    }
+
     /**
      * Add new event to taskList.
      * @param description description of event.

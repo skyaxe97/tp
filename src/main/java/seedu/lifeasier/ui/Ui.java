@@ -106,25 +106,56 @@ public class Ui {
         System.out.println("Alright! Please fill in your notes.\n");
     }
 
-    public void showDirectoryDetected() {
-        System.out.println("Save directory detected!");
-    }
-
     public DayOfWeek getCurrDayOfWeek(int dayCount) {
         LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
         return currDay.getDayOfWeek();
-    }
-
-    public void showNoDirectoryDetected() {
-        System.out.println("No save directory detected, creating new save directory...");
-    }
-
-    public void showNewDirectoryCreated() {
-        System.out.println("New save directory named 'LifEasierSaves' created!");
     }
 
     public void showFileCreationError() {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
+    public void showDataLoading() {
+        System.out.println("Reading your save data. New saves will be created if no saves are found.");
+    }
+
+    public void showFileReadError() {
+        System.out.println("Something went wrong, unable to read from save file...");
+    }
+
+    public void showFileWriteError() {
+        System.out.println("Something went wrong while saving your data...");
+    }
+
+    public void showInvalidNumberMessage() {
+        System.out.println("The number you inputted is invalid!");
+    }
+
+    public void showNoTitleFoundMessage() {
+        System.out.println("The title you inputted is not found...");
+    }
+
+    public void showNumberFormatMessage() {
+        System.out.println("\nPlease input only a number!\n");
+    }
+
+    public void showInvalidCastError() {
+        System.out.println("Something went wrong, mismatching task types...");
+    }
+
+    public void showSaveDataMissingError() {
+        System.out.println("Encountered an error while reading from the save file - Data missing/corrupted");
+    }
+
+    public void showLocalDateTimeParseError() {
+        System.out.println("Encountered a problem reading the date and time of the task...");
+    }
+
+    public void showUndeterminableTaskError() {
+        System.out.println("Something went wrong while determining the tasks...");
+    }
+
+    public void showDirectoryCreationFailed() {
+        System.out.println("An error was encountered while creating the save directory...");
+    }
 }
