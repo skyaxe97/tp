@@ -15,12 +15,13 @@ import java.util.logging.Logger;
  */
 public class FileCommand {
 
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
+
     public static final String BLANK_STRING = "";
     public static final String DEFAULT_DATETIME = "31-12-99 00:00";
     public static final String TIME_DELIMITER = "T";
     public static final String WHITE_SPACE = " ";
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static Logger logger = Logger.getLogger(FileCommand.class.getName());
 
     private Ui ui;

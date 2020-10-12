@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -23,7 +22,6 @@ import java.util.logging.Logger;
 public class TaskStorage {
 
     private static Logger logger = Logger.getLogger(TaskStorage.class.getName());
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static final String SAVE_DELIMITER = "=-=";
     public static final String DEFAULT_DATA = "\n";
 
@@ -175,21 +173,21 @@ public class TaskStorage {
     protected String convertLessonToString(Task task, String taskType) throws ClassCastException {
         Lesson lesson = (Lesson) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + lesson.getStart().format(DATE_TIME_FORMATTER) + SAVE_DELIMITER
-                + lesson.getEnd().format(DATE_TIME_FORMATTER) + System.lineSeparator();
+                + lesson.getStart().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER
+                + lesson.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
     protected String convertEventToString(Task task, String taskType) throws ClassCastException {
         Event event = (Event) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + event.getStart().format(DATE_TIME_FORMATTER) + SAVE_DELIMITER
-                + event.getEnd().format(DATE_TIME_FORMATTER) + System.lineSeparator();
+                + event.getStart().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER
+                + event.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
     protected String convertDeadlineToString(Task task, String taskType) throws ClassCastException {
         Deadline deadline = (Deadline) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + deadline.getBy().format(DATE_TIME_FORMATTER) + System.lineSeparator();
+                + deadline.getBy().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
 }
