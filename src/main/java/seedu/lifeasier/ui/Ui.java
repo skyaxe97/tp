@@ -158,6 +158,7 @@ public class Ui {
     public void showDirectoryCreationFailed() {
         System.out.println("An error was encountered while creating the save directory...");
     }
+
     public void showParseUnknownCommandMessage() {
         System.out.println("I'm sorry! I don't understand that command!");
         printSeparator();
