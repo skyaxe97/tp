@@ -26,10 +26,8 @@ public class AddNotesCommand extends Command {
         return input;
     }
 
-    @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    private String isValidTitle(Ui ui, String title) {
         String noteTitle = null;
-        String noteDescription = null;
 
         if (title.trim().length() > 0) {        // title is already inputted
             isEmpty = false;
@@ -40,6 +38,14 @@ public class AddNotesCommand extends Command {
                 noteTitle = checkForEmpty(ui);
             }
         }
+        return noteTitle;
+    }
+
+    @Override
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+        String noteDescription = null;
+
+        String noteTitle = isValidTitle(ui, title);
 
         isEmpty = true;
         ui.showNoteDescriptionMessage();
@@ -53,4 +59,5 @@ public class AddNotesCommand extends Command {
 
         storage.saveNote();
     }
+
 }

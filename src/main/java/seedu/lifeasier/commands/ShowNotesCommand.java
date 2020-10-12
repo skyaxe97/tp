@@ -34,15 +34,31 @@ public class ShowNotesCommand extends Command {
             break;
         default:
             System.out.println("Multiple matches found! Please select the one you are looking for:\n");
-            for (int i = 0; i < notes.size(); i++) {
-                if (notes.get(i).getTitle().contains(title)) {
-                    System.out.println(x++ + ". " + notes.get(i).getTitle() + "\n");
-                }
-            }
+            printMultipleMatches(notes, title, x);
             noteNumber = Integer.parseInt(ui.readCommand());
             System.out.println(notes.get(noteNumber).toString());
         }
 
+    }
+
+    private void printMultipleMatches(NoteList notes, String title, int x) {
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getTitle().contains(title)) {
+                System.out.println(x++ + ". " + notes.get(i).getTitle() + "\n");
+            }
+        }
+    }
+
+    private void printAllNotes(NoteList notes) {
+        for (int i = 0; i < notes.size(); i++) {
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
+        }
+    }
+
+    private void checkForIndexOutOfBounds(NoteList notes, int noteNumber) {
+        if (noteNumber - 1 > notes.size()) {
+            throw new IndexOutOfBoundsException();
+        }
     }
 
     @Override
@@ -52,15 +68,12 @@ public class ShowNotesCommand extends Command {
             findTitle(ui, notes, title);
         } else {
             System.out.println("Please select the notes you want to view:\n");
-            for (int i = 0; i < notes.size(); i++) {
-                System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
-            }
+            printAllNotes(notes);
             int noteNumber = Integer.parseInt(ui.readCommand());
 
-            if (noteNumber - 1 > notes.size()) {
-                throw new IndexOutOfBoundsException();
-            }
+            checkForIndexOutOfBounds(notes, noteNumber);
             System.out.println(notes.get(noteNumber - 1).toString());
         }
     }
+
 }
