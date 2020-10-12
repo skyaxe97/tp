@@ -27,7 +27,12 @@ public class DisplayScheduleCommand extends Command {
         if (isDisplayWeek) {
             displayWeekSchedule(currDate, tasks);
         } else {
-            displayDaySchedule(currDate, tasks);
+            if (getTaskCountForToday(tasks, currDate) == 0) {
+                System.out.println("You have nothing on for today!");
+            } else {
+                System.out.println("Here is your schedule for today:");
+                displayDaySchedule(currDate, tasks);
+            }
         }
     }
 
@@ -57,8 +62,8 @@ public class DisplayScheduleCommand extends Command {
 
     public void printWithScheduleFormat(Task t, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         String startDateTimeString = getTimeStamp(startDateTime);
-        String endDateTimeString = (endDateTime == null) ? "" : ("-" + getTimeStamp(startDateTime));
-        System.out.println(startDateTimeString + endDateTimeString + "   " + t.toScheduleFormatString());
+        String endDateTimeString = (endDateTime == null) ? "      " : ("-" + getTimeStamp(endDateTime));
+        System.out.println(startDateTimeString + endDateTimeString + "  " + t.getDescription());
     }
 
     public LocalDateTime getStart(Task t) {
@@ -81,5 +86,16 @@ public class DisplayScheduleCommand extends Command {
 
     public String getTimeStamp(LocalDateTime timedItem) {
         return timedItem.toLocalTime().toString();
+    }
+
+    public int getTaskCountForToday(TaskList tasks, LocalDate date) {
+        int count = 0;
+        for (int i = 0; i < tasks.getTaskCount(); i++) {
+            Task t = tasks.getTask(i);
+            if (getStart(t).toLocalDate().equals(date)) {
+                count++;
+            }
+        }
+        return count;
     }
 }
