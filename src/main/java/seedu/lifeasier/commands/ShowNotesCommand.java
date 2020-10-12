@@ -35,7 +35,7 @@ public class ShowNotesCommand extends Command {
             System.out.println("Multiple matches found! Please select the one you are looking for:\n");
             printMultipleMatches(notes, title);
             noteNumber = Integer.parseInt(ui.readCommand());
-            System.out.println(notes.get(noteNumber).toString());
+            System.out.println(notes.get(noteNumber - 1).toString());
         }
 
     }
