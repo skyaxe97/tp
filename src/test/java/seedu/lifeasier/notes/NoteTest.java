@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class NoteTest {
 
     @Test
-    void getTitle() {
+    void testGetTitle() {
         assertEquals("cat", new Note("cat", "i like cats").getTitle());
     }
 
     @Test
-    void getDescription() {
+    void testGetDescription() {
         assertEquals("i like cats", new Note("cat", "i like cats").getDescription());
     }
 

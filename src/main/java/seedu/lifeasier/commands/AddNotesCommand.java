@@ -1,7 +1,6 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.storage.NoteStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.Note;
@@ -27,15 +26,27 @@ public class AddNotesCommand extends Command {
         return input;
     }
 
+    private String isValidTitle(Ui ui, String title) {
+        String noteTitle = null;
+
+        if (title.trim().length() > 0) {        // title is already inputted
+            isEmpty = false;
+            noteTitle = title;
+        } else {
+            ui.showNoteTitleMessage();
+            while (isEmpty) {
+                noteTitle = checkForEmpty(ui);
+            }
+        }
+        return noteTitle;
+    }
+
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
-        String noteTitle = null;
         String noteDescription = null;
 
-        ui.showNoteTitleMessage();
-        while (isEmpty) {
-            noteTitle = checkForEmpty(ui);
-        }
+        final String noteTitle = isValidTitle(ui, title);
+
         isEmpty = true;
         ui.showNoteDescriptionMessage();
 
@@ -48,4 +59,5 @@ public class AddNotesCommand extends Command {
 
         storage.saveNote();
     }
+
 }

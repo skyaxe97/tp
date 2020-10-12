@@ -127,6 +127,18 @@ public class Ui {
         System.out.println("Something went wrong while saving your data...");
     }
 
+    public void showInvalidNumberMessage() {
+        System.out.println("The number you inputted is invalid!");
+    }
+
+    public void showNoTitleFoundMessage() {
+        System.out.println("The title you inputted is not found...");
+    }
+
+    public void showNumberFormatMessage() {
+        System.out.println("\nPlease input only a number!\n");
+    }
+
     public void showInvalidCastError() {
         System.out.println("Something went wrong, mismatching task types...");
     }

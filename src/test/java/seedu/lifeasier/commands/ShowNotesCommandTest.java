@@ -10,7 +10,7 @@ class ShowNotesCommandTest {
     private NoteList notes = new NoteList();
 
     @Test
-    void execute() {
+    void testShowCommandInputs_inputSizeMatchesActualSize() {
         notes.add(new Note("cat", "i like cats"));
         notes.add(new Note("dog", "i like dogs"));
         assertEquals(2, notes.size());
