@@ -16,17 +16,28 @@ public class TaskList {
         return taskList;
     }
 
-    public static int getTaskCount() {
+    public int getTaskCount() {
         return taskCount;
     }
 
-    public static Task getTask(int index) {
+    public Task getTask(int index) {
         return taskList.get(index);
     }
 
     public static void addTask(Task task) {
         taskList.add(task);
         taskCount++;
+    }
+
+    public void increaseTaskCount() {
+        taskCount++;
+    }
+
+    public void displayTaskList() {
+        System.out.println("This is what is in the taskList:");
+        for (Task task : taskList) {
+            System.out.println(task.toString());
+        }
     }
 
     /**

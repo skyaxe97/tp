@@ -6,6 +6,8 @@ import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The FileStorage class is the main entry point to actions related to the reading, writing and creation of the
@@ -14,8 +16,7 @@ import java.io.IOException;
 public class FileStorage {
 
     private static final String DIRECTORY_PATH = "/LifEasierSaves/";
-    private static final String TASK_FILE_TYPE = "taskSave";
-    private static final String NOTE_FILE_TYPE = "noteSave";
+    private static Logger logger = Logger.getLogger(FileStorage.class.getName());
 
     private String filePathTasks;
     private String filePathNotes;
@@ -38,15 +39,22 @@ public class FileStorage {
     public void readSaveFiles() {
         File saveFileTasks = new File(filePathTasks);
         File saveFileNotes = new File(filePathNotes);
+        logger.log(Level.INFO, "Start processing read saves");
 
+        ui.showDataLoading();
         //Check if both saves present. If they are, proceed to read data, else determine which saves to create
         if (!checkIfBothFilesExists(saveFileTasks, saveFileNotes)) {
+            logger.log(Level.INFO, "Save files missing, create save files");
             createNewSaves(saveFileTasks, saveFileNotes);
         } else {
-            System.out.println("Reading your save data...");
+            assert checkIfBothFilesExists(saveFileTasks, saveFileNotes) : "Both saves are supposed to exist";
+
+            logger.log(Level.INFO, "Save files found, read save files");
             noteStorage.readNotesSave(filePathNotes);
             taskStorage.readTasksSave(filePathTasks);
         }
+
+        logger.log(Level.INFO, "Startup file read end");
     }
 
     /**
@@ -65,9 +73,13 @@ public class FileStorage {
 
         if (directoryExists(fileDirectory)) {
             //Directory exists, check individual save files and create the missing files.
+            logger.log(Level.INFO, "Save directory found");
             handleExistingSaveDirectory(saveFileTasks, saveFileNotes);
         } else {
+            assert !directoryExists(fileDirectory) : "Directory should not exist";
+
             //Directory missing, create new directory
+            logger.log(Level.INFO, "Save directory missing, proceed to create");
             handleMissingSaveDirectory(fileDirectory, saveFileTasks, saveFileNotes);
         }
     }
@@ -78,16 +90,18 @@ public class FileStorage {
     }
 
     private void checkForNotesSaveFile(File saveFileNotes) {
+        logger.log(Level.INFO, "Checking for notes save file");
         //Create new save file if task save file does not exist
         if (!saveFileNotes.exists()) {
-            createNewSaveFile(saveFileNotes, NOTE_FILE_TYPE);
+            createNewSaveFile(saveFileNotes);
         }
     }
 
     private void checkForTaskSaveFile(File saveFileTasks) {
+        logger.log(Level.INFO, "Checking for task save file");
         //Create new notes save file if notes save file does not exist
         if (!saveFileTasks.exists()) {
-            createNewSaveFile(saveFileTasks, TASK_FILE_TYPE);
+            createNewSaveFile(saveFileTasks);
         }
     }
 
@@ -97,21 +111,31 @@ public class FileStorage {
 
     private void handleMissingSaveDirectory(File fileDirectory, File saveFileTasks, File saveFileNotes) {
         //Attempt creation of new save directory to hold save files
-        if (createNewDirectory(fileDirectory)) {
-            createNewSaveFile(saveFileTasks, TASK_FILE_TYPE);
-            createNewSaveFile(saveFileNotes, NOTE_FILE_TYPE);
+        logger.log(Level.INFO, "Creating save directory");
+
+        try {
+            if (createNewDirectory(fileDirectory)) {
+                createNewSaveFile(saveFileTasks);
+                createNewSaveFile(saveFileNotes);
+            }
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Save directory creation failed");
+            ui.showDirectoryCreationFailed();
         }
     }
 
-    private boolean createNewDirectory(File fileDirectory) {
+    private boolean createNewDirectory(File fileDirectory) throws IOException {
         return fileDirectory.mkdir();
     }
 
-    private void createNewSaveFile(File saveFile, String saveFileType) {
+    private void createNewSaveFile(File saveFile) {
+        logger.log(Level.INFO, "Creating save file");
         try {
             saveFile.createNewFile();
+            logger.log(Level.INFO, "Save file created");
         } catch (IOException e) {
             ui.showFileCreationError();
+            logger.log(Level.WARNING, "Save file creation failed");
         }
     }
 

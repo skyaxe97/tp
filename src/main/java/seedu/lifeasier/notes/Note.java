@@ -18,6 +18,6 @@ public class Note {
     }
 
     public String toString() {
-        return "Title: " + title + "\n\n" + description;
+        return "Title: " + title + "\n\n" + description + "\n";
     }
 }
