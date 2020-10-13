@@ -7,8 +7,10 @@ import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.timetable.Timetable;
 import seedu.lifeasier.ui.Ui;
 
+import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
@@ -23,6 +25,7 @@ public class LifEasier {
     private TaskList tasks;
     private NoteList notes;
     private FileStorage storage;
+    private Timetable timetable;
 
     public LifEasier(String fileNameTasks, String fileNameNotes) {
 
@@ -31,6 +34,7 @@ public class LifEasier {
         tasks = new TaskList();
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
+        timetable = new Timetable();
     }
 
     /**
