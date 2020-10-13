@@ -7,12 +7,8 @@ import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
-import seedu.lifeasier.timetable.Timetable;
+import seedu.lifeasier.timetableui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
-
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
@@ -25,7 +21,7 @@ public class LifEasier {
     private TaskList tasks;
     private NoteList notes;
     private FileStorage storage;
-    private Timetable timetable;
+    private TimetableUi timetable;
 
     public LifEasier(String fileNameTasks, String fileNameNotes) {
 
@@ -34,7 +30,7 @@ public class LifEasier {
         tasks = new TaskList();
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
-        timetable = new Timetable();
+        timetable = new TimetableUi();
     }
 
     /**
@@ -46,6 +42,7 @@ public class LifEasier {
         storage.readSaveFiles();
 
         ui.showWelcomeMessage();
+        timetable.showHome(tasks);
 
         while (!isFinished) {
 

@@ -1,5 +1,6 @@
 package seedu.lifeasier.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -13,6 +14,7 @@ public abstract class Task {
         this.isDone = false;
         taskCounter++;
     }
+
 
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbol
@@ -45,4 +47,8 @@ public abstract class Task {
     public abstract LocalDateTime getStart();
 
     public abstract LocalDateTime getEnd();
+
+    public boolean isWithinTimeSlot(LocalDate date, int hour) {
+        return getStart().toLocalDate().equals(date) && (getStart().getHour() <= hour && getEnd().getHour() >= (hour + 1));
+    }
 }
