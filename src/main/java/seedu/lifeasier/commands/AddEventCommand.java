@@ -25,6 +25,7 @@ public class AddEventCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         tasks.addEvent(description, start, end);
         storage.saveTasks();
-        ui.showAddConfirmationMessage("Event: " + description  + " from " + start.format(format) + " to " + end.format(format));
+        ui.showAddConfirmationMessage("Event: " + description  + " from "
+                + start.format(format) + " to " + end.format(format));
     }
 }

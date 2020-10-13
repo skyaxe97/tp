@@ -25,6 +25,7 @@ public class AddLessonCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         tasks.addLesson(moduleCode, start, end);
         storage.saveTasks();
-        ui.showAddConfirmationMessage("Lesson: " + moduleCode + " from " + start.format(format) + " to " + end.format(format));
+        ui.showAddConfirmationMessage("Lesson: " + moduleCode + " from "
+                + start.format(format) + " to " + end.format(format));
     }
 }
