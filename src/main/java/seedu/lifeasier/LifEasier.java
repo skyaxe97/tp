@@ -39,10 +39,9 @@ public class LifEasier {
         boolean isFinished = false;
 
         storage.readSaveFiles();
-
         ui.showWelcomeMessage();
         timetable.showHome(tasks);
-
+        
         while (!isFinished) {
 
             String fullCommand = ui.readCommand();

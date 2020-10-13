@@ -1,39 +1,40 @@
 package seedu.lifeasier.timetableui;
 
-import seedu.lifeasier.tasks.*;
+import seedu.lifeasier.tasks.Deadline;
+import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.ScheduleUi;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class TimetableUi {
     private static final String TIME_COLUMN_NAME = "TIME";
-    private static final String TIME_FORMAT ="%02d:00";
+    private static final String TIME_FORMAT = "%02d:00";
     private static final int DEFAULT_START_HOUR = 7;
     private static final int DEFAULT_END_HOUR = 18;
 
-    private static final int DAYS_OF_THE_WEEK_COLUMN_COUNT = 7;
+    private static final int DAYS_COLUMN_COUNT = 7;
     private static final int MAX_COLUMN_WIDTH = 15;
 
     private static final String ROW_FORMAT = "|%-11s| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |";
-    private static final String ROW_SEPARATOR = "+-----------+" + "-----------------+".repeat(DAYS_OF_THE_WEEK_COLUMN_COUNT);
+    private static final String ROW_SEPARATOR = "+-----------+" + "-----------------+".repeat(DAYS_COLUMN_COUNT);
 
-    private ArrayList<String> timetable_rows = new ArrayList<>();
+    private ArrayList<String> timetableRows = new ArrayList<>();
 
     public void showHome(TaskList tasks) {
         generateTimetable(tasks);
         System.out.println(ROW_SEPARATOR);
-        for (String row: timetable_rows) {
+        for (String row: timetableRows) {
             System.out.println(row);
             System.out.println(ROW_SEPARATOR);
         }
     }
 
-     public void generateTimetable(TaskList tasks) {
-        timetable_rows.add(getColumnTitlesString());
+    public void generateTimetable(TaskList tasks) {
+        timetableRows.add(getColumnTitlesString());
 
         LocalTime[] timeRange = getTimetableTimeRange(tasks);
         int firstHour = timeRange[0].getHour();
@@ -41,7 +42,7 @@ public class TimetableUi {
 
         int currHour = firstHour;
         while (currHour < lastHour) {
-            timetable_rows.add(generateRowString(currHour, tasks));
+            timetableRows.add(generateRowString(currHour, tasks));
             currHour++;
         }
     }
@@ -73,8 +74,10 @@ public class TimetableUi {
     }
 
     public String trimToFitTimetableCell(String fullString) {
-        return (fullString.length() > MAX_COLUMN_WIDTH) ? fullString.substring(0, MAX_COLUMN_WIDTH-3) + "..." : fullString;
-        //return fullString.substring(0, Math.min(MAX_COLUMN_WIDTH-3, fullString.length())) + "...";
+        if (fullString.length() > MAX_COLUMN_WIDTH) {
+            return fullString.substring(0, MAX_COLUMN_WIDTH - 3) + "...";
+        }
+        return fullString;
     }
 
     private String getTimeSlotString(int startHour) {
@@ -87,7 +90,7 @@ public class TimetableUi {
         ArrayList<String> cellContents = new ArrayList<>();
         for (int i = 0; i < tasks.getTaskCount(); i++) {
             Task task = tasks.getTask(i);
-            if (!(task instanceof Deadline) && task.isWithinTimeSlot(date, hour)) {
+            if (!(task instanceof Deadline) && task.isHappeningOn(date) && task.isWithinTimeSlot(hour)) {
                 cellContents.add(task.getDescription());
             }
         }

@@ -48,7 +48,11 @@ public abstract class Task {
 
     public abstract LocalDateTime getEnd();
 
-    public boolean isWithinTimeSlot(LocalDate date, int hour) {
-        return getStart().toLocalDate().equals(date) && (getStart().getHour() <= hour && getEnd().getHour() >= (hour + 1));
+    public boolean isWithinTimeSlot(int hour) {
+        return getStart().getHour() <= hour && getEnd().getHour() >= (hour + 1);
+    }
+
+    public boolean isHappeningOn(LocalDate date) {
+        return getStart().toLocalDate().equals(date);
     }
 }
