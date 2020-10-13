@@ -21,28 +21,28 @@ class ScheduleUiTest {
     @Test
     void getStart_LessonObject_StartTime() {
         ScheduleUi scheduleUiTest = new ScheduleUi();
-        LocalDateTime start = scheduleUiTest.getStart(seedu.lifeasier.ui.ScheduleUiTest.LESSON_SAMPLE);
+        LocalDateTime start = scheduleUiTest.getStartTimeOfTask(seedu.lifeasier.ui.ScheduleUiTest.LESSON_SAMPLE);
         assertEquals(LocalDateTime.parse("2020-10-14T13:00"), start);
     }
 
     @Test
     void getEnd_LessonObject_EndTime() {
         ScheduleUi scheduleUiTest = new ScheduleUi();
-        LocalDateTime end = scheduleUiTest.getEnd(seedu.lifeasier.ui.ScheduleUiTest.LESSON_SAMPLE);
+        LocalDateTime end = scheduleUiTest.getEndTimeOfTask(seedu.lifeasier.ui.ScheduleUiTest.LESSON_SAMPLE);
         assertEquals(LocalDateTime.parse("2020-10-14T14:00"), end);
     }
 
     @Test
     void getEnd_DeadlineObject_NullLocalDateTime() {
         ScheduleUi scheduleUiTest = new ScheduleUi();
-        LocalDateTime end = scheduleUiTest.getEnd(ScheduleUiTest.DEADLINE_SAMPLE);
+        LocalDateTime end = scheduleUiTest.getEndTimeOfTask(ScheduleUiTest.DEADLINE_SAMPLE);
         assertNull(end);
     }
 
     @Test
     void getTimeStamp_LocalDateTime_TimeString() {
         ScheduleUi scheduleUiTest = new ScheduleUi();
-        LocalDateTime start = scheduleUiTest.getStart(seedu.lifeasier.ui.ScheduleUiTest.LESSON_SAMPLE);
+        LocalDateTime start = scheduleUiTest.getStartTimeOfTask(seedu.lifeasier.ui.ScheduleUiTest.LESSON_SAMPLE);
         String timestamp = scheduleUiTest.getTimeStamp(start);
         assertEquals("13:00", timestamp);
     }
