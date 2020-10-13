@@ -73,6 +73,10 @@ public class Ui {
         System.out.println(MESSAGE_HELP_COMMAND);
     }
 
+    public void showAddConfirmationMessage(String task) {
+        System.out.println("Done! I've added \"" + task + "\" to your calendar");
+    }
+
     private void printLogo() {
         System.out.println(LOGO);
     }
