@@ -128,7 +128,7 @@ public class Ui {
     }
 
     public void showInvalidNumberMessage() {
-        System.out.println("The number you inputted is invalid!");
+        System.out.println("The number you inputted is invalid!\n");
     }
 
     public void showNoTitleFoundMessage() {

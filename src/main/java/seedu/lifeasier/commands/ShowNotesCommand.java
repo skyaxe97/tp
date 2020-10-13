@@ -1,6 +1,6 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.exceptions.TitleNotFoundException;
+import seedu.lifeasier.notes.TitleNotFoundException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
@@ -63,8 +63,7 @@ public class ShowNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) throws
-            TitleNotFoundException, NumberFormatException {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         try {
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
@@ -79,6 +78,10 @@ public class ShowNotesCommand extends Command {
             }
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidNumberMessage();
+        } catch (TitleNotFoundException e) {
+            ui.showNoTitleFoundMessage();
+        } catch (NumberFormatException e) {
+            ui.showNumberFormatMessage();
         }
     }
 

@@ -1,7 +1,6 @@
 package seedu.lifeasier;
 
 import seedu.lifeasier.commands.Command;
-import seedu.lifeasier.exceptions.TitleNotFoundException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
@@ -9,7 +8,6 @@ import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
-import java.time.format.DateTimeParseException;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
@@ -54,12 +52,8 @@ public class LifEasier {
             } catch (ParserException e) {
                 ui.showParseUnknownCommandMessage();
 
-            } catch (NumberFormatException e) {
-                ui.showNumberFormatMessage();
-
-            } catch (TitleNotFoundException e) {
-                ui.showNoTitleFoundMessage();
             }
+
         }
 
         ui.showGoodbyeMessage();
