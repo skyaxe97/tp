@@ -36,12 +36,13 @@ public class LifEasier {
      * Runs the LifEasier program infinitely until termination by the user.
      */
     public void run() {
-        boolean isFinished = false;
-
         storage.readSaveFiles();
+
         ui.showWelcomeMessage();
         timetable.showHome(tasks);
-        
+
+        boolean isFinished = false;
+
         while (!isFinished) {
 
             String fullCommand = ui.readCommand();
