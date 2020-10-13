@@ -47,18 +47,16 @@ public class LifEasier {
             String fullCommand = ui.readCommand();
 
             try {
-                Command userCommand = parser.parseCommand(fullCommand);
+                Command userCommand = parser.parseCommand(fullCommand, ui);
                 userCommand.execute(ui, notes, tasks, storage);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
                 ui.showParseUnknownCommandMessage();
-            } catch (IndexOutOfBoundsException e) {
-                ui.showParseIncorrectCommandFormatMessage();
-            } catch (DateTimeParseException e) {
-                ui.showParseIncorrectDateTimeMessage();
+
             } catch (NumberFormatException e) {
                 ui.showNumberFormatMessage();
+
             } catch (TitleNotFoundException e) {
                 ui.showNoTitleFoundMessage();
             }
