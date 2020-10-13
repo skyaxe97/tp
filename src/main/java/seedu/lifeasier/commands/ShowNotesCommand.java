@@ -32,7 +32,7 @@ public class ShowNotesCommand extends Command {
             System.out.println(notes.get(noteNumber).toString());
             break;
         default:
-            System.out.println("Multiple matches found! Please select the one you are looking for:\n");
+            ui.showMultipleMatchesFoundMessage();
             printMultipleMatches(notes, title);
             noteNumber = Integer.parseInt(ui.readCommand());
             checkForIndexOutOfBounds(notes, noteNumber);
@@ -68,7 +68,7 @@ public class ShowNotesCommand extends Command {
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
             } else {
-                System.out.println("Please select the notes you want to view:\n");
+                ui.showSelectWhichNoteMessage();
                 printAllNotes(notes);
                 int noteNumber = Integer.parseInt(ui.readCommand());
 

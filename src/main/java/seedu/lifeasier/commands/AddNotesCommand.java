@@ -21,7 +21,7 @@ public class AddNotesCommand extends Command {
         if (input.trim().length() > 0) {
             isEmpty = false;
         } else {
-            System.out.println("Empty description! =O\n");
+            ui.showEmptyDescriptionMessage();
         }
         return input;
     }
@@ -55,7 +55,7 @@ public class AddNotesCommand extends Command {
         }
 
         notes.add(new Note(noteTitle,noteDescription));
-        System.out.println("Ok! I've taken note of this note!\n");
+        ui.showNoteAddedMessage();
 
         storage.saveNote();
     }
