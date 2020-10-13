@@ -1,7 +1,6 @@
 package seedu.lifeasier;
 
 import seedu.lifeasier.commands.Command;
-import seedu.lifeasier.exceptions.TitleNotFoundException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
@@ -56,12 +55,8 @@ public class LifEasier {
             } catch (ParserException e) {
                 ui.showParseUnknownCommandMessage();
 
-            } catch (NumberFormatException e) {
-                ui.showNumberFormatMessage();
-
-            } catch (TitleNotFoundException e) {
-                ui.showNoTitleFoundMessage();
             }
+
         }
 
         ui.showGoodbyeMessage();
