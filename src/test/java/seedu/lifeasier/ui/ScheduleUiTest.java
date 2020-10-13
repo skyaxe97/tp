@@ -6,17 +6,22 @@ import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ScheduleUiTest {
     private static final LocalDateTime LESSON_SAMPLE_START = LocalDateTime.parse("2020-10-14T13:00");
     private static final LocalDateTime LESSON_SAMPLE_END = LocalDateTime.parse("2020-10-14T14:00");
     public static final Task LESSON_SAMPLE = new Lesson("CS2113", LESSON_SAMPLE_START, LESSON_SAMPLE_END);
+
     private static final LocalDateTime DEADLINE_SAMPLE_DATETIME = LocalDateTime.parse("2020-10-16T00:00");
     public static final Task DEADLINE_SAMPLE = new Deadline("CS2113", DEADLINE_SAMPLE_DATETIME);
+
     public static final TaskList TEST_TASKS = new TaskList();
+    public static final LocalDate SAMPLE_DATE = LocalDateTime.parse("2020-10-15T00:00").toLocalDate();
 
     @Test
     void getStart_LessonObject_StartTime() {
@@ -50,7 +55,7 @@ class ScheduleUiTest {
     @Test
     void getTaskCountForToday_emptyTaskList_Zero() {
         ScheduleUi scheduleUiTest = new ScheduleUi();
-        int taskCount = scheduleUiTest.getTaskCountForToday(seedu.lifeasier.ui.ScheduleUiTest.TEST_TASKS, LocalDateTime.parse("2020-10-15T00:00").toLocalDate());
+        int taskCount = scheduleUiTest.getTaskCountForToday(seedu.lifeasier.ui.ScheduleUiTest.TEST_TASKS, SAMPLE_DATE);
         assertEquals(0, taskCount);
     }
 }
