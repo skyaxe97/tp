@@ -1,4 +1,4 @@
-package seedu.lifeasier.exceptions;
+package seedu.lifeasier.notes;
 
 public class TitleNotFoundException extends Exception {
 }

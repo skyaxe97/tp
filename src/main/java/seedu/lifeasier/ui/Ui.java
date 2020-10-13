@@ -128,7 +128,7 @@ public class Ui {
     }
 
     public void showInvalidNumberMessage() {
-        System.out.println("The number you inputted is invalid!");
+        System.out.println("The number you inputted is invalid!\n");
     }
 
     public void showNoTitleFoundMessage() {
@@ -176,4 +176,19 @@ public class Ui {
         printSeparator();
     }
 
+    public void showEmptyDescriptionMessage() {
+        System.out.println("Empty description! =O\n");
+    }
+
+    public void showNoteAddedMessage() {
+        System.out.println("Ok! I've taken note of this note!\n");
+    }
+
+    public void showMultipleMatchesFoundMessage() {
+        System.out.println("Multiple matches found! Please select the one you are looking for:\n");
+    }
+
+    public void showSelectWhichNoteMessage() {
+        System.out.println("Please select the notes you want to view:\n");
+    }
 }
