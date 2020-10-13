@@ -94,7 +94,10 @@ public class FileStorage {
         //Create new save file if task save file does not exist
         if (!saveFileNotes.exists()) {
             createNewSaveFile(saveFileNotes);
+            return;
         }
+        //Read note save file
+        noteStorage.readNotesSave(filePathNotes);
     }
 
     private void checkForTaskSaveFile(File saveFileTasks) {
@@ -102,7 +105,10 @@ public class FileStorage {
         //Create new notes save file if notes save file does not exist
         if (!saveFileTasks.exists()) {
             createNewSaveFile(saveFileTasks);
+            return;
         }
+        //Read task save file
+        taskStorage.readTasksSave(filePathTasks);
     }
 
     private boolean directoryExists(File fileDirectory) {
