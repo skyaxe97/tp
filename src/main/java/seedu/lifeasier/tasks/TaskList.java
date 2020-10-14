@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TaskList {
-    protected static ArrayList<Task> taskList;
-    protected static int taskCount;
+    protected ArrayList<Task> taskList;
+    protected int taskCount;
 
     public TaskList() {
         taskList = new ArrayList<>();
         taskCount = 0;
     }
 
-    public static ArrayList<Task> getTaskList() {
+    public ArrayList<Task> getTaskList() {
         return taskList;
     }
 
@@ -24,7 +24,7 @@ public class TaskList {
         return taskList.get(index);
     }
 
-    public static void addTask(Task task) {
+    public void addTask(Task task) {
         taskList.add(task);
         taskCount++;
     }
@@ -46,7 +46,7 @@ public class TaskList {
      * @param start start date/time of event.
      * @param end end date/time of event.
      */
-    public static void addEvent(String description, LocalDateTime start, LocalDateTime end) {
+    public void addEvent(String description, LocalDateTime start, LocalDateTime end) {
         Event event = new Event(description, start, end);
         addTask(event);
     }
@@ -57,7 +57,7 @@ public class TaskList {
      * @param start start date/time of lesson.
      * @param end end date/time of lesson.
      */
-    public static void addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
+    public void addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
         Lesson lesson = new Lesson(moduleCode, start, end);
         addTask(lesson);
     }
@@ -67,7 +67,7 @@ public class TaskList {
      * @param description description of task.
      * @param by deadline of task.
      */
-    public static void addDeadline(String description, LocalDateTime by) {
+    public void addDeadline(String description, LocalDateTime by) {
         Deadline deadline = new Deadline(description, by);
         addTask(deadline);
     }
