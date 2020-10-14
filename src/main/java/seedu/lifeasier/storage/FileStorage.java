@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class FileStorage {
 
-    private static final String DIRECTORY_PATH = "/LifEasierSaves/";
+    private static final String DIRECTORY_PATH = "LifEasierSaves/";
     private static final String ARCHIVE_PATH = DIRECTORY_PATH + "Archives/";
     private static Logger logger = Logger.getLogger(FileStorage.class.getName());
 
