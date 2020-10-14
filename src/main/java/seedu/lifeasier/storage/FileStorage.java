@@ -1,13 +1,11 @@
 package seedu.lifeasier.storage;
 
-import seedu.lifeasier.notes.Note;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +24,7 @@ public class FileStorage {
     private Ui ui;
     private NoteStorage noteStorage;
     private TaskStorage taskStorage;
+    private FileArchive fileArchive;
     private NoteList notes;
 
     public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes, TaskList tasks) {
@@ -35,6 +34,7 @@ public class FileStorage {
         this.notes = notes;
         this.noteStorage = new NoteStorage(notes, filePathNotes);
         this.taskStorage = new TaskStorage(tasks, filePathTasks);
+        this.fileArchive = new FileArchive(notes, ui);
     }
 
     /**
@@ -49,32 +49,9 @@ public class FileStorage {
             createNewDirectory(archiveDirectory);
         }
 
-        handleDataArchiving(archiveDirectory);
+        fileArchive.handleDataArchiving(ARCHIVE_PATH);
 
         logger.log(Level.INFO, "Finish archiving process");
-    }
-
-    /**
-     * Creates new archive save file in archive directory and clears notes.
-     *
-     * @param archiveDirectory File object with path to archive directory.
-     */
-    private void handleDataArchiving(File archiveDirectory) {
-        ArrayList<Note> notesList = notes.getNotes();
-        Boolean isNotesEmpty = checkForEmptyNotes(notesList);
-
-        logger.log(Level.INFO, "Check notes empty status: isNotesEmpty = " + isNotesEmpty);
-        if (isNotesEmpty) {
-            ui.showNoDataToArchiveMessage();
-            return;
-        }
-    }
-
-    private Boolean checkForEmptyNotes(ArrayList<Note> notesList) {
-        if (notesList.size() == 0) {
-            return true;
-        }
-        return false;
     }
 
     /**
