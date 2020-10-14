@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class FileStorage {
 
-    private static final String DIRECTORY_PATH = "/LifEasierSaves/";
+    private static final String DIRECTORY_PATH = "LifEasierSaves/";
     private static final String ARCHIVE_PATH = DIRECTORY_PATH + "Archives/";
     private static Logger logger = Logger.getLogger(FileStorage.class.getName());
 
@@ -146,6 +146,7 @@ public class FileStorage {
                 throw new IOException();
             }
         } catch (IOException e) {
+            System.out.println("Save directory creation failed");
             logger.log(Level.WARNING, "Save directory creation failed");
         }
     }

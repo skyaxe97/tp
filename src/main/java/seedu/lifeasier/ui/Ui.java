@@ -128,6 +128,7 @@ public class Ui {
     }
 
     public void showArchiveStartMessge() {
+        printSeparator();
         System.out.println("Starting archiving...");
     }
 
