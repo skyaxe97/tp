@@ -1,14 +1,6 @@
 package seedu.lifeasier.parser;
 
-import seedu.lifeasier.commands.AddDeadlineCommand;
-import seedu.lifeasier.commands.AddEventCommand;
-import seedu.lifeasier.commands.AddLessonCommand;
-import seedu.lifeasier.commands.AddNotesCommand;
-import seedu.lifeasier.commands.Command;
-import seedu.lifeasier.commands.DisplayScheduleCommand;
-import seedu.lifeasier.commands.ExitCommand;
-import seedu.lifeasier.commands.HelpCommand;
-import seedu.lifeasier.commands.ShowNotesCommand;
+import seedu.lifeasier.commands.*;
 import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDateTime;
@@ -19,7 +11,7 @@ import java.util.logging.Logger;
 
 public class Parser {
 
-    private static Logger LOGGER = Logger.getLogger(Parser.class.getName());
+    private Logger logger;
 
     public static final String PARAM_ADD_LESSON = "addLesson";
     public static final String PARAM_ADD_EVENT = "addEvent";
@@ -39,7 +31,7 @@ public class Parser {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
     public Parser() {
-
+        this.logger = Logger.getLogger(Parser.class.getName());
     }
 
     /**
@@ -49,7 +41,7 @@ public class Parser {
      * @return The first word that the user input.
      */
     private String getCommandType(String input) {
-        LOGGER.log(Level.INFO, "Getting command type...");
+        logger.log(Level.INFO, "Getting command type...");
         int indexOfFirstSpace = input.indexOf(" ");
         if (indexOfFirstSpace > 0) {
             return input.substring(0, indexOfFirstSpace);
@@ -66,7 +58,7 @@ public class Parser {
      */
     Command parseAddLessonCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addLesson command...");
+        logger.log(Level.INFO, "Parsing addLesson command...");
 
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -94,7 +86,7 @@ public class Parser {
      */
     private Command parseAddEventCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addEvent command...");
+        logger.log(Level.INFO, "Parsing addEvent command...");
 
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -122,7 +114,7 @@ public class Parser {
      */
     Command parseAddDeadlineCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addDeadline command...");
+        logger.log(Level.INFO, "Parsing addDeadline command...");
 
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
@@ -143,7 +135,7 @@ public class Parser {
      */
     private Command parseAddNotesCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addNotes command...");
+        logger.log(Level.INFO, "Parsing addNotes command...");
 
         int lastIndexOfAddNotesCommand = input.indexOf(PARAM_ADD_NOTES) + PARAM_ADD_NOTES.length();
         String title = input.substring(lastIndexOfAddNotesCommand).trim();
@@ -159,7 +151,7 @@ public class Parser {
      */
     private Command parseShowNotesCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing showNotes command...");
+        logger.log(Level.INFO, "Parsing showNotes command...");
 
         int lastIndexOfShowNotesCommand = input.indexOf(PARAM_SHOW_NOTES) + PARAM_SHOW_NOTES.length();
         String title = input.substring(lastIndexOfShowNotesCommand).trim();
@@ -175,7 +167,7 @@ public class Parser {
      */
     private Command parseDisplayScheduleCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing display command...");
+        logger.log(Level.INFO, "Parsing display command...");
 
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
         String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
@@ -191,7 +183,7 @@ public class Parser {
      */
     public Command parseCommand(String input, Ui ui) throws ParserException {
 
-        LOGGER.log(Level.INFO, "Parsing user input for command...");
+        logger.log(Level.INFO, "Parsing user input for command...");
 
         try {
             String commandType = getCommandType(input);
@@ -233,7 +225,7 @@ public class Parser {
             ui.showParseIncorrectDateTimeMessage();
         }
 
-        return new ExitCommand();
+        return new DummyCommand();
 
     }
 }
