@@ -41,7 +41,7 @@ public class FileStorage {
         File saveFileNotes = new File(filePathNotes);
         logger.log(Level.INFO, "Start processing read saves");
 
-        ui.showDataLoading();
+        ui.showDataLoadingMessage();
         //Check if both saves present. If they are, proceed to read data, else determine which saves to create
         if (!checkIfBothFilesExists(saveFileTasks, saveFileNotes)) {
             logger.log(Level.INFO, "Save files missing, create save files");
@@ -120,7 +120,7 @@ public class FileStorage {
             }
         } catch (IOException e) {
             logger.log(Level.WARNING, "Save directory creation failed");
-            ui.showDirectoryCreationFailed();
+            ui.showDirectoryCreationFailedError();
         }
     }
 

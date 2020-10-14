@@ -119,7 +119,7 @@ public class Ui {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
-    public void showDataLoading() {
+    public void showDataLoadingMessage() {
         System.out.println("Reading your save data. New saves will be created if no saves are found.");
     }
 
@@ -159,7 +159,7 @@ public class Ui {
         System.out.println("Something went wrong while determining the tasks...");
     }
 
-    public void showDirectoryCreationFailed() {
+    public void showDirectoryCreationFailedError() {
         System.out.println("An error was encountered while creating the save directory...");
     }
 
