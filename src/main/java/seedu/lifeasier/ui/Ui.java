@@ -123,6 +123,10 @@ public class Ui {
         System.out.println("Reading your save data. New saves will be created if no saves are found.");
     }
 
+    public void showNoDataToArchiveMessage() {
+        System.out.println("You do not have any data available for archiving.");
+    }
+
     public void showFileReadError() {
         System.out.println("Something went wrong, unable to read from save file...");
     }
@@ -195,4 +199,5 @@ public class Ui {
     public void showSelectWhichNoteMessage() {
         System.out.println("Please select the notes you want to view:\n");
     }
+
 }

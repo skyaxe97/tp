@@ -1,11 +1,13 @@
 package seedu.lifeasier.storage;
 
+import seedu.lifeasier.notes.Note;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +18,7 @@ import java.util.logging.Logger;
 public class FileStorage {
 
     private static final String DIRECTORY_PATH = "/LifEasierSaves/";
+    private static final String ARCHIVE_PATH = DIRECTORY_PATH + "Archives/";
     private static Logger logger = Logger.getLogger(FileStorage.class.getName());
 
     private String filePathTasks;
@@ -23,13 +26,55 @@ public class FileStorage {
     private Ui ui;
     private NoteStorage noteStorage;
     private TaskStorage taskStorage;
+    private NoteList notes;
 
     public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes, TaskList tasks) {
         this.filePathTasks = DIRECTORY_PATH + fileNameTasks;
         this.filePathNotes = DIRECTORY_PATH + fileNameNotes;
         this.ui = ui;
+        this.notes = notes;
         this.noteStorage = new NoteStorage(notes, filePathNotes);
         this.taskStorage = new TaskStorage(tasks, filePathTasks);
+    }
+
+    /**
+     * Acts as main entry point into data archiving for LifEasier.
+     */
+    public void archiveData() {
+        File archiveDirectory = new File(ARCHIVE_PATH);
+
+        logger.log(Level.INFO, "Start archiving process");
+        //Create archive directory if non existent
+        if (!directoryExists(archiveDirectory)) {
+            createNewDirectory(archiveDirectory);
+        }
+
+        handleDataArchiving(archiveDirectory);
+
+        logger.log(Level.INFO, "Finish archiving process");
+    }
+
+    /**
+     * Creates new archive save file in archive directory and clears notes.
+     *
+     * @param archiveDirectory File object with path to archive directory.
+     */
+    private void handleDataArchiving(File archiveDirectory) {
+        ArrayList<Note> notesList = notes.getNotes();
+        Boolean isNotesEmpty = checkForEmptyNotes(notesList);
+
+        logger.log(Level.INFO, "Check notes empty status: isNotesEmpty = " + isNotesEmpty);
+        if (isNotesEmpty) {
+            ui.showNoDataToArchiveMessage();
+            return;
+        }
+    }
+
+    private Boolean checkForEmptyNotes(ArrayList<Note> notesList) {
+        if (notesList.size() == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -118,13 +163,16 @@ public class FileStorage {
                 createNewSaveFile(saveFileTasks);
                 createNewSaveFile(saveFileNotes);
             }
+            else {
+                throw new IOException();
+            }
         } catch (IOException e) {
             logger.log(Level.WARNING, "Save directory creation failed");
             ui.showDirectoryCreationFailedError();
         }
     }
 
-    private boolean createNewDirectory(File fileDirectory) throws IOException {
+    private boolean createNewDirectory(File fileDirectory) {
         return fileDirectory.mkdir();
     }
 
