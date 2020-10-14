@@ -34,11 +34,13 @@ public class FileArchive {
         ArrayList<Note> notesList = notes.getNotes();
         Boolean isNotesEmpty = checkForEmptyNotes(notesList);
 
-        logger.log(Level.INFO, "Check notes empty status: isNotesEmpty = " + isNotesEmpty);
+        logger.log(Level.INFO, "Check notes empty status: isNotesEmpty");
         if (isNotesEmpty) {
             ui.showNoDataToArchiveMessage();
+            logger.log(Level.INFO, "Notes empty");
             return;
         }
+        logger.log(Level.INFO, "Notes not empty");
         File archiveDirectory = new File(archiveFilePath);
         assert archiveDirectory.exists() : "Archive directory must exist";
 
@@ -50,7 +52,7 @@ public class FileArchive {
             writeDataToArchiveSaveFile(archiveSaveFilePath, notesList);
             clearNoteList(notesList);
         } catch (IOException e) {
-            System.out.println("There was an error archiving your data");
+            ui.showFileArchiveError();
         }
     }
 
@@ -114,6 +116,7 @@ public class FileArchive {
      * @param notesList ArrayList where all notes are to be removed.
      */
     private void clearNoteList(ArrayList<Note> notesList) {
+        logger.log(Level.INFO, "Clearing notes");
         notesList.clear();
     }
 }

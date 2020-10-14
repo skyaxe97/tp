@@ -127,6 +127,10 @@ public class Ui {
         System.out.println("You do not have any data available for archiving.");
     }
 
+    public void showFileArchiveError() {
+        System.out.println("There was an error archiving your data");
+    }
+
     public void showFileReadError() {
         System.out.println("Something went wrong, unable to read from save file...");
     }
