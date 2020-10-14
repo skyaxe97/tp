@@ -21,6 +21,8 @@ public class Parser {
     public static final String PARAM_DISPLAY = "display";
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
+    public static final String PARAM_FREE_TIME = "freeTime";
+    public static final String PARAM_SLEEP_TIME = "sleepTime";
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
@@ -210,6 +212,12 @@ public class Parser {
 
             case (PARAM_HELP):
                 return new HelpCommand();
+
+            case (PARAM_FREE_TIME):
+                return new FreeTimeCommand();
+
+            case (PARAM_SLEEP_TIME):
+                return new SleepTimeCommand();
 
             case (PARAM_EXIT):
                 return new ExitCommand();
