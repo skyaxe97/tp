@@ -1,7 +1,10 @@
 package seedu.lifeasier.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import static java.util.stream.Collectors.toList;
 
 public class TaskList {
     protected ArrayList<Task> taskList;
@@ -71,4 +74,15 @@ public class TaskList {
         Deadline deadline = new Deadline(description, by);
         addTask(deadline);
     }
+
+    public void getTasksFromToday() {
+        ArrayList<Task> taskListFromToday = (ArrayList<Task>) taskList.stream()
+                .filter((t) -> t.getStart().toLocalDate().equals(LocalDate.now()))
+                .collect(toList());
+
+        for (Task task : taskListFromToday) {
+            System.out.println(task.toString());
+        }
+    }
+
 }
