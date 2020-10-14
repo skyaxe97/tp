@@ -72,7 +72,7 @@ public class EditNotesCommand extends Command {
 
     private void parseUserResponse(Ui ui, NoteList notes, int noteNumber, String input) {
         logger.log(Level.INFO, "Start check for Y/N input");
-        while(!input.trim().equals("Y") && !input.trim().equals("N")) {
+        while (!input.trim().equals("Y") && !input.trim().equals("N")) {
             ui.showInvalidConfirmationMessage();
             input = ui.readCommand();
         }
@@ -81,7 +81,7 @@ public class EditNotesCommand extends Command {
         if (input.trim().equals("Y")) {
             logger.log(Level.INFO, "Y is inputted");
             ui.showEditWhichPartMessage();
-            while(!input.trim().equals("T") && !input.trim().equals("D")) {
+            while (!input.trim().equals("T") && !input.trim().equals("D")) {
                 ui.showInvalidTitleDescriptionConfirmationMessage();
                 input = ui.readCommand();
             }

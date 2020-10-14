@@ -68,7 +68,7 @@ public class DeleteNotesCommand extends Command {
 
     private String checkConfirmationMessage(Ui ui, String input) {
         logger.log(Level.INFO, "Start check for Y/N input");
-        while(!input.trim().equals("Y") && !input.trim().equals("N")) {
+        while (!input.trim().equals("Y") && !input.trim().equals("N")) {
             ui.showInvalidConfirmationMessage();
             input = ui.readCommand();
         }
