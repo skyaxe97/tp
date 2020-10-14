@@ -77,6 +77,7 @@ public class ShowNotesCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         try {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
+            ui.printSeparator();
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
             } else {
@@ -88,6 +89,7 @@ public class ShowNotesCommand extends Command {
                 System.out.println(notes.get(noteNumber - 1).toString());
 
             }
+            ui.printSeparator();
             logger.log(Level.INFO, "End of ShowNotesCommand");
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");

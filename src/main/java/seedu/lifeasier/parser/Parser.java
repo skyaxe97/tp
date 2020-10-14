@@ -19,6 +19,7 @@ public class Parser {
     public static final String PARAM_ADD_NOTES = "addNotes";
     public static final String PARAM_SHOW_NOTES = "showNotes";
     public static final String PARAM_DELETE_NOTES = "deleteNotes";
+    public static final String PARAM_EDIT_NOTES = "editNotes";
     public static final String PARAM_DISPLAY = "display";
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
@@ -175,6 +176,20 @@ public class Parser {
     }
 
     /**
+     * Parses the editNotes command that the user inputs.
+     * @param input String containing the user's input.
+     * @return ShowNotesCommand with the parameters input by the user.
+     */
+    private Command parseEditNotesCommand(String input) {
+        LOGGER.log(Level.INFO, "Parsing editNotes command...");
+
+        int lastIndexOfEditNotesCommand = input.indexOf(PARAM_EDIT_NOTES) + PARAM_EDIT_NOTES.length();
+        String title = input.substring(lastIndexOfEditNotesCommand).trim();
+
+        return new EditNotesCommand(title);
+    }
+
+    /**
      * Parses the display command that the user inputs.
      *
      * @param input String containing the user's input.
@@ -222,6 +237,9 @@ public class Parser {
 
             case (PARAM_DELETE_NOTES):
                 return parseDeleteNotesCommand(input);
+
+            case(PARAM_EDIT_NOTES):
+                return parseEditNotesCommand(input);
 
             case (PARAM_DISPLAY):
                 return parseDisplayScheduleCommand(input);

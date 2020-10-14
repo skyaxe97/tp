@@ -132,15 +132,18 @@ public class Ui {
     }
 
     public void showInvalidNumberMessage() {
-        System.out.println("The number you inputted is invalid!\n");
+        System.out.println("The number you inputted is invalid!");
+        printSeparator();
     }
 
     public void showNoTitleFoundMessage() {
         System.out.println("The title you inputted is not found...");
+        printSeparator();
     }
 
     public void showNumberFormatMessage() {
-        System.out.println("\nPlease input only a number!\n");
+        System.out.println("\nPlease input only a number!");
+        printSeparator();
     }
 
     public void showInvalidCastError() {
@@ -185,7 +188,7 @@ public class Ui {
     }
 
     public void showNoteAddedMessage() {
-        System.out.println("Ok! I've taken note of this note!\n");
+        System.out.println("Ok! I've taken note of this note!");
     }
 
     public void showMultipleMatchesFoundMessage() {
@@ -214,5 +217,33 @@ public class Ui {
 
     public void showNoteDeletedMessage() {
         System.out.println("OK! Note deleted!\n");
+    }
+
+    public void showConfirmEditMessage() {
+        System.out.println("Is this the note you want to edit? (Y/N)\n");
+    }
+
+    public void showEditWhichPartMessage() {
+        System.out.println("Do you want to change the title or description? (T/D)\n");
+    }
+
+    public void showNoteNotEditedMessage() {
+        System.out.println("OK! Note not edited!\n");
+    }
+
+    public void showInvalidTitleDescriptionConfirmationMessage() {
+        System.out.println("T for title and D for Description\n");
+    }
+
+    public void showEditTitleMessage() {
+        System.out.println("Please input the title you want to change to:\n");
+    }
+
+    public void showEditDescriptionMessage() {
+        System.out.println("\nPlease input the description you want to change to:\n");
+    }
+
+    public void showSelectWhichNoteToEditMessage() {
+        System.out.println("Please select the notes you want to edit:\n");
     }
 }
