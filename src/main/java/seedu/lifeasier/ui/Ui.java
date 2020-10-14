@@ -110,11 +110,6 @@ public class Ui {
         System.out.println("Alright! Please fill in your notes.\n");
     }
 
-    public DayOfWeek getCurrDayOfWeek(int dayCount) {
-        LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
-        return currDay.getDayOfWeek();
-    }
-
     public void showFileCreationError() {
         System.out.println("Something went wrong... Save file creation failed...");
     }
@@ -125,6 +120,7 @@ public class Ui {
 
     public void showNoDataToArchiveMessage() {
         System.out.println("You do not have any data available for archiving.");
+        printSeparator();
     }
 
     public void showFileArchiveError() {
