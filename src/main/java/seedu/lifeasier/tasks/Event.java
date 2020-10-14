@@ -10,10 +10,12 @@ public class Event extends Task {
 
     private String type = "event";
 
+    @Override
     public LocalDateTime getStart() {
         return start;
     }
 
+    @Override
     public LocalDateTime getEnd() {
         return end;
     }

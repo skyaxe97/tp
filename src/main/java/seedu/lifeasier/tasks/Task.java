@@ -1,5 +1,7 @@
 package seedu.lifeasier.tasks;
 
+import java.time.LocalDateTime;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -38,4 +40,8 @@ public abstract class Task {
     public String toScheduleFormatString() {
         return "[" + this.getStatusIcon() + "] " + description;
     }
+
+    public abstract LocalDateTime getStart();
+
+    public abstract LocalDateTime getEnd();
 }
