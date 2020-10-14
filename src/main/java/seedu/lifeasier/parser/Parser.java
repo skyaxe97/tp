@@ -1,14 +1,6 @@
 package seedu.lifeasier.parser;
 
-import seedu.lifeasier.commands.AddDeadlineCommand;
-import seedu.lifeasier.commands.AddEventCommand;
-import seedu.lifeasier.commands.AddLessonCommand;
-import seedu.lifeasier.commands.AddNotesCommand;
-import seedu.lifeasier.commands.Command;
-import seedu.lifeasier.commands.DisplayScheduleCommand;
-import seedu.lifeasier.commands.ExitCommand;
-import seedu.lifeasier.commands.HelpCommand;
-import seedu.lifeasier.commands.ShowNotesCommand;
+import seedu.lifeasier.commands.*;
 import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDateTime;
@@ -26,6 +18,7 @@ public class Parser {
     public static final String PARAM_ADD_DEADLINE = "addDeadline";
     public static final String PARAM_ADD_NOTES = "addNotes";
     public static final String PARAM_SHOW_NOTES = "showNotes";
+    public static final String PARAM_DELETE_NOTES = "deleteNotes";
     public static final String PARAM_DISPLAY = "display";
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
@@ -168,6 +161,20 @@ public class Parser {
     }
 
     /**
+     * Parses the deleteNotes command that the user inputs.
+     * @param input String containing the user's input.
+     * @return ShowNotesCommand with the parameters input by the user.
+     */
+    private Command parseDeleteNotesCommand(String input) {
+        LOGGER.log(Level.INFO, "Parsing deleteNotes command...");
+
+        int lastIndexOfDeleteNotesCommand = input.indexOf(PARAM_DELETE_NOTES) + PARAM_DELETE_NOTES.length();
+        String title = input.substring(lastIndexOfDeleteNotesCommand).trim();
+
+        return new DeleteNotesCommand(title);
+    }
+
+    /**
      * Parses the display command that the user inputs.
      *
      * @param input String containing the user's input.
@@ -212,6 +219,9 @@ public class Parser {
 
             case (PARAM_SHOW_NOTES):
                 return parseShowNotesCommand(input);
+
+            case (PARAM_DELETE_NOTES):
+                return parseDeleteNotesCommand(input);
 
             case (PARAM_DISPLAY):
                 return parseDisplayScheduleCommand(input);

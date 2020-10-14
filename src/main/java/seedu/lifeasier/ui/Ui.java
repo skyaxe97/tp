@@ -192,7 +192,27 @@ public class Ui {
         System.out.println("Multiple matches found! Please select the one you are looking for:\n");
     }
 
-    public void showSelectWhichNoteMessage() {
+    public void showSelectWhichNoteToViewMessage() {
         System.out.println("Please select the notes you want to view:\n");
+    }
+
+    public void showSelectWhichNoteToDeleteMessage() {
+        System.out.println("Please select the notes you want to delete:\n");
+    }
+
+    public void showConfirmDeleteMessage() {
+        System.out.println("Is this the note you want to delete? (Y/N)\n");
+    }
+
+    public void showInvalidConfirmationMessage() {
+        System.out.println("Y for Yes and N for No\n");
+    }
+
+    public void showNoteNotDeletedMessage() {
+        System.out.println("OK! Note not deleted!\n");
+    }
+
+    public void showNoteDeletedMessage() {
+        System.out.println("OK! Note deleted!\n");
     }
 }
