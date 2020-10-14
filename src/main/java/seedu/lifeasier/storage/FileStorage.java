@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public class FileStorage {
 
     private static final String DIRECTORY_PATH = "/LifEasierSaves/";
+    private static final String ARCHIVE_PATH = DIRECTORY_PATH + "Archives/";
     private static Logger logger = Logger.getLogger(FileStorage.class.getName());
 
     private String filePathTasks;
@@ -23,13 +24,40 @@ public class FileStorage {
     private Ui ui;
     private NoteStorage noteStorage;
     private TaskStorage taskStorage;
+    private FileArchive fileArchive;
+    private FileCommand fileCommand;
+    private NoteList notes;
 
     public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes, TaskList tasks) {
         this.filePathTasks = DIRECTORY_PATH + fileNameTasks;
         this.filePathNotes = DIRECTORY_PATH + fileNameNotes;
         this.ui = ui;
+        this.notes = notes;
         this.noteStorage = new NoteStorage(notes, filePathNotes);
         this.taskStorage = new TaskStorage(tasks, filePathTasks);
+        this.fileArchive = new FileArchive(notes, ui);
+        this.fileCommand = new FileCommand();
+    }
+
+    /**
+     * Acts as main entry point into data archiving for LifEasier.
+     */
+    public void archiveData() {
+        File archiveDirectory = new File(ARCHIVE_PATH);
+
+        ui.showArchiveStartMessge();
+        logger.log(Level.INFO, "Start archiving process");
+        //Create archive directory if non existent
+        if (!directoryExists(archiveDirectory)) {
+            createNewDirectory(archiveDirectory);
+        }
+
+        fileArchive.handleDataArchiving(ARCHIVE_PATH);
+        //Clear notes save file
+        fileCommand.clearSaveFile(filePathNotes);
+
+        ui.showArchiveEndMessage();
+        logger.log(Level.INFO, "Finish archiving process");
     }
 
     /**
@@ -41,7 +69,7 @@ public class FileStorage {
         File saveFileNotes = new File(filePathNotes);
         logger.log(Level.INFO, "Start processing read saves");
 
-        ui.showDataLoading();
+        ui.showDataLoadingMessage();
         //Check if both saves present. If they are, proceed to read data, else determine which saves to create
         if (!checkIfBothFilesExists(saveFileTasks, saveFileNotes)) {
             logger.log(Level.INFO, "Save files missing, create save files");
@@ -123,14 +151,16 @@ public class FileStorage {
             if (createNewDirectory(fileDirectory)) {
                 createNewSaveFile(saveFileTasks);
                 createNewSaveFile(saveFileNotes);
+            } else {
+                throw new IOException();
             }
         } catch (IOException e) {
             logger.log(Level.WARNING, "Save directory creation failed");
-            ui.showDirectoryCreationFailed();
+            ui.showDirectoryCreationFailedError();
         }
     }
 
-    private boolean createNewDirectory(File fileDirectory) throws IOException {
+    private boolean createNewDirectory(File fileDirectory) {
         return fileDirectory.mkdir();
     }
 
