@@ -18,7 +18,8 @@ public class FileArchive {
     private NoteList notes;
     private Ui ui;
 
-    private static final String NOTE_SEPARATOR = "-------------------------------------------------------------------";
+    private static final String NOTE_SEPARATOR =
+            "-------------------------------------------------------------------" + System.lineSeparator();
 
     public FileArchive(NoteList notes, Ui ui) {
         this.notes = notes;
@@ -44,7 +45,7 @@ public class FileArchive {
         File archiveDirectory = new File(archiveFilePath);
         assert archiveDirectory.exists() : "Archive directory must exist";
 
-        String archiveSaveFilePath = archiveFilePath + getCurrentDateTime() + ".txt";
+        String archiveSaveFilePath = archiveFilePath + getCurrentDateTime() + "Archive.txt";
         try {
             File archiveSave = new File(archiveSaveFilePath);
 
@@ -71,8 +72,8 @@ public class FileArchive {
         for (Note note : notesList) {
             String noteTitle = getNoteTitle(note);
             String noteBody = getNoteBody(note);
-            fileWriter.write(noteTitle);
             fileWriter.write(NOTE_SEPARATOR);
+            fileWriter.write(noteTitle);
             fileWriter.write(noteBody);
             fileWriter.write(NOTE_SEPARATOR);
             logger.log(Level.INFO, "Archive written for: " + noteTitle);
@@ -107,7 +108,8 @@ public class FileArchive {
 
     private String getCurrentDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        return currentDateTime.format(FileCommand.DATE_TIME_FORMATTER).replaceAll(" ", "_");
+        String formattedDateTime = currentDateTime.format(FileCommand.DATE_TIME_FORMATTER);
+        return formattedDateTime.replaceAll(" ", "T").replace(":", "");
     }
 
     /**

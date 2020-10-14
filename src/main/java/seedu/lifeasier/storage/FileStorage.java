@@ -25,6 +25,7 @@ public class FileStorage {
     private NoteStorage noteStorage;
     private TaskStorage taskStorage;
     private FileArchive fileArchive;
+    private FileCommand fileCommand;
     private NoteList notes;
 
     public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes, TaskList tasks) {
@@ -35,6 +36,7 @@ public class FileStorage {
         this.noteStorage = new NoteStorage(notes, filePathNotes);
         this.taskStorage = new TaskStorage(tasks, filePathTasks);
         this.fileArchive = new FileArchive(notes, ui);
+        this.fileCommand = new FileCommand();
     }
 
     /**
@@ -43,6 +45,7 @@ public class FileStorage {
     public void archiveData() {
         File archiveDirectory = new File(ARCHIVE_PATH);
 
+        ui.showArchiveStartMessge();
         logger.log(Level.INFO, "Start archiving process");
         //Create archive directory if non existent
         if (!directoryExists(archiveDirectory)) {
@@ -50,7 +53,10 @@ public class FileStorage {
         }
 
         fileArchive.handleDataArchiving(ARCHIVE_PATH);
+        //Clear notes save file
+        fileCommand.clearSaveFile(filePathNotes);
 
+        ui.showArchiveEndMessage();
         logger.log(Level.INFO, "Finish archiving process");
     }
 

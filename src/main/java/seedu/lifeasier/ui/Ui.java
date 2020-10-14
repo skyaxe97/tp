@@ -131,6 +131,15 @@ public class Ui {
         System.out.println("There was an error archiving your data");
     }
 
+    public void showArchiveStartMessge() {
+        System.out.println("Starting archiving...");
+    }
+
+    public void showArchiveEndMessage() {
+        System.out.println("Archiving successful!");
+        printSeparator();
+    }
+
     public void showFileReadError() {
         System.out.println("Something went wrong, unable to read from save file...");
     }
