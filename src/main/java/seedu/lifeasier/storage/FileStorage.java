@@ -156,7 +156,6 @@ public class FileStorage {
             }
         } catch (IOException e) {
             logger.log(Level.WARNING, "Save directory creation failed");
-            ui.showDirectoryCreationFailedError();
         }
     }
 

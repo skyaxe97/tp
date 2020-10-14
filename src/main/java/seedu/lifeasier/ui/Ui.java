@@ -176,10 +176,6 @@ public class Ui {
         System.out.println("Something went wrong while determining the tasks...");
     }
 
-    public void showDirectoryCreationFailedError() {
-        System.out.println("An error was encountered while creating the save directory...");
-    }
-
     public void showParseUnknownCommandMessage() {
         System.out.println("I'm sorry! I don't understand that command!");
         printSeparator();
