@@ -145,8 +145,7 @@ public class FileStorage {
             if (createNewDirectory(fileDirectory)) {
                 createNewSaveFile(saveFileTasks);
                 createNewSaveFile(saveFileNotes);
-            }
-            else {
+            } else {
                 throw new IOException();
             }
         } catch (IOException e) {
