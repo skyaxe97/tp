@@ -85,7 +85,7 @@ public class FileStorage {
     }
 
     private void handleExistingSaveDirectory(File saveFileTasks, File saveFileNotes) {
-        checkForTaskSaveFile(saveFileTasks);
+        checkForTasksSaveFile(saveFileTasks);
         checkForNotesSaveFile(saveFileNotes);
     }
 
@@ -100,7 +100,7 @@ public class FileStorage {
         noteStorage.readNotesSave(filePathNotes);
     }
 
-    private void checkForTaskSaveFile(File saveFileTasks) {
+    private void checkForTasksSaveFile(File saveFileTasks) {
         logger.log(Level.INFO, "Checking for task save file");
         //Create new notes save file if notes save file does not exist
         if (!saveFileTasks.exists()) {
