@@ -79,14 +79,12 @@ public class TaskList {
         addTask(deadline);
     }
 
-    public void getTasksFromToday() {
-        ArrayList<Task> taskListFromToday = (ArrayList<Task>) taskList.stream()
+    public ArrayList<Task> getTasksFromToday() {
+
+        return (ArrayList<Task>) taskList.stream()
                 .filter((t) -> t.getStart().toLocalDate().equals(LocalDate.now()))
                 .collect(toList());
 
-        for (Task task : taskListFromToday) {
-            System.out.println(task.toString());
-        }
     }
 
     public void sort() {

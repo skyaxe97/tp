@@ -208,4 +208,19 @@ public class Ui {
         System.out.println("Please select the notes you want to view:\n");
     }
 
+    public void printFreeTimeMessage(int startHour, int endHour, int duration) {
+
+        if (duration != 0) {
+            System.out.println("You have " + duration + " hours of free time between " + startHour +
+                    ":00 and " + endHour + ":00!");
+            System.out.println("Hope you can schedule something in this time!");
+
+        } else {
+            System.out.println("Unfortunately you have no free time today!");
+            System.out.println("You might want to relax a little!");
+        }
+
+        printSeparator();
+    }
+
 }
