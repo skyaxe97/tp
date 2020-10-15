@@ -23,11 +23,11 @@ public class DisplayScheduleCommand extends Command {
         if (isDisplayWeek) {
             scheduleUi.displayWeekSchedule(currDate, tasks);
         } else {
-            if (scheduleUi.getTaskCountForToday(tasks, currDate) == 0) {
-                System.out.println("You have nothing on for today!");
-            } else {
+            if (scheduleUi.getTaskCountForToday(tasks, currDate) != 0) {
                 System.out.println("Here is your schedule for today:");
                 scheduleUi.displayDaySchedule(currDate, tasks);
+            } else {
+                System.out.println("You have nothing on for today!");
             }
         }
     }
