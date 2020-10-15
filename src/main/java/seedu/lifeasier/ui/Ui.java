@@ -1,7 +1,6 @@
 package seedu.lifeasier.ui;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
@@ -59,18 +58,21 @@ public class Ui {
         System.out.println(SEPARATOR);
     }
 
-    public void showWelcomeMessage() {
+    public void showLogo() {
         printSeparator();
         printSeparator();
         printLogo();
         printSeparator();
         printSeparator();
-        showGreetingMessage();
     }
 
-    private void showGreetingMessage() {
+    public void showGreetingMessage() {
         System.out.println(MESSAGE_GREETING);
         System.out.println(MESSAGE_HELP_COMMAND);
+    }
+
+    public void showAddConfirmationMessage(String task) {
+        System.out.println("Done! I've added \"" + task + "\" to your calendar");
     }
 
     private void printLogo() {
@@ -106,17 +108,31 @@ public class Ui {
         System.out.println("Alright! Please fill in your notes.\n");
     }
 
-    public DayOfWeek getCurrDayOfWeek(int dayCount) {
-        LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
-        return currDay.getDayOfWeek();
-    }
-
     public void showFileCreationError() {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
-    public void showDataLoading() {
+    public void showDataLoadingMessage() {
         System.out.println("Reading your save data. New saves will be created if no saves are found.");
+    }
+
+    public void showNoDataToArchiveMessage() {
+        System.out.println("You do not have any data available for archiving.");
+        printSeparator();
+    }
+
+    public void showFileArchiveError() {
+        System.out.println("There was an error archiving your data");
+    }
+
+    public void showArchiveStartMessge() {
+        printSeparator();
+        System.out.println("Starting archiving...");
+    }
+
+    public void showArchiveEndMessage() {
+        System.out.println("Archiving successful!");
+        printSeparator();
     }
 
     public void showFileReadError() {
@@ -127,8 +143,12 @@ public class Ui {
         System.out.println("Something went wrong while saving your data...");
     }
 
+    public void showDirectoryCreationFailedError() {
+        System.out.println("Directory creation failed...");
+    }
+
     public void showInvalidNumberMessage() {
-        System.out.println("The number you inputted is invalid!");
+        System.out.println("The number you inputted is invalid!\n");
     }
 
     public void showNoTitleFoundMessage() {
@@ -155,10 +175,6 @@ public class Ui {
         System.out.println("Something went wrong while determining the tasks...");
     }
 
-    public void showDirectoryCreationFailed() {
-        System.out.println("An error was encountered while creating the save directory...");
-    }
-
     public void showParseUnknownCommandMessage() {
         System.out.println("I'm sorry! I don't understand that command!");
         printSeparator();
@@ -174,6 +190,22 @@ public class Ui {
         System.out.println("I'm sorry! Please ensure your dates are in the format dd-mm-yy,");
         System.out.println("and your times are in the format hh:mm!");
         printSeparator();
+    }
+
+    public void showEmptyDescriptionMessage() {
+        System.out.println("Empty description! =O\n");
+    }
+
+    public void showNoteAddedMessage() {
+        System.out.println("Ok! I've taken note of this note!\n");
+    }
+
+    public void showMultipleMatchesFoundMessage() {
+        System.out.println("Multiple matches found! Please select the one you are looking for:\n");
+    }
+
+    public void showSelectWhichNoteMessage() {
+        System.out.println("Please select the notes you want to view:\n");
     }
 
 }

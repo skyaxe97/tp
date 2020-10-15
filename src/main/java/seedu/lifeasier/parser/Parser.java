@@ -4,11 +4,13 @@ import seedu.lifeasier.commands.AddDeadlineCommand;
 import seedu.lifeasier.commands.AddEventCommand;
 import seedu.lifeasier.commands.AddLessonCommand;
 import seedu.lifeasier.commands.AddNotesCommand;
+import seedu.lifeasier.commands.ArchiveCommand;
 import seedu.lifeasier.commands.Command;
 import seedu.lifeasier.commands.DisplayScheduleCommand;
 import seedu.lifeasier.commands.ExitCommand;
 import seedu.lifeasier.commands.HelpCommand;
 import seedu.lifeasier.commands.ShowNotesCommand;
+import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +30,7 @@ public class Parser {
     public static final String PARAM_DISPLAY = "display";
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
+    public static final String PARAM_ARCHIVE = "archive";
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
@@ -63,7 +66,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
-    private Command parseAddLessonCommand(String input) {
+    Command parseAddLessonCommand(String input) {
 
         LOGGER.log(Level.INFO, "Parsing addLesson command...");
 
@@ -119,7 +122,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddDeadlineCommand with the parameters input by the user.
      */
-    private Command parseAddDeadlineCommand(String input) {
+    Command parseAddDeadlineCommand(String input) {
 
         LOGGER.log(Level.INFO, "Parsing addDeadline command...");
 
@@ -187,45 +190,55 @@ public class Parser {
      *
      * @param input String containing the user's input.
      * @return Command that the user inputs.
-     * @throws ParserException if an invalid command type is input.
-     * @throws IndexOutOfBoundsException if the format of the command is incorrect.
-     * @throws DateTimeParseException if the format of the date or time input is incorrect.
      */
-    public Command parseCommand(String input) throws
-            ParserException, IndexOutOfBoundsException, DateTimeParseException {
+    public Command parseCommand(String input, Ui ui) throws ParserException {
 
         LOGGER.log(Level.INFO, "Parsing user input for command...");
 
-        String commandType = getCommandType(input);
+        try {
+            String commandType = getCommandType(input);
 
-        switch (commandType) {
+            switch (commandType) {
 
-        case(PARAM_ADD_LESSON):
-            return parseAddLessonCommand(input);
+            case (PARAM_ADD_LESSON):
+                return parseAddLessonCommand(input);
 
-        case(PARAM_ADD_EVENT):
-            return parseAddEventCommand(input);
+            case (PARAM_ADD_EVENT):
+                return parseAddEventCommand(input);
 
-        case(PARAM_ADD_DEADLINE):
-            return parseAddDeadlineCommand(input);
+            case (PARAM_ADD_DEADLINE):
+                return parseAddDeadlineCommand(input);
 
-        case(PARAM_ADD_NOTES):
-            return parseAddNotesCommand(input);
+            case (PARAM_ADD_NOTES):
+                return parseAddNotesCommand(input);
 
-        case(PARAM_SHOW_NOTES):
-            return parseShowNotesCommand(input);
+            case (PARAM_SHOW_NOTES):
+                return parseShowNotesCommand(input);
 
-        case(PARAM_DISPLAY):
-            return parseDisplayScheduleCommand(input);
+            case (PARAM_DISPLAY):
+                return parseDisplayScheduleCommand(input);
 
-        case(PARAM_HELP):
-            return new HelpCommand();
+            case (PARAM_HELP):
+                return new HelpCommand();
 
-        case(PARAM_EXIT):
-            return new ExitCommand();
+            case (PARAM_ARCHIVE):
+                return new ArchiveCommand();
 
-        default:
-            throw new ParserException();
+            case (PARAM_EXIT):
+                return new ExitCommand();
+
+            default:
+                throw new ParserException();
+            }
+
+        } catch (IndexOutOfBoundsException e) {
+            ui.showParseIncorrectCommandFormatMessage();
+
+        } catch (DateTimeParseException e) {
+            ui.showParseIncorrectDateTimeMessage();
         }
+
+        return new ExitCommand();
+
     }
 }

@@ -1,8 +1,6 @@
 package seedu.lifeasier.ui;
 
 import seedu.lifeasier.tasks.Deadline;
-import seedu.lifeasier.tasks.Event;
-import seedu.lifeasier.tasks.Lesson;
 import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
 
@@ -11,52 +9,46 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class ScheduleUi {
-    public void displayWeekSchedule(LocalDate startOfWeek, TaskList tasks) {
-        for (int i = 0; i < 7; i++) {
-            displayDayOfWeek(i);
-            displayDaySchedule(startOfWeek.plus(i, ChronoUnit.DAYS), tasks);
-            System.out.println();
-        }
+
+    private final TimetableUi timetable = new TimetableUi();
+
+    public void showHome(TaskList tasks) {
+        timetable.showTimetable(tasks);
+        displayDeadlines(tasks);
     }
 
-    public void displayDayOfWeek(int i) {
-        LocalDateTime datePointer = LocalDateTime.now().plus(i, ChronoUnit.DAYS);
-        System.out.println(datePointer.getDayOfWeek());
-    }
-
-    public void displayDaySchedule(LocalDate date, TaskList tasks) {
-        for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task t = tasks.getTask(i);
-            LocalDateTime startDateTime = getStart(t);
-            LocalDateTime endDateTime = getEnd(t);
-            if (startDateTime.toLocalDate().equals(date)) {
-                printWithScheduleFormat(t, startDateTime, endDateTime);
+    private void displayDeadlines(TaskList tasks) {
+        for (Task task : TaskList.getTaskList()) {
+            if (task instanceof Deadline) {
+                System.out.println(task.toString());
             }
         }
     }
 
-    public void printWithScheduleFormat(Task t, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public void displayWeekSchedule(TaskList tasks) {
+        timetable.showTimetable(tasks);
+    }
+
+    public void displayDaySchedule(LocalDate date, TaskList tasks) {
+        for (int i = 0; i < tasks.getTaskCount(); i++) {
+            Task task = tasks.getTask(i);
+            LocalDateTime startDateTime = task.getStart();
+            LocalDateTime endDateTime = task.getEnd();
+            if (startDateTime.toLocalDate().equals(date)) {
+                printWithScheduleFormat(task, startDateTime, endDateTime);
+            }
+        }
+    }
+
+    public void printWithScheduleFormat(Task task, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         String startDateTimeString = getTimeStamp(startDateTime);
         String endDateTimeString = (endDateTime == null) ? "      " : ("-" + getTimeStamp(endDateTime));
-        System.out.println(startDateTimeString + endDateTimeString + "  " + t.getDescription());
+        System.out.println(startDateTimeString + endDateTimeString + "  " + task.getDescription());
     }
 
-    public LocalDateTime getStart(Task t) {
-        if (t instanceof Lesson) {
-            return ((Lesson) t).getStart();
-        } else if (t instanceof Event) {
-            return ((Event) t).getStart();
-        }
-        return ((Deadline) t).getBy();
-    }
-
-    public LocalDateTime getEnd(Task t) {
-        if (t instanceof Lesson) {
-            return ((Lesson) t).getEnd();
-        } else if (t instanceof Event) {
-            return ((Event) t).getEnd();
-        }
-        return null;
+    public static String getDayOfWeek(int i) {
+        LocalDateTime datePointer = LocalDateTime.now().plus(i, ChronoUnit.DAYS);
+        return datePointer.getDayOfWeek().toString();
     }
 
     public String getTimeStamp(LocalDateTime timedItem) {
@@ -66,8 +58,8 @@ public class ScheduleUi {
     public int getTaskCountForToday(TaskList tasks, LocalDate date) {
         int count = 0;
         for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task t = tasks.getTask(i);
-            if (getStart(t).toLocalDate().equals(date)) {
+            Task task = tasks.getTask(i);
+            if (task.getStart().toLocalDate().equals(date)) {
                 count++;
             }
         }

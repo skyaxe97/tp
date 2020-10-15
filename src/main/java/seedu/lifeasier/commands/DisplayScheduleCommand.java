@@ -2,6 +2,7 @@ package seedu.lifeasier.commands;
 
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.ui.ScheduleUi;
 import seedu.lifeasier.notes.NoteList;
@@ -21,7 +22,7 @@ public class DisplayScheduleCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         LocalDate currDate = LocalDate.now();
         if (isDisplayWeek) {
-            scheduleUi.displayWeekSchedule(currDate, tasks);
+            scheduleUi.displayWeekSchedule(tasks);
         } else {
             if (scheduleUi.getTaskCountForToday(tasks, currDate) != 0) {
                 System.out.println("Here is your schedule for today:");

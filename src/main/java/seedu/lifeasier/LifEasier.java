@@ -1,15 +1,14 @@
 package seedu.lifeasier;
 
 import seedu.lifeasier.commands.Command;
-import seedu.lifeasier.exceptions.TitleNotFoundException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.ScheduleUi;
+import seedu.lifeasier.ui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
-
-import java.time.format.DateTimeParseException;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
@@ -22,51 +21,50 @@ public class LifEasier {
     private TaskList tasks;
     private NoteList notes;
     private FileStorage storage;
+    private ScheduleUi scheduleUi;
 
     public LifEasier(String fileNameTasks, String fileNameNotes) {
-
         ui = new Ui();
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
+        scheduleUi = new ScheduleUi();
     }
 
     /**
      * Runs the LifEasier program infinitely until termination by the user.
      */
     public void run() {
-        boolean isFinished = false;
-
         storage.readSaveFiles();
 
-        ui.showWelcomeMessage();
+        showStartupSequence();
+
+        boolean isFinished = false;
 
         while (!isFinished) {
 
             String fullCommand = ui.readCommand();
 
             try {
-                Command userCommand = parser.parseCommand(fullCommand);
+                Command userCommand = parser.parseCommand(fullCommand, ui);
                 userCommand.execute(ui, notes, tasks, storage);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
                 ui.showParseUnknownCommandMessage();
-            } catch (IndexOutOfBoundsException e) {
-                ui.showParseIncorrectCommandFormatMessage();
-                ui.showInvalidNumberMessage();
 
-            } catch (DateTimeParseException e) {
-                ui.showParseIncorrectDateTimeMessage();
-            } catch (NumberFormatException e) {
-                ui.showNumberFormatMessage();
-            } catch (TitleNotFoundException e) {
-                ui.showNoTitleFoundMessage();
             }
+
         }
 
         ui.showGoodbyeMessage();
+    }
+
+    public void showStartupSequence() {
+        ui.showLogo();
+        //scheduleUi.showHome(tasks);
+        ui.showGreetingMessage();
     }
 
     /**
