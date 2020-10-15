@@ -216,7 +216,7 @@ public class Ui {
     }
 
     public void showNoteDeletedMessage() {
-        System.out.println("OK! Note deleted!\n");
+        System.out.println("OK! Note deleted!");
     }
 
     public void showConfirmEditMessage() {
@@ -228,7 +228,8 @@ public class Ui {
     }
 
     public void showNoteNotEditedMessage() {
-        System.out.println("OK! Note not edited!\n");
+        System.out.println("OK! Note not edited!");
+        printSeparator();
     }
 
     public void showInvalidTitleDescriptionConfirmationMessage() {

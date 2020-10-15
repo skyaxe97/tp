@@ -102,6 +102,7 @@ public class EditNotesCommand extends Command {
             notes.get(noteNumber).setTitle(input);
             logger.log(Level.INFO, "Title is changed");
             System.out.println("OK! Your title is now: " + notes.get(noteNumber).getTitle());
+            ui.printSeparator();
         } else {
             logger.log(Level.INFO, "D is inputted");
             System.out.println("Current description:\n" + notes.get(noteNumber).getDescription());
@@ -110,6 +111,7 @@ public class EditNotesCommand extends Command {
             notes.get(noteNumber).setDescription(input);
             logger.log(Level.INFO, "Description is changed");
             System.out.println("OK! Your description is now: " + notes.get(noteNumber).getDescription());
+            ui.printSeparator();
         }
     }
 
