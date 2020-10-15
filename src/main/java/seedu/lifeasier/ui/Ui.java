@@ -212,7 +212,7 @@ public class Ui {
     }
 
     public void showNoteNotDeletedMessage() {
-        System.out.println("OK! Note not deleted!\n");
+        System.out.println("OK! Note not deleted!");
     }
 
     public void showNoteDeletedMessage() {
@@ -246,5 +246,10 @@ public class Ui {
 
     public void showSelectWhichNoteToEditMessage() {
         System.out.println("Please select the notes you want to edit:\n");
+    }
+
+    public void showEmptyNoteListMessage() {
+        System.out.println("There's no Notes!");
+        printSeparator();
     }
 }

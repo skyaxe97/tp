@@ -1,10 +1,12 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.notes.EmptyNoteListException;
 import seedu.lifeasier.notes.TitleNotFoundException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.notes.NoteCommandFunctions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,32 +44,19 @@ public class EditNotesCommand extends Command {
         default:
             logger.log(Level.INFO, "Multiple matches found");
             ui.showMultipleMatchesFoundMessage();
-            printMultipleMatches(notes, title);
+
+            logger.log(Level.INFO, "Start of printing all matching notes");
+            NoteCommandFunctions.printMultipleMatches(notes, title);
+            logger.log(Level.INFO, "End of printing all matching notes");
+
             noteNumber = Integer.parseInt(ui.readCommand());
-            checkForIndexOutOfBounds(notes, noteNumber);
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
 
             System.out.println(notes.get(noteNumber - 1).toString());
             ui.showConfirmEditMessage();
             parseUserResponse(ui, notes, noteNumber - 1, ui.readCommand());
         }
 
-    }
-
-    private void printMultipleMatches(NoteList notes, String title) {
-        logger.log(Level.INFO, "Start of printing all matching notes");
-        for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getTitle().contains(title)) {
-                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
-            }
-        }
-        logger.log(Level.INFO, "End of printing all matching notes");
-
-    }
-
-    private void checkForIndexOutOfBounds(NoteList notes, int noteNumber) {
-        if (noteNumber - 1 > notes.size()) {
-            throw new IndexOutOfBoundsException();
-        }
     }
 
     private void parseUserResponse(Ui ui, NoteList notes, int noteNumber, String input) {
@@ -115,27 +104,23 @@ public class EditNotesCommand extends Command {
         }
     }
 
-    private void printAllNotes(NoteList notes) {
-        logger.log(Level.INFO, "Start of printing all notes in the list");
-        for (int i = 0; i < notes.size(); i++) {
-            System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
-        }
-        logger.log(Level.INFO, "End of printing all notes in the list");
-
-    }
-
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
         try {
             logger.log(Level.INFO, "Start of EditNotesCommand");
             ui.printSeparator();
+            NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
             } else {
                 ui.showSelectWhichNoteToEditMessage();
-                printAllNotes(notes);
+
+                logger.log(Level.INFO, "Start of printing all notes in the list");
+                NoteCommandFunctions.printAllNotes(notes);
+                logger.log(Level.INFO, "End of printing all notes in the list");
+
                 int noteNumber = Integer.parseInt(ui.readCommand());
-                checkForIndexOutOfBounds(notes, noteNumber);
+                NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
 
                 System.out.println(notes.get(noteNumber - 1).toString());
                 ui.showConfirmEditMessage();
@@ -153,6 +138,8 @@ public class EditNotesCommand extends Command {
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatMessage();
+        } catch (EmptyNoteListException e) {
+            ui.showEmptyNoteListMessage();
         }
     }
 }
