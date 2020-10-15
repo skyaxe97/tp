@@ -95,8 +95,6 @@ public class NoteStorage {
             fileCommand.clearSaveFile(filePathNotes);
             ArrayList<Note> noteList = notes.getNotes();
 
-            assert noteList.size() > 0 : "noteList must contain at least 1 item when saving";
-
             //Append note information into save file for notes
             for (Note note : noteList) {
                 String noteToSave = convertNoteToString(note);

@@ -120,6 +120,7 @@ public class DeleteNotesCommand extends Command {
                 String input = checkConfirmationMessage(ui, ui.readCommand());
                 checkIfDelete(ui, notes, noteNumber, input);
 
+                storage.saveNote();
             }
             ui.printSeparator();
             logger.log(Level.INFO, "End of DeleteNotesCommand");

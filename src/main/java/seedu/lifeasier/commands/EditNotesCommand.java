@@ -138,6 +138,8 @@ public class EditNotesCommand extends Command {
                 System.out.println(notes.get(noteNumber - 1).toString());
                 ui.showConfirmEditMessage();
                 parseUserResponse(ui, notes, noteNumber - 1, ui.readCommand());
+
+                storage.saveNote();
             }
             logger.log(Level.INFO, "End of EditNotesCommand");
         } catch (IndexOutOfBoundsException e) {
