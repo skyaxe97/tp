@@ -119,8 +119,25 @@ public class Ui {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
-    public void showDataLoading() {
+    public void showDataLoadingMessage() {
         System.out.println("Reading your save data. New saves will be created if no saves are found.");
+    }
+
+    public void showNoDataToArchiveMessage() {
+        System.out.println("You do not have any data available for archiving.");
+    }
+
+    public void showFileArchiveError() {
+        System.out.println("There was an error archiving your data");
+    }
+
+    public void showArchiveStartMessge() {
+        System.out.println("Starting archiving...");
+    }
+
+    public void showArchiveEndMessage() {
+        System.out.println("Archiving successful!");
+        printSeparator();
     }
 
     public void showFileReadError() {
@@ -159,10 +176,6 @@ public class Ui {
         System.out.println("Something went wrong while determining the tasks...");
     }
 
-    public void showDirectoryCreationFailed() {
-        System.out.println("An error was encountered while creating the save directory...");
-    }
-
     public void showParseUnknownCommandMessage() {
         System.out.println("I'm sorry! I don't understand that command!");
         printSeparator();
@@ -195,4 +208,5 @@ public class Ui {
     public void showSelectWhichNoteMessage() {
         System.out.println("Please select the notes you want to view:\n");
     }
+
 }

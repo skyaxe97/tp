@@ -4,6 +4,7 @@ import seedu.lifeasier.commands.AddDeadlineCommand;
 import seedu.lifeasier.commands.AddEventCommand;
 import seedu.lifeasier.commands.AddLessonCommand;
 import seedu.lifeasier.commands.AddNotesCommand;
+import seedu.lifeasier.commands.ArchiveCommand;
 import seedu.lifeasier.commands.Command;
 import seedu.lifeasier.commands.DisplayScheduleCommand;
 import seedu.lifeasier.commands.ExitCommand;
@@ -29,6 +30,7 @@ public class Parser {
     public static final String PARAM_DISPLAY = "display";
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
+    public static final String PARAM_ARCHIVE = "archive";
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
@@ -218,6 +220,9 @@ public class Parser {
 
             case (PARAM_HELP):
                 return new HelpCommand();
+
+            case (PARAM_ARCHIVE):
+                return new ArchiveCommand();
 
             case (PARAM_EXIT):
                 return new ExitCommand();

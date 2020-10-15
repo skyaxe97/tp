@@ -8,7 +8,6 @@ import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
-
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
  * If you can type fast, LifEasier will get your scheduling done faster than traditional GUI calender apps.
