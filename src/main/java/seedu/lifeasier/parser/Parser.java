@@ -1,7 +1,5 @@
 package seedu.lifeasier.parser;
 
-
-import seedu.lifeasier.commands.*;
 import seedu.lifeasier.commands.AddDeadlineCommand;
 import seedu.lifeasier.commands.AddEventCommand;
 import seedu.lifeasier.commands.AddLessonCommand;
@@ -12,8 +10,9 @@ import seedu.lifeasier.commands.DisplayScheduleCommand;
 import seedu.lifeasier.commands.ExitCommand;
 import seedu.lifeasier.commands.HelpCommand;
 import seedu.lifeasier.commands.ShowNotesCommand;
+import seedu.lifeasier.commands.DeleteNotesCommand;
+import seedu.lifeasier.commands.EditNotesCommand;
 import seedu.lifeasier.ui.Ui;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
