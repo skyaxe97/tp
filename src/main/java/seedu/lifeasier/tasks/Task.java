@@ -39,10 +39,6 @@ public abstract class Task {
         return "[" + this.getStatusIcon() + "] " + description;
     }
 
-    public String toScheduleFormatString() {
-        return "[" + this.getStatusIcon() + "] " + description;
-    }
-
     public abstract LocalDateTime getStart();
 
     public abstract LocalDateTime getEnd();
