@@ -10,7 +10,6 @@ import seedu.lifeasier.ui.ScheduleUi;
 import seedu.lifeasier.ui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
 
-import java.time.LocalTime;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
