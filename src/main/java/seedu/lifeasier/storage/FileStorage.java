@@ -55,9 +55,6 @@ public class FileStorage {
         fileArchive.handleDataArchiving(ARCHIVE_PATH);
         //Clear notes save file
         fileCommand.clearSaveFile(filePathNotes);
-
-        ui.showArchiveEndMessage();
-        logger.log(Level.INFO, "Finish archiving process");
     }
 
     /**
@@ -155,6 +152,7 @@ public class FileStorage {
                 throw new IOException();
             }
         } catch (IOException e) {
+            ui.showDirectoryCreationFailedError();
             logger.log(Level.WARNING, "Save directory creation failed");
         }
     }

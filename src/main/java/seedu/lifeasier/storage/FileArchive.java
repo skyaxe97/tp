@@ -55,6 +55,8 @@ public class FileArchive {
         } catch (IOException e) {
             ui.showFileArchiveError();
         }
+        ui.showArchiveEndMessage();
+        logger.log(Level.INFO, "Finish archiving process");
     }
 
     /**
