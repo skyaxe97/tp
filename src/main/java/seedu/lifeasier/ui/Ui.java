@@ -145,6 +145,10 @@ public class Ui {
         System.out.println("Something went wrong while saving your data...");
     }
 
+    public void showDirectoryCreationFailedError() {
+        System.out.println("Directory creation failed...");
+    }
+
     public void showInvalidNumberMessage() {
         System.out.println("The number you inputted is invalid!\n");
     }
@@ -171,10 +175,6 @@ public class Ui {
 
     public void showUndeterminableTaskError() {
         System.out.println("Something went wrong while determining the tasks...");
-    }
-
-    public void showDirectoryCreationFailedError() {
-        System.out.println("An error was encountered while creating the save directory...");
     }
 
     public void showParseUnknownCommandMessage() {
