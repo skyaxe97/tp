@@ -114,11 +114,11 @@ public class TimetableUi {
         return new LocalTime[] {defaultEarliestTime, defaultLatestTime};
     }
 
-    public LocalTime getLaterTime(LocalTime defaultLatestTime, LocalTime endTime) {
-        return endTime.isAfter(defaultLatestTime) ? endTime : defaultLatestTime;
+    public LocalTime getEarlierTime(LocalTime defaultEarliestTime, LocalTime startTime) {
+        return startTime.isBefore(defaultEarliestTime) ? startTime : defaultEarliestTime;
     }
 
-    public LocalTime getEarlierTime(LocalTime defaultEarliestTime, LocalTime startTime) {
-        return startTime.isAfter(defaultEarliestTime) ? startTime : defaultEarliestTime;
+    public LocalTime getLaterTime(LocalTime defaultLatestTime, LocalTime endTime) {
+        return endTime.isAfter(defaultLatestTime) ? endTime : defaultLatestTime;
     }
 }
