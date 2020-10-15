@@ -233,7 +233,7 @@ public class Parser {
             ui.showParseIncorrectDateTimeMessage();
         }
 
-        return new DummyCommand();
+        return new InvalidCommand();
 
     }
 }
