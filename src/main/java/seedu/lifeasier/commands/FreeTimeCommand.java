@@ -59,8 +59,8 @@ public class FreeTimeCommand extends Command {
                 startOfFreeTime = hour + 1;
             }
 
-            if ((endOfFreeTime - startOfFreeTime + 1) >=
-                    (longestFreeTime[PARAM_END] - longestFreeTime[PARAM_START] + 1)) {
+            if ((endOfFreeTime - startOfFreeTime + 1)
+                    >= (longestFreeTime[PARAM_END] - longestFreeTime[PARAM_START] + 1)) {
 
                 longestFreeTime[PARAM_START] = startOfFreeTime;
                 longestFreeTime[PARAM_END] = endOfFreeTime;

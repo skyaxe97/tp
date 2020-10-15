@@ -211,8 +211,8 @@ public class Ui {
     public void printFreeTimeMessage(int startHour, int endHour, int duration) {
 
         if (duration != 0) {
-            System.out.println("You have " + duration + " hours of free time between " + startHour +
-                    ":00 and " + endHour + ":00!");
+            System.out.println("You have " + duration + " hours of free time between " + startHour
+                    + ":00 and " + endHour + ":00!");
             System.out.println("Hope you can schedule something in this time!");
 
         } else {
