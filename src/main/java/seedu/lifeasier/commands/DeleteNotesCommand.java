@@ -59,7 +59,7 @@ public class DeleteNotesCommand extends Command {
 
     private void checkIfDelete(Ui ui, NoteList notes, int noteNumber, String input) {
         if (input.trim().equals("Y")) {
-            notes.remove(noteNumber - 1);
+            notes.remove(noteNumber);
             ui.showNoteDeletedMessage();
         } else {
             ui.showNoteNotDeletedMessage();
@@ -118,7 +118,7 @@ public class DeleteNotesCommand extends Command {
 
                 ui.showConfirmDeleteMessage();
                 String input = checkConfirmationMessage(ui, ui.readCommand());
-                checkIfDelete(ui, notes, noteNumber, input);
+                checkIfDelete(ui, notes, noteNumber -  1, input);
 
                 storage.saveNote();
             }
