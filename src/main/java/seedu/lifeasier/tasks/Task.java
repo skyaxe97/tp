@@ -15,7 +15,6 @@ public abstract class Task {
         taskCounter++;
     }
 
-
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbol
     }
@@ -49,7 +48,15 @@ public abstract class Task {
     public abstract LocalDateTime getEnd();
 
     public boolean isWithinTimeSlot(int hour) {
-        return getStart().getHour() <= hour && getEnd().getHour() >= (hour + 1);
+        return startsAfter(hour) && endsBefore(hour + 1);
+    }
+
+    public boolean endsBefore(int hour) {
+        return getEnd().getHour() >= hour;
+    }
+
+    public boolean startsAfter(int hour) {
+        return getStart().getHour() <= hour;
     }
 
     public boolean isHappeningOn(LocalDate date) {

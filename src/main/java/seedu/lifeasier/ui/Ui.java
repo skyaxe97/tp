@@ -1,7 +1,6 @@
 package seedu.lifeasier.ui;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
@@ -59,16 +58,15 @@ public class Ui {
         System.out.println(SEPARATOR);
     }
 
-    public void showWelcomeMessage() {
+    public void showLogo() {
         printSeparator();
         printSeparator();
         printLogo();
         printSeparator();
         printSeparator();
-        showGreetingMessage();
     }
 
-    private void showGreetingMessage() {
+    public void showGreetingMessage() {
         System.out.println(MESSAGE_GREETING);
         System.out.println(MESSAGE_HELP_COMMAND);
     }

@@ -1,9 +1,8 @@
-package seedu.lifeasier.timetableui;
+package seedu.lifeasier.ui;
 
 import seedu.lifeasier.tasks.Deadline;
 import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
-import seedu.lifeasier.ui.ScheduleUi;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,7 +23,7 @@ public class TimetableUi {
 
     private ArrayList<String> timetableRows = new ArrayList<>();
 
-    public void showHome(TaskList tasks) {
+    public void showTimetable(TaskList tasks) {
         generateTimetable(tasks);
         System.out.println(ROW_SEPARATOR);
         for (String row: timetableRows) {
@@ -105,18 +104,21 @@ public class TimetableUi {
             Task task = tasks.getTask(i);
 
             if (!(task instanceof Deadline)) {
-                LocalTime earliestTime = task.getStart().toLocalTime();
-                LocalTime latestTime = task.getEnd().toLocalTime();
+                LocalTime currTaskStartTime = task.getStart().toLocalTime();
+                LocalTime currTaskEndTime = task.getEnd().toLocalTime();
 
-                if (earliestTime.isBefore(defaultEarliestTime)) {
-                    defaultEarliestTime = earliestTime;
-                }
-
-                if (latestTime.isAfter(defaultLatestTime)) {
-                    defaultLatestTime = latestTime;
-                }
+                defaultEarliestTime = getEarlierTime(defaultEarliestTime, currTaskStartTime);
+                defaultLatestTime = getLaterTime(defaultLatestTime, currTaskEndTime);
             }
         }
         return new LocalTime[] {defaultEarliestTime, defaultLatestTime};
+    }
+
+    public LocalTime getLaterTime(LocalTime defaultLatestTime, LocalTime endTime) {
+        return endTime.isAfter(defaultLatestTime) ? endTime : defaultLatestTime;
+    }
+
+    public LocalTime getEarlierTime(LocalTime defaultEarliestTime, LocalTime startTime) {
+        return startTime.isAfter(defaultEarliestTime) ? startTime : defaultEarliestTime;
     }
 }

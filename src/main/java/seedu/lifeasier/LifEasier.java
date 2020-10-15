@@ -6,7 +6,8 @@ import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
-import seedu.lifeasier.timetableui.TimetableUi;
+import seedu.lifeasier.ui.ScheduleUi;
+import seedu.lifeasier.ui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
 
 /**
@@ -20,16 +21,15 @@ public class LifEasier {
     private TaskList tasks;
     private NoteList notes;
     private FileStorage storage;
-    private TimetableUi timetable;
+    private ScheduleUi scheduleUi;
 
     public LifEasier(String fileNameTasks, String fileNameNotes) {
-
         ui = new Ui();
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
-        timetable = new TimetableUi();
+        scheduleUi = new ScheduleUi();
     }
 
     /**
@@ -38,8 +38,7 @@ public class LifEasier {
     public void run() {
         storage.readSaveFiles();
 
-        ui.showWelcomeMessage();
-        timetable.showHome(tasks);
+        showStartupSequence();
 
         boolean isFinished = false;
 
@@ -60,6 +59,12 @@ public class LifEasier {
         }
 
         ui.showGoodbyeMessage();
+    }
+
+    public void showStartupSequence() {
+        ui.showLogo();
+        //scheduleUi.showHome(tasks);
+        ui.showGreetingMessage();
     }
 
     /**
