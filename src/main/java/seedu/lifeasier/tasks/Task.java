@@ -9,6 +9,8 @@ public abstract class Task {
     protected boolean isDone;
     protected static int taskCounter = 0;
 
+    private static final String TIME_FORMAT = "%02d:00";
+
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -43,16 +45,31 @@ public abstract class Task {
 
     public abstract LocalDateTime getEnd();
 
-    public boolean isWithinTimeSlot(int hour) {
-        return startsAfter(hour) && endsBefore(hour + 1);
+    public boolean isWithinTimeSlot(int timeSlotStartHour) {
+        return startsBeforeOrAt(timeSlotStartHour) && endsAtOrAfter(timeSlotStartHour + 1);
     }
 
-    public boolean endsBefore(int hour) {
-        return getEnd().getHour() >= hour;
+    public boolean startsBeforeOrAt(int hour) {
+        return getRoundedDownStartHour(getStart().toLocalTime()) <= hour;
     }
 
-    public boolean startsAfter(int hour) {
-        return getStart().getHour() <= hour;
+    public int getRoundedDownStartHour(LocalTime startTime) {
+        return startTime.getHour();
+    }
+
+    public boolean endsAtOrAfter(int hour) {
+        return getRoundedUpEndHour(getEnd().toLocalTime()) >= hour;
+    }
+
+    public int getRoundedUpEndHour(LocalTime endTime) {
+        int endHour = endTime.getHour();
+        LocalTime adjustedEndTime = LocalTime.parse(String.format(TIME_FORMAT, endHour));
+
+        if (endTime.equals(adjustedEndTime)) {
+            return endHour;
+        } else {
+            return endHour + 1;
+        }
     }
 
     public boolean isHappeningOn(LocalDate date) {

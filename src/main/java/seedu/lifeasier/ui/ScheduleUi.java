@@ -18,7 +18,7 @@ public class ScheduleUi {
     }
 
     private void displayDeadlines(TaskList tasks) {
-        for (Task task : TaskList.getTaskList()) {
+        for (Task task : tasks.getTaskList()) {
             if (task instanceof Deadline) {
                 System.out.println(task.toString());
             }
@@ -30,8 +30,7 @@ public class ScheduleUi {
     }
 
     public void displayDaySchedule(LocalDate date, TaskList tasks) {
-        for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task task = tasks.getTask(i);
+        for (Task task : tasks.getTaskList()) {
             LocalDateTime startDateTime = task.getStart();
             LocalDateTime endDateTime = task.getEnd();
             if (startDateTime.toLocalDate().equals(date)) {
@@ -57,8 +56,7 @@ public class ScheduleUi {
 
     public int getTaskCountForToday(TaskList tasks, LocalDate date) {
         int count = 0;
-        for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task task = tasks.getTask(i);
+        for (Task task : tasks.getTaskList()) {
             if (task.getStart().toLocalDate().equals(date)) {
                 count++;
             }

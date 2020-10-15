@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class TimetableUi {
     private static final String TIME_COLUMN_NAME = "TIME";
     private static final String TIME_FORMAT = "%02d:00";
-    private static final int DEFAULT_START_HOUR = 7;
+    private static final int DEFAULT_START_HOUR = 8;
     private static final int DEFAULT_END_HOUR = 18;
 
     private static final int DAYS_COLUMN_COUNT = 7;
@@ -40,7 +40,7 @@ public class TimetableUi {
         int lastHour = timeRange[1].getHour();
 
         int currHour = firstHour;
-        while (currHour < lastHour) {
+        while (currHour <= lastHour) {
             timetableRows.add(generateRowString(currHour, tasks));
             currHour++;
         }
@@ -65,23 +65,18 @@ public class TimetableUi {
         LocalDate todayDate = LocalDate.now();
 
         rowContents[0] = getTimeSlotString(hour);
+
         for (int dayIncrement = 0; dayIncrement < 7; dayIncrement++) {
             LocalDate currDate = todayDate.plus(dayIncrement, ChronoUnit.DAYS);
             rowContents[dayIncrement + 1] = getCellString(currDate, hour, tasks);
         }
-        return rowContents;
-    }
 
-    public String trimToFitTimetableCell(String fullString) {
-        if (fullString.length() > MAX_COLUMN_WIDTH) {
-            return fullString.substring(0, MAX_COLUMN_WIDTH - 3) + "...";
-        }
-        return fullString;
+        return rowContents;
     }
 
     private String getTimeSlotString(int startHour) {
         String startHourString = String.format(TIME_FORMAT, startHour);
-        String endHourString = String.format(TIME_FORMAT, startHour + 1);
+        String endHourString = String.format(TIME_FORMAT, (startHour + 1) % 24);
         return startHourString + "-" + endHourString;
     }
 
@@ -96,29 +91,40 @@ public class TimetableUi {
         return trimToFitTimetableCell(cellContents.toString().replace("[", "").replace("]", ""));
     }
 
+    public String trimToFitTimetableCell(String fullString) {
+        if (fullString.length() > MAX_COLUMN_WIDTH) {
+            return fullString.substring(0, MAX_COLUMN_WIDTH - 3) + "...";
+        }
+        return fullString;
+    }
+
     public LocalTime[] getTimetableTimeRange(TaskList tasks) {
-        LocalTime defaultEarliestTime = LocalTime.parse(String.format(TIME_FORMAT, DEFAULT_START_HOUR));
-        LocalTime defaultLatestTime = LocalTime.parse(String.format(TIME_FORMAT, DEFAULT_END_HOUR));
+        int earliestHour = DEFAULT_START_HOUR;
+        int latestHour = DEFAULT_END_HOUR;
 
-        for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task task = tasks.getTask(i);
+        for (int hour = 0; hour < 24; hour++) {
+            for (Task task: tasks.getTaskList()) {
+                if (!(task instanceof Deadline) && task.isWithinTimeSlot(hour)) {
+                    int currTaskStartHour = task.getStart().toLocalTime().getHour();
+                    int currTaskEndHour = task.getEnd().toLocalTime().getHour();
 
-            if (!(task instanceof Deadline)) {
-                LocalTime currTaskStartTime = task.getStart().toLocalTime();
-                LocalTime currTaskEndTime = task.getEnd().toLocalTime();
-
-                defaultEarliestTime = getEarlierTime(defaultEarliestTime, currTaskStartTime);
-                defaultLatestTime = getLaterTime(defaultLatestTime, currTaskEndTime);
+                    earliestHour = getEarlierTime(earliestHour, currTaskStartHour, currTaskEndHour);
+                    latestHour = getLaterTime(latestHour, currTaskStartHour, currTaskEndHour);
+                }
             }
         }
-        return new LocalTime[] {defaultEarliestTime, defaultLatestTime};
+
+        LocalTime earliestTime = LocalTime.parse(String.format(TIME_FORMAT, earliestHour));
+        LocalTime latestTime = LocalTime.parse(String.format(TIME_FORMAT, latestHour));
+
+        return new LocalTime[] {earliestTime, latestTime};
     }
 
-    public LocalTime getEarlierTime(LocalTime defaultEarliestTime, LocalTime startTime) {
-        return startTime.isBefore(defaultEarliestTime) ? startTime : defaultEarliestTime;
+    public int getEarlierTime(int referenceHour, int taskStartHour, int taskEndHour) {
+        return Math.min(Math.min(referenceHour, taskStartHour),Math.min(referenceHour, taskEndHour));
     }
 
-    public LocalTime getLaterTime(LocalTime defaultLatestTime, LocalTime endTime) {
-        return endTime.isAfter(defaultLatestTime) ? endTime : defaultLatestTime;
+    public int getLaterTime(int referenceHour, int taskStartHour, int taskEndHour) {
+        return Math.max(Math.max(referenceHour, taskStartHour),Math.max(referenceHour, taskEndHour));
     }
 }
