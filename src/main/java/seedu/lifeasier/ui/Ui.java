@@ -1,7 +1,6 @@
 package seedu.lifeasier.ui;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
@@ -59,16 +58,15 @@ public class Ui {
         System.out.println(SEPARATOR);
     }
 
-    public void showWelcomeMessage() {
+    public void showLogo() {
         printSeparator();
         printSeparator();
         printLogo();
         printSeparator();
         printSeparator();
-        showGreetingMessage();
     }
 
-    private void showGreetingMessage() {
+    public void showGreetingMessage() {
         System.out.println(MESSAGE_GREETING);
         System.out.println(MESSAGE_HELP_COMMAND);
     }
@@ -110,17 +108,31 @@ public class Ui {
         System.out.println("Alright! Please fill in your notes.\n");
     }
 
-    public DayOfWeek getCurrDayOfWeek(int dayCount) {
-        LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
-        return currDay.getDayOfWeek();
-    }
-
     public void showFileCreationError() {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
-    public void showDataLoading() {
+    public void showDataLoadingMessage() {
         System.out.println("Reading your save data. New saves will be created if no saves are found.");
+    }
+
+    public void showNoDataToArchiveMessage() {
+        System.out.println("You do not have any data available for archiving.");
+        printSeparator();
+    }
+
+    public void showFileArchiveError() {
+        System.out.println("There was an error archiving your data");
+    }
+
+    public void showArchiveStartMessge() {
+        printSeparator();
+        System.out.println("Starting archiving...");
+    }
+
+    public void showArchiveEndMessage() {
+        System.out.println("Archiving successful!");
+        printSeparator();
     }
 
     public void showFileReadError() {
@@ -129,6 +141,10 @@ public class Ui {
 
     public void showFileWriteError() {
         System.out.println("Something went wrong while saving your data...");
+    }
+
+    public void showDirectoryCreationFailedError() {
+        System.out.println("Directory creation failed...");
     }
 
     public void showInvalidNumberMessage() {
@@ -157,10 +173,6 @@ public class Ui {
 
     public void showUndeterminableTaskError() {
         System.out.println("Something went wrong while determining the tasks...");
-    }
-
-    public void showDirectoryCreationFailed() {
-        System.out.println("An error was encountered while creating the save directory...");
     }
 
     public void showParseUnknownCommandMessage() {
@@ -195,4 +207,5 @@ public class Ui {
     public void showSelectWhichNoteMessage() {
         System.out.println("Please select the notes you want to view:\n");
     }
+
 }

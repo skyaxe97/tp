@@ -6,6 +6,8 @@ import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.ScheduleUi;
+import seedu.lifeasier.ui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
 
 import java.util.logging.LogManager;
@@ -22,14 +24,15 @@ public class LifEasier {
     private TaskList tasks;
     private NoteList notes;
     private FileStorage storage;
+    private ScheduleUi scheduleUi;
 
     public LifEasier(String fileNameTasks, String fileNameNotes) {
-
         ui = new Ui();
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
+        scheduleUi = new ScheduleUi();
     }
 
     /**
@@ -41,7 +44,7 @@ public class LifEasier {
 
         storage.readSaveFiles();
 
-        ui.showWelcomeMessage();
+        showStartupSequence();
 
         while (!isFinished) {
 
@@ -60,6 +63,12 @@ public class LifEasier {
         }
 
         ui.showGoodbyeMessage();
+    }
+
+    public void showStartupSequence() {
+        ui.showLogo();
+        //scheduleUi.showHome(tasks);
+        ui.showGreetingMessage();
     }
 
     /**

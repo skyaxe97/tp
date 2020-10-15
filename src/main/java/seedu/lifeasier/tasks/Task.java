@@ -1,6 +1,8 @@
 package seedu.lifeasier.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public abstract class Task {
     protected String description;
@@ -37,11 +39,23 @@ public abstract class Task {
         return "[" + this.getStatusIcon() + "] " + description;
     }
 
-    public String toScheduleFormatString() {
-        return "[" + this.getStatusIcon() + "] " + description;
-    }
-
     public abstract LocalDateTime getStart();
 
     public abstract LocalDateTime getEnd();
+
+    public boolean isWithinTimeSlot(int hour) {
+        return startsAfter(hour) && endsBefore(hour + 1);
+    }
+
+    public boolean endsBefore(int hour) {
+        return getEnd().getHour() >= hour;
+    }
+
+    public boolean startsAfter(int hour) {
+        return getStart().getHour() <= hour;
+    }
+
+    public boolean isHappeningOn(LocalDate date) {
+        return getStart().toLocalDate().equals(date);
+    }
 }
