@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 
 public class FreeTimeCommand extends Command {
-
-    public static final int HOURS_IN_A_DAY = 24;
     public static final int PARAM_START = 0;
     public static final int PARAM_END = 1;
     public static final int HOUR_EARLIEST = 7;
@@ -28,6 +26,8 @@ public class FreeTimeCommand extends Command {
         int startHour = longestFreeTime[PARAM_START];
         int endHour = longestFreeTime[PARAM_END];
         int duration = endHour - startHour;
+
+        assert (startHour < endHour) : "The end cannot be before the start!";
         ui.printFreeTimeMessage(startHour, endHour, duration);
 
 
@@ -62,6 +62,10 @@ public class FreeTimeCommand extends Command {
 
         int startOfFreeTime = 24;
         int endOfFreeTime = 24;
+
+        assert (0 < HOUR_LATEST && HOUR_LATEST < 25) : "The latest hour checked must be between 0 and 24";
+        assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
+                "The earliest hour must be between 0 and the latest hour";
 
         for (int hour = HOUR_EARLIEST; hour < HOUR_LATEST + 1; hour++) {
 
