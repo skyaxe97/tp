@@ -33,6 +33,13 @@ public class FreeTimeCommand extends Command {
 
     }
 
+    /**
+     * Returns if there is nothing scheduled for a particular hour slot in a day.
+     *
+     * @param hour The time to be checked.
+     * @param tasks An ArrayList containing the tasks scheduled for that day.
+     * @return True if there is nothing scheduled.
+     */
     private boolean isFreeTime(int hour, ArrayList<Task> tasks) {
 
         for (Task task : tasks) {
@@ -43,6 +50,12 @@ public class FreeTimeCommand extends Command {
         return true;
     }
 
+    /**
+     * Returns the longest block of free time in the day's schedule.
+     *
+     * @param tasks An ArrayList containing the tasks scheduled for that day.
+     * @return An integer array where the first index is the start of the block, and the second index is the end.
+     */
     private int[] getLongestFreeTime(ArrayList<Task> tasks) {
 
         int[] longestFreeTime = new int[2];
