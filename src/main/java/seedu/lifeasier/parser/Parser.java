@@ -31,12 +31,23 @@ public class Parser {
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
     public static final String PARAM_ARCHIVE = "archive";
+    public static final String PARAM_EDIT_LESSON = "editLesson";
+    public static final String PARAM_EDIT_DEADLINE = "editDeadline";
+    public static final String PARAM_EDIT_EVENT = "editEvent";
+    public static final String PARAM_DELETE_TASK = "deleteTask";
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
     public static final String PARAM_TIME = "/time";
     public static final String PARAM_TO = "/to";
     public static final String PARAM_BY = "/by";
+    public static final String PARAM_TYPE = "/type";
+    public static final String PARAM_NAME = "/name";
+
+    public static final String PARAM_LESSON = "lesson";
+    public static final String PARAM_EVENT = "event";
+    public static final String PARAM_DEADLINE = "deadline";
+
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
