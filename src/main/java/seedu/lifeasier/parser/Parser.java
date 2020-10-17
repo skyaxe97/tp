@@ -164,6 +164,65 @@ public class Parser {
         return new AddNotesCommand(title);
     }
 
+    private Command parseEditLessonCommand(String input) {
+
+        LOGGER.log(Level.INFO, "Parsing editLesson command...");
+
+        int lastIndexOfAddNotesCommand = input.indexOf(PARAM_EDIT_LESSON) + PARAM_EDIT_LESSON.length();
+        String code = input.substring(lastIndexOfAddNotesCommand).trim();
+
+        return new EditLessonCommand(code);
+    }
+
+    private Command parseEditEventCommand(String input) {
+
+        LOGGER.log(Level.INFO, "Parsing editEvent command...");
+
+        int lastIndexOfAddNotesCommand = input.indexOf(PARAM_EDIT_EVENT) + PARAM_EDIT_EVENT.length();
+        String eventName = input.substring(lastIndexOfAddNotesCommand).trim();
+
+        return new EditEventCommand(eventName);
+    }
+
+    private Command parseEditDeadlineCommand(String input) {
+
+        LOGGER.log(Level.INFO, "Parsing editDeadline command...");
+
+        int lastIndexOfAddNotesCommand = input.indexOf(PARAM_EDIT_DEADLINE) + PARAM_EDIT_DEADLINE.length();
+        String deadlineName = input.substring(lastIndexOfAddNotesCommand).trim();
+
+        return new EditDeadlineCommand(deadlineName);
+    }
+
+    private Command parseDeleteTaskCommand(String input){
+        String type = "";
+        String name = "";
+        try {
+            LOGGER.log(Level.INFO, "Parsing deleteTask command...");
+            int firstIndexOfTypeCommand = input.indexOf(PARAM_TYPE);
+            int lastIndexOfTypeCommand = input.indexOf(PARAM_TYPE) + PARAM_TYPE.length();
+            if (firstIndexOfTypeCommand == -1) {
+                throw new ParserException();
+            }
+
+            int firstIndexOfNameCommand = input.indexOf(PARAM_NAME);
+            if (firstIndexOfNameCommand == -1) {
+                type = input.substring(lastIndexOfTypeCommand).trim();
+                name = "";
+            } else {
+                int lastIndexOfNameCommand = input.indexOf(PARAM_NAME) + PARAM_NAME.length();
+                type = input.substring(lastIndexOfTypeCommand, firstIndexOfNameCommand).trim();
+                if (!type.equals(PARAM_DEADLINE) && !type.equals(PARAM_EVENT)
+                        && !type.equals(PARAM_LESSON)) {
+                    throw new ParserException();
+                }
+                name = input.substring(lastIndexOfNameCommand).trim();
+            }
+        } catch (ParserException e) {
+        }
+        return new DeleteTaskCommand(type, name);
+    }
+
     public LocalDateTime[] parseNewTimeInput(Ui ui, String input, int numOfTimeArgs) throws ParserException {
 
         LOGGER.log(Level.INFO, "Parsing newTimeInput from user...");
