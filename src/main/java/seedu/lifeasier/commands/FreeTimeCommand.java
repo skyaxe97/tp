@@ -9,9 +9,13 @@ import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class FreeTimeCommand extends Command {
+
+    private static Logger logger = Logger.getLogger(FreeTimeCommand.class.getName());
 
     public static final int PARAM_START = 0;
     public static final int PARAM_END = 1;
@@ -22,7 +26,10 @@ public class FreeTimeCommand extends Command {
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
 
+        logger.log(Level.INFO, "Getting tasks from today...");
         ArrayList<Task> tasksFromToday = tasks.getTasksFromOneDay(LocalDate.now());
+
+        logger.log(Level.INFO, "Getting longest block of free time...");
         int[] longestFreeTime = getLongestFreeTime(tasksFromToday);
 
         int startHour = longestFreeTime[PARAM_START];
@@ -30,6 +37,8 @@ public class FreeTimeCommand extends Command {
         int duration = endHour - startHour;
 
         assert (startHour < endHour) : "The end cannot be before the start!";
+
+        logger.log(Level.INFO, "Showing free time message...");
         ui.showFreeTimeMessage(startHour, endHour, duration);
 
     }
