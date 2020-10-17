@@ -1,15 +1,22 @@
 package seedu.lifeasier.tasks;
 
+import seedu.lifeasier.commands.ShowNotesCommand;
+import seedu.lifeasier.parser.Parser;
+import seedu.lifeasier.parser.ParserException;
+import seedu.lifeasier.ui.Ui;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class TaskList {
+    private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
     protected static int taskCount;
+    private int indexOfLastMatch;
 
     public TaskList() {
         taskList = new ArrayList<>();
@@ -37,7 +44,7 @@ public class TaskList {
         taskCount++;
     }
 
-    public void displayTaskList() {
+    public void debugDisplayTaskList() {
         System.out.println("This is what is in the taskList:");
         for (Task task : taskList) {
             System.out.println(task.toString());
@@ -76,7 +83,84 @@ public class TaskList {
         addTask(deadline);
     }
 
+    public void editTaskDescription(int index, Ui ui) {
+        String newDescription = ui.readCommand();
+        getTask(index).setDescription(newDescription);
+        ui.showEditConfirmationMessage();
+    }
+
+    public void editLessonTime(int index, Ui ui) throws ParserException {
+        Parser parser = new Parser();
+        LocalDateTime[] times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
+        if (times[0] == null) {
+            throw new ParserException();
+        }
+        getTask(index).setStart(times[0]);
+        getTask(index).setEnd(times[1]);
+        ui.showEditConfirmationMessage();
+    }
+
+    public void editEventTime(int index, Ui ui) throws ParserException {
+        LocalDateTime[] times;
+        Parser parser = new Parser();
+        times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
+        if (times[0] == null) {
+            throw new ParserException();
+        }
+        getTask(index).setStart(times[0]);
+        getTask(index).setEnd(times[1]);
+        ui.showEditConfirmationMessage();
+    }
+
+    public void editDeadlineTime(int index, Ui ui) throws ParserException {
+        LocalDateTime[] times;
+        Parser parser = new Parser();
+        times = parser.parseNewTimeInput(ui, ui.readCommand(), 1);
+        if (times[0] == null) {
+            throw new ParserException();
+        }
+        getTask(index).setStart(times[0]);
+        ui.showEditConfirmationMessage();
+    }
+
+    public void deleteTask(int index, Ui ui) {
+        try {
+            taskList.remove(index);
+            taskCount--;
+        } catch (IndexOutOfBoundsException e) {
+            ui.showInvalidNumberMessage();
+        } catch (NumberFormatException e) {
+            ui.showNumberFormatMessage();
+        }
+    }
+
+    public void printMatchingTasks(Ui ui, String type, String description) throws TaskNotFoundException {
+
+        logger.log(Level.INFO, "Start of printing all matching " + type);
+        indexOfLastMatch = 0;
+        boolean noMatches = true;
+        for (int i = 0; i < getTaskCount(); i++) {
+                if (getTask(i).getType().equals(type)
+                        && getTask(i).getDescription().contains(description)) {
+                    System.out.println((i + 1) + ". " + getTask(i).toString());
+                    indexOfLastMatch = i;
+                    noMatches = false;
+                }
+            }
+            if (noMatches) {
+                throw new TaskNotFoundException();
+            }
+        logger.log(Level.INFO, "Start of printing all matching " + type);
+    }
+
+    public void checkForIndexOutOfBounds(int userInput) {
+        if (userInput > indexOfLastMatch || userInput < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
     public void sort() {
         taskList.sort(Comparator.comparing(Task::getStart));
     }
+
 }
