@@ -48,6 +48,9 @@ public class SleepTimeCommand extends Command {
     }
 
     private int getLatestBusyTime(ArrayList<Task> tasks) {
+
+        assert (0 < HOUR_LATEST && HOUR_LATEST < 25) : "The latest hour checked must be between 0 and 24";
+
         for (int hour = HOUR_LATEST - 1; hour > 0; hour--) {
             if (isBusyTime(hour, tasks)) {
                 return hour;
@@ -57,6 +60,10 @@ public class SleepTimeCommand extends Command {
     }
 
     private int getEarliestBusyTime(ArrayList<Task> tasks) {
+
+        assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
+                "The earliest hour must be between 0 and the latest hour";
+
         for (int hour = HOUR_EARLIEST; hour < HOUR_LATEST; hour++) {
             if (isBusyTime(hour, tasks)) {
                 return hour;
