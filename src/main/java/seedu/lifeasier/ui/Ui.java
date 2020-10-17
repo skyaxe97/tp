@@ -11,6 +11,9 @@ import java.util.Scanner;
 public class Ui {
 
     public static final String SEPARATOR = "=========================================================================";
+    public static final String PARAM_LESSON = "lesson";
+    public static final String PARAM_EVENT = "event";
+    public static final String PARAM_DEADLINE = "deadline";
     public static final String LOGO = "\n"
             + "  _      _  __ ______          _\n"
             + " | |    (_)/ _|  ____|        (_)\n"
