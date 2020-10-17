@@ -48,7 +48,7 @@ public class LifEasier {
 
             try {
                 Command userCommand = parser.parseCommand(fullCommand, ui);
-                userCommand.execute(ui, notes, tasks, storage);
+                userCommand.execute(ui, notes, tasks, storage, parser);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
