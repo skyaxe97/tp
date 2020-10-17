@@ -49,12 +49,12 @@ public class EditNotesCommand extends Command {
             NoteCommandFunctions.printMultipleMatches(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
-            noteNumber = Integer.parseInt(ui.readCommand());
+            noteNumber = Integer.parseInt(ui.readCommand()) - 1;
             NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
 
-            System.out.println(notes.get(noteNumber - 1).toString());
+            System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmEditMessage();
-            parseUserResponse(ui, notes, noteNumber - 1, ui.readCommand());
+            parseUserResponse(ui, notes, noteNumber, ui.readCommand());
         }
 
     }

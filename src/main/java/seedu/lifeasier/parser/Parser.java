@@ -174,6 +174,7 @@ public class Parser {
 
     /**
      * Parses the deleteNotes command that the user inputs.
+     *
      * @param input String containing the user's input.
      * @return ShowNotesCommand with the parameters input by the user.
      */
@@ -188,6 +189,7 @@ public class Parser {
 
     /**
      * Parses the editNotes command that the user inputs.
+     *
      * @param input String containing the user's input.
      * @return ShowNotesCommand with the parameters input by the user.
      */
