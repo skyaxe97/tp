@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 
 public class FreeTimeCommand extends Command {
+
     public static final int PARAM_START = 0;
     public static final int PARAM_END = 1;
     public static final int HOUR_EARLIEST = 7;
@@ -61,8 +62,8 @@ public class FreeTimeCommand extends Command {
 
         int[] longestFreeTime = new int[2];
 
-        int startOfFreeTime = 24;
-        int endOfFreeTime = 24;
+        int startOfFreeTime = HOUR_EARLIEST;
+        int endOfFreeTime = HOUR_LATEST;
 
         assert (0 < HOUR_LATEST && HOUR_LATEST < 25) : "The latest hour checked must be between 0 and 24";
         assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
