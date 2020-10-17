@@ -64,7 +64,7 @@ public class EditNotesCommand extends Command {
         if (parser.parseUserInputYesOrNo(input, ui).equals("Y")) {
             logger.log(Level.INFO, "Y is inputted");
             ui.showEditWhichPartMessage();
-            parser.parseUserInputTOrD(input, ui);
+            input = parser.parseUserInputTOrD(input, ui);
             changeTitleOrDescription(ui, notes, noteNumber, input);
         } else {
             logger.log(Level.INFO, "N is inputted");
