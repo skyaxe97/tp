@@ -348,6 +348,18 @@ public class Parser {
             case (PARAM_EXIT):
                 return new ExitCommand();
 
+            case (PARAM_EDIT_LESSON):
+                return parseEditLessonCommand(input);
+
+            case (PARAM_EDIT_EVENT):
+                return parseEditEventCommand(input);
+
+            case (PARAM_EDIT_DEADLINE):
+                return parseEditDeadlineCommand(input);
+
+            case (PARAM_DELETE_TASK):
+                return parseDeleteTaskCommand(input);
+
             default:
                 throw new ParserException();
             }
