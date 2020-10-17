@@ -137,7 +137,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddDeadlineCommand with the parameters input by the user.
      */
-    private Command parseAddDeadlineCommand(String input) {
+    protected Command parseAddDeadlineCommand(String input) throws DateTimeParseException {
 
         LOGGER.log(Level.INFO, "Parsing addDeadline command...");
 

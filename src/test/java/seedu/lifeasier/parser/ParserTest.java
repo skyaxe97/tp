@@ -43,7 +43,7 @@ class ParserTest {
         Parser parser = new Parser();
         Ui ui = new Ui();
         assertThrows(DateTimeParseException.class, () -> {
-            parser.parseCommand("addDeadline do homework /by 10-30-40 24:67", ui);
+            parser.parseAddDeadlineCommand("addDeadline do homework /by 10-30-40 24:67");
         });
     }
 
