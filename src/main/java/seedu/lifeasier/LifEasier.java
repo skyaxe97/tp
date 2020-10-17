@@ -26,6 +26,7 @@ public class LifEasier {
     private FileStorage storage;
     private ScheduleUi scheduleUi;
 
+
     public LifEasier(String fileNameTasks, String fileNameNotes) {
         ui = new Ui();
         parser = new Parser();
@@ -38,7 +39,11 @@ public class LifEasier {
     /**
      * Runs the LifEasier program infinitely until termination by the user.
      */
-    public void run() {
+    public void run(boolean showLogging) {
+
+        if (!showLogging) {
+            LogManager.getLogManager().reset();
+        }
 
         boolean isFinished = false;
 
@@ -75,7 +80,7 @@ public class LifEasier {
      * Main entry-point for the LifEasier application.
      */
     public static void main(String[] args) {
-        LogManager.getLogManager().reset();
-        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run();
+
+        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(true);
     }
 }
