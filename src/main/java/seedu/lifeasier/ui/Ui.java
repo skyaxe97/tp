@@ -26,6 +26,7 @@ public class Ui {
     //Error messages
     public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for "
             + "a list of available commands";
+    public static final String ERROR_INVALID_INPUT = "Oh no, I do not understand this input!";
 
     //General UI messages
     public static final String MESSAGE_GOODBYE = "Goodbye, hope to see you again soon!";
@@ -104,8 +105,96 @@ public class Ui {
         return conversation.nextLine();
     }
 
+    public int readSingleIntInput() {
+        return Integer.parseInt(readCommand());
+    }
+
+    public void showSelectTaskToEdit(String type) {
+        System.out.println("Please select the " + type + " you want to edit.");
+    }
+
+    public void showSelectParameterToEdit() {
+        System.out.println("Please select the parameter you want to edit.");
+    }
+
+    public void showSelectTaskToDelete(String type) {
+        System.out.println("Please select the " + type + " you want to delete.");
+    }
+
+    public void showInputFormat(String type) {
+        switch (type) {
+
+        case (PARAM_EVENT):
+            System.out.println("Please input your new time in this format: " + NEW_EVENT_TIME_INPUT_FORMAT);
+            break;
+
+        case (PARAM_DEADLINE):
+            System.out.println("Please input your new time in this format: " + NEW_DEADLINE_TIME_INPUT_FORMAT);
+            break;
+
+        case (PARAM_LESSON):
+            System.out.println("Please input your new time in this format: " + NEW_LESSON_TIME_INPUT_FORMAT);
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    public void showInputMessage(String type) {
+        switch (type) {
+
+        case (PARAM_LESSON):
+            System.out.println("Please input your new Module Code");
+            break;
+
+        case (PARAM_DEADLINE):
+            System.out.println("Please input your new Deadline name");
+            break;
+
+        case (PARAM_EVENT):
+            System.out.println("Please input your new Event name");
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    public void showEditableParameters(String type) {
+        switch (type) {
+
+        case (PARAM_LESSON):
+            System.out.println("1. Module Code\n2. Time");
+            break;
+
+        case (PARAM_DEADLINE):
+            System.out.println("1. Deadline Name\n2. Time");
+            break;
+
+        case (PARAM_EVENT):
+            System.out.println("1. Event Name\n2. Time");
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    public void showEditConfirmationMessage() {
+        System.out.println("Your edit has been saved.");
+    }
+
+    public void showDeleteConfirmationMessage() {
+        System.out.println("The task you selected has been deleted.");
+    }
+
     public void showInvalidCommandError() {
         System.out.println(ERROR_INVALID_COMMAND);
+    }
+
+    public void showInvalidInputMessage() {
+        System.out.println(ERROR_INVALID_INPUT);
     }
 
     public void showGoodbyeMessage() {
@@ -206,6 +295,10 @@ public class Ui {
 
     public void showEmptyDescriptionMessage() {
         System.out.println("Empty description! =O\n");
+    }
+
+    public void showNoMatchesMessage(String type) {
+        System.out.println("Sorry! There is no " + type + " matching your query. Please re-enter your command.");
     }
 
     public void showNoteAddedMessage() {
