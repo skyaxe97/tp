@@ -7,6 +7,7 @@ import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -20,7 +21,7 @@ public class FreeTimeCommand extends Command {
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
 
-        ArrayList<Task> tasksFromToday = tasks.getTasksFromToday();
+        ArrayList<Task> tasksFromToday = tasks.getTasksFromOneDay(LocalDate.now());
         int[] longestFreeTime = getLongestFreeTime(tasksFromToday);
 
         int startHour = longestFreeTime[PARAM_START];

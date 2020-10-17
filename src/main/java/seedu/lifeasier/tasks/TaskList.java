@@ -79,10 +79,10 @@ public class TaskList {
         addTask(deadline);
     }
 
-    public ArrayList<Task> getTasksFromToday() {
+    public ArrayList<Task> getTasksFromOneDay(LocalDate day) {
 
         return (ArrayList<Task>) taskList.stream()
-                .filter((t) -> t.getStart().toLocalDate().equals(LocalDate.now()))
+                .filter((t) -> t.getStart().toLocalDate().equals(day))
                 .collect(toList());
 
     }
