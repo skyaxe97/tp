@@ -25,9 +25,6 @@ public class NoteStorage {
     private FileCommand fileCommand;
     private Ui ui;
 
-    public NoteStorage() {
-    }
-
     public NoteStorage(NoteList notes, String filePathNotes) {
         this.notes = notes;
         this.filePathNotes = filePathNotes;
