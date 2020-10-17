@@ -19,6 +19,7 @@ public class SleepTimeCommand extends Command {
 
     public static final int HOUR_EARLIEST = 0;
     public static final int HOUR_LATEST = 24;
+    public static final int RECOMMENDED_SLEEP_DURATION = 9;
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
@@ -38,12 +39,24 @@ public class SleepTimeCommand extends Command {
         int duration = (HOUR_LATEST - earliestSleepTime) + latestWakeTime;
 
         logger.log(Level.INFO, "Showing sleep time message...");
-        ui.showSleepTimeMessage(earliestSleepTime, latestWakeTime, duration);
 
+        if (earliestSleepTime == HOUR_EARLIEST && latestWakeTime == HOUR_LATEST) {
+            ui.showNothingScheduledMessage();
+        } else {
+            ui.showAvailableSleepTimeMessage(earliestSleepTime, latestWakeTime);
+        }
+
+        if (duration < RECOMMENDED_SLEEP_DURATION) {
+            ui.showSleepDurationMessage(duration);
+        } else {
+            ui.showExcessSleepDurationMessage();
+        }
+
+        ui.printSeparator();
     }
 
     /**
-     * Returns if there is something scheduled for a particular hour slot in a day.
+     * Returns true if there is something scheduled for a particular hour slot in a day.
      *
      * @param hour The time to be checked.
      * @param tasks An ArrayList containing the tasks scheduled for that day.

@@ -44,7 +44,7 @@ public class FreeTimeCommand extends Command {
     }
 
     /**
-     * Returns if there is nothing scheduled for a particular hour slot in a day.
+     * Returns true if there is nothing scheduled for a particular hour slot in a day.
      *
      * @param hour The time to be checked.
      * @param tasks An ArrayList containing the tasks scheduled for that day.
@@ -70,8 +70,8 @@ public class FreeTimeCommand extends Command {
 
         int[] longestFreeTime = new int[2];
 
-        int startOfFreeTime = HOUR_EARLIEST;
-        int endOfFreeTime = HOUR_LATEST;
+        int tempStartOfFreeTime = HOUR_EARLIEST;
+        int tempEndOfFreeTime = HOUR_LATEST;
 
         assert (0 < HOUR_LATEST && HOUR_LATEST < 25) : "The latest hour checked must be between 0 and 24";
         assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
@@ -80,17 +80,18 @@ public class FreeTimeCommand extends Command {
         for (int hour = HOUR_EARLIEST; hour < HOUR_LATEST; hour++) {
 
             if (isFreeTime(hour, tasks)) {
-                endOfFreeTime = hour + 1;
+                tempEndOfFreeTime = hour + 1;
 
             } else {
-                startOfFreeTime = hour + 1;
+                tempStartOfFreeTime = hour + 1;
             }
 
-            if ((endOfFreeTime - startOfFreeTime + 1)
-                    >= (longestFreeTime[PARAM_END] - longestFreeTime[PARAM_START] + 1)) {
+            int durationOfTempFreeTimeBlock = tempEndOfFreeTime - tempStartOfFreeTime + 1;
+            int durationOfLongestFreeTimeBlock = longestFreeTime[PARAM_END] - longestFreeTime[PARAM_START] + 1;
 
-                longestFreeTime[PARAM_START] = startOfFreeTime;
-                longestFreeTime[PARAM_END] = endOfFreeTime;
+            if (durationOfTempFreeTimeBlock >= durationOfLongestFreeTimeBlock) {
+                longestFreeTime[PARAM_START] = tempStartOfFreeTime;
+                longestFreeTime[PARAM_END] = tempEndOfFreeTime;
             }
         }
 

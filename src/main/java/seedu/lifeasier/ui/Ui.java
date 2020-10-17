@@ -213,7 +213,7 @@ public class Ui {
         if (duration != 0) {
             System.out.println("You have " + duration + " hours of free time between " + startHour
                     + ":00 and " + endHour + ":00!");
-            System.out.println("Hope you can schedule something in this time!");
+            System.out.println("You can try scheduling something in this time!");
 
         } else {
             System.out.println("Unfortunately you have no free time today!");
@@ -223,22 +223,21 @@ public class Ui {
         printSeparator();
     }
 
-    public void showSleepTimeMessage(int earliestSleepTime, int latestWakeTime, int duration) {
+    public void showNothingScheduledMessage() {
+        System.out.println("You have nothing on for today and tomorrow!");
+    }
 
-        if (earliestSleepTime == 0 && latestWakeTime == 24) {
-            System.out.println("You have nothing on for today and tomorrow!");
-        } else {
-            System.out.println("You have nothing on from " + earliestSleepTime + ":00 today to " + latestWakeTime
-                    + ":00 tomorrow!");
-        }
+    public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
+        System.out.println("You have nothing on from " + earliestSleepTime + ":00 today to " + latestWakeTime
+                + ":00 tomorrow!");
+    }
 
-        if (duration < 9) {
-            System.out.println("You can sleep for up to " + duration + " hours!");
-        } else {
-            System.out.println("You can sleep for the recommended 8 hours or longer!");
-        }
-        printSeparator();
+    public void showSleepDurationMessage(int duration) {
+        System.out.println("You can sleep for up to " + duration + " hours!");
+    }
 
+    public void showExcessSleepDurationMessage() {
+        System.out.println("You can sleep for the recommended 8 hours or longer!");
     }
 
 }
