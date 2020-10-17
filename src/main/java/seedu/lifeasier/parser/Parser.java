@@ -153,6 +153,57 @@ public class Parser {
         return new AddNotesCommand(title);
     }
 
+    public LocalDateTime[] parseNewTimeInput(Ui ui, String input, int numOfTimeArgs) throws ParserException {
+
+        LOGGER.log(Level.INFO, "Parsing newTimeInput from user...");
+        LocalDateTime[] times = new LocalDateTime[2];
+        try {
+            switch (numOfTimeArgs) {
+
+            case (1):
+                int firstIndexOfByCommand = input.indexOf(PARAM_BY);
+                int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
+
+                if (firstIndexOfByCommand == -1) {
+                    throw new ParserException();
+                }
+
+                String byInput = input.substring(lastIndexOfByCommand).trim();
+                LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
+                times[0] = by;
+                return times;
+
+            case (2):
+                int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
+                int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
+                int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
+                int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
+                int firstIndexOfToCommand = input.indexOf(PARAM_TO);
+                int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+
+                if (firstIndexOfDateCommand == -1 || firstIndexOfTimeCommand == -1 || firstIndexOfToCommand == -1) {
+                    throw new ParserException();
+                }
+
+                String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+                String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+                String endTime =  input.substring(lastIndexOfToCommand).trim();
+                LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+                LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+                times[0] = start;
+                times[1] = end;
+                return times;
+
+            default:
+                throw new ParserException();
+            }
+
+        } catch (DateTimeParseException e) {
+            ui.showLocalDateTimeParseError();
+        }
+        return times;
+    }
+
     /**
      * Parses the showNotes command that the user inputs.
      *
