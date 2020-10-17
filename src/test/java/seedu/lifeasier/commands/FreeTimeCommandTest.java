@@ -53,7 +53,7 @@ class FreeTimeCommandTest {
         tasks.add(new Event(description1, start1, end1));
         String description2 = "Another very long activity";
         LocalDateTime start2 = LocalDateTime.of(2020, 10, 17, 18, 0);
-        LocalDateTime end2 = LocalDateTime.of(2020, 10, 17, 23, );
+        LocalDateTime end2 = LocalDateTime.of(2020, 10, 17, 23, 0);
         tasks.add(new Event(description2, start2, end2));
 
         int[] longestFreeTime = command.getLongestFreeTime(tasks);
