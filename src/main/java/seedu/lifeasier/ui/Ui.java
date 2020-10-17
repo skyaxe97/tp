@@ -55,6 +55,11 @@ public class Ui {
             + "*************************************************************************\n"
             + "For more detailed information, please visit the online user guide at:\n";
 
+    //Input format messages
+    public static final String NEW_DEADLINE_TIME_INPUT_FORMAT = "/by DATETIME";
+    public static final String NEW_EVENT_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
+    public static final String NEW_LESSON_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
+
     private Scanner conversation;
 
     public Ui() {
