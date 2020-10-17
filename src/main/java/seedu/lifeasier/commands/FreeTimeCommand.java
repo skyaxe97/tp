@@ -42,7 +42,7 @@ public class FreeTimeCommand extends Command {
      * @param tasks An ArrayList containing the tasks scheduled for that day.
      * @return True if there is nothing scheduled.
      */
-    private boolean isFreeTime(int hour, ArrayList<Task> tasks) {
+    boolean isFreeTime(int hour, ArrayList<Task> tasks) {
 
         for (Task task : tasks) {
             if (!(task instanceof Deadline) && task.isWithinTimeSlot(hour)) {
@@ -58,7 +58,7 @@ public class FreeTimeCommand extends Command {
      * @param tasks An ArrayList containing the tasks scheduled for that day.
      * @return An integer array where the first index is the start of the block, and the second index is the end.
      */
-    private int[] getLongestFreeTime(ArrayList<Task> tasks) {
+    int[] getLongestFreeTime(ArrayList<Task> tasks) {
 
         int[] longestFreeTime = new int[2];
 
@@ -69,10 +69,10 @@ public class FreeTimeCommand extends Command {
         assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
                 "The earliest hour must be between 0 and the latest hour";
 
-        for (int hour = HOUR_EARLIEST; hour < HOUR_LATEST + 1; hour++) {
+        for (int hour = HOUR_EARLIEST; hour < HOUR_LATEST; hour++) {
 
             if (isFreeTime(hour, tasks)) {
-                endOfFreeTime = hour;
+                endOfFreeTime = hour + 1;
 
             } else {
                 startOfFreeTime = hour + 1;

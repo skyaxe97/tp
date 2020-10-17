@@ -47,6 +47,12 @@ public class SleepTimeCommand extends Command {
         return false;
     }
 
+    /**
+     * Returns the latest hour slot in which there is something scheduled in a day.
+     *
+     * @param tasks An ArrayList containing the tasks scheduled for that day.
+     * @return Integer representing the latest hour slot in which there is something scheduled for the day.
+     */
     private int getLatestBusyTime(ArrayList<Task> tasks) {
 
         assert (0 < HOUR_LATEST && HOUR_LATEST < 25) : "The latest hour checked must be between 0 and 24";
@@ -59,6 +65,12 @@ public class SleepTimeCommand extends Command {
         return 0;
     }
 
+    /**
+     * Returns the earliest hour slot in which there is something scheduled in a day.
+     *
+     * @param tasks An ArrayList containing the tasks scheduled for that day.
+     * @return Integer representing the earliest hour slot in which there is something scheduled for the day.
+     */
     private int getEarliestBusyTime(ArrayList<Task> tasks) {
 
         assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
