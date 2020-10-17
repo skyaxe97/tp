@@ -7,6 +7,7 @@ import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.notes.NoteCommandFunctions;
+import seedu.lifeasier.parser.Parser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +19,7 @@ public class EditNotesCommand extends Command {
         this.title = title;
     }
 
-    private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
+    private void findTitle(Ui ui, NoteList notes, Parser parser, String title) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
         int noteNumber = -1;
         int matchNumber = 0;
@@ -39,7 +40,7 @@ public class EditNotesCommand extends Command {
             logger.log(Level.INFO, "One match found");
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmEditMessage();
-            parseUserResponse(ui, notes, noteNumber, ui.readCommand());
+            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand());
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
@@ -54,26 +55,16 @@ public class EditNotesCommand extends Command {
 
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmEditMessage();
-            parseUserResponse(ui, notes, noteNumber, ui.readCommand());
+            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand());
         }
 
     }
 
-    private void parseUserResponse(Ui ui, NoteList notes, int noteNumber, String input) {
-        logger.log(Level.INFO, "Start check for Y/N input");
-        while (!input.trim().equals("Y") && !input.trim().equals("N")) {
-            ui.showInvalidConfirmationMessage();
-            input = ui.readCommand();
-        }
-        logger.log(Level.INFO, "End check for Y/N input");
-
-        if (input.trim().equals("Y")) {
+    private void promptUserInput(Ui ui, Parser parser, NoteList notes, int noteNumber, String input) {
+        if (parser.parseUserInputYesOrNo(input, ui).equals("Y")) {
             logger.log(Level.INFO, "Y is inputted");
             ui.showEditWhichPartMessage();
-            while (!input.trim().equals("T") && !input.trim().equals("D")) {
-                ui.showInvalidTitleDescriptionConfirmationMessage();
-                input = ui.readCommand();
-            }
+            parser.parseUserInputTOrD(input, ui);
             changeTitleOrDescription(ui, notes, noteNumber, input);
         } else {
             logger.log(Level.INFO, "N is inputted");
@@ -105,13 +96,13 @@ public class EditNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         try {
             logger.log(Level.INFO, "Start of EditNotesCommand");
             ui.printSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
-                findTitle(ui, notes, title);
+                findTitle(ui, notes, parser, title);
             } else {
                 ui.showSelectWhichNoteToEditMessage();
 
@@ -124,7 +115,7 @@ public class EditNotesCommand extends Command {
 
                 System.out.println(notes.get(noteNumber - 1).toString());
                 ui.showConfirmEditMessage();
-                parseUserResponse(ui, notes, noteNumber - 1, ui.readCommand());
+                promptUserInput(ui, parser, notes, noteNumber - 1, ui.readCommand());
 
             }
             storage.saveNote();

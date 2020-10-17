@@ -1,5 +1,6 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
@@ -47,7 +48,7 @@ public class AddNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         logger.log(Level.INFO, "Start of AddNotesCommand");
         String noteDescription = null;
         logger.log(Level.INFO, "Start for assigning noteTitle");

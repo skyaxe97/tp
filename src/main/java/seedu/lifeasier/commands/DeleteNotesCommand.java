@@ -7,6 +7,7 @@ import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.notes.NoteCommandFunctions;
+import seedu.lifeasier.parser.Parser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,7 +84,7 @@ public class DeleteNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         try {
             logger.log(Level.INFO, "Start of DeleteNotesCommand");
             ui.printSeparator();
