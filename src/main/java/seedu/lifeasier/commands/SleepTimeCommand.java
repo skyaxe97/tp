@@ -37,7 +37,7 @@ public class SleepTimeCommand extends Command {
      * @param tasks An ArrayList containing the tasks scheduled for that day.
      * @return True if there is something scheduled.
      */
-    private boolean isBusyTime(int hour, ArrayList<Task> tasks) {
+    boolean isBusyTime(int hour, ArrayList<Task> tasks) {
 
         for (Task task : tasks) {
             if (!(task instanceof Deadline) && task.isWithinTimeSlot(hour)) {
@@ -53,7 +53,7 @@ public class SleepTimeCommand extends Command {
      * @param tasks An ArrayList containing the tasks scheduled for that day.
      * @return Integer representing the latest hour slot in which there is something scheduled for the day.
      */
-    private int getLatestBusyTime(ArrayList<Task> tasks) {
+    int getLatestBusyTime(ArrayList<Task> tasks) {
 
         assert (0 < HOUR_LATEST && HOUR_LATEST < 25) : "The latest hour checked must be between 0 and 24";
 
@@ -62,7 +62,7 @@ public class SleepTimeCommand extends Command {
                 return hour;
             }
         }
-        return 0;
+        return -1;
     }
 
     /**
@@ -71,7 +71,7 @@ public class SleepTimeCommand extends Command {
      * @param tasks An ArrayList containing the tasks scheduled for that day.
      * @return Integer representing the earliest hour slot in which there is something scheduled for the day.
      */
-    private int getEarliestBusyTime(ArrayList<Task> tasks) {
+    int getEarliestBusyTime(ArrayList<Task> tasks) {
 
         assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
                 "The earliest hour must be between 0 and the latest hour";
@@ -81,7 +81,7 @@ public class SleepTimeCommand extends Command {
                 return hour;
             }
         }
-        return 24;
+        return 25;
     }
 }
 

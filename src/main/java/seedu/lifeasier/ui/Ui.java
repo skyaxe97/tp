@@ -224,8 +224,13 @@ public class Ui {
     }
 
     public void printSleepTimeMessage(int earliestSleepTime, int latestWakeTime, int duration) {
-        System.out.println("You have nothing on from " + earliestSleepTime + ":00 today to " + latestWakeTime
-                 + ":00 tomorrow!");
+
+        if (earliestSleepTime == 0 && latestWakeTime == 24) {
+            System.out.println("You have nothing on for today and tomorrow!");
+        } else {
+            System.out.println("You have nothing on from " + earliestSleepTime + ":00 today to " + latestWakeTime
+                    + ":00 tomorrow!");
+        }
 
         if (duration < 9) {
             System.out.println("You can sleep for up to " + duration + " hours!");
