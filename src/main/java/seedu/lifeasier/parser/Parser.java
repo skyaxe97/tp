@@ -198,7 +198,7 @@ public class Parser {
         return new EditDeadlineCommand(deadlineName);
     }
 
-    private Command parseDeleteTaskCommand(String input){
+    private Command parseDeleteTaskCommand(String input) {
         String type = "";
         String name = "";
         try {
@@ -223,6 +223,7 @@ public class Parser {
                 name = input.substring(lastIndexOfNameCommand).trim();
             }
         } catch (ParserException e) {
+            LOGGER.log(Level.SEVERE, "Invalid command...");
         }
         return new DeleteTaskCommand(type, name);
     }

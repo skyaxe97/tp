@@ -7,7 +7,8 @@ import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 
-import java.util.logging.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DeleteTaskCommand extends Command {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
@@ -27,7 +28,7 @@ public class DeleteTaskCommand extends Command {
         tasks.checkForIndexOutOfBounds(userInput);
     }
 
-    private void deleteTask (TaskList tasks, Ui ui, int index) {
+    private void deleteTask(TaskList tasks, Ui ui, int index) {
         tasks.deleteTask(index, ui);
     }
 

@@ -71,7 +71,7 @@ public class EditLessonCommand extends Command {
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Input is not in the correct format");
             ui.showInvalidInputMessage();
-        }catch (TaskNotFoundException e) {
+        } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input deadline name does not match any of the existing deadline names.");
             ui.showNoMatchesMessage("deadline");
         }

@@ -140,16 +140,16 @@ public class TaskList {
         indexOfLastMatch = 0;
         boolean noMatches = true;
         for (int i = 0; i < getTaskCount(); i++) {
-                if (getTask(i).getType().equals(type)
-                        && getTask(i).getDescription().contains(description)) {
-                    System.out.println((i + 1) + ". " + getTask(i).toString());
-                    indexOfLastMatch = i;
-                    noMatches = false;
-                }
+            if (getTask(i).getType().equals(type)
+                    && getTask(i).getDescription().contains(description)) {
+                System.out.println((i + 1) + ". " + getTask(i).toString());
+                indexOfLastMatch = i;
+                noMatches = false;
             }
-            if (noMatches) {
-                throw new TaskNotFoundException();
-            }
+        }
+        if (noMatches) {
+            throw new TaskNotFoundException();
+        }
         logger.log(Level.INFO, "Start of printing all matching " + type);
     }
 
