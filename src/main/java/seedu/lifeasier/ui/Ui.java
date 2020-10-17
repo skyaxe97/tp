@@ -208,7 +208,7 @@ public class Ui {
         System.out.println("Please select the notes you want to view:\n");
     }
 
-    public void printFreeTimeMessage(int startHour, int endHour, int duration) {
+    public void showFreeTimeMessage(int startHour, int endHour, int duration) {
 
         if (duration != 0) {
             System.out.println("You have " + duration + " hours of free time between " + startHour
@@ -223,7 +223,7 @@ public class Ui {
         printSeparator();
     }
 
-    public void printSleepTimeMessage(int earliestSleepTime, int latestWakeTime, int duration) {
+    public void showSleepTimeMessage(int earliestSleepTime, int latestWakeTime, int duration) {
 
         if (earliestSleepTime == 0 && latestWakeTime == 24) {
             System.out.println("You have nothing on for today and tomorrow!");

@@ -26,7 +26,7 @@ public class SleepTimeCommand extends Command {
 
         int duration = (HOUR_LATEST - earliestSleepTime) + latestWakeTime;
 
-        ui.printSleepTimeMessage(earliestSleepTime, latestWakeTime, duration);
+        ui.showSleepTimeMessage(earliestSleepTime, latestWakeTime, duration);
 
     }
 

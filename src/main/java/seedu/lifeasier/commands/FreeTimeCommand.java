@@ -30,7 +30,7 @@ public class FreeTimeCommand extends Command {
         int duration = endHour - startHour;
 
         assert (startHour < endHour) : "The end cannot be before the start!";
-        ui.printFreeTimeMessage(startHour, endHour, duration);
+        ui.showFreeTimeMessage(startHour, endHour, duration);
 
     }
 
