@@ -6,7 +6,11 @@ import seedu.lifeasier.commands.AddLessonCommand;
 import seedu.lifeasier.commands.AddNotesCommand;
 import seedu.lifeasier.commands.ArchiveCommand;
 import seedu.lifeasier.commands.Command;
+import seedu.lifeasier.commands.DeleteTaskCommand;
 import seedu.lifeasier.commands.DisplayScheduleCommand;
+import seedu.lifeasier.commands.EditDeadlineCommand;
+import seedu.lifeasier.commands.EditEventCommand;
+import seedu.lifeasier.commands.EditLessonCommand;
 import seedu.lifeasier.commands.ExitCommand;
 import seedu.lifeasier.commands.HelpCommand;
 import seedu.lifeasier.commands.ShowNotesCommand;
@@ -77,7 +81,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
-    Command parseAddLessonCommand(String input) {
+    private Command parseAddLessonCommand(String input) {
 
         LOGGER.log(Level.INFO, "Parsing addLesson command...");
 
@@ -133,7 +137,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddDeadlineCommand with the parameters input by the user.
      */
-    Command parseAddDeadlineCommand(String input) {
+    private Command parseAddDeadlineCommand(String input) {
 
         LOGGER.log(Level.INFO, "Parsing addDeadline command...");
 
