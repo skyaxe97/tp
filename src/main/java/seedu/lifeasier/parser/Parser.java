@@ -47,6 +47,7 @@ public class Parser {
     private boolean isDateEmpty = true;
     private boolean isStartTimeEmpty = true;
     private boolean isEndTimeEmpty = true;
+    private boolean isDateTimeEmpty = true;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
@@ -209,7 +210,7 @@ public class Parser {
                 isDescriptionEmpty = false;
                 break;
             case END_TIME:
-                input = addEndTimeParam(ui, input);
+                input = addByDateTime(ui, input);
                 isEndTimeEmpty = false;
                 break;
             default:
@@ -343,6 +344,7 @@ public class Parser {
         isDateEmpty = true;
         isStartTimeEmpty = true;
         isEndTimeEmpty = true;
+        isDateTimeEmpty = true;
     }
 
     private MissingParam checkLessonParameters(String input) {
@@ -382,11 +384,11 @@ public class Parser {
     private MissingParam checkDeadlineParameters(String input) {
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
-        int descriptionLength = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim().length();
 
-        if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
+        if (!input.contains(PARAM_BY) && isDateTimeEmpty) {
             return MissingParam.END_TIME;
-        } else if (descriptionLength == 0 && isDescriptionEmpty) {
+        } else if (input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim().length() == 0
+                && isDescriptionEmpty) {
             return MissingParam.DESCRIPTION;
         } else {
             return MissingParam.COMPLETED;
@@ -405,8 +407,8 @@ public class Parser {
     private String addDeadlineDescriptionParam(Ui ui, String input) {
         ui.showAddDescriptionMessage();
         String description = checkIfEmpty(ui, ui.readCommand());
-        String[] temp = input.split("/date");
-        input = temp[0] + description + " /date" + temp[1];
+        String[] temp = input.split("/by");
+        input = temp[0] + description + " /by" + temp[1];
 
         return input;
     }
@@ -442,6 +444,14 @@ public class Parser {
         ui.showAddEndTimeMessage();
         String endTime = checkIfEmpty(ui, ui.readCommand());
         input = input + " /to " + endTime;
+
+        return input;
+    }
+
+    private String addByDateTime(Ui ui, String input) {
+        ui.showAddDateTimeMessage();
+        String DateTime = checkIfEmpty(ui, ui.readCommand());
+        input = input + " /by" + DateTime;
 
         return input;
     }

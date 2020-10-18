@@ -285,4 +285,8 @@ public class Ui {
     public void showAddDescriptionMessage() {
         System.out.println("Please input the description:");
     }
+
+    public void showAddDateTimeMessage() {
+        System.out.println("Please input the Date Time:");
+    }
 }
