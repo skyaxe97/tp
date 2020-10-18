@@ -81,10 +81,6 @@ public class Parser {
     Command parseAddLessonCommand(Ui ui, String input) {
 
         LOGGER.log(Level.INFO, "Parsing addLesson command...");
-        String moduleCode;
-        String date;
-        String startTime;
-        String endTime;
 
         while (isParametersEmpty) {
             MissingParam param = checkLessonParameters(input);
@@ -121,10 +117,10 @@ public class Parser {
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
 
-        moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
-        date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-        startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        endTime =  input.substring(lastIndexOfToCommand).trim();
+        String moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
+        String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+        String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+        String endTime =  input.substring(lastIndexOfToCommand).trim();
 
         System.out.println(moduleCode + " " + date + " " + startTime + " " + endTime);
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
@@ -352,7 +348,7 @@ public class Parser {
      * @return A non-empty string.
      */
     private String checkIfEmpty(Ui ui, String string) {
-        while (string.trim().length()==0) {     // empty string
+        while (string.trim().length() == 0) {     // empty string
             ui.showEmptyDescriptionMessage();
             string = ui.readCommand();
         }
@@ -409,8 +405,8 @@ public class Parser {
             return MissingParam.START_TIME;
         } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
             return MissingParam.DATE;
-        } else if (input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim().length() == 0 &&
-                isDescriptionEmpty) {
+        } else if (input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim().length() == 0
+                && isDescriptionEmpty) {
             return MissingParam.DESCRIPTION;
         } else {
             return MissingParam.COMPLETED;
@@ -543,8 +539,8 @@ public class Parser {
      */
     private String addByDateTime(Ui ui, String input) {
         ui.showAddDateTimeMessage();
-        String DateTime = checkIfEmpty(ui, ui.readCommand());
-        input = input + " /by" + DateTime;
+        String ByDateTime = checkIfEmpty(ui, ui.readCommand());
+        input = input + " /by" + ByDateTime;
 
         return input;
     }
