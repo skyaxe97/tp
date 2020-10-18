@@ -38,14 +38,14 @@ class ParserTest {
         });
     }
 
-//    @Test
-//    void parseAddDeadlineCommand_inputInvalidDateTime_ParserException() {
-//        Parser parser = new Parser();
-//        Ui ui = new Ui();
-//        assertThrows(DateTimeParseException.class, () -> {
-//            parser.parseAddDeadlineCommand("addDeadline do homework /by 10-30-40 24:67");
-//        });
-//    }
+    //    @Test
+    //    void parseAddDeadlineCommand_inputInvalidDateTime_ParserException() {
+    //        Parser parser = new Parser();
+    //        Ui ui = new Ui();
+    //        assertThrows(DateTimeParseException.class, () -> {
+    //            parser.parseAddDeadlineCommand("addDeadline do homework /by 10-30-40 24:67");
+    //        });
+    //    }
 
 
 }
