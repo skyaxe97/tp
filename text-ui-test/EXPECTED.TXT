@@ -26,6 +26,10 @@ help ---------------------------------------- Displays available commands
 addLesson /code MODULE_CODE /date DATE /time START /to END -- Adds lesson
 addEvent EVENT_NAME /date DATE /time START /to END -------- Adds an event
 addDeadline DEADLINE_NAME /by DATETIME ------------------ Adds a deadline
+editLesson MODULE_CODE ----------------------------------- Edits a lesson
+editEvent EVENT_NAME ------------------------------------- Edits an event
+editDeadline DEADLINE_NAME ----------------------------- Edits a deadline
+deleteTask /type TYPE /name NAME ------------------------- Deletes a task
 addNotes TITLE ------------------------------------------ Adds a new note
 showNotes TITLE ------------------------------------- Shows selected note
 display WEEK/DAY --------------- Displays either weekly or daily schedule
