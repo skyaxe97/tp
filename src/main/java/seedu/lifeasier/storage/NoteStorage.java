@@ -17,6 +17,8 @@ import java.util.logging.Logger;
  */
 public class NoteStorage {
 
+    public static final String BLANK_STRING = "";
+
     private static Logger logger = Logger.getLogger(NoteStorage.class.getName());
     private static final String SAVE_DELIMITER = "=-=";
 
@@ -54,7 +56,7 @@ public class NoteStorage {
         logger.log(Level.INFO, "Read Notes save file end");
     }
 
-    private void createNoteList(Scanner fileScanner) {
+    protected void createNoteList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding notes from save");
 
         try {
@@ -64,6 +66,10 @@ public class NoteStorage {
                 String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
                 String noteTitle = noteComponents[0];
                 String noteDescription = noteComponents[1];
+
+                if (noteTitle.equals(BLANK_STRING)) {
+                    throw new ArrayIndexOutOfBoundsException();
+                }
 
                 notes.add(new Note(noteTitle, noteDescription));
                 logger.log(Level.INFO, "New Note added: " + noteTitle);

@@ -6,6 +6,8 @@ import seedu.lifeasier.notes.NoteList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -84,6 +86,40 @@ class NoteStorageTest {
         Boolean correctNoteListLength = notes.getNotes().size() == 1;
 
         assertTrue(correctTitle && correctDescription && correctNoteListLength);
+    }
+
+    /**
+     * Tests when save data is corrupted and missing fields, all previous save data to that point is still read
+     * onto the program and the program continues to run instead of crashing.
+     */
+    @Test
+    void createNoteList_missingData_limitedSaveRead() {
+        try {
+            File testFile = new File(TEST_NOTE_PATH);
+            if (!testFile.exists()) {
+                if (testFile.createNewFile()) {
+                    System.out.println("New test save file created");
+                }
+            }
+            //Clear save file if written on from previous tests
+            FileCommand fileCommand = new FileCommand();
+            fileCommand.clearSaveFile(TEST_NOTE_PATH);
+            notes.getNotes().clear();
+            //Write test data onto test file
+            FileWriter fileWriter = new FileWriter(TEST_NOTE_PATH, true);
+            fileWriter.write("Test Note 1=-=First Test case" + System.lineSeparator());
+            fileWriter.write("Test Note 2=-=Second Test case" + System.lineSeparator());
+            fileWriter.write("=-=This test is missing information" + System.lineSeparator());
+            fileWriter.write("Test Note 3=-=This should not be written" + System.lineSeparator());
+            fileWriter.close();
+
+            Scanner fileReader = new Scanner(testFile);
+            noteStorage.createNoteList(fileReader);
+
+            assertEquals(2, notes.getNotes().size());
+        } catch (IOException e) {
+            System.out.println("Testing error - Could not write to save file");
+        }
     }
 
 }
