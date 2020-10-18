@@ -539,8 +539,8 @@ public class Parser {
      */
     private String addByDateTime(Ui ui, String input) {
         ui.showAddDateTimeMessage();
-        String ByDateTime = checkIfEmpty(ui, ui.readCommand());
-        input = input + " /by" + ByDateTime;
+        String byDateTime = checkIfEmpty(ui, ui.readCommand());
+        input = input + " /by" + byDateTime;
 
         return input;
     }
