@@ -66,7 +66,8 @@ public class FileArchive {
      * @param notesList ArrayList of notes to be archived.
      * @throws IOException When an error is encountered writing to the archive file.
      */
-    private void writeDataToArchiveSaveFile(String archiveSaveFilePath, ArrayList<Note> notesList) throws IOException {
+    protected void writeDataToArchiveSaveFile(String archiveSaveFilePath, ArrayList<Note> notesList)
+            throws IOException {
         FileWriter fileWriter = new FileWriter(archiveSaveFilePath, true);
 
         assert notesList.size() > 0 : "NotesList cannot be empty when archiving";
@@ -84,15 +85,15 @@ public class FileArchive {
         logger.log(Level.INFO, "End archive file write");
     }
 
-    private String getNoteBody(Note note) {
+    protected String getNoteBody(Note note) {
         return note.getDescription().trim() + System.lineSeparator();
     }
 
-    private String getNoteTitle(Note note) {
+    protected String getNoteTitle(Note note) {
         return note.getTitle().trim() + System.lineSeparator();
     }
 
-    private void createArchiveSaveFile(File archiveSave) throws IOException {
+    protected void createArchiveSaveFile(File archiveSave) throws IOException {
         //Create new save if none exist
         if (!archiveSave.exists()) {
             logger.log(Level.INFO, "Creating new archive save");
@@ -104,11 +105,11 @@ public class FileArchive {
         logger.log(Level.INFO, "Archive save created");
     }
 
-    private Boolean checkForEmptyNotes(ArrayList<Note> notesList) {
+    protected Boolean checkForEmptyNotes(ArrayList<Note> notesList) {
         return notesList.size() == 0;
     }
 
-    private String getCurrentDateTime() {
+    protected String getCurrentDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         String formattedDateTime = currentDateTime.format(FileCommand.DATE_TIME_FORMATTER);
         return formattedDateTime.replaceAll(" ", "T").replace(":", "");
@@ -119,7 +120,7 @@ public class FileArchive {
      *
      * @param notesList ArrayList where all notes are to be removed.
      */
-    private void clearNoteList(ArrayList<Note> notesList) {
+    protected void clearNoteList(ArrayList<Note> notesList) {
         logger.log(Level.INFO, "Clearing notes");
         notesList.clear();
     }

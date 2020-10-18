@@ -19,7 +19,7 @@ class NoteStorageTest {
             "Cats are awesome!=-=Cats are so cute, they are the best :D" + System.lineSeparator();
     private static final String EXPECTED_STRING_NOTES_READ =
             "Cats are awesome!=-=Cats are so cute, they are the best :D";
-    private static final String TEST_NOTE_PATH = "testSave.txt";
+    private static final String TEST_FILEPATH = "testSave.txt";
 
     private NoteStorage noteStorage;
     private NoteList notes;
@@ -27,7 +27,7 @@ class NoteStorageTest {
 
     public NoteStorageTest() {
         this.notes = new NoteList();
-        this.noteStorage = new NoteStorage(notes, TEST_NOTE_PATH);
+        this.noteStorage = new NoteStorage(notes, TEST_FILEPATH);
         this.note = new Note("Cats are awesome!  ", "  Cats are so cute, they are the best :D  ");
     }
 
@@ -43,7 +43,7 @@ class NoteStorageTest {
         notes.add(note);
         noteStorage.writeToNoteSaveFile();
 
-        File testFile = new File(TEST_NOTE_PATH);
+        File testFile = new File(TEST_FILEPATH);
         String saveFileContents = null;
         Scanner fileReader = null;
         try {
@@ -95,7 +95,7 @@ class NoteStorageTest {
     @Test
     void createNoteList_missingData_limitedSaveRead() {
         try {
-            File testFile = new File(TEST_NOTE_PATH);
+            File testFile = new File(TEST_FILEPATH);
             if (!testFile.exists()) {
                 if (testFile.createNewFile()) {
                     System.out.println("New test save file created");
@@ -103,10 +103,10 @@ class NoteStorageTest {
             }
             //Clear save file if written on from previous tests
             FileCommand fileCommand = new FileCommand();
-            fileCommand.clearSaveFile(TEST_NOTE_PATH);
+            fileCommand.clearSaveFile(TEST_FILEPATH);
             notes.getNotes().clear();
             //Write test data onto test file
-            FileWriter fileWriter = new FileWriter(TEST_NOTE_PATH, true);
+            FileWriter fileWriter = new FileWriter(TEST_FILEPATH, true);
             fileWriter.write("Test Note 1=-=First Test case" + System.lineSeparator());
             fileWriter.write("Test Note 2=-=Second Test case" + System.lineSeparator());
             fileWriter.write("=-=This test is missing information" + System.lineSeparator());

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TaskStorageTest {
 
     public static final String SAVE_DELIMITER = "=-=";
-    public static final String TEST_SAVE_PATH = "testSave.txt";
+    public static final String TEST_FILEPATH = "testSave.txt";
     public static final String EXPECTED_LESSON = "lesson" + SAVE_DELIMITER + "false" + SAVE_DELIMITER + "CS2113T"
             + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "09-04-21 18:00" + System.lineSeparator();
     public static final String EXPECTED_EVENT = "event" + SAVE_DELIMITER + "false" + SAVE_DELIMITER + "Concert"
@@ -37,7 +37,7 @@ class TaskStorageTest {
 
     public TaskStorageTest() {
         this.tasks = new TaskList();
-        this.taskStorage = new TaskStorage(tasks, TEST_SAVE_PATH);
+        this.taskStorage = new TaskStorage(tasks, TEST_FILEPATH);
         this.fileCommand = new FileCommand();
         startTime = fileCommand.convertToLocalDateTime("09-04-21T18:00");
         endTime = fileCommand.convertToLocalDateTime("09-04-21T18:00");
@@ -46,15 +46,15 @@ class TaskStorageTest {
     @Test
     void readTasksSave_saveFileTasks_tasksRebuilt() {
         try {
-            File testSaveFile = new File(TEST_SAVE_PATH);
+            File testSaveFile = new File(TEST_FILEPATH);
             if (!testSaveFile.exists()) {
                 if (testSaveFile.createNewFile()) {
                     System.out.println("Save file for testing created");
                 }
             }
-            fileCommand.clearSaveFile(TEST_SAVE_PATH);
+            fileCommand.clearSaveFile(TEST_FILEPATH);
 
-            FileWriter fileWriter = new FileWriter(TEST_SAVE_PATH, true);
+            FileWriter fileWriter = new FileWriter(TEST_FILEPATH, true);
             fileWriter.write("deadline=-=false=-=Go Home=-=16-10-20 23:59");
             fileWriter.close();
 
@@ -75,16 +75,16 @@ class TaskStorageTest {
 
     @Test
     void createTaskList_saveDataCorrupted_limitedSavesRead() {
-        File testSave = new File(TEST_SAVE_PATH);
+        File testSave = new File(TEST_FILEPATH);
         try {
             if (!testSave.exists()) {
                 if (testSave.createNewFile()) {
                     System.out.println("New save created for testing");
                 }
             }
-            fileCommand.clearSaveFile(TEST_SAVE_PATH);
+            fileCommand.clearSaveFile(TEST_FILEPATH);
 
-            FileWriter fileWriter = new FileWriter(TEST_SAVE_PATH, true);
+            FileWriter fileWriter = new FileWriter(TEST_FILEPATH, true);
             fileWriter.write("lesson=-=false=-=CS1231=-=17-10-20 09:00=-=17-10-20 12:00" + System.lineSeparator());
             fileWriter.write("deadline=-=false=-=Go Home=-=16-10-20 23:59" + System.lineSeparator());
             fileWriter.write("event=-=false=-=Another Concert=-=16-10-20 22:00=-=16-10-20 23:59"
@@ -107,14 +107,14 @@ class TaskStorageTest {
 
     @Test
     void writeToTaskSaveFile_allTaskTypes_writeSuccess() {
-        File testSave = new File(TEST_SAVE_PATH);
+        File testSave = new File(TEST_FILEPATH);
         try {
             if (!testSave.exists()) {
                 if (testSave.createNewFile()) {
                     System.out.println("New save created for testing");
                 }
             }
-            fileCommand.clearSaveFile(TEST_SAVE_PATH);
+            fileCommand.clearSaveFile(TEST_FILEPATH);
 
             ArrayList<Task> taskList = tasks.getTaskList();
             taskList.clear();
