@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FileArchiveTest {
 
@@ -46,10 +48,10 @@ class FileArchiveTest {
             }
 
             Assertions.assertAll(
-                    () -> assertEquals(NOTE_SEPARATOR, fileContents.get(0)),
-                    () -> assertEquals("Cats are cute!", fileContents.get(1)),
-                    () -> assertEquals("I Love Cats", fileContents.get(2)),
-                    () -> assertEquals(NOTE_SEPARATOR, fileContents.get(3))
+                () -> assertEquals(NOTE_SEPARATOR, fileContents.get(0)),
+                () -> assertEquals("Cats are cute!", fileContents.get(1)),
+                () -> assertEquals("I Love Cats", fileContents.get(2)),
+                () -> assertEquals(NOTE_SEPARATOR, fileContents.get(3))
             );
 
         } catch (IOException e) {
