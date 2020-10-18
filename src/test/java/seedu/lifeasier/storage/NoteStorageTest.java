@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NoteStorageTest {
 
@@ -20,22 +21,23 @@ class NoteStorageTest {
 
     private NoteStorage noteStorage;
     private NoteList notes;
+    private Note note;
 
     public NoteStorageTest() {
         this.notes = new NoteList();
         this.noteStorage = new NoteStorage(notes, TEST_NOTE_PATH);
+        this.note = new Note("Cats are awesome!  ", "  Cats are so cute, they are the best :D  ");
     }
 
     @Test
     void convertNoteToString_newNote_correctStringOutput() {
-        Note note = new Note("Cats are awesome!  ", "  Cats are so cute, they are the best :D  ");
         String output = noteStorage.convertNoteToString(note);
         assertEquals(EXPECTED_STRING_OUTPUT_NOTES, output);
     }
 
     @Test
     void writeToNoteSaveFile_newNote_writtenToFile() {
-        Note note = new Note("Cats are awesome!  ", "  Cats are so cute, they are the best :D  ");
+        notes.getNotes().clear();
         notes.add(note);
         noteStorage.writeToNoteSaveFile();
 
@@ -56,6 +58,32 @@ class NoteStorageTest {
 
         testFile.deleteOnExit();
         assertEquals(EXPECTED_STRING_NOTES_READ, saveFileContents);
+    }
+
+    @Test
+    void readNotesSave_newNote_notesRebuilt() {
+        notes.getNotes().clear();
+        notes.add(note);
+        noteStorage.writeToNoteSaveFile();
+        notes.getNotes().clear();
+
+        noteStorage.readNotesSave();
+        Note readNote = new Note(null, null);
+
+        try {
+            readNote = notes.get(0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Testing error - Note out of bounds");
+        }
+
+        String noteTitle = readNote.getTitle();
+        String noteDescription = readNote.getDescription();
+
+        Boolean correctTitle = noteTitle.equals("Cats are awesome!");
+        Boolean correctDescription = noteDescription.equals("Cats are so cute, they are the best :D");
+        Boolean correctNoteListLength = notes.getNotes().size() == 1;
+
+        assertTrue(correctTitle && correctDescription && correctNoteListLength);
     }
 
 }

@@ -40,7 +40,7 @@ public class TaskStorage {
         this.ui = new Ui();
     }
 
-    protected void readTasksSave(String filePathTasks) {
+    protected void readTasksSave() {
         logger.log(Level.INFO, "Read Tasks save file start");
         try {
             File saveFile = new File(filePathTasks);

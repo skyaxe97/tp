@@ -34,10 +34,8 @@ public class NoteStorage {
 
     /**
      * Reads and loads all saved note information.
-     *
-     * @param filePathNotes File object containing the file path of the notes save file.
      */
-    protected void readNotesSave(String filePathNotes) {
+    protected void readNotesSave() {
         logger.log(Level.INFO, "Read Notes save file start");
 
         try {
