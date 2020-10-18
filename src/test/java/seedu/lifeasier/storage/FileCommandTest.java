@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class FileCommandTest {
 
-    public static final String TEST_FILEPATH = "testSave.txt";
+    public static final String TEST_FILEPATH = "testCommandsSave.txt";
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private FileCommand fileCommand;
