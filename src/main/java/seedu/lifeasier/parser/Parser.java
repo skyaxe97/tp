@@ -341,7 +341,7 @@ public class Parser {
     }
 
     /**
-     * Checks for an empty string.
+     * Checks for an empty string and prompts the user if empty.
      *
      * @param ui Input and output interaction with the user.
      * @param string The string to be checked.
@@ -353,6 +353,19 @@ public class Parser {
             string = ui.readCommand();
         }
         return string;
+    }
+
+    /**
+     * Checks the condition of whether the input is empty.
+     *
+     * @param input The string to be checked.
+     * @param index1 The starting index.
+     * @param index2 The ending index.
+     * @param factor Status of the factor.
+     * @return A non-empty string.
+     */
+    private boolean isMissingDescription(String input, int index1, int index2, boolean factor) {
+        return input.substring(index1, index2).trim().length() == 0 && factor;
     }
 
     /**
@@ -405,8 +418,8 @@ public class Parser {
             return MissingParam.START_TIME;
         } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
             return MissingParam.DATE;
-        } else if (input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim().length() == 0
-                && isDescriptionEmpty) {
+        } else if (isMissingDescription(input, lastIndexOfAddEventCommand, firstIndexOfDateCommand,
+                isDescriptionEmpty)) {
             return MissingParam.DESCRIPTION;
         } else {
             return MissingParam.COMPLETED;
@@ -425,8 +438,8 @@ public class Parser {
 
         if (!input.contains(PARAM_BY) && isDateTimeEmpty) {
             return MissingParam.END_TIME;
-        } else if (input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim().length() == 0
-                && isDescriptionEmpty) {
+        } else if (isMissingDescription(input, lastIndexOfAddDeadlineCommand, firstIndexOfByCommand,
+                isDescriptionEmpty)) {
             return MissingParam.DESCRIPTION;
         } else {
             return MissingParam.COMPLETED;
