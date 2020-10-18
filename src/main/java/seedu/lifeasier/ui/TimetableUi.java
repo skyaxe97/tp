@@ -21,7 +21,19 @@ public class TimetableUi {
     private static final String ROW_FORMAT = "|%-11s| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |";
     private static final String ROW_SEPARATOR = "+-----------+" + "-----------------+".repeat(DAYS_COLUMN_COUNT);
 
-    private ArrayList<String> timetableRows = new ArrayList<>();
+    private static TimetableUi timetableUi = null;
+    private static ArrayList<String> timetableRows;
+
+    private TimetableUi() {
+        timetableRows = new ArrayList<>();
+    }
+
+    public static TimetableUi getInstance() {
+        if (timetableUi == null) {
+            timetableUi = new TimetableUi();
+        }
+        return timetableUi;
+    }
 
     public void showTimetable(TaskList tasks) {
         generateTimetable(tasks);

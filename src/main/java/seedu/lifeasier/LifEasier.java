@@ -7,7 +7,6 @@ import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.ScheduleUi;
-import seedu.lifeasier.ui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
 
 

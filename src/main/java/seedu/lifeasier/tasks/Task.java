@@ -3,6 +3,7 @@ package seedu.lifeasier.tasks;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 public abstract class Task {
     protected String description;
@@ -74,5 +75,9 @@ public abstract class Task {
 
     public boolean isHappeningOn(LocalDate date) {
         return getStart().toLocalDate().equals(date);
+    }
+
+    public boolean isHappeningBefore(LocalDate date) {
+        return getStart().toLocalDate().isBefore(date);
     }
 }
