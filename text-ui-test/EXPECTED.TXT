@@ -29,6 +29,8 @@ addDeadline DEADLINE_NAME /by DATETIME ------------------ Adds a deadline
 addNotes TITLE ------------------------------------------ Adds a new note
 showNotes TITLE ------------------------------------- Shows selected note
 display WEEK/DAY --------------- Displays either weekly or daily schedule
+freeTime ------------------------ Tells you when you have free time today
+sleepTime --------------------- Tells you how much time you have to sleep
 exit --------------------------------------- Closes the LifEasier program
 *************************************************************************
 For more detailed information, please visit the online user guide at:

@@ -44,6 +44,8 @@ public class Ui {
             + "addNotes TITLE ------------------------------------------ Adds a new note\n"
             + "showNotes TITLE ------------------------------------- Shows selected note\n"
             + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
+            + "freeTime ------------------------ Tells you when you have free time today\n"
+            + "sleepTime --------------------- Tells you how much time you have to sleep\n"
             + "exit --------------------------------------- Closes the LifEasier program\n"
             + "*************************************************************************\n"
             + "For more detailed information, please visit the online user guide at:\n";
