@@ -74,6 +74,7 @@ public class Parser {
     /**
      * Parses the addLesson command that the user inputs.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
@@ -136,6 +137,7 @@ public class Parser {
     /**
      * Parses the addEvent command that the user inputs.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return AddEventCommand with the parameters input by the user.
      */
@@ -144,9 +146,7 @@ public class Parser {
         LOGGER.log(Level.INFO, "Parsing addEvent command...");
 
         while (isParametersEmpty) {
-            System.out.println("1");
             MissingParam param = checkEventParameters(input);
-            System.out.println("2");
             switch (param) {
             case DESCRIPTION:   // description is missing
                 input = addEventDescriptionParam(ui, input);
@@ -194,6 +194,7 @@ public class Parser {
     /**
      * Parses the addDeadline command that the user inputs.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return AddDeadlineCommand with the parameters input by the user.
      */
@@ -310,6 +311,13 @@ public class Parser {
         return new DisplayScheduleCommand(toDisplay);
     }
 
+    /**
+     * Parses the user Y/N inputs.
+     *
+     * @param input String containing the user's input.
+     * @param ui Input and output interaction with the user.
+     * @return A "Y" or "N" string.
+     */
     public String parseUserInputYesOrNo(String input, Ui ui) {
         LOGGER.log(Level.INFO, "Start check for Y/N input");
         while (!input.trim().equals("Y") && !input.trim().equals("N")) {
@@ -321,6 +329,13 @@ public class Parser {
         return input;
     }
 
+    /**
+     * Parses the user T/D inputs.
+     *
+     * @param input String containing the user's input.
+     * @param ui Input and output interaction with the user.
+     * @return A "T" or "D" string.
+     */
     public String parseUserInputTOrD(String input, Ui ui) {
         while (!input.trim().equals("T") && !input.trim().equals("D")) {
             ui.showInvalidTitleDescriptionConfirmationMessage();
@@ -329,6 +344,13 @@ public class Parser {
         return input;
     }
 
+    /**
+     * Checks for an empty string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param string The string to be checked.
+     * @return A non-empty string.
+     */
     private String checkIfEmpty(Ui ui, String string) {
         while (string.trim().length()==0) {     // empty string
             ui.showEmptyDescriptionMessage();
@@ -337,6 +359,10 @@ public class Parser {
         return string;
     }
 
+    /**
+     * Reset all boolean variables to true.
+     *
+     */
     private void resetBoolean() {
         isParametersEmpty = true;
         isModuleCodeEmpty = true;
@@ -347,6 +373,12 @@ public class Parser {
         isDateTimeEmpty = true;
     }
 
+    /**
+     * Checks the addLesson input for missing parameters.
+     *
+     * @param input String containing user's input.
+     * @return An enumeration of the missing parameter.
+     */
     private MissingParam checkLessonParameters(String input) {
         if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
@@ -361,11 +393,15 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks the addEvent input for missing parameters.
+     *
+     * @param input String containing the user's input.
+     * @return An enumeration of the missing parameter.
+     */
     private MissingParam checkEventParameters(String input) {
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
-        System.out.println("2");
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
-        System.out.println("3");
 
         if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
@@ -381,6 +417,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks the addDeadline input for missing parameters.
+     *
+     * @param input String containing the user's input.
+     * @return An enumeration of the missing parameter.
+     */
     private MissingParam checkDeadlineParameters(String input) {
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
@@ -395,6 +437,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Adds the event description to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with description added.
+     */
     private String addEventDescriptionParam(Ui ui, String input) {
         ui.showAddDescriptionMessage();
         String description = checkIfEmpty(ui, ui.readCommand());
@@ -404,6 +453,13 @@ public class Parser {
         return input;
     }
 
+    /**
+     * Adds the deadline description to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with description added.
+     */
     private String addDeadlineDescriptionParam(Ui ui, String input) {
         ui.showAddDescriptionMessage();
         String description = checkIfEmpty(ui, ui.readCommand());
@@ -413,6 +469,13 @@ public class Parser {
         return input;
     }
 
+    /**
+     * Adds the module code to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with module code added.
+     */
     private String addModuleCodeParam(Ui ui, String input) {
         ui.showAddModuleCodeMessage();
         String moduleCode = checkIfEmpty(ui, ui.readCommand());
@@ -422,6 +485,14 @@ public class Parser {
         return input;
     }
 
+
+    /**
+     * Adds the date to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with date added.
+     */
     private String addDateParam(Ui ui, String input) {
         ui.showAddDateMessage();
         String date = checkIfEmpty(ui, ui.readCommand());
@@ -431,6 +502,14 @@ public class Parser {
         return input;
     }
 
+
+    /**
+     * Adds the start time to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with start time added.
+     */
     private String addStartTimeParam(Ui ui, String input) {
         ui.showAddStartTimeMessage();
         String startTime = checkIfEmpty(ui, ui.readCommand());
@@ -440,6 +519,13 @@ public class Parser {
         return input;
     }
 
+    /**
+     * Adds the end time to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with end time added.
+     */
     private String addEndTimeParam(Ui ui, String input) {
         ui.showAddEndTimeMessage();
         String endTime = checkIfEmpty(ui, ui.readCommand());
@@ -448,6 +534,13 @@ public class Parser {
         return input;
     }
 
+    /**
+     * Adds the date and time to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with date and time added.
+     */
     private String addByDateTime(Ui ui, String input) {
         ui.showAddDateTimeMessage();
         String DateTime = checkIfEmpty(ui, ui.readCommand());
@@ -459,6 +552,7 @@ public class Parser {
     /**
      * Parses the user's input into a Command object that can later be executed.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return Command that the user inputs.
      */
