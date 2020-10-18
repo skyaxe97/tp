@@ -73,6 +73,7 @@ public class Ui {
 
     public void showAddConfirmationMessage(String task) {
         System.out.println("Done! I've added \"" + task + "\" to your calendar");
+        printSeparator();
     }
 
     private void printLogo() {
@@ -265,4 +266,23 @@ public class Ui {
         printSeparator();
     }
 
+    public void showAddModuleCodeMessage() {
+        System.out.println("Please input the module code:");
+    }
+
+    public void showAddDateMessage() {
+        System.out.println("Please input the date:");
+    }
+
+    public void showAddStartTimeMessage() {
+        System.out.println("Please input the start time:");
+    }
+
+    public void showAddEndTimeMessage() {
+        System.out.println("Please input the end time:");
+    }
+
+    public void showAddDescriptionMessage() {
+        System.out.println("Please input the description:");
+    }
 }

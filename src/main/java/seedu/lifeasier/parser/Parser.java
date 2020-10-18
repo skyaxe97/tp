@@ -41,6 +41,12 @@ public class Parser {
     public static final String PARAM_TO = "/to";
     public static final String PARAM_BY = "/by";
 
+    private boolean isParametersEmpty = true;
+    private boolean isModuleCodeEmpty = true;
+    private boolean isDateEmpty = true;
+    private boolean isStartTimeEmpty = true;
+    private boolean isEndTimeEmpty = true;
+
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
     public Parser() {
@@ -69,9 +75,41 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
-    Command parseAddLessonCommand(String input) {
+    Command parseAddLessonCommand(Ui ui, String input) {
 
         LOGGER.log(Level.INFO, "Parsing addLesson command...");
+        String moduleCode;
+        String date;
+        String startTime;
+        String endTime;
+
+        while (isParametersEmpty) {
+            MissingParam param = checkLessonParameters(input);
+
+            switch (param) {
+            case MODULE_CODE:   // module code is missing
+                input = addModuleCodeParam(ui, input);
+                isModuleCodeEmpty = false;
+                break;
+            case DATE:
+                input = addDateParam(ui, input);
+                isDateEmpty = false;
+                break;
+            case START_TIME:
+                input = addStartTimeParam(ui, input);
+                isStartTimeEmpty = false;
+                break;
+            case END_TIME:
+                input = addEndTimeParam(ui, input);
+                isEndTimeEmpty = false;
+                break;
+            default:
+                System.out.println("1");
+                isParametersEmpty = false;
+                break;
+            }
+
+        }
 
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -81,10 +119,13 @@ public class Parser {
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
 
-        String moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
-        String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-        String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String endTime =  input.substring(lastIndexOfToCommand).trim();
+        moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
+        date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+        startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+        endTime =  input.substring(lastIndexOfToCommand).trim();
+
+
+        System.out.println(moduleCode + " " + date + " " + startTime + " " + endTime);
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
@@ -97,9 +138,37 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddEventCommand with the parameters input by the user.
      */
-    private Command parseAddEventCommand(String input) {
+    private Command parseAddEventCommand(Ui ui, String input) {
 
         LOGGER.log(Level.INFO, "Parsing addEvent command...");
+
+        while (isParametersEmpty) {
+            MissingParam param = checkEventParameters(input);
+
+            switch (param) {
+            case DESCRIPTION:   // description is missing
+                input = addDescriptionParam(ui, input);
+                isModuleCodeEmpty = false;
+                break;
+            case DATE:
+                input = addDateParam(ui, input);
+                isDateEmpty = false;
+                break;
+            case START_TIME:
+                input = addStartTimeParam(ui, input);
+                isStartTimeEmpty = false;
+                break;
+            case END_TIME:
+                input = addEndTimeParam(ui, input);
+                isEndTimeEmpty = false;
+                break;
+            default:
+                System.out.println("1");
+                isParametersEmpty = false;
+                break;
+            }
+
+        }
 
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -237,6 +306,87 @@ public class Parser {
         return input;
     }
 
+    private String checkIfEmpty(Ui ui, String string) {
+        while (string.trim().length()==0) {     // empty string
+            ui.showEmptyDescriptionMessage();
+            string = ui.readCommand();
+        }
+        return string;
+    }
+
+
+    private MissingParam checkLessonParameters(String input) {
+        if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
+            return MissingParam.END_TIME;
+        } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
+            return MissingParam.START_TIME;
+        } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
+            return MissingParam.DATE;
+        } else if (!input.contains(PARAM_CODE) && isModuleCodeEmpty) {
+            return MissingParam.MODULE_CODE;
+        } else {
+            return MissingParam.COMPLETED;
+        }
+    }
+
+    private MissingParam checkEventParameters(String input) {
+        if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
+            return MissingParam.END_TIME;
+        } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
+            return MissingParam.START_TIME;
+        } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
+            return MissingParam.DATE;
+        } else if (!input.contains(PARAM_CODE) && isModuleCodeEmpty) {
+            return MissingParam.MODULE_CODE;
+        } else {
+            return MissingParam.COMPLETED;
+        }
+    }
+
+    private String addDescriptionParam(Ui ui, String input) {
+        ui.showAddDescriptionMessage();
+        String description = checkIfEmpty(ui, ui.readCommand());
+        String[] temp = input.split("/date");
+        input = temp[0] + description + " /date" + temp[1];
+
+        return input;
+    }
+
+    private String addModuleCodeParam(Ui ui, String input) {
+        ui.showAddModuleCodeMessage();
+        String moduleCode = checkIfEmpty(ui, ui.readCommand());
+        String[] temp = input.split("/date");
+        input = temp[0] + "/code" + moduleCode + " /date" + temp[1];
+
+        return input;
+    }
+
+    private String addDateParam(Ui ui, String input) {
+        ui.showAddDateMessage();
+        String date = checkIfEmpty(ui, ui.readCommand());
+        String[] temp1 = input.split("/time");
+        input = temp1[0] + "/date " + date + " /time" + temp1[1];
+
+        return input;
+    }
+
+    private String addStartTimeParam(Ui ui, String input) {
+        ui.showAddStartTimeMessage();
+        String startTime = checkIfEmpty(ui, ui.readCommand());
+        String[] temp2 = input.split("/to");
+        input = temp2[0] + "/time " + startTime + " /to" + temp2[1];
+
+        return input;
+    }
+
+    private String addEndTimeParam(Ui ui, String input) {
+        ui.showAddEndTimeMessage();
+        String endTime = checkIfEmpty(ui, ui.readCommand());
+        input = input + " /to " + endTime;
+
+        return input;
+    }
+
     /**
      * Parses the user's input into a Command object that can later be executed.
      *
@@ -253,7 +403,7 @@ public class Parser {
             switch (commandType) {
 
             case (PARAM_ADD_LESSON):
-                return parseAddLessonCommand(input);
+                return parseAddLessonCommand(ui, input);
 
             case (PARAM_ADD_EVENT):
                 return parseAddEventCommand(input);
