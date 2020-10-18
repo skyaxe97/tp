@@ -19,7 +19,7 @@ class NoteStorageTest {
             "Cats are awesome!=-=Cats are so cute, they are the best :D" + System.lineSeparator();
     private static final String EXPECTED_STRING_NOTES_READ =
             "Cats are awesome!=-=Cats are so cute, they are the best :D";
-    private static final String TEST_NOTE_PATH = "testNotes.txt";
+    private static final String TEST_NOTE_PATH = "testSave.txt";
 
     private NoteStorage noteStorage;
     private NoteList notes;
