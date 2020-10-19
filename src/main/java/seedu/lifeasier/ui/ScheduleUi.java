@@ -21,7 +21,7 @@ public class ScheduleUi {
 
         System.out.println("Here are your upcoming deadlines this week:");
         int id = 1;
-        
+
         for (Task task : tasks.getTaskList()) {
             if (task instanceof Deadline && task.isHappeningBefore(dateAfterOneWeek)) {
                 System.out.println((id) + task.toString());

@@ -52,6 +52,8 @@ public class Ui {
             + "addNotes TITLE ------------------------------------------ Adds a new note\n"
             + "showNotes TITLE ------------------------------------- Shows selected note\n"
             + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
+            + "freeTime ------------------------ Tells you when you have free time today\n"
+            + "sleepTime --------------------- Tells you how much time you have to sleep\n"
             + "exit --------------------------------------- Closes the LifEasier program\n"
             + "*************************************************************************\n"
             + "For more detailed information, please visit the online user guide at:\n";
@@ -314,6 +316,38 @@ public class Ui {
 
     public void showSelectWhichNoteToViewMessage() {
         System.out.println("Please select the notes you want to view:\n");
+    }
+
+    public void showFreeTimeMessage(int startHour, int endHour, int duration) {
+
+        if (duration != 0) {
+            System.out.println("You have " + duration + " hours of free time between " + startHour
+                    + ":00 and " + endHour + ":00!");
+            System.out.println("You can try scheduling something in this time!");
+
+        } else {
+            System.out.println("Unfortunately you have no free time today!");
+            System.out.println("You might want to relax a little!");
+        }
+
+        printSeparator();
+    }
+
+    public void showNothingScheduledMessage() {
+        System.out.println("You have nothing on for today and tomorrow!");
+    }
+
+    public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
+        System.out.println("You have nothing on from " + earliestSleepTime + ":00 today to " + latestWakeTime
+                + ":00 tomorrow!");
+    }
+
+    public void showSleepDurationMessage(int duration) {
+        System.out.println("You can sleep for up to " + duration + " hours!");
+    }
+
+    public void showExcessSleepDurationMessage() {
+        System.out.println("You can sleep for the recommended 8 hours or longer!");
     }
 
     public void showSelectWhichNoteToDeleteMessage() {

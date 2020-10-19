@@ -1,13 +1,16 @@
 package seedu.lifeasier.tasks;
 
+
 import seedu.lifeasier.commands.ShowNotesCommand;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.ui.Ui;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import static java.util.stream.Collectors.toList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +42,7 @@ public class TaskList {
         return taskList.get(index);
     }
 
-    public static void addTask(Task task) {
+    public void addTask(Task task) {
         taskList.add(task);
         taskCount++;
     }
@@ -61,7 +64,7 @@ public class TaskList {
      * @param start start date/time of event.
      * @param end end date/time of event.
      */
-    public static void addEvent(String description, LocalDateTime start, LocalDateTime end) {
+    public void addEvent(String description, LocalDateTime start, LocalDateTime end) {
         Event event = new Event(description, start, end);
         addTask(event);
     }
@@ -72,7 +75,7 @@ public class TaskList {
      * @param start start date/time of lesson.
      * @param end end date/time of lesson.
      */
-    public static void addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
+    public void addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
         Lesson lesson = new Lesson(moduleCode, start, end);
         addTask(lesson);
     }
@@ -82,7 +85,7 @@ public class TaskList {
      * @param description description of task.
      * @param by deadline of task.
      */
-    public static void addDeadline(String description, LocalDateTime by) {
+    public void addDeadline(String description, LocalDateTime by) {
         Deadline deadline = new Deadline(description, by);
         addTask(deadline);
     }
@@ -165,6 +168,13 @@ public class TaskList {
         if (userInput > indexOfLastMatch || userInput < 0) {
             throw new IndexOutOfBoundsException();
         }
+
+    public ArrayList<Task> getTasksFromOneDay(LocalDate day) {
+
+        return (ArrayList<Task>) taskList.stream()
+                .filter((t) -> t.getStart().toLocalDate().equals(day))
+                .collect(toList());
+
     }
 
     public void sort() {
