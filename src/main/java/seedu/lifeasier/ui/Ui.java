@@ -3,6 +3,7 @@ package seedu.lifeasier.ui;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import seedu.lifeasier.notes.NoteList;
 import java.util.Scanner;
 
 /**
@@ -288,5 +289,19 @@ public class Ui {
 
     public void showAddDateTimeMessage() {
         System.out.println("Please input the Date Time:");
+    }
+
+    public void printMultipleNoteMatches(NoteList notes, String title) {
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getTitle().contains(title)) {
+                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
+            }
+        }
+    }
+
+    public void printAllNotes(NoteList notes) {
+        for (int i = 0; i < notes.size(); i++) {
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
+        }
     }
 }

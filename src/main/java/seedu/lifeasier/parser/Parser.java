@@ -316,9 +316,11 @@ public class Parser {
      */
     public String parseUserInputYesOrNo(String input, Ui ui) {
         LOGGER.log(Level.INFO, "Start check for Y/N input");
+
         while (!input.trim().equals("Y") && !input.trim().equals("N")) {
             ui.showInvalidConfirmationMessage();
             input = ui.readCommand();
+
         }
         LOGGER.log(Level.INFO, "End check for Y/N input");
 
@@ -333,6 +335,7 @@ public class Parser {
      * @return A "T" or "D" string.
      */
     public String parseUserInputTOrD(String input, Ui ui) {
+
         while (!input.trim().equals("T") && !input.trim().equals("D")) {
             ui.showInvalidTitleDescriptionConfirmationMessage();
             input = ui.readCommand();
@@ -493,7 +496,6 @@ public class Parser {
 
         return input;
     }
-
 
     /**
      * Adds the date to the string.
