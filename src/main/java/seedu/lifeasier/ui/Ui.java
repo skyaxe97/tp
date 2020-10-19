@@ -3,6 +3,7 @@ package seedu.lifeasier.ui;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import seedu.lifeasier.notes.NoteList;
 import java.util.Scanner;
 
 /**
@@ -75,6 +76,7 @@ public class Ui {
 
     public void showAddConfirmationMessage(String task) {
         System.out.println("Done! I've added \"" + task + "\" to your calendar");
+        printSeparator();
     }
 
     private void printLogo() {
@@ -299,4 +301,41 @@ public class Ui {
         printSeparator();
     }
 
+    public void showAddModuleCodeMessage() {
+        System.out.println("Please input the module code:");
+    }
+
+    public void showAddDateMessage() {
+        System.out.println("Please input the date:");
+    }
+
+    public void showAddStartTimeMessage() {
+        System.out.println("Please input the start time:");
+    }
+
+    public void showAddEndTimeMessage() {
+        System.out.println("Please input the end time:");
+    }
+
+    public void showAddDescriptionMessage() {
+        System.out.println("Please input the description:");
+    }
+
+    public void showAddDateTimeMessage() {
+        System.out.println("Please input the Date Time:");
+    }
+
+    public void printMultipleNoteMatches(NoteList notes, String title) {
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getTitle().contains(title)) {
+                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
+            }
+        }
+    }
+
+    public void printAllNotes(NoteList notes) {
+        for (int i = 0; i < notes.size(); i++) {
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
+        }
+    }
 }
