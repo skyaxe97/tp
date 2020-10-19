@@ -1,7 +1,8 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.parser.*;
+import seedu.lifeasier.parser.Parser;
+import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.TaskNotFoundException;

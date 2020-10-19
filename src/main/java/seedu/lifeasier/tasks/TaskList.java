@@ -160,7 +160,7 @@ public class TaskList {
     }
 
     private boolean checkMatchingTasks(int index, String type, String description) {
-        return(getTask(index).getType().equals(type)
+        return (getTask(index).getType().equals(type)
                 && getTask(index).getDescription().contains(description));
     }
 

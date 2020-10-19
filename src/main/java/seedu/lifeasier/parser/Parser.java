@@ -395,6 +395,7 @@ public class Parser {
             throw new ParserException();
         }
     }
+
     /**
      * Parses the showNotes command that the user inputs.
      *
