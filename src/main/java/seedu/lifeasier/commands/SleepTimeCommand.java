@@ -22,7 +22,7 @@ public class SleepTimeCommand extends Command {
     public static final int RECOMMENDED_SLEEP_DURATION = 9;
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
 
         logger.log(Level.INFO, "Getting tasks from today...");
         ArrayList<Task> tasksFromToday = tasks.getTasksFromOneDay(LocalDate.now());

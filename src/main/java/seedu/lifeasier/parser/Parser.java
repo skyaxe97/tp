@@ -13,8 +13,10 @@ import seedu.lifeasier.commands.HelpCommand;
 import seedu.lifeasier.commands.InvalidCommand;
 import seedu.lifeasier.commands.ShowNotesCommand;
 import seedu.lifeasier.commands.SleepTimeCommand;
-import seedu.lifeasier.ui.Ui;
+import seedu.lifeasier.commands.DeleteNotesCommand;
+import seedu.lifeasier.commands.EditNotesCommand;
 
+import seedu.lifeasier.ui.Ui;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -23,13 +25,15 @@ import java.util.logging.Logger;
 
 public class Parser {
 
-    private Logger logger;
+    private static Logger logger = Logger.getLogger(Parser.class.getName());
 
     public static final String PARAM_ADD_LESSON = "addLesson";
     public static final String PARAM_ADD_EVENT = "addEvent";
     public static final String PARAM_ADD_DEADLINE = "addDeadline";
     public static final String PARAM_ADD_NOTES = "addNotes";
     public static final String PARAM_SHOW_NOTES = "showNotes";
+    public static final String PARAM_DELETE_NOTES = "deleteNotes";
+    public static final String PARAM_EDIT_NOTES = "editNotes";
     public static final String PARAM_DISPLAY = "display";
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
@@ -46,7 +50,7 @@ public class Parser {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
     public Parser() {
-        this.logger = Logger.getLogger(Parser.class.getName());
+
     }
 
     /**
@@ -175,6 +179,36 @@ public class Parser {
     }
 
     /**
+     * Parses the deleteNotes command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return ShowNotesCommand with the parameters input by the user.
+     */
+    private Command parseDeleteNotesCommand(String input) {
+        logger.log(Level.INFO, "Parsing deleteNotes command...");
+
+        int lastIndexOfDeleteNotesCommand = input.indexOf(PARAM_DELETE_NOTES) + PARAM_DELETE_NOTES.length();
+        String title = input.substring(lastIndexOfDeleteNotesCommand).trim();
+
+        return new DeleteNotesCommand(title);
+    }
+
+    /**
+     * Parses the editNotes command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return ShowNotesCommand with the parameters input by the user.
+     */
+    private Command parseEditNotesCommand(String input) {
+        logger.log(Level.INFO, "Parsing editNotes command...");
+
+        int lastIndexOfEditNotesCommand = input.indexOf(PARAM_EDIT_NOTES) + PARAM_EDIT_NOTES.length();
+        String title = input.substring(lastIndexOfEditNotesCommand).trim();
+
+        return new EditNotesCommand(title);
+    }
+
+    /**
      * Parses the display command that the user inputs.
      *
      * @param input String containing the user's input.
@@ -188,6 +222,25 @@ public class Parser {
         String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
 
         return new DisplayScheduleCommand(toDisplay);
+    }
+
+    public String parseUserInputYesOrNo(String input, Ui ui) {
+        logger.log(Level.INFO, "Start check for Y/N input");
+        while (!input.trim().equals("Y") && !input.trim().equals("N")) {
+            ui.showInvalidConfirmationMessage();
+            input = ui.readCommand();
+        }
+        logger.log(Level.INFO, "End check for Y/N input");
+
+        return input;
+    }
+
+    public String parseUserInputTOrD(String input, Ui ui) {
+        while (!input.trim().equals("T") && !input.trim().equals("D")) {
+            ui.showInvalidTitleDescriptionConfirmationMessage();
+            input = ui.readCommand();
+        }
+        return input;
     }
 
     /**
@@ -219,6 +272,12 @@ public class Parser {
 
             case (PARAM_SHOW_NOTES):
                 return parseShowNotesCommand(input);
+
+            case (PARAM_DELETE_NOTES):
+                return parseDeleteNotesCommand(input);
+
+            case(PARAM_EDIT_NOTES):
+                return parseEditNotesCommand(input);
 
             case (PARAM_DISPLAY):
                 return parseDisplayScheduleCommand(input);

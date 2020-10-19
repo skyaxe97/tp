@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  */
 public class TaskStorage {
 
+    public static final String BLANK_STRING = "";
     private static Logger logger = Logger.getLogger(TaskStorage.class.getName());
     private static final String SAVE_DELIMITER = "=-=";
     public static final String DEFAULT_DATA = "\n";
@@ -30,9 +31,6 @@ public class TaskStorage {
     private FileCommand fileCommand;
     private Ui ui;
 
-    public TaskStorage() {
-    }
-
     public TaskStorage(TaskList tasks, String filePathTasks) {
         this.tasks = tasks;
         this.filePathTasks = filePathTasks;
@@ -40,7 +38,7 @@ public class TaskStorage {
         this.ui = new Ui();
     }
 
-    protected void readTasksSave(String filePathTasks) {
+    protected void readTasksSave() {
         logger.log(Level.INFO, "Read Tasks save file start");
         try {
             File saveFile = new File(filePathTasks);
@@ -57,7 +55,7 @@ public class TaskStorage {
         logger.log(Level.INFO, "Read Tasks save file end");
     }
 
-    private void createTaskList(Scanner fileScanner) {
+    protected void createTaskList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding tasks list from save file");
 
         ArrayList<Task> taskList = tasks.getTaskList();
@@ -67,6 +65,7 @@ public class TaskStorage {
                 String taskInformation = fileScanner.nextLine();
 
                 String[] taskComponents = taskInformation.split(SAVE_DELIMITER);
+                checkForMissingDataInSave(taskComponents);
                 String taskType = taskComponents[0];
                 String taskDescription = taskComponents[2];
                 Boolean taskStatus = fileCommand.convertToBoolean(taskComponents[1]);
@@ -94,7 +93,15 @@ public class TaskStorage {
         }
     }
 
-    private void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
+    private void checkForMissingDataInSave(String[] taskComponents) throws ArrayIndexOutOfBoundsException {
+        for (String information : taskComponents) {
+            if (information.equals(BLANK_STRING)) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
+        }
+    }
+
+    protected void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
         LocalDateTime lessonStartTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
         LocalDateTime lessonEndTime = fileCommand.convertToLocalDateTime(taskComponents[4]);
@@ -104,7 +111,7 @@ public class TaskStorage {
         tasks.increaseTaskCount();
     }
 
-    private void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
+    protected void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
         LocalDateTime eventStartTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
         LocalDateTime eventEndTime = fileCommand.convertToLocalDateTime(taskComponents[4]);
@@ -114,8 +121,8 @@ public class TaskStorage {
         tasks.increaseTaskCount();
     }
 
-    private void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
-            throws ArrayIndexOutOfBoundsException {
+    protected void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description,
+                                   Boolean status) throws ArrayIndexOutOfBoundsException {
         LocalDateTime deadlineTimeInfo = fileCommand.convertToLocalDateTime(taskComponents[3]);
 
         //Create new deadline in tasks
@@ -133,8 +140,6 @@ public class TaskStorage {
 
             String dataToSave;
             ArrayList<Task> taskList = tasks.getTaskList();
-
-            assert taskList.size() > 0 : "taskList cannot be empty when saving";
 
             //Append each tasks information into save file for tasks
             for (Task task : taskList) {

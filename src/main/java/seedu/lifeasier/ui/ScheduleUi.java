@@ -10,28 +10,34 @@ import java.time.temporal.ChronoUnit;
 
 public class ScheduleUi {
 
-    private final TimetableUi timetable = new TimetableUi();
-
     public void showHome(TaskList tasks) {
-        timetable.showTimetable(tasks);
-        displayDeadlines(tasks);
+        TimetableUi.getInstance().showTimetable(tasks);
+        System.out.println();
+        displayUpcomingDeadlines(tasks);
     }
 
-    private void displayDeadlines(TaskList tasks) {
+    private void displayUpcomingDeadlines(TaskList tasks) {
+        LocalDate dateAfterOneWeek = LocalDate.now().plus(1, ChronoUnit.WEEKS);
+
+        System.out.println("Here are your upcoming deadlines this week:");
+        int id = 1;
+
         for (Task task : tasks.getTaskList()) {
-            if (task instanceof Deadline) {
-                System.out.println(task.toString());
+            if (task instanceof Deadline && task.isHappeningBefore(dateAfterOneWeek)) {
+                System.out.println((id) + task.toString());
+                id++;
             }
         }
     }
 
     public void displayWeekSchedule(TaskList tasks) {
-        timetable.showTimetable(tasks);
+        TimetableUi.getInstance().showTimetable(tasks);
+        displayUpcomingDeadlines(tasks);
     }
 
     public void displayDaySchedule(LocalDate date, TaskList tasks) {
-        for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task task = tasks.getTask(i);
+        tasks.sort();
+        for (Task task : tasks.getTaskList()) {
             LocalDateTime startDateTime = task.getStart();
             LocalDateTime endDateTime = task.getEnd();
             if (startDateTime.toLocalDate().equals(date)) {
@@ -57,8 +63,7 @@ public class ScheduleUi {
 
     public int getTaskCountForToday(TaskList tasks, LocalDate date) {
         int count = 0;
-        for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task task = tasks.getTask(i);
+        for (Task task : tasks.getTaskList()) {
             if (task.getStart().toLocalDate().equals(date)) {
                 count++;
             }

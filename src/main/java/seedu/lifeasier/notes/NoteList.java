@@ -29,4 +29,8 @@ public class NoteList {
     public int size() {
         return notes.size();
     }
+
+    public void remove(int index) {
+        notes.remove(index);
+    }
 }

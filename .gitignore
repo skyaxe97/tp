@@ -9,6 +9,9 @@
 /LifEasierSaves/
 src/main/resources/docs/
 
+# Generated test files
+testSave.txt
+
 # MacOS custom attributes files created by Finder
 .DS_Store
 *.iml

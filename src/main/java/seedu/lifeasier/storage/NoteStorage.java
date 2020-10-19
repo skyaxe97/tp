@@ -17,6 +17,8 @@ import java.util.logging.Logger;
  */
 public class NoteStorage {
 
+    public static final String BLANK_STRING = "";
+
     private static Logger logger = Logger.getLogger(NoteStorage.class.getName());
     private static final String SAVE_DELIMITER = "=-=";
 
@@ -24,9 +26,6 @@ public class NoteStorage {
     private String filePathNotes;
     private FileCommand fileCommand;
     private Ui ui;
-
-    public NoteStorage() {
-    }
 
     public NoteStorage(NoteList notes, String filePathNotes) {
         this.notes = notes;
@@ -37,10 +36,8 @@ public class NoteStorage {
 
     /**
      * Reads and loads all saved note information.
-     *
-     * @param filePathNotes File object containing the file path of the notes save file.
      */
-    protected void readNotesSave(String filePathNotes) {
+    protected void readNotesSave() {
         logger.log(Level.INFO, "Read Notes save file start");
 
         try {
@@ -59,7 +56,7 @@ public class NoteStorage {
         logger.log(Level.INFO, "Read Notes save file end");
     }
 
-    private void createNoteList(Scanner fileScanner) {
+    protected void createNoteList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding notes from save");
 
         try {
@@ -69,6 +66,10 @@ public class NoteStorage {
                 String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
                 String noteTitle = noteComponents[0];
                 String noteDescription = noteComponents[1];
+
+                if (noteTitle.equals(BLANK_STRING)) {
+                    throw new ArrayIndexOutOfBoundsException();
+                }
 
                 notes.add(new Note(noteTitle, noteDescription));
                 logger.log(Level.INFO, "New Note added: " + noteTitle);
@@ -83,8 +84,6 @@ public class NoteStorage {
 
     /**
      * Writes information from the notes onto the notes save file for storage when there is a change to the notes.
-     *
-     * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToNoteSaveFile() {
         logger.log(Level.INFO, "Write to Notes save start");
@@ -94,8 +93,6 @@ public class NoteStorage {
 
             fileCommand.clearSaveFile(filePathNotes);
             ArrayList<Note> noteList = notes.getNotes();
-
-            assert noteList.size() > 0 : "noteList must contain at least 1 item when saving";
 
             //Append note information into save file for notes
             for (Note note : noteList) {
