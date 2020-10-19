@@ -161,7 +161,7 @@ public class Ui {
         }
     }
 
-    public void showEditableParameters(String type) {
+    public void showEditableParametersMessage(String type) {
         switch (type) {
 
         case (PARAM_LESSON):

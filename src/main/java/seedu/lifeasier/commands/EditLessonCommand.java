@@ -19,7 +19,7 @@ public class EditLessonCommand extends Command {
     }
 
     public void printLessonsMatchingCode(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui, ui.PARAM_LESSON, code);
+        tasks.printMatchingTasks(ui.PARAM_LESSON, code);
     }
 
     public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
@@ -43,7 +43,7 @@ public class EditLessonCommand extends Command {
             int userLessonChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userLessonChoice);
             ui.showSelectParameterToEdit();
-            ui.showEditableParameters(Ui.PARAM_LESSON);
+            ui.showEditableParametersMessage(Ui.PARAM_LESSON);
             int userParamChoice = Integer.parseInt(ui.readCommand());
 
             switch (userParamChoice) {

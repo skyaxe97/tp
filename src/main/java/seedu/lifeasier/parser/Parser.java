@@ -52,6 +52,10 @@ public class Parser {
     public static final String PARAM_EVENT = "event";
     public static final String PARAM_DEADLINE = "deadline";
 
+    public static final int INDEX_START = 0;
+    public static final int INDEX_END = 1;
+
+
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
@@ -216,16 +220,20 @@ public class Parser {
             } else {
                 int lastIndexOfNameCommand = input.indexOf(PARAM_NAME) + PARAM_NAME.length();
                 type = input.substring(lastIndexOfTypeCommand, firstIndexOfNameCommand).trim();
-                if (!type.equals(PARAM_DEADLINE) && !type.equals(PARAM_EVENT)
-                        && !type.equals(PARAM_LESSON)) {
-                    throw new ParserException();
-                }
+                checkValidType(type);
                 name = input.substring(lastIndexOfNameCommand).trim();
             }
         } catch (ParserException e) {
             LOGGER.log(Level.SEVERE, "Invalid command...");
         }
         return new DeleteTaskCommand(type, name);
+    }
+
+    private void checkValidType(String type) throws ParserException {
+        if (!type.equals(PARAM_DEADLINE) && !type.equals(PARAM_EVENT)
+                && !type.equals(PARAM_LESSON)) {
+            throw new ParserException();
+        }
     }
 
     public LocalDateTime[] parseNewTimeInput(Ui ui, String input, int numOfTimeArgs) throws ParserException {
@@ -245,7 +253,7 @@ public class Parser {
 
                 String byInput = input.substring(lastIndexOfByCommand).trim();
                 LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-                times[0] = by;
+                times[INDEX_START] = by;
                 return times;
 
             case (2):
@@ -256,17 +264,15 @@ public class Parser {
                 int firstIndexOfToCommand = input.indexOf(PARAM_TO);
                 int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
 
-                if (firstIndexOfDateCommand == -1 || firstIndexOfTimeCommand == -1 || firstIndexOfToCommand == -1) {
-                    throw new ParserException();
-                }
+                checkValidTimeKeywords(firstIndexOfDateCommand, firstIndexOfTimeCommand, firstIndexOfToCommand);
 
                 String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
                 String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
                 String endTime =  input.substring(lastIndexOfToCommand).trim();
                 LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
                 LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
-                times[0] = start;
-                times[1] = end;
+                times[INDEX_START] = start;
+                times[INDEX_END] = end;
                 return times;
 
             default:
@@ -279,6 +285,12 @@ public class Parser {
         return times;
     }
 
+    private void checkValidTimeKeywords(int firstIndexOfDateCommand, int firstIndexOfTimeCommand,
+                                        int firstIndexOfToCommand) throws ParserException {
+        if (firstIndexOfDateCommand == -1 || firstIndexOfTimeCommand == -1 || firstIndexOfToCommand == -1) {
+            throw new ParserException();
+        }
+    }
     /**
      * Parses the showNotes command that the user inputs.
      *

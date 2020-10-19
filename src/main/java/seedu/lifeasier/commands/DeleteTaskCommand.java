@@ -21,7 +21,7 @@ public class DeleteTaskCommand extends Command {
     }
 
     private void printMatchingTasks(TaskList tasks, Ui ui, String type, String name) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui, type, name);
+        tasks.printMatchingTasks(type, name);
     }
 
     private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
@@ -39,10 +39,13 @@ public class DeleteTaskCommand extends Command {
                 throw new ParserException();
             }
             logger.log(Level.INFO, "Start of DeleteTaskCommand");
+
             ui.showSelectTaskToDelete(type);
             printMatchingTasks(tasks, ui, type, name);
+
             int userTaskChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userTaskChoice);
+
             deleteTask(tasks, ui, userTaskChoice);
             storage.saveTasks();
             ui.showDeleteConfirmationMessage();

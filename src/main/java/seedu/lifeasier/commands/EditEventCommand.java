@@ -19,7 +19,7 @@ public class EditEventCommand extends Command {
     }
 
     public void printMatchingEvents(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui, ui.PARAM_EVENT, code);
+        tasks.printMatchingTasks(ui.PARAM_EVENT, code);
     }
 
     public void editEventName(TaskList tasks, int index, Ui ui) {
@@ -43,7 +43,7 @@ public class EditEventCommand extends Command {
             int userEventChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userEventChoice);
             ui.showSelectParameterToEdit();
-            ui.showEditableParameters(Ui.PARAM_EVENT);
+            ui.showEditableParametersMessage(Ui.PARAM_EVENT);
             int userParamChoice = Integer.parseInt(ui.readCommand());
 
             switch (userParamChoice) {

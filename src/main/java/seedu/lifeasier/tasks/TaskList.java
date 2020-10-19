@@ -13,6 +13,9 @@ import java.util.logging.Logger;
 
 
 public class TaskList {
+    public static final int INDEX_START = 0;
+    public static final int INDEX_END = 1;
+
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
     protected static int taskCount;
@@ -95,8 +98,8 @@ public class TaskList {
         if (times[0] == null) {
             throw new ParserException();
         }
-        getTask(index).setStart(times[0]);
-        getTask(index).setEnd(times[1]);
+        getTask(index).setStart(times[INDEX_START]);
+        getTask(index).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
@@ -107,8 +110,8 @@ public class TaskList {
         if (times[0] == null) {
             throw new ParserException();
         }
-        getTask(index).setStart(times[0]);
-        getTask(index).setEnd(times[1]);
+        getTask(index).setStart(times[INDEX_START]);
+        getTask(index).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
@@ -134,14 +137,13 @@ public class TaskList {
         }
     }
 
-    public void printMatchingTasks(Ui ui, String type, String description) throws TaskNotFoundException {
+    public void printMatchingTasks(String type, String description) throws TaskNotFoundException {
 
         logger.log(Level.INFO, "Start of printing all matching " + type);
         indexOfLastMatch = 0;
         boolean noMatches = true;
         for (int i = 0; i < getTaskCount(); i++) {
-            if (getTask(i).getType().equals(type)
-                    && getTask(i).getDescription().contains(description)) {
+            if (checkMatchingTasks(i, type, description)) {
                 System.out.println((i + 1) + ". " + getTask(i).toString());
                 indexOfLastMatch = i;
                 noMatches = false;
@@ -151,6 +153,11 @@ public class TaskList {
             throw new TaskNotFoundException();
         }
         logger.log(Level.INFO, "Start of printing all matching " + type);
+    }
+
+    private boolean checkMatchingTasks(int index, String type, String description) {
+        return(getTask(index).getType().equals(type)
+                && getTask(index).getDescription().contains(description));
     }
 
     public void checkForIndexOutOfBounds(int userInput) {
