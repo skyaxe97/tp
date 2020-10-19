@@ -168,13 +168,12 @@ public class TaskList {
         if (userInput > indexOfLastMatch || userInput < 0) {
             throw new IndexOutOfBoundsException();
         }
+    }
 
     public ArrayList<Task> getTasksFromOneDay(LocalDate day) {
-
         return (ArrayList<Task>) taskList.stream()
                 .filter((t) -> t.getStart().toLocalDate().equals(day))
                 .collect(toList());
-
     }
 
     public void sort() {

@@ -73,6 +73,7 @@ public class LifEasier {
         ui.showGreetingMessage();
     }
 
+
     /**
      * Main entry-point for the LifEasier application.
      */
