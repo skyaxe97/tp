@@ -75,8 +75,8 @@ public class FileStorage {
             assert checkIfBothFilesExists(saveFileTasks, saveFileNotes) : "Both saves are supposed to exist";
 
             logger.log(Level.INFO, "Save files found, read save files");
-            noteStorage.readNotesSave(filePathNotes);
-            taskStorage.readTasksSave(filePathTasks);
+            noteStorage.readNotesSave();
+            taskStorage.readTasksSave();
         }
 
         logger.log(Level.INFO, "Startup file read end");
@@ -122,7 +122,7 @@ public class FileStorage {
             return;
         }
         //Read note save file
-        noteStorage.readNotesSave(filePathNotes);
+        noteStorage.readNotesSave();
     }
 
     private void checkForTasksSaveFile(File saveFileTasks) {
@@ -133,7 +133,7 @@ public class FileStorage {
             return;
         }
         //Read task save file
-        taskStorage.readTasksSave(filePathTasks);
+        taskStorage.readTasksSave();
     }
 
     private boolean directoryExists(File fileDirectory) {

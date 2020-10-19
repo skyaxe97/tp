@@ -6,6 +6,7 @@ import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
+import seedu.lifeasier.parser.Parser;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +36,7 @@ public class EditLessonCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         try {
             logger.log(Level.INFO, "Start of EditLessonCommand");
             printLessonsMatchingCode(tasks, ui, code);

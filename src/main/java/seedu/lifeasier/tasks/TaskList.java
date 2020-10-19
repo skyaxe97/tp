@@ -8,6 +8,7 @@ import seedu.lifeasier.ui.Ui;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +27,7 @@ public class TaskList {
         taskCount = 0;
     }
 
-    public static ArrayList<Task> getTaskList() {
+    public ArrayList<Task> getTaskList() {
         return taskList;
     }
 

@@ -1,7 +1,7 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.parser.ParserException;
+import seedu.lifeasier.parser.*;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.TaskNotFoundException;
@@ -35,7 +35,7 @@ public class EditEventCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         try {
             logger.log(Level.INFO, "Start of EditEventCommand");
             printMatchingEvents(tasks, ui, eventName);

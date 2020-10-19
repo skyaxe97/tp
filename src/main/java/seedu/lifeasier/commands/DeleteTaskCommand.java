@@ -1,6 +1,7 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
@@ -33,7 +34,7 @@ public class DeleteTaskCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         try {
             if (type.equals("")) {
                 throw new ParserException();
