@@ -50,14 +50,12 @@ public abstract class Task {
 
     public abstract LocalDateTime getEnd();
 
-<<<<<<< HEAD
+
     public abstract void setStart(LocalDateTime start);
 
     public abstract void setEnd(LocalDateTime end);
 
-    public boolean isWithinTimeSlot(int hour) {
-        return startsAfter(hour) && endsBefore(hour + 1);
-=======
+
     public boolean isWithinTimeSlot(int timeSlotStartHour) {
         return startsBeforeOrAt(timeSlotStartHour) && endsAtOrAfter(timeSlotStartHour + 1);
     }
@@ -68,7 +66,6 @@ public abstract class Task {
 
     public int getRoundedDownStartHour(LocalTime startTime) {
         return startTime.getHour();
->>>>>>> upstream/master
     }
 
     public boolean endsAtOrAfter(int hour) {
