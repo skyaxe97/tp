@@ -6,7 +6,11 @@ import seedu.lifeasier.commands.AddLessonCommand;
 import seedu.lifeasier.commands.AddNotesCommand;
 import seedu.lifeasier.commands.ArchiveCommand;
 import seedu.lifeasier.commands.Command;
+import seedu.lifeasier.commands.DeleteTaskCommand;
 import seedu.lifeasier.commands.DisplayScheduleCommand;
+import seedu.lifeasier.commands.EditDeadlineCommand;
+import seedu.lifeasier.commands.EditEventCommand;
+import seedu.lifeasier.commands.EditLessonCommand;
 import seedu.lifeasier.commands.ExitCommand;
 import seedu.lifeasier.commands.FreeTimeCommand;
 import seedu.lifeasier.commands.HelpCommand;
@@ -40,12 +44,27 @@ public class Parser {
     public static final String PARAM_FREE_TIME = "freeTime";
     public static final String PARAM_SLEEP_TIME = "sleepTime";
     public static final String PARAM_ARCHIVE = "archive";
+    public static final String PARAM_EDIT_LESSON = "editLesson";
+    public static final String PARAM_EDIT_DEADLINE = "editDeadline";
+    public static final String PARAM_EDIT_EVENT = "editEvent";
+    public static final String PARAM_DELETE_TASK = "deleteTask";
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
     public static final String PARAM_TIME = "/time";
     public static final String PARAM_TO = "/to";
     public static final String PARAM_BY = "/by";
+    public static final String PARAM_TYPE = "/type";
+    public static final String PARAM_NAME = "/name";
+
+    public static final String PARAM_LESSON = "lesson";
+    public static final String PARAM_EVENT = "event";
+    public static final String PARAM_DEADLINE = "deadline";
+
+    public static final int INDEX_START = 0;
+    public static final int INDEX_END = 1;
+
+
 
     private boolean isParametersEmpty = true;
     private boolean isModuleCodeEmpty = true;
@@ -84,6 +103,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
+
     Command parseAddLessonCommand(Ui ui, String input) {
 
         logger.log(Level.INFO, "Parsing addLesson command...");
@@ -202,6 +222,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddDeadlineCommand with the parameters input by the user.
      */
+
     Command parseAddDeadlineCommand(Ui ui, String input) {
 
         logger.log(Level.INFO, "Parsing addDeadline command...");
@@ -253,6 +274,126 @@ public class Parser {
         String title = input.substring(lastIndexOfAddNotesCommand).trim();
 
         return new AddNotesCommand(title);
+    }
+
+    private Command parseEditLessonCommand(String input) {
+
+        logger.log(Level.INFO, "Parsing editLesson command...");
+
+        int lastIndexOfAddNotesCommand = input.indexOf(PARAM_EDIT_LESSON) + PARAM_EDIT_LESSON.length();
+        String code = input.substring(lastIndexOfAddNotesCommand).trim();
+
+        return new EditLessonCommand(code);
+    }
+
+    private Command parseEditEventCommand(String input) {
+
+        logger.log(Level.INFO, "Parsing editEvent command...");
+
+        int lastIndexOfAddNotesCommand = input.indexOf(PARAM_EDIT_EVENT) + PARAM_EDIT_EVENT.length();
+        String eventName = input.substring(lastIndexOfAddNotesCommand).trim();
+
+        return new EditEventCommand(eventName);
+    }
+
+    private Command parseEditDeadlineCommand(String input) {
+
+        logger.log(Level.INFO, "Parsing editDeadline command...");
+
+        int lastIndexOfAddNotesCommand = input.indexOf(PARAM_EDIT_DEADLINE) + PARAM_EDIT_DEADLINE.length();
+        String deadlineName = input.substring(lastIndexOfAddNotesCommand).trim();
+
+        return new EditDeadlineCommand(deadlineName);
+    }
+
+    private Command parseDeleteTaskCommand(String input) {
+        String type = "";
+        String name = "";
+        try {
+            logger.log(Level.INFO, "Parsing deleteTask command...");
+            int firstIndexOfTypeCommand = input.indexOf(PARAM_TYPE);
+            int lastIndexOfTypeCommand = input.indexOf(PARAM_TYPE) + PARAM_TYPE.length();
+            if (firstIndexOfTypeCommand == -1) {
+                throw new ParserException();
+            }
+
+            int firstIndexOfNameCommand = input.indexOf(PARAM_NAME);
+            if (firstIndexOfNameCommand == -1) {
+                type = input.substring(lastIndexOfTypeCommand).trim();
+                name = "";
+            } else {
+                int lastIndexOfNameCommand = input.indexOf(PARAM_NAME) + PARAM_NAME.length();
+                type = input.substring(lastIndexOfTypeCommand, firstIndexOfNameCommand).trim();
+                checkValidType(type);
+                name = input.substring(lastIndexOfNameCommand).trim();
+            }
+        } catch (ParserException e) {
+            logger.log(Level.SEVERE, "Invalid command...");
+        }
+        return new DeleteTaskCommand(type, name);
+    }
+
+    private void checkValidType(String type) throws ParserException {
+        if (!type.equals(PARAM_DEADLINE) && !type.equals(PARAM_EVENT)
+                && !type.equals(PARAM_LESSON)) {
+            throw new ParserException();
+        }
+    }
+
+    public LocalDateTime[] parseNewTimeInput(Ui ui, String input, int numOfTimeArgs) throws ParserException {
+
+        logger.log(Level.INFO, "Parsing newTimeInput from user...");
+        LocalDateTime[] times = new LocalDateTime[2];
+        try {
+            switch (numOfTimeArgs) {
+
+            case (1):
+                int firstIndexOfByCommand = input.indexOf(PARAM_BY);
+                int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
+
+                if (firstIndexOfByCommand == -1) {
+                    throw new ParserException();
+                }
+
+                String byInput = input.substring(lastIndexOfByCommand).trim();
+                LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
+                times[INDEX_START] = by;
+                return times;
+
+            case (2):
+                int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
+                int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
+                int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
+                int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
+                int firstIndexOfToCommand = input.indexOf(PARAM_TO);
+                int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+
+                checkValidTimeKeywords(firstIndexOfDateCommand, firstIndexOfTimeCommand, firstIndexOfToCommand);
+
+                String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+                String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+                String endTime =  input.substring(lastIndexOfToCommand).trim();
+                LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+                LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+                times[INDEX_START] = start;
+                times[INDEX_END] = end;
+                return times;
+
+            default:
+                throw new ParserException();
+            }
+
+        } catch (DateTimeParseException e) {
+            ui.showLocalDateTimeParseError();
+        }
+        return times;
+    }
+
+    private void checkValidTimeKeywords(int firstIndexOfDateCommand, int firstIndexOfTimeCommand,
+                                        int firstIndexOfToCommand) throws ParserException {
+        if (firstIndexOfDateCommand == -1 || firstIndexOfTimeCommand == -1 || firstIndexOfToCommand == -1) {
+            throw new ParserException();
+        }
     }
 
     /**
@@ -639,6 +780,18 @@ public class Parser {
 
             case (PARAM_EXIT):
                 return new ExitCommand();
+
+            case (PARAM_EDIT_LESSON):
+                return parseEditLessonCommand(input);
+
+            case (PARAM_EDIT_EVENT):
+                return parseEditEventCommand(input);
+
+            case (PARAM_EDIT_DEADLINE):
+                return parseEditDeadlineCommand(input);
+
+            case (PARAM_DELETE_TASK):
+                return parseDeleteTaskCommand(input);
 
             default:
                 throw new ParserException();

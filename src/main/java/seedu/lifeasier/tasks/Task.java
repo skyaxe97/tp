@@ -18,6 +18,10 @@ public abstract class Task {
         taskCounter++;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbol
     }
@@ -39,12 +43,18 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return "[" + this.getStatusIcon() + "] " + description;
+        return description;
     }
 
     public abstract LocalDateTime getStart();
 
     public abstract LocalDateTime getEnd();
+
+
+    public abstract void setStart(LocalDateTime start);
+
+    public abstract void setEnd(LocalDateTime end);
+
 
     public boolean isWithinTimeSlot(int timeSlotStartHour) {
         return startsBeforeOrAt(timeSlotStartHour) && endsAtOrAfter(timeSlotStartHour + 1);
