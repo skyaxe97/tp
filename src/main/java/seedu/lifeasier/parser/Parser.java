@@ -108,7 +108,7 @@ public class Parser {
             }
 
         }
-        LOGGER.log(Level.INFO, "End check for parameters");
+        LOGGER.log(Level.INFO, "End check for missing parameters");
 
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -167,7 +167,7 @@ public class Parser {
             }
 
         }
-        LOGGER.log(Level.INFO, "Start check for missing parameters.");
+        LOGGER.log(Level.INFO, "End check for missing parameters.");
 
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -219,7 +219,7 @@ public class Parser {
             }
 
         }
-        LOGGER.log(Level.INFO, "Start check for missing parameters.");
+        LOGGER.log(Level.INFO, "End check for missing parameters.");
 
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
