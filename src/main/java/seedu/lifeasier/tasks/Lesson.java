@@ -9,10 +9,12 @@ public class Lesson extends Task {
 
     private String type = "lesson";
 
+    @Override
     public LocalDateTime getStart() {
         return start;
     }
 
+    @Override
     public LocalDateTime getEnd() {
         return end;
     }
