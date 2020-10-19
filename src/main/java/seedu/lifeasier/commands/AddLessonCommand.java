@@ -4,7 +4,7 @@ import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
-
+import seedu.lifeasier.parser.Parser;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,7 +22,7 @@ public class AddLessonCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         tasks.addLesson(moduleCode, start, end);
         storage.saveTasks();
         ui.showAddConfirmationMessage("Lesson: " + moduleCode + " from "

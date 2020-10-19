@@ -7,8 +7,8 @@ import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.ScheduleUi;
-import seedu.lifeasier.ui.TimetableUi;
 import seedu.lifeasier.ui.Ui;
+
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
@@ -48,7 +48,7 @@ public class LifEasier {
 
             try {
                 Command userCommand = parser.parseCommand(fullCommand, ui);
-                userCommand.execute(ui, notes, tasks, storage);
+                userCommand.execute(ui, notes, tasks, storage, parser);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
