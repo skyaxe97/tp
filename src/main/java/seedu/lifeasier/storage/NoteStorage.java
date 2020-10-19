@@ -84,8 +84,6 @@ public class NoteStorage {
 
     /**
      * Writes information from the notes onto the notes save file for storage when there is a change to the notes.
-     *
-     * @throws IOException When the file cannot be found or is corrupted.
      */
     public void writeToNoteSaveFile() {
         logger.log(Level.INFO, "Write to Notes save start");
