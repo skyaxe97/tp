@@ -2,10 +2,7 @@ package seedu.lifeasier.tasks;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class TaskList {
     protected static ArrayList<Task> taskList;
@@ -16,7 +13,7 @@ public class TaskList {
         taskCount = 0;
     }
 
-    public static ArrayList<Task> getTaskList() {
+    public ArrayList<Task> getTaskList() {
         return taskList;
     }
 
