@@ -38,16 +38,6 @@ class ParserTest {
         });
     }
 
-<<<<<<< HEAD
-    //    @Test
-    //    void parseAddDeadlineCommand_inputInvalidDateTime_ParserException() {
-    //        Parser parser = new Parser();
-    //        Ui ui = new Ui();
-    //        assertThrows(DateTimeParseException.class, () -> {
-    //            parser.parseAddDeadlineCommand("addDeadline do homework /by 10-30-40 24:67");
-    //        });
-    //    }
-=======
     @Test
     void parseAddDeadlineCommand_inputInvalidDateTime_ParserException() {
         Parser parser = new Parser();
@@ -56,7 +46,4 @@ class ParserTest {
             parser.parseAddDeadlineCommand(ui, "addDeadline do homework /by 10-30-40 24:67");
         });
     }
->>>>>>> upstream/master
-
-
 }
