@@ -81,7 +81,7 @@ public class Parser {
     Command parseAddLessonCommand(Ui ui, String input) {
 
         LOGGER.log(Level.INFO, "Parsing addLesson command...");
-
+        LOGGER.log(Level.INFO, "Start check for missing parameters.");
         while (isParametersEmpty) {
             MissingParam param = checkLessonParameters(input);
 
@@ -108,6 +108,7 @@ public class Parser {
             }
 
         }
+        LOGGER.log(Level.INFO, "End check for parameters");
 
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -140,7 +141,7 @@ public class Parser {
     private Command parseAddEventCommand(Ui ui, String input) {
 
         LOGGER.log(Level.INFO, "Parsing addEvent command...");
-
+        LOGGER.log(Level.INFO, "Start check for missing parameters.");
         while (isParametersEmpty) {
             MissingParam param = checkEventParameters(input);
             switch (param) {
@@ -166,6 +167,7 @@ public class Parser {
             }
 
         }
+        LOGGER.log(Level.INFO, "Start check for missing parameters.");
 
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -197,6 +199,7 @@ public class Parser {
     Command parseAddDeadlineCommand(Ui ui, String input) {
 
         LOGGER.log(Level.INFO, "Parsing addDeadline command...");
+        LOGGER.log(Level.INFO, "Start check for missing parameters.");
 
         while (isParametersEmpty) {
             MissingParam param = checkDeadlineParameters(input);
@@ -216,6 +219,7 @@ public class Parser {
             }
 
         }
+        LOGGER.log(Level.INFO, "Start check for missing parameters.");
 
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
@@ -335,11 +339,12 @@ public class Parser {
      * @return A "T" or "D" string.
      */
     public String parseUserInputTOrD(String input, Ui ui) {
-
+        LOGGER.log(Level.INFO, "Start check for T/D input");
         while (!input.trim().equals("T") && !input.trim().equals("D")) {
             ui.showInvalidTitleDescriptionConfirmationMessage();
             input = ui.readCommand();
         }
+        LOGGER.log(Level.INFO, "End check for T/D input");
         return input;
     }
 
@@ -351,11 +356,14 @@ public class Parser {
      * @return A non-empty string.
      */
     private String checkIfEmpty(Ui ui, String string) {
+        LOGGER.log(Level.INFO, "Start check for empty string");
         while (string.trim().length() == 0) {     // empty string
             ui.showEmptyDescriptionMessage();
             string = ui.readCommand();
         }
+        LOGGER.log(Level.INFO, "End check for empty string");
         return string;
+
     }
 
     /**
@@ -457,11 +465,12 @@ public class Parser {
      * @return A string with description added.
      */
     private String addEventDescriptionParam(Ui ui, String input) {
+        LOGGER.log(Level.INFO, "Start of adding Event description to string.");
         ui.showAddDescriptionMessage();
         String description = checkIfEmpty(ui, ui.readCommand());
         String[] temp = input.split("/date");
         input = temp[0] + description + " /date" + temp[1];
-
+        LOGGER.log(Level.INFO, "End of adding Event description to string.");
         return input;
     }
 
@@ -473,11 +482,12 @@ public class Parser {
      * @return A string with description added.
      */
     private String addDeadlineDescriptionParam(Ui ui, String input) {
+        LOGGER.log(Level.INFO, "Start of adding Deadline description to string.");
         ui.showAddDescriptionMessage();
         String description = checkIfEmpty(ui, ui.readCommand());
         String[] temp = input.split("/by");
         input = temp[0] + description + " /by" + temp[1];
-
+        LOGGER.log(Level.INFO, "End of adding Deadline description to string.");
         return input;
     }
 
@@ -489,11 +499,12 @@ public class Parser {
      * @return A string with module code added.
      */
     private String addModuleCodeParam(Ui ui, String input) {
+        LOGGER.log(Level.INFO, "Start of adding Module Code to string.");
         ui.showAddModuleCodeMessage();
         String moduleCode = checkIfEmpty(ui, ui.readCommand());
         String[] temp = input.split("/date");
         input = temp[0] + "/code" + moduleCode + " /date" + temp[1];
-
+        LOGGER.log(Level.INFO, "End of adding Module Code to string.");
         return input;
     }
 
@@ -505,10 +516,12 @@ public class Parser {
      * @return A string with date added.
      */
     private String addDateParam(Ui ui, String input) {
+        LOGGER.log(Level.INFO, "Start of adding Date to string.");
         ui.showAddDateMessage();
         String date = checkIfEmpty(ui, ui.readCommand());
         String[] temp1 = input.split("/time");
         input = temp1[0] + "/date " + date + " /time" + temp1[1];
+        LOGGER.log(Level.INFO, "End of adding Date to string.");
 
         return input;
     }
@@ -522,10 +535,12 @@ public class Parser {
      * @return A string with start time added.
      */
     private String addStartTimeParam(Ui ui, String input) {
+        LOGGER.log(Level.INFO, "Start of adding Start Time to string.");
         ui.showAddStartTimeMessage();
         String startTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp2 = input.split("/to");
         input = temp2[0] + "/time " + startTime + " /to" + temp2[1];
+        LOGGER.log(Level.INFO, "End of adding Start Time to string.");
 
         return input;
     }
@@ -538,9 +553,11 @@ public class Parser {
      * @return A string with end time added.
      */
     private String addEndTimeParam(Ui ui, String input) {
+        LOGGER.log(Level.INFO, "Start of adding End Time to string.");
         ui.showAddEndTimeMessage();
         String endTime = checkIfEmpty(ui, ui.readCommand());
         input = input + " /to " + endTime;
+        LOGGER.log(Level.INFO, "End of adding End Time to string.");
 
         return input;
     }
@@ -553,9 +570,11 @@ public class Parser {
      * @return A string with date and time added.
      */
     private String addByDateTime(Ui ui, String input) {
+        LOGGER.log(Level.INFO, "Start of adding By Time to string.");
         ui.showAddDateTimeMessage();
         String byDateTime = checkIfEmpty(ui, ui.readCommand());
         input = input + " /by" + byDateTime;
+        LOGGER.log(Level.INFO, "End of adding By Time to string.");
 
         return input;
     }
