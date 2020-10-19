@@ -45,6 +45,7 @@ public class TimetableUi {
     }
 
     public void generateTimetable(TaskList tasks) {
+        timetableRows.clear();
         timetableRows.add(getColumnTitlesString());
 
         LocalTime[] timeRange = getTimetableTimeRange(tasks);
