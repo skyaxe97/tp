@@ -9,17 +9,24 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected static int taskCounter = 0;
+    protected int editNumber;
 
     private static final String TIME_FORMAT = "%02d:00";
+    private static final int DEFAULT_EDIT_NUMBER = -999999;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.editNumber = DEFAULT_EDIT_NUMBER;
         taskCounter++;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setEditNumber(int number) {
+        this.editNumber = number;
     }
 
     public String getStatusIcon() {
@@ -49,7 +56,6 @@ public abstract class Task {
     public abstract LocalDateTime getStart();
 
     public abstract LocalDateTime getEnd();
-
 
     public abstract void setStart(LocalDateTime start);
 

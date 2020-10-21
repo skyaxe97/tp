@@ -1,24 +1,6 @@
 package seedu.lifeasier.parser;
 
-import seedu.lifeasier.commands.AddDeadlineCommand;
-import seedu.lifeasier.commands.AddEventCommand;
-import seedu.lifeasier.commands.AddLessonCommand;
-import seedu.lifeasier.commands.AddNotesCommand;
-import seedu.lifeasier.commands.ArchiveCommand;
-import seedu.lifeasier.commands.Command;
-import seedu.lifeasier.commands.DeleteTaskCommand;
-import seedu.lifeasier.commands.DisplayScheduleCommand;
-import seedu.lifeasier.commands.EditDeadlineCommand;
-import seedu.lifeasier.commands.EditEventCommand;
-import seedu.lifeasier.commands.EditLessonCommand;
-import seedu.lifeasier.commands.ExitCommand;
-import seedu.lifeasier.commands.FreeTimeCommand;
-import seedu.lifeasier.commands.HelpCommand;
-import seedu.lifeasier.commands.InvalidCommand;
-import seedu.lifeasier.commands.ShowNotesCommand;
-import seedu.lifeasier.commands.SleepTimeCommand;
-import seedu.lifeasier.commands.DeleteNotesCommand;
-import seedu.lifeasier.commands.EditNotesCommand;
+import seedu.lifeasier.commands.*;
 
 import seedu.lifeasier.ui.Ui;
 import java.time.LocalDateTime;
@@ -48,6 +30,7 @@ public class Parser {
     public static final String PARAM_EDIT_DEADLINE = "editDeadline";
     public static final String PARAM_EDIT_EVENT = "editEvent";
     public static final String PARAM_DELETE_TASK = "deleteTask";
+    public static final String PARAM_UNDO = "undo";
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
@@ -63,8 +46,6 @@ public class Parser {
 
     public static final int INDEX_START = 0;
     public static final int INDEX_END = 1;
-
-
 
     private boolean isParametersEmpty = true;
     private boolean isModuleCodeEmpty = true;
@@ -459,6 +440,55 @@ public class Parser {
     }
 
     /**
+     * Parses the undo command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return Either UndoNoteCommand or UndoTaskCommand depending on the parsed parameter.
+     */
+    private Command parseUndoCommand(String input) {
+        Ui ui = new Ui();
+        logger.log(Level.INFO, "Parsing undo command...");
+
+        String undoType = "";
+
+        try {
+            String[] splitInput = input.split(" ");
+            undoType = splitInput[1];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            logger.log(Level.WARNING, "Missing parameter, proceed to prompt");
+            undoType = handleMissingUndoParam(ui);
+        }
+
+        switch (undoType) {
+        case "task":
+            return new UndoTaskCommand();
+        case "note":
+            return new UndoNoteCommand();
+        default:
+            logger.log(Level.SEVERE, "Error determining undo command type");
+            return new InvalidCommand();
+        }
+    }
+
+    private String handleMissingUndoParam(Ui ui) {
+        boolean isValidField = false;
+        String userInput = "";
+
+        while (!isValidField) {
+            ui.showEnterUndoTypeMessage();
+
+            userInput = ui.readCommand();
+
+            if (userInput.equals("task") || userInput.equals("note")) {
+                isValidField = true;
+            } else {
+                ui.showInvalidUndoType();
+            }
+        }
+        return userInput;
+    }
+
+    /**
      * Parses the user Y/N inputs.
      *
      * @param input String containing the user's input.
@@ -528,7 +558,6 @@ public class Parser {
 
     /**
      * Reset all boolean variables to true.
-     *
      */
     private void resetBoolean() {
         isParametersEmpty = true;
@@ -736,6 +765,7 @@ public class Parser {
     public Command parseCommand(String input, Ui ui) throws ParserException {
 
         logger.log(Level.INFO, "Parsing user input for command...");
+        input = input.trim();
 
         try {
             String commandType = getCommandType(input);
@@ -793,6 +823,9 @@ public class Parser {
             case (PARAM_DELETE_TASK):
                 return parseDeleteTaskCommand(input);
 
+            case (PARAM_UNDO):
+                return parseUndoCommand(input);
+
             default:
                 throw new ParserException();
             }
@@ -807,4 +840,5 @@ public class Parser {
         return new InvalidCommand();
 
     }
+
 }

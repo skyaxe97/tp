@@ -1,10 +1,12 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.Deadline;
 import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
@@ -25,7 +27,8 @@ public class FreeTimeCommand extends Command {
 
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
+                        NoteHistory noteHistory, TaskHistory taskHistory) {
 
         logger.log(Level.INFO, "Getting tasks from today...");
         ArrayList<Task> tasksFromToday = tasks.getTasksFromOneDay(LocalDate.now());

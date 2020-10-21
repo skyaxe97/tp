@@ -1,9 +1,11 @@
 package seedu.lifeasier.commands;
 
+import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
@@ -36,12 +38,13 @@ public class EditDeadlineCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
+                        NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditDeadlineCommand");
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
-            int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
+            int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1; //Determine index in tasks - Copy this value
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
@@ -76,7 +79,7 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesMessage("deadline");
         }
-        storage.saveTasks();
+        storage.saveTasks(); //Edit confirmed, can push old saved into tasks arraylist
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 }

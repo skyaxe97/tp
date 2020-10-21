@@ -1,12 +1,10 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.EmptyNoteListException;
-import seedu.lifeasier.notes.TitleNotFoundException;
+import seedu.lifeasier.notes.*;
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
-import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.notes.NoteCommandFunctions;
 import seedu.lifeasier.parser.Parser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +53,8 @@ public class ShowNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
+                        NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
             ui.printSeparator();
