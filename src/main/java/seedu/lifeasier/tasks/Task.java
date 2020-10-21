@@ -25,6 +25,10 @@ public abstract class Task {
         this.description = description;
     }
 
+    public void setEditNumber(int number) {
+        this.editNumber = number;
+    }
+
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbol
     }
