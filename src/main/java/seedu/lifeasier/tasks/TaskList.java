@@ -22,12 +22,10 @@ public class TaskList {
 
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
-    protected static int taskCount;
     private int indexOfLastMatch;
 
     public TaskList() {
         taskList = new ArrayList<>();
-        taskCount = 0;
     }
 
     public ArrayList<Task> getTaskList() {
@@ -35,7 +33,7 @@ public class TaskList {
     }
 
     public int getTaskCount() {
-        return taskCount;
+        return taskList.size();
     }
 
     public Task getTask(int index) {
@@ -44,11 +42,6 @@ public class TaskList {
 
     public void addTask(Task task) {
         taskList.add(task);
-        taskCount++;
-    }
-
-    public void increaseTaskCount() {
-        taskCount++;
     }
 
     public void debugDisplayTaskList() {
@@ -133,7 +126,6 @@ public class TaskList {
     public void deleteTask(int index, Ui ui) {
         try {
             taskList.remove(index);
-            taskCount--;
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidNumberMessage();
         } catch (NumberFormatException e) {
