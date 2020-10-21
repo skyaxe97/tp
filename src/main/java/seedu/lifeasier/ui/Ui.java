@@ -443,4 +443,14 @@ public class Ui {
             System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
         }
     }
+
+    public void showEnterUndoTypeMessage() {
+        printSeparator();
+        System.out.println("To undo a change in tasks, please enter: task");
+        System.out.println("To undo a change in notes, please enter: note");
+    }
+
+    public void showInvalidUndoType() {
+        System.out.println("Invalid undo type, please try again!");
+    }
 }
