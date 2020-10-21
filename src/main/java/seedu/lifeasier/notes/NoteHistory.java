@@ -13,5 +13,4 @@ public class NoteHistory {
         this.noteHistory = new ArrayList<>();
         this.notes = notes;
     }
-
 }

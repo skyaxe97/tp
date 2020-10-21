@@ -471,7 +471,7 @@ public class Parser {
     }
 
     private String handleMissingUndoParam(Ui ui) {
-        Boolean isValidField = false;
+        boolean isValidField = false;
         String userInput = "";
 
         while (!isValidField) {
@@ -558,7 +558,6 @@ public class Parser {
 
     /**
      * Reset all boolean variables to true.
-     *
      */
     private void resetBoolean() {
         isParametersEmpty = true;
