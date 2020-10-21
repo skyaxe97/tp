@@ -50,7 +50,6 @@ public abstract class Task {
 
     public abstract LocalDateTime getEnd();
 
-
     public abstract void setStart(LocalDateTime start);
 
     public abstract void setEnd(LocalDateTime end);
