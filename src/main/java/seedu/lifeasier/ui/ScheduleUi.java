@@ -8,10 +8,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * The ScheduleUi class handles all schedule-related displays.
+ */
 public class ScheduleUi {
+    private static final TimetableUi timetable = TimetableUi.getInstance();
 
+    /**
+     * Displays the home screen to the user.
+     */
     public void showHome(TaskList tasks) {
-        TimetableUi.getInstance().showTimetable(tasks);
+        timetable.showTimetable(tasks);
         System.out.println();
         displayUpcomingDeadlines(tasks);
     }
@@ -31,7 +38,7 @@ public class ScheduleUi {
     }
 
     public void displayWeekSchedule(TaskList tasks) {
-        TimetableUi.getInstance().showTimetable(tasks);
+        timetable.showTimetable(tasks);
         displayUpcomingDeadlines(tasks);
     }
 
@@ -52,8 +59,7 @@ public class ScheduleUi {
         System.out.println(startDateTimeString + endDateTimeString + "  " + task.getDescription());
     }
 
-    public static String getDayOfWeek(int i) {
-        LocalDateTime datePointer = LocalDateTime.now().plus(i, ChronoUnit.DAYS);
+    public static String getDayOfWeek(LocalDateTime datePointer) {
         return datePointer.getDayOfWeek().toString();
     }
 
