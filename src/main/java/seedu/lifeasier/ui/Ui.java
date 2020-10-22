@@ -1,8 +1,5 @@
 package seedu.lifeasier.ui;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import seedu.lifeasier.notes.NoteList;
 import java.util.Scanner;
 
@@ -452,5 +449,9 @@ public class Ui {
 
     public void showInvalidUndoType() {
         System.out.println("Invalid undo type, please try again!");
+    }
+
+    public void showInvalidUndoAction() {
+        System.out.println("Nothing to undo!");
     }
 }

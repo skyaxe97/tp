@@ -14,15 +14,18 @@ public class UndoTaskCommand extends Command {
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
-        System.out.println("UNDO TASK COMMAND");
-        int lastTaskEditID = taskHistory.getChangeCount();
-        System.out.println(lastTaskEditID);
-        for (int i = 0; i < tasks.getTaskCount(); i++) {
-            Task task = tasks.getTask(i);
-            if (lastTaskEditID == task.getEditNumber()) {
-                Task old = taskHistory.getLastTask();
-                tasks.setTask(i, old);
+        try {
+            int lastTaskEditNumber = taskHistory.getLastTask().getEditNumber();
+            for (int i = 0; i < tasks.getTaskCount(); i++) {
+                int editNumOfCurrTask =  tasks.getTask(i).getEditNumber();
+                if (editNumOfCurrTask == lastTaskEditNumber) {
+                    Task oldCopyOfCurrTask = taskHistory.getLastTask();
+                    tasks.setTask(i, oldCopyOfCurrTask);
+                }
             }
+            taskHistory.popLastTask();
+        } catch (IndexOutOfBoundsException e) {
+            ui.showInvalidUndoAction();
         }
     }
 }

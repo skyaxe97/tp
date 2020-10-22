@@ -43,14 +43,10 @@ public class EditDeadlineCommand extends Command {
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1; //Determine index in tasks - Copy this value
-
-            int editID = taskHistory.getChangeCount() + 1;
-            tasks.getTask(userDeadlineChoice).setEditNumber(editID);
-            Task oldCopyOfTask = new Deadline(tasks.getTask(userDeadlineChoice), editID);
-            System.out.println("edit num: " + tasks.getTask(userDeadlineChoice).getEditNumber());
-            System.out.println("old copy " + oldCopyOfTask.toString());
-
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
+
+            Task oldCopyOfTask = taskHistory.getCurrCopyOfTask(tasks, userDeadlineChoice);
+
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
             int userParamChoice = Integer.parseInt(ui.readCommand());
@@ -70,8 +66,8 @@ public class EditDeadlineCommand extends Command {
             default:
                 throw new IndexOutOfBoundsException();
             }
-            System.out.println("old copy " + oldCopyOfTask.toString());
-            taskHistory.addOldCopy(oldCopyOfTask, ui);
+
+            taskHistory.pushOldCopy(oldCopyOfTask, ui);
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
@@ -89,4 +85,5 @@ public class EditDeadlineCommand extends Command {
         storage.saveTasks(); //Edit confirmed, can push old saved into tasks arraylist
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
+
 }
