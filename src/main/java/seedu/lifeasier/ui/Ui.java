@@ -454,4 +454,12 @@ public class Ui {
     public void showInvalidUndoAction() {
         System.out.println("Nothing to undo!");
     }
+
+    public void showTaskUndoMessage() {
+        System.out.println("This task has been successfully reverted!");
+    }
+
+    public void showNoteUndoMessage() {
+        System.out.println("This note has been successfully reverted!");
+    }
 }
