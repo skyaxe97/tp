@@ -45,7 +45,7 @@ public class EditDeadlineCommand extends Command {
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1; //Determine index in tasks - Copy this value
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
 
-            Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTask(tasks, userDeadlineChoice);
+            Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTaskToEdit(tasks, userDeadlineChoice);
             logger.log(Level.INFO, "Temporarily hold value of this Deadline");
 
             ui.showSelectParameterToEdit();

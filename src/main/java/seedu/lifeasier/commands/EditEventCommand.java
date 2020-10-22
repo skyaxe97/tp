@@ -48,7 +48,7 @@ public class EditEventCommand extends Command {
             int userEventChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userEventChoice);
 
-            Task oldCopyOfEvent = taskHistory.getCurrCopyOfTask(tasks, userEventChoice);
+            Task oldCopyOfEvent = taskHistory.getCurrCopyOfTaskToEdit(tasks, userEventChoice);
             logger.log(Level.INFO, "Temporarily hold value of this Event");
 
             ui.showSelectParameterToEdit();

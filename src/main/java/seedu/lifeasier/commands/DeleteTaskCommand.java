@@ -5,6 +5,7 @@ import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.TaskNotFoundException;
@@ -50,8 +51,14 @@ public class DeleteTaskCommand extends Command {
             int userTaskChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userTaskChoice);
 
+            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, userTaskChoice);
+            logger.log(Level.INFO, "Temporarily hold value of this Task");
+
             deleteTask(tasks, ui, userTaskChoice);
-            storage.saveTasks();
+
+            taskHistory.pushOldCopy(oldCopyOfTask, ui);
+            logger.log(Level.INFO, "Push old copy of Task into taskHistory");
+
             ui.showDeleteConfirmationMessage();
         } catch (ParserException e) {
             ui.showInvalidInputMessage();
@@ -60,6 +67,7 @@ public class DeleteTaskCommand extends Command {
                     + type + " names.");
             ui.showNoMatchesMessage(type);
         }
+        storage.saveTasks();
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }
 }

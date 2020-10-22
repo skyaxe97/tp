@@ -48,7 +48,7 @@ public class EditLessonCommand extends Command {
             int userLessonChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userLessonChoice);
 
-            Task oldCopyOfLesson = taskHistory.getCurrCopyOfTask(tasks, userLessonChoice);
+            Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);
             logger.log(Level.INFO, "Temporarily hold value of this Event");
 
             ui.showSelectParameterToEdit();
