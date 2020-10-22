@@ -5,7 +5,10 @@ import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.*;
+import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.tasks.TaskHistory;
+import seedu.lifeasier.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 
 import java.util.logging.Level;
@@ -42,7 +45,7 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.INFO, "Start of EditDeadlineCommand");
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
-            int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1; //Determine index in tasks - Copy this value
+            int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
 
             Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTaskToEdit(tasks, userDeadlineChoice);

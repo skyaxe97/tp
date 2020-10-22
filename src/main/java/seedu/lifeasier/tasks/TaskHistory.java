@@ -11,15 +11,14 @@ public class TaskHistory {
     private int deleteCount;
 
     private ArrayList<Task> taskHistory;
-    private TaskList tasks;
 
     private static final int DEFAULT_EDIT_NUMBER = -999999;
 
-    public TaskHistory(TaskList tasks) {
+    public TaskHistory() {
+        this.changeCount = 0;
         this.editCount = 0;
         this.deleteCount = 0;
         this.taskHistory = new ArrayList<>();
-        this.tasks = tasks;
     }
 
     public Task getLastTask() {

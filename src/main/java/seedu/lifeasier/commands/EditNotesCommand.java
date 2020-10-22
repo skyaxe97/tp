@@ -1,11 +1,17 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.*;
+import seedu.lifeasier.notes.Note;
+import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.notes.NoteHistory;
+import seedu.lifeasier.notes.NoteCommandFunctions;
+import seedu.lifeasier.notes.EmptyNoteListException;
+import seedu.lifeasier.notes.TitleNotFoundException;
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
-import seedu.lifeasier.parser.Parser;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +23,8 @@ public class EditNotesCommand extends Command {
         this.title = title;
     }
 
-    private void findTitle(Ui ui, NoteList notes, Parser parser, String title) throws TitleNotFoundException {
+    private void findTitle(Ui ui, NoteList notes, Parser parser,
+                           String title, NoteHistory noteHistory) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
         int noteNumber = -1;
         int matchNumber = 0;
@@ -38,7 +45,7 @@ public class EditNotesCommand extends Command {
             logger.log(Level.INFO, "One match found");
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmEditMessage();
-            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand());
+            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand(), noteHistory);
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
@@ -53,17 +60,18 @@ public class EditNotesCommand extends Command {
 
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmEditMessage();
-            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand());
+            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand(), noteHistory);
         }
 
     }
 
-    private void promptUserInput(Ui ui, Parser parser, NoteList notes, int noteNumber, String input) {
+    private void promptUserInput(Ui ui, Parser parser, NoteList notes, int noteNumber,
+                                 String input, NoteHistory noteHistory) {
         if (parser.parseUserInputYesOrNo(input, ui).equals("Y")) {
             logger.log(Level.INFO, "Y is inputted");
             ui.showEditWhichPartMessage();
             input = parser.parseUserInputTOrD(input, ui);
-            changeTitleOrDescription(ui, notes, noteNumber, input);
+            changeTitleOrDescription(ui, notes, noteNumber, input, noteHistory);
         } else {
             logger.log(Level.INFO, "N is inputted");
             ui.showNoteNotEditedMessage();
@@ -71,7 +79,11 @@ public class EditNotesCommand extends Command {
 
     }
 
-    private void changeTitleOrDescription(Ui ui, NoteList notes, int noteNumber, String input) {
+    private void changeTitleOrDescription(Ui ui, NoteList notes, int noteNumber, String input,
+                                          NoteHistory noteHistory) {
+        Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToEdit(notes, noteNumber);
+        logger.log(Level.INFO, "Temporarily hold details of this Note");
+
         if (input.trim().equals("T")) {
             logger.log(Level.INFO, "T is inputted");
             System.out.println("Current Title: " + notes.get(noteNumber).getTitle());
@@ -91,6 +103,10 @@ public class EditNotesCommand extends Command {
             System.out.println("OK! Your description is now: " + notes.get(noteNumber).getDescription());
             ui.printSeparator();
         }
+
+        noteHistory.pushOldCopy(oldCopyOfNote, ui);
+        logger.log(Level.INFO, "Push old copy of Note into noteHistory");
+
     }
 
     @Override
@@ -101,7 +117,7 @@ public class EditNotesCommand extends Command {
             ui.printSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
-                findTitle(ui, notes, parser, title);
+                findTitle(ui, notes, parser, title, noteHistory);
             } else {
                 ui.showSelectWhichNoteToEditMessage();
 
@@ -114,7 +130,7 @@ public class EditNotesCommand extends Command {
 
                 System.out.println(notes.get(noteNumber - 1).toString());
                 ui.showConfirmEditMessage();
-                promptUserInput(ui, parser, notes, noteNumber - 1, ui.readCommand());
+                promptUserInput(ui, parser, notes, noteNumber - 1, ui.readCommand(), noteHistory);
 
             }
             storage.saveNote();

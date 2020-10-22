@@ -18,6 +18,10 @@ public class NoteList {
         return notes.get(index);
     }
 
+    public void setNote(int i, Note oldCopyOfCurrNote) {
+        notes.set(i, oldCopyOfCurrNote);
+    }
+
     public void add(Note note) {
         notes.add(note);
     }

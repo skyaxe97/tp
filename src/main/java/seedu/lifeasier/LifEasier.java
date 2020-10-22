@@ -35,8 +35,8 @@ public class LifEasier {
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
         scheduleUi = new ScheduleUi();
-        noteHistory = new NoteHistory(notes);
-        taskHistory = new TaskHistory(tasks);
+        noteHistory = new NoteHistory();
+        taskHistory = new TaskHistory();
     }
 
     /**

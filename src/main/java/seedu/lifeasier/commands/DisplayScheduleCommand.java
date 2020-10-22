@@ -29,9 +29,10 @@ public class DisplayScheduleCommand extends Command {
         if (isDisplayWeek) {
             scheduleUi.displayWeekSchedule(tasks);
         } else {
-            int TaskCountToday = scheduleUi.getTaskCountForToday(tasks, currDate);
+            taskHistory.printTaskHistory();
+            int taskCountForToday = scheduleUi.getTaskCountForToday(tasks, currDate);
 
-            if (TaskCountToday > 0) {
+            if (taskCountForToday > 0) {
                 System.out.println("Here is your schedule for today:");
                 scheduleUi.displayDaySchedule(currDate, tasks);
             } else {
