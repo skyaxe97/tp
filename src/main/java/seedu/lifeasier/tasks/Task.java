@@ -3,7 +3,6 @@ package seedu.lifeasier.tasks;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 
 public abstract class Task {
     protected String description;
@@ -21,12 +20,22 @@ public abstract class Task {
         taskCounter++;
     }
 
+    public Task(Task task, int editNumber) {
+        this.description = task.description;
+        this.isDone = task.isDone;
+        this.editNumber = editNumber;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     public void setEditNumber(int number) {
         this.editNumber = number;
+    }
+
+    public int getEditNumber() {
+        return editNumber;
     }
 
     public String getStatusIcon() {

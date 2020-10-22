@@ -5,9 +5,7 @@ import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskList;
-import seedu.lifeasier.tasks.TaskNotFoundException;
+import seedu.lifeasier.tasks.*;
 import seedu.lifeasier.ui.Ui;
 
 import java.util.logging.Level;
@@ -45,6 +43,13 @@ public class EditDeadlineCommand extends Command {
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1; //Determine index in tasks - Copy this value
+
+            int editID = taskHistory.getChangeCount() + 1;
+            tasks.getTask(userDeadlineChoice).setEditNumber(editID);
+            Task oldCopyOfTask = new Deadline(tasks.getTask(userDeadlineChoice), editID);
+            System.out.println("edit num: " + tasks.getTask(userDeadlineChoice).getEditNumber());
+            System.out.println("old copy " + oldCopyOfTask.toString());
+
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
@@ -65,6 +70,8 @@ public class EditDeadlineCommand extends Command {
             default:
                 throw new IndexOutOfBoundsException();
             }
+            System.out.println("old copy " + oldCopyOfTask.toString());
+            taskHistory.addOldCopy(oldCopyOfTask, ui);
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
