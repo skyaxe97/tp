@@ -52,6 +52,8 @@ public class Ui {
             + "deleteTask /type TYPE /name NAME ------------------------- Deletes a task\n"
             + "addNotes TITLE ------------------------------------------ Adds a new note\n"
             + "showNotes TITLE ------------------------------------- Shows selected note\n"
+            + "editNotes TITLE ----------------------------------- Edits a selected note\n"
+            + "deleteNotes TITLE ------------------------------- Deletes a selected note\n"
             + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
             + "freeTime ------------------------ Tells you when you have free time today\n"
             + "sleepTime --------------------- Tells you how much time you have to sleep\n"
