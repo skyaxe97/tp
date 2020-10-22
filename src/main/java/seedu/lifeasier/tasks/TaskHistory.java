@@ -45,18 +45,25 @@ public class TaskHistory {
         decrementChangeCount();
     }
 
-    public Task getCurrCopyOfTask(TaskList tasks, int userDeadlineChoice) {
-        Task task = tasks.getTask(userDeadlineChoice);
+    public Task getCurrCopyOfTask(TaskList tasks, int userIndexChoice) {
+        Task task = tasks.getTask(userIndexChoice);
 
         int taskEditNumber = task.getEditNumber();
         int editID;
 
         if (taskEditNumber == DEFAULT_EDIT_NUMBER) {
             editID = getChangeCount() + 1;
-            tasks.getTask(userDeadlineChoice).setEditNumber(editID);
+            tasks.getTask(userIndexChoice).setEditNumber(editID);
         } else {
             editID = taskEditNumber;
         }
-        return new Deadline(tasks.getTask(userDeadlineChoice), editID);
+
+        if (task instanceof Deadline) {
+            return new Deadline(tasks.getTask(userIndexChoice), editID);
+        } else if (task instanceof Event) {
+            return new Event(tasks.getTask(userIndexChoice), editID);
+        } else {
+            return new Lesson(tasks.getTask(userIndexChoice), editID);
+        }
     }
 }

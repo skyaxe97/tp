@@ -4,6 +4,7 @@ import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.tasks.TaskNotFoundException;
@@ -46,6 +47,10 @@ public class EditLessonCommand extends Command {
             ui.showSelectTaskToEdit(Ui.PARAM_LESSON);
             int userLessonChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userLessonChoice);
+
+            Task oldCopyOfLesson = taskHistory.getCurrCopyOfTask(tasks, userLessonChoice);
+            logger.log(Level.INFO, "Temporarily hold value of this Event");
+
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_LESSON);
             int userParamChoice = Integer.parseInt(ui.readCommand());
@@ -65,6 +70,9 @@ public class EditLessonCommand extends Command {
             default:
                 throw new IndexOutOfBoundsException();
             }
+
+            taskHistory.pushOldCopy(oldCopyOfLesson, ui);
+            logger.log(Level.INFO, "Push old copy of Event into taskHistory");
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");

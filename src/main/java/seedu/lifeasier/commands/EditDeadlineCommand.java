@@ -45,7 +45,8 @@ public class EditDeadlineCommand extends Command {
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1; //Determine index in tasks - Copy this value
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
 
-            Task oldCopyOfTask = taskHistory.getCurrCopyOfTask(tasks, userDeadlineChoice);
+            Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTask(tasks, userDeadlineChoice);
+            logger.log(Level.INFO, "Temporarily hold value of this Deadline");
 
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
@@ -67,7 +68,8 @@ public class EditDeadlineCommand extends Command {
                 throw new IndexOutOfBoundsException();
             }
 
-            taskHistory.pushOldCopy(oldCopyOfTask, ui);
+            taskHistory.pushOldCopy(oldCopyOfDeadline, ui);
+            logger.log(Level.INFO, "Push old copy of Deadline into taskHistory");
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
