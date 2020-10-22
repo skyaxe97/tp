@@ -455,8 +455,12 @@ public class Ui {
         System.out.println("Nothing to undo!");
     }
 
-    public void showTaskUndoMessage() {
-        System.out.println("This task has been successfully reverted!");
+    public void showUndoTaskEditMessage() {
+        System.out.println("This task has been reverted back to its previous version!");
+    }
+
+    public void showUndoTaskDeleteMessage() {
+        System.out.println("This deleted task has been successfully restored!");
     }
 
     public void showNoteUndoMessage() {

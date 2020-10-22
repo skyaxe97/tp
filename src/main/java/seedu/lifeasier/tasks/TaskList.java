@@ -43,9 +43,7 @@ public class TaskList {
     }
 
     public void setTask(int index, Task task) {
-        System.out.println(taskList.get(index));
         taskList.set(index, task);
-        System.out.println(taskList.get(index));
     }
 
     public void addTask(Task task) {

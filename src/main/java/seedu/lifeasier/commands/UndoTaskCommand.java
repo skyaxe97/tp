@@ -23,8 +23,16 @@ public class UndoTaskCommand extends Command {
                     tasks.setTask(i, oldCopyOfCurrTask);
                 }
             }
+
+            if (lastTaskEditNumber > 0) {
+                ui.showUndoTaskEditMessage();
+            } else {
+                ui.showUndoTaskDeleteMessage();
+            }
+            System.out.println(taskHistory.getLastTask());
+
             taskHistory.popLastTask();
-            ui.showTaskUndoMessage();
+
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidUndoAction();
         }
