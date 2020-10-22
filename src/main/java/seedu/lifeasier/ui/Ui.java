@@ -265,7 +265,7 @@ public class Ui {
     }
 
     public void showNumberFormatMessage() {
-        System.out.println("\nPlease input only a number!");
+        System.out.println("\nOpps! The input must be a number!");
         printSeparator();
     }
 
