@@ -45,7 +45,7 @@ public class FileStorage {
     public void archiveData() {
         File archiveDirectory = new File(ARCHIVE_PATH);
 
-        ui.showArchiveStartMessge();
+        ui.showArchiveStartMessage();
         logger.log(Level.INFO, "Start archiving process");
         //Create archive directory if non existent
         if (!directoryExists(archiveDirectory)) {

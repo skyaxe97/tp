@@ -10,14 +10,14 @@ import java.util.Scanner;
 public class Ui {
 
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_BLACK = "\u001b[30;1m";
+    public static final String ANSI_RED = "\u001B[31;1m";
+    public static final String ANSI_GREEN = "\u001B[32;1m";
+    public static final String ANSI_YELLOW = "\u001B[33;1m";
+    public static final String ANSI_BLUE = "\u001B[34;1m";
+    public static final String ANSI_PURPLE = "\u001B[35;1m";
+    public static final String ANSI_CYAN = "\u001B[36;1m";
+    public static final String ANSI_WHITE = "\u001B[37;1m";
 
     public static final String SEPARATOR = "=========================================================================";
     public static final String PARAM_LESSON = "lesson";
@@ -79,7 +79,7 @@ public class Ui {
     }
 
     public void printSeparator() {
-        System.out.println(ANSI_GREEN + SEPARATOR + ANSI_RESET);
+        System.out.println(ANSI_CYAN + SEPARATOR + ANSI_RESET);
     }
 
     public void showLogo() {
@@ -93,7 +93,7 @@ public class Ui {
     }
 
     public void showGreetingMessage() {
-        System.out.println(ANSI_CYAN + MESSAGE_GREETING + ANSI_RESET);
+        System.out.println(ANSI_BLUE + MESSAGE_GREETING + ANSI_RESET);
         System.out.println(ANSI_PURPLE + MESSAGE_HELP_COMMAND + ANSI_RESET);
     }
 
@@ -228,7 +228,8 @@ public class Ui {
     }
 
     public void showDataLoadingMessage() {
-        System.out.println("Reading your save data. New saves will be created if no saves are found.");
+        System.out.println(ANSI_RED + "Reading your save data. New saves will be created if no saves are found."
+                + ANSI_RESET);
     }
 
     public void showNoDataToArchiveMessage() {
@@ -240,7 +241,7 @@ public class Ui {
         System.out.println("There was an error archiving your data");
     }
 
-    public void showArchiveStartMessge() {
+    public void showArchiveStartMessage() {
         printSeparator();
         System.out.println("Starting archiving...");
     }
