@@ -6,8 +6,10 @@ import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.ui.ScheduleUi;
 import seedu.lifeasier.ui.Ui;
 
+import java.util.logging.LogManager;
 
 /**
  * LifEasier is a CLI application that allows busy CEG students to schedule their day.
@@ -20,25 +22,31 @@ public class LifEasier {
     private TaskList tasks;
     private NoteList notes;
     private FileStorage storage;
+    private ScheduleUi scheduleUi;
 
     public LifEasier(String fileNameTasks, String fileNameNotes) {
-
         ui = new Ui();
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
+        scheduleUi = new ScheduleUi();
     }
 
     /**
      * Runs the LifEasier program infinitely until termination by the user.
      */
-    public void run() {
-        boolean isFinished = false;
+    public void run(boolean showLogging) {
+
+        if (!showLogging) {
+            LogManager.getLogManager().reset();
+        }
 
         storage.readSaveFiles();
 
-        ui.showWelcomeMessage();
+        showStartupSequence();
+
+        boolean isFinished = false;
 
         while (!isFinished) {
 
@@ -46,7 +54,7 @@ public class LifEasier {
 
             try {
                 Command userCommand = parser.parseCommand(fullCommand, ui);
-                userCommand.execute(ui, notes, tasks, storage);
+                userCommand.execute(ui, notes, tasks, storage, parser);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
@@ -59,10 +67,17 @@ public class LifEasier {
         ui.showGoodbyeMessage();
     }
 
+    public void showStartupSequence() {
+        ui.showLogo();
+        //scheduleUi.showHome(tasks);
+        ui.showGreetingMessage();
+    }
+
+
     /**
      * Main entry-point for the LifEasier application.
      */
     public static void main(String[] args) {
-        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run();
+        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(true);
     }
 }

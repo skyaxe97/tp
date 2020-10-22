@@ -1,9 +1,9 @@
 package seedu.lifeasier.ui;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import seedu.lifeasier.notes.NoteList;
 import java.util.Scanner;
 
 /**
@@ -45,6 +45,8 @@ public class Ui {
             + "addNotes TITLE ------------------------------------------ Adds a new note\n"
             + "showNotes TITLE ------------------------------------- Shows selected note\n"
             + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
+            + "freeTime ------------------------ Tells you when you have free time today\n"
+            + "sleepTime --------------------- Tells you how much time you have to sleep\n"
             + "exit --------------------------------------- Closes the LifEasier program\n"
             + "*************************************************************************\n"
             + "For more detailed information, please visit the online user guide at:\n";
@@ -59,22 +61,22 @@ public class Ui {
         System.out.println(SEPARATOR);
     }
 
-    public void showWelcomeMessage() {
+    public void showLogo() {
         printSeparator();
         printSeparator();
         printLogo();
         printSeparator();
         printSeparator();
-        showGreetingMessage();
     }
 
-    private void showGreetingMessage() {
+    public void showGreetingMessage() {
         System.out.println(MESSAGE_GREETING);
         System.out.println(MESSAGE_HELP_COMMAND);
     }
 
     public void showAddConfirmationMessage(String task) {
         System.out.println("Done! I've added \"" + task + "\" to your calendar");
+        printSeparator();
     }
 
     private void printLogo() {
@@ -110,17 +112,31 @@ public class Ui {
         System.out.println("Alright! Please fill in your notes.\n");
     }
 
-    public DayOfWeek getCurrDayOfWeek(int dayCount) {
-        LocalDateTime currDay = LocalDateTime.now().plus(dayCount, ChronoUnit.DAYS);
-        return currDay.getDayOfWeek();
-    }
-
     public void showFileCreationError() {
         System.out.println("Something went wrong... Save file creation failed...");
     }
 
-    public void showDataLoading() {
+    public void showDataLoadingMessage() {
         System.out.println("Reading your save data. New saves will be created if no saves are found.");
+    }
+
+    public void showNoDataToArchiveMessage() {
+        System.out.println("You do not have any data available for archiving.");
+        printSeparator();
+    }
+
+    public void showFileArchiveError() {
+        System.out.println("There was an error archiving your data");
+    }
+
+    public void showArchiveStartMessge() {
+        printSeparator();
+        System.out.println("Starting archiving...");
+    }
+
+    public void showArchiveEndMessage() {
+        System.out.println("Archiving successful!");
+        printSeparator();
     }
 
     public void showFileReadError() {
@@ -131,16 +147,23 @@ public class Ui {
         System.out.println("Something went wrong while saving your data...");
     }
 
+    public void showDirectoryCreationFailedError() {
+        System.out.println("Directory creation failed...");
+    }
+
     public void showInvalidNumberMessage() {
-        System.out.println("The number you inputted is invalid!\n");
+        System.out.println("The number you inputted is invalid!");
+        printSeparator();
     }
 
     public void showNoTitleFoundMessage() {
         System.out.println("The title you inputted is not found...");
+        printSeparator();
     }
 
     public void showNumberFormatMessage() {
-        System.out.println("\nPlease input only a number!\n");
+        System.out.println("\nPlease input only a number!");
+        printSeparator();
     }
 
     public void showInvalidCastError() {
@@ -157,10 +180,6 @@ public class Ui {
 
     public void showUndeterminableTaskError() {
         System.out.println("Something went wrong while determining the tasks...");
-    }
-
-    public void showDirectoryCreationFailed() {
-        System.out.println("An error was encountered while creating the save directory...");
     }
 
     public void showParseUnknownCommandMessage() {
@@ -185,14 +204,138 @@ public class Ui {
     }
 
     public void showNoteAddedMessage() {
-        System.out.println("Ok! I've taken note of this note!\n");
+        System.out.println("Ok! I've taken note of this note!");
     }
 
     public void showMultipleMatchesFoundMessage() {
         System.out.println("Multiple matches found! Please select the one you are looking for:\n");
     }
 
-    public void showSelectWhichNoteMessage() {
+    public void showSelectWhichNoteToViewMessage() {
         System.out.println("Please select the notes you want to view:\n");
+    }
+
+    public void showFreeTimeMessage(int startHour, int endHour, int duration) {
+
+        if (duration != 0) {
+            System.out.println("You have " + duration + " hours of free time between " + startHour
+                    + ":00 and " + endHour + ":00!");
+            System.out.println("You can try scheduling something in this time!");
+
+        } else {
+            System.out.println("Unfortunately you have no free time today!");
+            System.out.println("You might want to relax a little!");
+        }
+
+        printSeparator();
+    }
+
+    public void showNothingScheduledMessage() {
+        System.out.println("You have nothing on for today and tomorrow!");
+    }
+
+    public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
+        System.out.println("You have nothing on from " + earliestSleepTime + ":00 today to " + latestWakeTime
+                + ":00 tomorrow!");
+    }
+
+    public void showSleepDurationMessage(int duration) {
+        System.out.println("You can sleep for up to " + duration + " hours!");
+    }
+
+    public void showExcessSleepDurationMessage() {
+        System.out.println("You can sleep for the recommended 8 hours or longer!");
+    }
+
+    public void showSelectWhichNoteToDeleteMessage() {
+        System.out.println("Please select the notes you want to delete:\n");
+    }
+
+    public void showConfirmDeleteMessage() {
+        System.out.println("Is this the note you want to delete? (Y/N)\n");
+    }
+
+    public void showInvalidConfirmationMessage() {
+        System.out.println("Y for Yes and N for No\n");
+    }
+
+    public void showNoteNotDeletedMessage() {
+        System.out.println("OK! Note not deleted!");
+    }
+
+    public void showNoteDeletedMessage() {
+        System.out.println("OK! Note deleted!");
+    }
+
+    public void showConfirmEditMessage() {
+        System.out.println("Is this the note you want to edit? (Y/N)\n");
+    }
+
+    public void showEditWhichPartMessage() {
+        System.out.println("Do you want to change the title or description? (T/D)\n");
+    }
+
+    public void showNoteNotEditedMessage() {
+        System.out.println("OK! Note not edited!");
+        printSeparator();
+    }
+
+    public void showInvalidTitleDescriptionConfirmationMessage() {
+        System.out.println("T for title and D for Description\n");
+    }
+
+    public void showEditTitleMessage() {
+        System.out.println("Please input the title you want to change to:\n");
+    }
+
+    public void showEditDescriptionMessage() {
+        System.out.println("\nPlease input the description you want to change to:\n");
+    }
+
+    public void showSelectWhichNoteToEditMessage() {
+        System.out.println("Please select the notes you want to edit:\n");
+    }
+
+    public void showEmptyNoteListMessage() {
+        System.out.println("There's no Notes!");
+        printSeparator();
+    }
+
+    public void showAddModuleCodeMessage() {
+        System.out.println("Please input the module code:");
+    }
+
+    public void showAddDateMessage() {
+        System.out.println("Please input the date:");
+    }
+
+    public void showAddStartTimeMessage() {
+        System.out.println("Please input the start time:");
+    }
+
+    public void showAddEndTimeMessage() {
+        System.out.println("Please input the end time:");
+    }
+
+    public void showAddDescriptionMessage() {
+        System.out.println("Please input the description:");
+    }
+
+    public void showAddDateTimeMessage() {
+        System.out.println("Please input the Date Time:");
+    }
+
+    public void printMultipleNoteMatches(NoteList notes, String title) {
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getTitle().contains(title)) {
+                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
+            }
+        }
+    }
+
+    public void printAllNotes(NoteList notes) {
+        for (int i = 0; i < notes.size(); i++) {
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
+        }
     }
 }

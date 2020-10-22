@@ -4,13 +4,19 @@ import seedu.lifeasier.commands.AddDeadlineCommand;
 import seedu.lifeasier.commands.AddEventCommand;
 import seedu.lifeasier.commands.AddLessonCommand;
 import seedu.lifeasier.commands.AddNotesCommand;
+import seedu.lifeasier.commands.ArchiveCommand;
 import seedu.lifeasier.commands.Command;
 import seedu.lifeasier.commands.DisplayScheduleCommand;
 import seedu.lifeasier.commands.ExitCommand;
+import seedu.lifeasier.commands.FreeTimeCommand;
 import seedu.lifeasier.commands.HelpCommand;
+import seedu.lifeasier.commands.InvalidCommand;
 import seedu.lifeasier.commands.ShowNotesCommand;
-import seedu.lifeasier.ui.Ui;
+import seedu.lifeasier.commands.SleepTimeCommand;
+import seedu.lifeasier.commands.DeleteNotesCommand;
+import seedu.lifeasier.commands.EditNotesCommand;
 
+import seedu.lifeasier.ui.Ui;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -19,22 +25,35 @@ import java.util.logging.Logger;
 
 public class Parser {
 
-    private static Logger LOGGER = Logger.getLogger(Parser.class.getName());
+    private static Logger logger = Logger.getLogger(Parser.class.getName());
 
     public static final String PARAM_ADD_LESSON = "addLesson";
     public static final String PARAM_ADD_EVENT = "addEvent";
     public static final String PARAM_ADD_DEADLINE = "addDeadline";
     public static final String PARAM_ADD_NOTES = "addNotes";
     public static final String PARAM_SHOW_NOTES = "showNotes";
+    public static final String PARAM_DELETE_NOTES = "deleteNotes";
+    public static final String PARAM_EDIT_NOTES = "editNotes";
     public static final String PARAM_DISPLAY = "display";
     public static final String PARAM_HELP = "help";
     public static final String PARAM_EXIT = "exit";
+    public static final String PARAM_FREE_TIME = "freeTime";
+    public static final String PARAM_SLEEP_TIME = "sleepTime";
+    public static final String PARAM_ARCHIVE = "archive";
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
     public static final String PARAM_TIME = "/time";
     public static final String PARAM_TO = "/to";
     public static final String PARAM_BY = "/by";
+
+    private boolean isParametersEmpty = true;
+    private boolean isModuleCodeEmpty = true;
+    private boolean isDescriptionEmpty = true;
+    private boolean isDateEmpty = true;
+    private boolean isStartTimeEmpty = true;
+    private boolean isEndTimeEmpty = true;
+    private boolean isDateTimeEmpty = true;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
@@ -49,7 +68,7 @@ public class Parser {
      * @return The first word that the user input.
      */
     private String getCommandType(String input) {
-        LOGGER.log(Level.INFO, "Getting command type...");
+        logger.log(Level.INFO, "Getting command type...");
         int indexOfFirstSpace = input.indexOf(" ");
         if (indexOfFirstSpace > 0) {
             return input.substring(0, indexOfFirstSpace);
@@ -61,12 +80,41 @@ public class Parser {
     /**
      * Parses the addLesson command that the user inputs.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
-    Command parseAddLessonCommand(String input) {
+    Command parseAddLessonCommand(Ui ui, String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addLesson command...");
+        logger.log(Level.INFO, "Parsing addLesson command...");
+        logger.log(Level.INFO, "Start check for missing parameters.");
+        while (isParametersEmpty) {
+            MissingParam param = checkLessonParameters(input);
+
+            switch (param) {
+            case MODULE_CODE:   // module code is missing
+                input = addModuleCodeParam(ui, input);
+                isModuleCodeEmpty = false;
+                break;
+            case DATE:
+                input = addDateParam(ui, input);
+                isDateEmpty = false;
+                break;
+            case START_TIME:
+                input = addStartTimeParam(ui, input);
+                isStartTimeEmpty = false;
+                break;
+            case END_TIME:
+                input = addEndTimeParam(ui, input);
+                isEndTimeEmpty = false;
+                break;
+            default:
+                isParametersEmpty = false;
+                break;
+            }
+
+        }
+        logger.log(Level.INFO, "End check for missing parameters");
 
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -80,21 +128,51 @@ public class Parser {
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String endTime =  input.substring(lastIndexOfToCommand).trim();
+        
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
+        resetBoolean();
         return new AddLessonCommand(moduleCode, start, end);
     }
 
     /**
      * Parses the addEvent command that the user inputs.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return AddEventCommand with the parameters input by the user.
      */
-    private Command parseAddEventCommand(String input) {
+    private Command parseAddEventCommand(Ui ui, String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addEvent command...");
+        logger.log(Level.INFO, "Parsing addEvent command...");
+        logger.log(Level.INFO, "Start check for missing parameters.");
+        while (isParametersEmpty) {
+            MissingParam param = checkEventParameters(input);
+            switch (param) {
+            case DESCRIPTION:   // description is missing
+                input = addEventDescriptionParam(ui, input);
+                isDescriptionEmpty = false;
+                break;
+            case DATE:
+                input = addDateParam(ui, input);
+                isDateEmpty = false;
+                break;
+            case START_TIME:
+                input = addStartTimeParam(ui, input);
+                isStartTimeEmpty = false;
+                break;
+            case END_TIME:
+                input = addEndTimeParam(ui, input);
+                isEndTimeEmpty = false;
+                break;
+            default:
+                isParametersEmpty = false;
+                break;
+            }
+
+        }
+        logger.log(Level.INFO, "End check for missing parameters.");
 
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
@@ -108,21 +186,45 @@ public class Parser {
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String endTime =  input.substring(lastIndexOfToCommand).trim();
+
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
+        resetBoolean();
         return new AddEventCommand(description, start, end);
     }
 
     /**
      * Parses the addDeadline command that the user inputs.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return AddDeadlineCommand with the parameters input by the user.
      */
-    Command parseAddDeadlineCommand(String input) {
+    Command parseAddDeadlineCommand(Ui ui, String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addDeadline command...");
+        logger.log(Level.INFO, "Parsing addDeadline command...");
+        logger.log(Level.INFO, "Start check for missing parameters.");
+
+        while (isParametersEmpty) {
+            MissingParam param = checkDeadlineParameters(input);
+
+            switch (param) {
+            case DESCRIPTION:   // description is missing
+                input = addDeadlineDescriptionParam(ui, input);
+                isDescriptionEmpty = false;
+                break;
+            case END_TIME:
+                input = addByDateTime(ui, input);
+                isEndTimeEmpty = false;
+                break;
+            default:
+                isParametersEmpty = false;
+                break;
+            }
+
+        }
+        logger.log(Level.INFO, "End check for missing parameters.");
 
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
@@ -132,6 +234,7 @@ public class Parser {
         String byInput = input.substring(lastIndexOfByCommand).trim();
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
 
+        resetBoolean();
         return new AddDeadlineCommand(description, by);
     }
 
@@ -143,7 +246,7 @@ public class Parser {
      */
     private Command parseAddNotesCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing addNotes command...");
+        logger.log(Level.INFO, "Parsing addNotes command...");
 
         int lastIndexOfAddNotesCommand = input.indexOf(PARAM_ADD_NOTES) + PARAM_ADD_NOTES.length();
         String title = input.substring(lastIndexOfAddNotesCommand).trim();
@@ -159,12 +262,42 @@ public class Parser {
      */
     private Command parseShowNotesCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing showNotes command...");
+        logger.log(Level.INFO, "Parsing showNotes command...");
 
         int lastIndexOfShowNotesCommand = input.indexOf(PARAM_SHOW_NOTES) + PARAM_SHOW_NOTES.length();
         String title = input.substring(lastIndexOfShowNotesCommand).trim();
 
         return new ShowNotesCommand(title);
+    }
+
+    /**
+     * Parses the deleteNotes command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return ShowNotesCommand with the parameters input by the user.
+     */
+    private Command parseDeleteNotesCommand(String input) {
+        logger.log(Level.INFO, "Parsing deleteNotes command...");
+
+        int lastIndexOfDeleteNotesCommand = input.indexOf(PARAM_DELETE_NOTES) + PARAM_DELETE_NOTES.length();
+        String title = input.substring(lastIndexOfDeleteNotesCommand).trim();
+
+        return new DeleteNotesCommand(title);
+    }
+
+    /**
+     * Parses the editNotes command that the user inputs.
+     *
+     * @param input String containing the user's input.
+     * @return ShowNotesCommand with the parameters input by the user.
+     */
+    private Command parseEditNotesCommand(String input) {
+        logger.log(Level.INFO, "Parsing editNotes command...");
+
+        int lastIndexOfEditNotesCommand = input.indexOf(PARAM_EDIT_NOTES) + PARAM_EDIT_NOTES.length();
+        String title = input.substring(lastIndexOfEditNotesCommand).trim();
+
+        return new EditNotesCommand(title);
     }
 
     /**
@@ -175,7 +308,7 @@ public class Parser {
      */
     private Command parseDisplayScheduleCommand(String input) {
 
-        LOGGER.log(Level.INFO, "Parsing display command...");
+        logger.log(Level.INFO, "Parsing display command...");
 
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
         String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
@@ -184,14 +317,283 @@ public class Parser {
     }
 
     /**
+     * Parses the user Y/N inputs.
+     *
+     * @param input String containing the user's input.
+     * @param ui Input and output interaction with the user.
+     * @return A "Y" or "N" string.
+     */
+    public String parseUserInputYesOrNo(String input, Ui ui) {
+        logger.log(Level.INFO, "Start check for Y/N input");
+
+        while (!input.trim().equals("Y") && !input.trim().equals("N")) {
+            ui.showInvalidConfirmationMessage();
+            input = ui.readCommand();
+
+        }
+        logger.log(Level.INFO, "End check for Y/N input");
+
+        return input;
+    }
+
+    /**
+     * Parses the user T/D inputs.
+     *
+     * @param input String containing the user's input.
+     * @param ui Input and output interaction with the user.
+     * @return A "T" or "D" string.
+     */
+    public String parseUserInputTOrD(String input, Ui ui) {
+        logger.log(Level.INFO, "Start check for T/D input");
+        while (!input.trim().equals("T") && !input.trim().equals("D")) {
+            ui.showInvalidTitleDescriptionConfirmationMessage();
+            input = ui.readCommand();
+        }
+        logger.log(Level.INFO, "End check for T/D input");
+        return input;
+    }
+
+    /**
+     * Checks for an empty string and prompts the user if empty.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param string The string to be checked.
+     * @return A non-empty string.
+     */
+    private String checkIfEmpty(Ui ui, String string) {
+        logger.log(Level.INFO, "Start check for empty string");
+        while (string.trim().length() == 0) {     // empty string
+            ui.showEmptyDescriptionMessage();
+            string = ui.readCommand();
+        }
+        logger.log(Level.INFO, "End check for empty string");
+        return string;
+
+    }
+
+    /**
+     * Checks the condition of whether the input is empty.
+     *
+     * @param input The string to be checked.
+     * @param index1 The starting index.
+     * @param index2 The ending index.
+     * @param factor Status of the factor.
+     * @return A non-empty string.
+     */
+    private boolean isMissingDescription(String input, int index1, int index2, boolean factor) {
+        return input.substring(index1, index2).trim().length() == 0 && factor;
+    }
+
+    /**
+     * Reset all boolean variables to true.
+     *
+     */
+    private void resetBoolean() {
+        isParametersEmpty = true;
+        isModuleCodeEmpty = true;
+        isDescriptionEmpty = true;
+        isDateEmpty = true;
+        isStartTimeEmpty = true;
+        isEndTimeEmpty = true;
+        isDateTimeEmpty = true;
+    }
+
+    /**
+     * Checks the addLesson input for missing parameters.
+     *
+     * @param input String containing user's input.
+     * @return An enumeration of the missing parameter.
+     */
+    private MissingParam checkLessonParameters(String input) {
+        if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
+            return MissingParam.END_TIME;
+        } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
+            return MissingParam.START_TIME;
+        } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
+            return MissingParam.DATE;
+        } else if (!input.contains(PARAM_CODE) && isModuleCodeEmpty) {
+            return MissingParam.MODULE_CODE;
+        } else {
+            return MissingParam.COMPLETED;
+        }
+    }
+
+    /**
+     * Checks the addEvent input for missing parameters.
+     *
+     * @param input String containing the user's input.
+     * @return An enumeration of the missing parameter.
+     */
+    private MissingParam checkEventParameters(String input) {
+        int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
+        int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
+
+        if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
+            return MissingParam.END_TIME;
+        } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
+            return MissingParam.START_TIME;
+        } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
+            return MissingParam.DATE;
+        } else if (isMissingDescription(input, lastIndexOfAddEventCommand, firstIndexOfDateCommand,
+                isDescriptionEmpty)) {
+            return MissingParam.DESCRIPTION;
+        } else {
+            return MissingParam.COMPLETED;
+        }
+    }
+
+    /**
+     * Checks the addDeadline input for missing parameters.
+     *
+     * @param input String containing the user's input.
+     * @return An enumeration of the missing parameter.
+     */
+    private MissingParam checkDeadlineParameters(String input) {
+        int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
+        int firstIndexOfByCommand = input.indexOf(PARAM_BY);
+
+        if (!input.contains(PARAM_BY) && isDateTimeEmpty) {
+            return MissingParam.END_TIME;
+        } else if (isMissingDescription(input, lastIndexOfAddDeadlineCommand, firstIndexOfByCommand,
+                isDescriptionEmpty)) {
+            return MissingParam.DESCRIPTION;
+        } else {
+            return MissingParam.COMPLETED;
+        }
+    }
+
+    /**
+     * Adds the event description to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with description added.
+     */
+    private String addEventDescriptionParam(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding Event description to string.");
+        ui.showAddDescriptionMessage();
+        String description = checkIfEmpty(ui, ui.readCommand());
+        String[] temp = input.split("/date");
+        input = temp[0] + description + " /date" + temp[1];
+        logger.log(Level.INFO, "End of adding Event description to string.");
+        return input;
+    }
+
+    /**
+     * Adds the deadline description to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with description added.
+     */
+    private String addDeadlineDescriptionParam(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding Deadline description to string.");
+        ui.showAddDescriptionMessage();
+        String description = checkIfEmpty(ui, ui.readCommand());
+        String[] temp = input.split("/by");
+        input = temp[0] + description + " /by" + temp[1];
+        logger.log(Level.INFO, "End of adding Deadline description to string.");
+        return input;
+    }
+
+    /**
+     * Adds the module code to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with module code added.
+     */
+    private String addModuleCodeParam(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding Module Code to string.");
+        ui.showAddModuleCodeMessage();
+        String moduleCode = checkIfEmpty(ui, ui.readCommand());
+        String[] temp = input.split("/date");
+        input = temp[0] + "/code" + moduleCode + " /date" + temp[1];
+        logger.log(Level.INFO, "End of adding Module Code to string.");
+        return input;
+    }
+
+    /**
+     * Adds the date to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with date added.
+     */
+    private String addDateParam(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding Date to string.");
+        ui.showAddDateMessage();
+        String date = checkIfEmpty(ui, ui.readCommand());
+        String[] temp1 = input.split("/time");
+        input = temp1[0] + "/date " + date + " /time" + temp1[1];
+        logger.log(Level.INFO, "End of adding Date to string.");
+
+        return input;
+    }
+
+
+    /**
+     * Adds the start time to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with start time added.
+     */
+    private String addStartTimeParam(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding Start Time to string.");
+        ui.showAddStartTimeMessage();
+        String startTime = checkIfEmpty(ui, ui.readCommand());
+        String[] temp2 = input.split("/to");
+        input = temp2[0] + "/time " + startTime + " /to" + temp2[1];
+        logger.log(Level.INFO, "End of adding Start Time to string.");
+
+        return input;
+    }
+
+    /**
+     * Adds the end time to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with end time added.
+     */
+    private String addEndTimeParam(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding End Time to string.");
+        ui.showAddEndTimeMessage();
+        String endTime = checkIfEmpty(ui, ui.readCommand());
+        input = input + " /to " + endTime;
+        logger.log(Level.INFO, "End of adding End Time to string.");
+
+        return input;
+    }
+
+    /**
+     * Adds the date and time to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return A string with date and time added.
+     */
+    private String addByDateTime(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding By Time to string.");
+        ui.showAddDateTimeMessage();
+        String byDateTime = checkIfEmpty(ui, ui.readCommand());
+        input = input + " /by" + byDateTime;
+        logger.log(Level.INFO, "End of adding By Time to string.");
+
+        return input;
+    }
+
+    /**
      * Parses the user's input into a Command object that can later be executed.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return Command that the user inputs.
      */
     public Command parseCommand(String input, Ui ui) throws ParserException {
 
-        LOGGER.log(Level.INFO, "Parsing user input for command...");
+        logger.log(Level.INFO, "Parsing user input for command...");
 
         try {
             String commandType = getCommandType(input);
@@ -199,13 +601,13 @@ public class Parser {
             switch (commandType) {
 
             case (PARAM_ADD_LESSON):
-                return parseAddLessonCommand(input);
+                return parseAddLessonCommand(ui, input);
 
             case (PARAM_ADD_EVENT):
-                return parseAddEventCommand(input);
+                return parseAddEventCommand(ui, input);
 
             case (PARAM_ADD_DEADLINE):
-                return parseAddDeadlineCommand(input);
+                return parseAddDeadlineCommand(ui, input);
 
             case (PARAM_ADD_NOTES):
                 return parseAddNotesCommand(input);
@@ -213,11 +615,26 @@ public class Parser {
             case (PARAM_SHOW_NOTES):
                 return parseShowNotesCommand(input);
 
+            case (PARAM_DELETE_NOTES):
+                return parseDeleteNotesCommand(input);
+
+            case(PARAM_EDIT_NOTES):
+                return parseEditNotesCommand(input);
+
             case (PARAM_DISPLAY):
                 return parseDisplayScheduleCommand(input);
 
             case (PARAM_HELP):
                 return new HelpCommand();
+
+            case (PARAM_FREE_TIME):
+                return new FreeTimeCommand();
+
+            case (PARAM_SLEEP_TIME):
+                return new SleepTimeCommand();
+
+            case (PARAM_ARCHIVE):
+                return new ArchiveCommand();
 
             case (PARAM_EXIT):
                 return new ExitCommand();
@@ -233,7 +650,7 @@ public class Parser {
             ui.showParseIncorrectDateTimeMessage();
         }
 
-        return new ExitCommand();
+        return new InvalidCommand();
 
     }
 }
