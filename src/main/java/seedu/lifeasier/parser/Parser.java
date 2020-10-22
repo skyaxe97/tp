@@ -147,6 +147,7 @@ public class Parser {
 
         logger.log(Level.INFO, "Parsing addEvent command...");
         logger.log(Level.INFO, "Start check for missing parameters.");
+        
         while (isParametersEmpty) {
             MissingParam param = checkEventParameters(input);
             switch (param) {

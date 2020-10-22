@@ -47,7 +47,7 @@ public class EditNotesCommand extends Command {
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            NoteCommandFunctions.printMultipleMatches(ui, notes, title);
+            ui.printMultipleNoteMatches(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
@@ -82,7 +82,6 @@ public class EditNotesCommand extends Command {
             notes.get(noteNumber).setTitle(input);
             logger.log(Level.INFO, "Title is changed");
             System.out.println("OK! Your title is now: " + notes.get(noteNumber).getTitle());
-            ui.printSeparator();
         } else {
             logger.log(Level.INFO, "D is inputted");
             System.out.println("Current description:\n" + notes.get(noteNumber).getDescription());
@@ -91,8 +90,8 @@ public class EditNotesCommand extends Command {
             notes.get(noteNumber).setDescription(input);
             logger.log(Level.INFO, "Description is changed");
             System.out.println("OK! Your description is now: " + notes.get(noteNumber).getDescription());
-            ui.printSeparator();
         }
+        ui.printSeparator();
     }
 
     @Override
@@ -107,7 +106,7 @@ public class EditNotesCommand extends Command {
                 ui.showSelectWhichNoteToEditMessage();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                NoteCommandFunctions.printAllNotes(ui, notes);
+                ui.printAllNotes(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());

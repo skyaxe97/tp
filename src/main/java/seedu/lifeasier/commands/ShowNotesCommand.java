@@ -44,7 +44,7 @@ public class ShowNotesCommand extends Command {
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            NoteCommandFunctions.printMultipleMatches(ui, notes, title);
+            ui.printMultipleNoteMatches(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand());
@@ -66,7 +66,7 @@ public class ShowNotesCommand extends Command {
                 ui.showSelectWhichNoteToViewMessage();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                NoteCommandFunctions.printAllNotes(ui, notes);
+                ui.printAllNotes(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
