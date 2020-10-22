@@ -463,7 +463,11 @@ public class Ui {
         System.out.println("This deleted task has been successfully restored!");
     }
 
-    public void showNoteUndoMessage() {
-        System.out.println("This note has been successfully reverted!");
+    public void showUndoNoteEditMessage() {
+        System.out.println("This note has been reverted back to its previous version!");
+    }
+
+    public void showUndoNoteDeleteMessage() {
+        System.out.println("This deleted note has been successfully restored!");
     }
 }
