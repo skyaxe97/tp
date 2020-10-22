@@ -1,10 +1,12 @@
 package seedu.lifeasier;
 
+import org.fusesource.jansi.AnsiConsole;
+
 import seedu.lifeasier.commands.Command;
 import seedu.lifeasier.notes.NoteHistory;
+import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
-import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
@@ -37,6 +39,8 @@ public class LifEasier {
         scheduleUi = new ScheduleUi();
         noteHistory = new NoteHistory(notes);
         taskHistory = new TaskHistory(tasks);
+
+        AnsiConsole.systemInstall();
     }
 
     /**
@@ -71,6 +75,7 @@ public class LifEasier {
         }
 
         ui.showGoodbyeMessage();
+        AnsiConsole.systemUninstall();
     }
 
     public void showStartupSequence() {

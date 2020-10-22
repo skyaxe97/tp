@@ -1,15 +1,23 @@
 package seedu.lifeasier.ui;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import seedu.lifeasier.notes.NoteList;
+
 import java.util.Scanner;
 
 /**
  * The Ui class deals with all interactions with the user.
  */
 public class Ui {
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
     public static final String SEPARATOR = "=========================================================================";
     public static final String PARAM_LESSON = "lesson";
@@ -31,7 +39,7 @@ public class Ui {
 
     //General UI messages
     public static final String MESSAGE_GOODBYE = "Goodbye, hope to see you again soon!";
-    public static final String MESSAGE_GREETING = "Hello [NAME], what can I do for you today?";
+    public static final String MESSAGE_GREETING = "Hello! what can I do for you today?";
     public static final String MESSAGE_HELP_COMMAND = " -Type 'help' for a list the list of available commands";
 
     //Help message
@@ -71,20 +79,22 @@ public class Ui {
     }
 
     public void printSeparator() {
-        System.out.println(SEPARATOR);
+        System.out.println(ANSI_GREEN + SEPARATOR + ANSI_RESET);
     }
 
     public void showLogo() {
         printSeparator();
         printSeparator();
+        System.out.println(ANSI_YELLOW);
         printLogo();
+        System.out.println(ANSI_RESET);
         printSeparator();
         printSeparator();
     }
 
     public void showGreetingMessage() {
-        System.out.println(MESSAGE_GREETING);
-        System.out.println(MESSAGE_HELP_COMMAND);
+        System.out.println(ANSI_CYAN + MESSAGE_GREETING + ANSI_RESET);
+        System.out.println(ANSI_PURPLE + MESSAGE_HELP_COMMAND + ANSI_RESET);
     }
 
     public void showAddConfirmationMessage(String task) {
