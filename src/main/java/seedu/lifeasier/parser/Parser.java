@@ -128,8 +128,7 @@ public class Parser {
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String endTime =  input.substring(lastIndexOfToCommand).trim();
-
-        System.out.println(moduleCode + " " + date + " " + startTime + " " + endTime);
+        
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
