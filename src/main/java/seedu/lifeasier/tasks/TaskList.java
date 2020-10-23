@@ -179,6 +179,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns an ArrayList of Tasks from one specific day.
+     *
+     * @param day Day to get tasks from.
+     * @return ArrayList of Tasks from one specific day.
+     */
     public ArrayList<Task> getTasksFromOneDay(LocalDate day) {
         return (ArrayList<Task>) taskList.stream()
                 .filter((t) -> t.getStart().toLocalDate().equals(day))
@@ -189,16 +195,29 @@ public class TaskList {
         taskList.sort(Comparator.comparing(Task::getStart));
     }
 
+    /**
+     * Cleans up the taskList.
+     * Deletes tasks if they have no more recurrences and are in the past.
+     * Updates tasks' dates if they have more recurrences and are in the past.
+     *
+     * @param day Day behind which tasks will be updated and deleted.
+     */
     public void updateTasks(LocalDate day) {
+
+        ArrayList<Task> tasksToBeRemoved = new ArrayList<>();
 
         for (Task task : taskList) {
 
             if ((task.isHappeningBefore(day)) && (task.getRecurrences() == 0)) {
-                taskList.remove(task);
+                tasksToBeRemoved.add(task);
 
             } else if ((task.isHappeningBefore(day)) && (task.getRecurrences() > 0)) {
                 task.moveAndUpdateRecurrences();
             }
+        }
+
+        for (Task task : tasksToBeRemoved) {
+            taskList.remove(task);
         }
 
     }
