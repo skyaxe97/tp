@@ -60,4 +60,10 @@ public class Deadline extends Task {
         return "Deadline: " + super.toString() + " by (" + by.format(format) + "), "
                 + "repeats weekly " + recurrences + " times";
     }
+
+    @Override
+    public void moveAndUpdateRecurrences() {
+        decrementRecurrences(1);
+        by = by.plusDays(7);
+    }
 }

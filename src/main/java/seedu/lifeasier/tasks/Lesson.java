@@ -62,4 +62,10 @@ public class Lesson extends Task {
                 + "repeats weekly " + recurrences + " times";
     }
 
+    @Override
+    public void moveAndUpdateRecurrences() {
+        decrementRecurrences(1);
+        start = start.plusDays(7);
+        end = end.plusDays(7);
+    }
 }

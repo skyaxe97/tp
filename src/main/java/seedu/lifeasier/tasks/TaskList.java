@@ -60,35 +60,41 @@ public class TaskList {
 
     /**
      * Add new event to taskList.
+     *
      * @param description description of event.
      * @param start start date/time of event.
      * @param end end date/time of event.
+     * @param recurrences number of times to repeat.
      */
-    public Task addEvent(String description, LocalDateTime start, LocalDateTime end) {
-        Event event = new Event(description, start, end);
+    public Task addEvent(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+        Event event = new Event(description, start, end, recurrences);
         addTask(event);
         return event;
     }
 
     /**
      * Add new Lesson to taskList.
+     *
      * @param moduleCode module code of lesson.
      * @param start start date/time of lesson.
      * @param end end date/time of lesson.
+     * @param recurrences number of times to repeat.
      */
-    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
-        Lesson lesson = new Lesson(moduleCode, start, end);
+    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
+        Lesson lesson = new Lesson(moduleCode, start, end, recurrences);
         addTask(lesson);
         return lesson;
     }
 
     /**
      * Adds a new Deadline to taskList.
+     *
      * @param description description of task.
      * @param by deadline of task.
+     * @param recurrences number of times to repeat.
      */
-    public Task addDeadline(String description, LocalDateTime by) {
-        Deadline deadline = new Deadline(description, by);
+    public Task addDeadline(String description, LocalDateTime by, int recurrences) {
+        Deadline deadline = new Deadline(description, by, recurrences);
         addTask(deadline);
         return deadline;
     }
@@ -181,6 +187,20 @@ public class TaskList {
 
     public void sort() {
         taskList.sort(Comparator.comparing(Task::getStart));
+    }
+
+    public void updateTasks(LocalDate day) {
+
+        for (Task task : taskList) {
+
+            if ((task.isHappeningBefore(day)) && (task.getRecurrences() == 0)) {
+                taskList.remove(task);
+
+            } else if ((task.isHappeningBefore(day)) && (task.getRecurrences() > 0)) {
+                task.moveAndUpdateRecurrences();
+            }
+        }
+
     }
 
 }

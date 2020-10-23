@@ -61,4 +61,11 @@ public class Event extends Task {
         return "Event: " + super.toString() + " (" + start.format(format) + " to " +  end.format(format) + "), "
                 + "repeats weekly " + recurrences + " times";
     }
+
+    @Override
+    public void moveAndUpdateRecurrences() {
+        decrementRecurrences(1);
+        start = start.plusDays(7);
+        end = end.plusDays(7);
+    }
 }

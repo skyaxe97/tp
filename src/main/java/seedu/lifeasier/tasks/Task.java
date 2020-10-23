@@ -41,6 +41,14 @@ public abstract class Task {
         return isDone;
     }
 
+    public int getRecurrences() {
+        return recurrences;
+    }
+
+    public void decrementRecurrences(int by) {
+        recurrences = recurrences - by;
+    }
+
     public abstract String getType();
 
     @Override
@@ -56,6 +64,8 @@ public abstract class Task {
     public abstract void setStart(LocalDateTime start);
 
     public abstract void setEnd(LocalDateTime end);
+
+    public abstract void moveAndUpdateRecurrences();
 
 
     public boolean isWithinTimeSlot(int timeSlotStartHour) {
