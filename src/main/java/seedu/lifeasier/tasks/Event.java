@@ -58,6 +58,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E] " + super.toString() + " (" + start.format(format) + " to " +  end.format(format) + ")";
+        return "[E] " + super.toString() + " (" + start.format(format) + " to " +  end.format(format) + ")"
+                + "repeats weekly " + recurrences + " times";
     }
 }
