@@ -13,16 +13,18 @@ public class AddDeadlineCommand extends Command {
 
     private String description;
     private LocalDateTime by;
+    private int recurrences;
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
 
-    public AddDeadlineCommand(String description, LocalDateTime by) {
+    public AddDeadlineCommand(String description, LocalDateTime by, int recurrences) {
         this.description = description;
         this.by = by;
+        this.recurrences = recurrences;
     }
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
-        Task task = tasks.addDeadline(description, by);
+        Task task = tasks.addDeadline(description, by, recurrences);
         storage.saveTasks();
         ui.showAddConfirmationMessage(task);
     }

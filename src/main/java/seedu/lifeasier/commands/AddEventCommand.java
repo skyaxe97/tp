@@ -26,7 +26,7 @@ public class AddEventCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
-        Task task = tasks.addEvent(description, start, end);
+        Task task = tasks.addEvent(description, start, end, recurrences);
         storage.saveTasks();
         ui.showAddConfirmationMessage(task);
     }

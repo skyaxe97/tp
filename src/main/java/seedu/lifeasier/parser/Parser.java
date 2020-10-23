@@ -255,6 +255,10 @@ public class Parser {
                 input = addByDateTime(ui, input);
                 isEndTimeEmpty = false;
                 break;
+            case RECURRENCES:
+                input = addRecurrencesParam(ui, input);
+                isRecurrencesEmpty = false;
+                break;
             default:
                 isParametersEmpty = false;
                 break;
@@ -266,13 +270,17 @@ public class Parser {
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
         int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
+        int firstIndexOfRepeatsCommand = input.indexOf(PARAM_REPEATS);
+        int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
-        String byInput = input.substring(lastIndexOfByCommand).trim();
+        String byInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
+        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
+        int recurrences = Integer.parseInt(recurrencesString);
 
         resetBoolean();
-        return new AddDeadlineCommand(description, by);
+        return new AddDeadlineCommand(description, by, recurrences);
     }
 
     /**
@@ -553,6 +561,7 @@ public class Parser {
         isStartTimeEmpty = true;
         isEndTimeEmpty = true;
         isDateTimeEmpty = true;
+        isRecurrencesEmpty = true;
     }
 
     /**
@@ -613,7 +622,9 @@ public class Parser {
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
 
-        if (!input.contains(PARAM_BY) && isDateTimeEmpty) {
+        if (!input.contains(PARAM_REPEATS) && isRecurrencesEmpty) {
+            return MissingParam.RECURRENCES;
+        } else if (!input.contains(PARAM_BY) && isDateTimeEmpty) {
             return MissingParam.END_TIME;
         } else if (isMissingDescription(input, lastIndexOfAddDeadlineCommand, firstIndexOfByCommand,
                 isDescriptionEmpty)) {
@@ -757,7 +768,8 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding By Time to string.");
         ui.showAddDateTimeMessage();
         String byDateTime = checkIfEmpty(ui, ui.readCommand());
-        input = input + " /by" + byDateTime;
+        String[] temp4 = input.split(PARAM_REPEATS);
+        input = temp4[0] + " /by " + byDateTime + " /repeats" + temp4[1];
         logger.log(Level.INFO, "End of adding By Time to string.");
 
         return input;
@@ -835,9 +847,11 @@ public class Parser {
             }
 
         } catch (IndexOutOfBoundsException e) {
+            resetBoolean();
             ui.showParseIncorrectCommandFormatMessage();
 
         } catch (DateTimeParseException e) {
+            resetBoolean();
             ui.showParseIncorrectDateTimeMessage();
         }
 
