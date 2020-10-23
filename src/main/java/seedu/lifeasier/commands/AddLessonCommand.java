@@ -13,12 +13,14 @@ public class AddLessonCommand extends Command {
     private String moduleCode;
     private LocalDateTime start;
     private LocalDateTime end;
+    private int recurrences;
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
 
-    public AddLessonCommand(String moduleCode, LocalDateTime start, LocalDateTime end) {
+    public AddLessonCommand(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
         this.moduleCode = moduleCode;
         this.start = start;
         this.end = end;
+        this.recurrences = recurrences;
     }
 
     @Override
@@ -26,6 +28,6 @@ public class AddLessonCommand extends Command {
         tasks.addLesson(moduleCode, start, end);
         storage.saveTasks();
         ui.showAddConfirmationMessage("Lesson: " + moduleCode + " from "
-                + start.format(format) + " to " + end.format(format));
+                + start.format(format) + " to " + end.format(format) + "repeats weekly " + recurrences + " times");
     }
 }

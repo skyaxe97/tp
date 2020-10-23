@@ -430,6 +430,10 @@ public class Ui {
         System.out.println("Please input the Date Time:");
     }
 
+    public void showAddRecurrencesMessage() {
+        System.out.println("Please input the number of times to repeat:");
+    }
+
     public void printMultipleNoteMatches(NoteList notes, String title) {
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {

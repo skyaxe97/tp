@@ -56,6 +56,7 @@ public class Parser {
     public static final String PARAM_BY = "/by";
     public static final String PARAM_TYPE = "/type";
     public static final String PARAM_NAME = "/name";
+    public static final String PARAM_REPEATS = "/repeats";
 
     public static final String PARAM_LESSON = "lesson";
     public static final String PARAM_EVENT = "event";
@@ -73,6 +74,7 @@ public class Parser {
     private boolean isStartTimeEmpty = true;
     private boolean isEndTimeEmpty = true;
     private boolean isDateTimeEmpty = true;
+    private boolean isRecurrencesEmpty = true;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
 
@@ -110,7 +112,6 @@ public class Parser {
         logger.log(Level.INFO, "Start check for missing parameters.");
         while (isParametersEmpty) {
             MissingParam param = checkLessonParameters(input);
-
             switch (param) {
             case MODULE_CODE:   // module code is missing
                 input = addModuleCodeParam(ui, input);
@@ -128,6 +129,10 @@ public class Parser {
                 input = addEndTimeParam(ui, input);
                 isEndTimeEmpty = false;
                 break;
+            case RECURRENCES:
+                input = addRecurrencesParam(ui, input);
+                isRecurrencesEmpty = false;
+                break;
             default:
                 isParametersEmpty = false;
                 break;
@@ -143,18 +148,22 @@ public class Parser {
         int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+        int firstIndexOfRepeatsCommand = input.indexOf(PARAM_REPEATS);
+        int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String endTime =  input.substring(lastIndexOfToCommand).trim();
+        String endTime =  input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
+        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
         System.out.println(moduleCode + " " + date + " " + startTime + " " + endTime);
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+        int recurrences = Integer.parseInt(recurrencesString);
 
         resetBoolean();
-        return new AddLessonCommand(moduleCode, start, end);
+        return new AddLessonCommand(moduleCode, start, end, recurrences);
     }
 
     /**
@@ -187,6 +196,8 @@ public class Parser {
                 input = addEndTimeParam(ui, input);
                 isEndTimeEmpty = false;
                 break;
+            case RECURRENCES:
+                input = addRecurrencesParam(ui, input);
             default:
                 isParametersEmpty = false;
                 break;
@@ -547,7 +558,9 @@ public class Parser {
      * @return An enumeration of the missing parameter.
      */
     private MissingParam checkLessonParameters(String input) {
-        if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
+        if (!input.contains(PARAM_REPEATS) && isRecurrencesEmpty) {
+            return MissingParam.RECURRENCES;
+        } else if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
         } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
             return MissingParam.START_TIME;
@@ -703,8 +716,26 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding End Time to string.");
         ui.showAddEndTimeMessage();
         String endTime = checkIfEmpty(ui, ui.readCommand());
-        input = input + " /to " + endTime;
+        String[] temp3 = input.split(PARAM_REPEATS);
+        input = temp3[0] + " /to " + endTime + "/repeats" + temp3[1];
         logger.log(Level.INFO, "End of adding End Time to string.");
+
+        return input;
+    }
+
+    /**
+     * Adds the recurrences to the string.
+     *
+     * @param ui Input and output interaction with the user.
+     * @param input String containing the user's input.
+     * @return String with the recurrences added.
+     */
+    private String addRecurrencesParam(Ui ui, String input) {
+        logger.log(Level.INFO, "Start of adding recurrences to string.)");
+        ui.showAddRecurrencesMessage();
+        String recurrences = checkIfEmpty(ui, ui.readCommand());
+        input = input + " /repeats " + recurrences;
+        logger.log(Level.INFO, "End of adding recurrences to string.)");
 
         return input;
     }

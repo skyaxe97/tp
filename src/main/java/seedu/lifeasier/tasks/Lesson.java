@@ -58,7 +58,8 @@ public class Lesson extends Task {
 
     @Override
     public String toString() {
-        return "[L] " + super.toString() + " (" + start.format(format) + " to " + end.format(format) + ")";
+        return "[L] " + super.toString() + " (" + start.format(format) + " to " + end.format(format) + ")"
+                + "repeats weekly " + recurrences + " times";
     }
 
 }
