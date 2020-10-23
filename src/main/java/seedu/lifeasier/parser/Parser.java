@@ -65,8 +65,6 @@ public class Parser {
     public static final int INDEX_START = 0;
     public static final int INDEX_END = 1;
 
-
-
     private boolean isParametersEmpty = true;
     private boolean isModuleCodeEmpty = true;
     private boolean isDescriptionEmpty = true;
@@ -198,6 +196,8 @@ public class Parser {
                 break;
             case RECURRENCES:
                 input = addRecurrencesParam(ui, input);
+                isRecurrencesEmpty = false;
+                break;
             default:
                 isParametersEmpty = false;
                 break;
@@ -213,17 +213,21 @@ public class Parser {
         int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+        int firstIndexOfRepeatsCommand = input.indexOf(PARAM_REPEATS);
+        int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
         String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String endTime =  input.substring(lastIndexOfToCommand).trim();
+        String endTime =  input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
+        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+        int recurrences = Integer.parseInt(recurrencesString);
 
         resetBoolean();
-        return new AddEventCommand(description, start, end);
+        return new AddEventCommand(description, start, end, recurrences);
     }
 
     /**
@@ -583,7 +587,9 @@ public class Parser {
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
 
-        if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
+        if (!input.contains(PARAM_REPEATS) && isRecurrencesEmpty) {
+            return MissingParam.RECURRENCES;
+        } else if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
         } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
             return MissingParam.START_TIME;

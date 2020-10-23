@@ -14,12 +14,14 @@ public class AddEventCommand extends Command {
     private String description;
     private LocalDateTime start;
     private LocalDateTime end;
+    private int recurrences;
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
 
-    public AddEventCommand(String description, LocalDateTime start, LocalDateTime end) {
+    public AddEventCommand(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
         this.description = description;
         this.start = start;
         this.end = end;
+        this.recurrences = recurrences;
     }
 
     @Override
