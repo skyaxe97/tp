@@ -15,6 +15,12 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public Deadline(String description, LocalDateTime by, int recurrences) {
+        super(description);
+        this.by = by;
+        this.recurrences = recurrences;
+    }
+
     public Deadline(String description, LocalDateTime by, boolean isDone) {
         super(description);
         this.by = by;

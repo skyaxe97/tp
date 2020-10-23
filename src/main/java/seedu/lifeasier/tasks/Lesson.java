@@ -17,6 +17,13 @@ public class Lesson extends Task {
         this.end = end;
     }
 
+    public Lesson(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+        super(description);
+        this.start = start;
+        this.end = end;
+        this.recurrences = recurrences;
+    }
+
     public Lesson(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
         super(description);
         this.start = start;

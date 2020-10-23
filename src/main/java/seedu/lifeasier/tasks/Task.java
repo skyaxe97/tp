@@ -8,12 +8,14 @@ import java.time.temporal.ChronoUnit;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected int recurrences;
     protected static int taskCounter = 0;
 
     private static final String TIME_FORMAT = "%02d:00";
 
     public Task(String description) {
         this.description = description;
+        this.recurrences = 0;
         this.isDone = false;
         taskCounter++;
     }
