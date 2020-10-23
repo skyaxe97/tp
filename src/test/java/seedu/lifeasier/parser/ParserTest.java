@@ -25,7 +25,8 @@ class ParserTest {
     void parseCommand_inputAddLesson_AddLessonCommand() throws ParserException {
         Parser parser = new Parser();
         Ui ui = new Ui();
-        Command command = parser.parseCommand("addLesson /code cg1111 /date 10-10-20 /time 10:00 /to 20:00", ui);
+        Command command = parser.parseCommand(
+                "addLesson /code cg1111 /date 10-10-20 /time 10:00 /to 20:00 /repeats 0", ui);
         assertTrue(command instanceof AddLessonCommand);
     }
 
