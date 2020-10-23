@@ -21,15 +21,11 @@ public class ShowNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-        int noteNumber = -1;
-        int matchNumber = 0;
 
-        for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getTitle().contains(title)) {
-                matchNumber++;
-                noteNumber = i;
-            }
-        }
+        int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
+        int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
+
+        logger.log(Level.INFO, "End for finding title in note list");
 
         switch (matchNumber) {
         case 0:     // no matches
@@ -51,7 +47,7 @@ public class ShowNotesCommand extends Command {
             NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
             System.out.println(notes.get(noteNumber - 1).toString());
         }
-        logger.log(Level.INFO, "End for finding title in note list");
+
     }
 
     @Override
