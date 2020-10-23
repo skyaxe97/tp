@@ -7,7 +7,6 @@ import java.time.temporal.ChronoUnit;
 
 public abstract class Task {
     protected String description;
-    protected boolean isDone;
     protected int recurrences;
     protected static int taskCounter = 0;
 
@@ -16,7 +15,6 @@ public abstract class Task {
     public Task(String description) {
         this.description = description;
         this.recurrences = 0;
-        this.isDone = false;
         taskCounter++;
     }
 
@@ -24,21 +22,8 @@ public abstract class Task {
         this.description = description;
     }
 
-    public String getStatusIcon() {
-        return (isDone ? "\u2713" : "\u2718"); //return tick or X symbol
-    }
-
-    public void markAsDone() {
-        this.isDone = true;
-        taskCounter--;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public boolean getStatus() {
-        return isDone;
     }
 
     public int getRecurrences() {
