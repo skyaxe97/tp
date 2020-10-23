@@ -502,7 +502,7 @@ public class Parser {
      * @param string The string to be checked.
      * @return A non-empty string.
      */
-    private String checkIfEmpty(Ui ui, String string) {
+    public String checkIfEmpty(Ui ui, String string) {
         logger.log(Level.INFO, "Start check for empty string");
         while (string.trim().length() == 0) {     // empty string
             ui.showEmptyDescriptionMessage();
