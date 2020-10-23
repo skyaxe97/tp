@@ -37,7 +37,7 @@ public class Ui {
 
     //General UI messages
     public static final String MESSAGE_GOODBYE = "Goodbye, hope to see you again soon!";
-    public static final String MESSAGE_GREETING = "Hello! what can I do for you today?";
+    public static final String MESSAGE_GREETING = "Hello! What can I do for you today?";
     public static final String MESSAGE_HELP_COMMAND = " -Type 'help' for a list the list of available commands";
 
     //Help message
