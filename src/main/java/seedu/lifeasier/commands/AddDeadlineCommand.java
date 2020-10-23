@@ -1,6 +1,7 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
@@ -21,8 +22,8 @@ public class AddDeadlineCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
-        tasks.addDeadline(description, by);
+        Task task = tasks.addDeadline(description, by);
         storage.saveTasks();
-        ui.showAddConfirmationMessage("Deadline: " + description + " by " + by.format(format));
+        ui.showAddConfirmationMessage(task);
     }
 }

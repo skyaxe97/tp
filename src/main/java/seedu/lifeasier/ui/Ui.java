@@ -4,6 +4,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.tasks.Task;
+
 import java.util.Scanner;
 
 /**
@@ -87,7 +89,7 @@ public class Ui {
         System.out.println(MESSAGE_HELP_COMMAND);
     }
 
-    public void showAddConfirmationMessage(String task) {
+    public void showAddConfirmationMessage(Task task) {
         System.out.println("Done! I've added \"" + task + "\" to your calendar");
         printSeparator();
     }

@@ -64,9 +64,10 @@ public class TaskList {
      * @param start start date/time of event.
      * @param end end date/time of event.
      */
-    public void addEvent(String description, LocalDateTime start, LocalDateTime end) {
+    public Task addEvent(String description, LocalDateTime start, LocalDateTime end) {
         Event event = new Event(description, start, end);
         addTask(event);
+        return event;
     }
 
     /**
@@ -75,9 +76,10 @@ public class TaskList {
      * @param start start date/time of lesson.
      * @param end end date/time of lesson.
      */
-    public void addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
+    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
         Lesson lesson = new Lesson(moduleCode, start, end);
         addTask(lesson);
+        return lesson;
     }
 
     /**
@@ -85,9 +87,10 @@ public class TaskList {
      * @param description description of task.
      * @param by deadline of task.
      */
-    public void addDeadline(String description, LocalDateTime by) {
+    public Task addDeadline(String description, LocalDateTime by) {
         Deadline deadline = new Deadline(description, by);
         addTask(deadline);
+        return deadline;
     }
 
     public void editTaskDescription(int index, Ui ui) {

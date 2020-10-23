@@ -1,6 +1,7 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.notes.NoteList;
@@ -25,9 +26,8 @@ public class AddLessonCommand extends Command {
 
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
-        tasks.addLesson(moduleCode, start, end);
+        Task task = tasks.addLesson(moduleCode, start, end);
         storage.saveTasks();
-        ui.showAddConfirmationMessage("Lesson: " + moduleCode + " from "
-                + start.format(format) + " to " + end.format(format) + "repeats weekly " + recurrences + " times");
+        ui.showAddConfirmationMessage(task);
     }
 }

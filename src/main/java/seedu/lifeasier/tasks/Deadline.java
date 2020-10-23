@@ -57,7 +57,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D] " + super.toString() + " by (" + by.format(format) + ")"
+        return "Deadline: " + super.toString() + " by (" + by.format(format) + "), "
                 + "repeats weekly " + recurrences + " times";
     }
 }
