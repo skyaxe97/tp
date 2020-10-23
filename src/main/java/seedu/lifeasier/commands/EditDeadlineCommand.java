@@ -44,7 +44,7 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.INFO, "Start of EditDeadlineCommand");
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
-            int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1; //Determine index in tasks - Copy this value
+            int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
@@ -79,7 +79,7 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesMessage("deadline");
         }
-        storage.saveTasks(); //Edit confirmed, can push old saved into tasks arraylist
+        storage.saveTasks();
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 }

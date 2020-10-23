@@ -1,6 +1,10 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.*;
+import seedu.lifeasier.notes.EmptyNoteListException;
+import seedu.lifeasier.notes.NoteCommandFunctions;
+import seedu.lifeasier.notes.NoteHistory;
+import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.notes.TitleNotFoundException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
