@@ -10,14 +10,12 @@ import java.util.Scanner;
 public class Ui {
 
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001b[30;1m";
     public static final String ANSI_RED = "\u001B[31;1m";
     public static final String ANSI_GREEN = "\u001B[32;1m";
     public static final String ANSI_YELLOW = "\u001B[33;1m";
     public static final String ANSI_BLUE = "\u001B[34;1m";
     public static final String ANSI_PURPLE = "\u001B[35;1m";
     public static final String ANSI_CYAN = "\u001B[36;1m";
-    public static final String ANSI_WHITE = "\u001B[37;1m";
 
     public static final String SEPARATOR = "=========================================================================";
     public static final String PARAM_LESSON = "lesson";
@@ -44,11 +42,11 @@ public class Ui {
 
     //Help message
     public static final String HELP_MESSAGE = "These are the commands that are available:\n"
-            + "Notes about the command format:\n"
+            + ANSI_PURPLE + "Notes about the command format:\n" + ANSI_RESET
             + " * Words in UPPER_CASE are the parameters to be supplied by the user\n"
             + " * Items in square brackets are optional, e.g [DATE]\n"
             + "\n"
-            + "COMMANDS\n"
+            + ANSI_CYAN + "COMMANDS\n" + ANSI_RESET
             + "*************************************************************************\n"
             + "help ---------------------------------------- Displays available commands\n"
             + "addLesson /code MODULE_CODE /date DATE /time START /to END -- Adds lesson\n"
@@ -60,12 +58,13 @@ public class Ui {
             + "deleteTask /type TYPE /name NAME ------------------------- Deletes a task\n"
             + "addNotes TITLE ------------------------------------------ Adds a new note\n"
             + "showNotes TITLE ------------------------------------- Shows selected note\n"
+            + "archive ------------------------------------- Archives all existing notes\n"
             + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
             + "freeTime ------------------------ Tells you when you have free time today\n"
             + "sleepTime --------------------- Tells you how much time you have to sleep\n"
             + "exit --------------------------------------- Closes the LifEasier program\n"
             + "*************************************************************************\n"
-            + "For more detailed information, please visit the online user guide at:\n";
+            + ANSI_GREEN + "For more detailed information, please visit the online user guide at:\n" + ANSI_RESET;
 
     //Input format messages
     public static final String NEW_DEADLINE_TIME_INPUT_FORMAT = "/by DATETIME";
@@ -79,31 +78,59 @@ public class Ui {
     }
 
     public void printSeparator() {
-        System.out.println(ANSI_CYAN + SEPARATOR + ANSI_RESET);
+        System.out.println(SEPARATOR);
+    }
+
+    /**
+     * Colours input string to a green colour.
+     *
+     * @param string String to be coloured.
+     * @return Green coloured string.
+     */
+    private String colourTextGreen(String string) {
+        return ANSI_GREEN + string + ANSI_RESET;
+    }
+
+    /**
+     * Colours input string to a red colour.
+     *
+     * @param string String to be coloured.
+     * @return Red coloured string.
+     */
+    private String colourTextRed(String string) {
+        return ANSI_RED + string + ANSI_RESET;
+    }
+
+    /**
+     * Colours input string to a cyan colour.
+     *
+     * @param string String to be coloured
+     * @return Cyan coloured string.
+     */
+    private String colourTextCyan(String string) {
+        return ANSI_CYAN + string + ANSI_RESET;
     }
 
     public void showLogo() {
         printSeparator();
         printSeparator();
-        System.out.println(ANSI_YELLOW);
         printLogo();
-        System.out.println(ANSI_RESET);
         printSeparator();
         printSeparator();
     }
 
     public void showGreetingMessage() {
-        System.out.println(ANSI_BLUE + MESSAGE_GREETING + ANSI_RESET);
-        System.out.println(ANSI_PURPLE + MESSAGE_HELP_COMMAND + ANSI_RESET);
+        System.out.println(colourTextCyan(MESSAGE_GREETING));
+        System.out.println(colourTextGreen(MESSAGE_HELP_COMMAND));
     }
 
     public void showAddConfirmationMessage(String task) {
-        System.out.println("Done! I've added \"" + task + "\" to your calendar");
+        System.out.println(colourTextGreen("Done! I've added \"" + task + "\" to your calendar"));
         printSeparator();
     }
 
     private void printLogo() {
-        System.out.println(LOGO);
+        System.out.println(colourTextCyan(LOGO));
     }
 
     public void showHelp() {
@@ -196,23 +223,23 @@ public class Ui {
     }
 
     public void showEditConfirmationMessage() {
-        System.out.println("Your edit has been saved.");
+        System.out.println(colourTextGreen("Your edit has been saved."));
     }
 
     public void showDeleteConfirmationMessage() {
-        System.out.println("The task you selected has been deleted.");
+        System.out.println(colourTextGreen("The task you selected has been deleted."));
     }
 
     public void showInvalidCommandError() {
-        System.out.println(ERROR_INVALID_COMMAND);
+        System.out.println(colourTextRed(ERROR_INVALID_COMMAND));
     }
 
     public void showInvalidInputMessage() {
-        System.out.println(ERROR_INVALID_INPUT);
+        System.out.println(colourTextRed(ERROR_INVALID_INPUT));
     }
 
     public void showGoodbyeMessage() {
-        System.out.println(MESSAGE_GOODBYE);
+        System.out.println(colourTextCyan(MESSAGE_GOODBYE));
     }
 
     public void showNoteTitleMessage() {
@@ -224,43 +251,43 @@ public class Ui {
     }
 
     public void showFileCreationError() {
-        System.out.println("Something went wrong... Save file creation failed...");
+        System.out.println(colourTextRed("Something went wrong... Save file creation failed..."));
     }
 
     public void showDataLoadingMessage() {
-        System.out.println(ANSI_RED + "Reading your save data. New saves will be created if no saves are found."
-                + ANSI_RESET);
+        System.out.println(colourTextGreen("Reading your save data. New saves will be created "
+                + "if no saves are found."));
     }
 
     public void showNoDataToArchiveMessage() {
-        System.out.println("You do not have any data available for archiving.");
+        System.out.println(colourTextRed("You do not have any data available for archiving."));
         printSeparator();
     }
 
     public void showFileArchiveError() {
-        System.out.println("There was an error archiving your data");
+        System.out.println(colourTextRed("There was an error archiving your data"));
     }
 
     public void showArchiveStartMessage() {
         printSeparator();
-        System.out.println("Starting archiving...");
+        System.out.println(colourTextGreen("Starting archiving..."));
     }
 
     public void showArchiveEndMessage() {
-        System.out.println("Archiving successful!");
+        System.out.println(colourTextGreen("Archiving successful!"));
         printSeparator();
     }
 
     public void showFileReadError() {
-        System.out.println("Something went wrong, unable to read from save file...");
+        System.out.println(colourTextRed("Something went wrong, unable to read from save file..."));
     }
 
     public void showFileWriteError() {
-        System.out.println("Something went wrong while saving your data...");
+        System.out.println(colourTextRed("Something went wrong while saving your data..."));
     }
 
     public void showDirectoryCreationFailedError() {
-        System.out.println("Directory creation failed...");
+        System.out.println(colourTextRed("Directory creation failed..."));
     }
 
     public void showInvalidNumberMessage() {
@@ -279,23 +306,24 @@ public class Ui {
     }
 
     public void showInvalidCastError() {
-        System.out.println("Something went wrong, mismatching task types...");
+        System.out.println(colourTextRed("Something went wrong, mismatching task types..."));
     }
 
     public void showSaveDataMissingError() {
-        System.out.println("Encountered an error while reading from the save file - Data missing/corrupted");
+        System.out.println(colourTextRed("Encountered an error while reading from the save file "
+                + "- Data missing/corrupted"));
     }
 
     public void showLocalDateTimeParseError() {
-        System.out.println("Encountered a problem reading the date and time of the task...");
+        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task..."));
     }
 
     public void showUndeterminableTaskError() {
-        System.out.println("Something went wrong while determining the tasks...");
+        System.out.println(colourTextRed("Something went wrong while determining the tasks..."));
     }
 
     public void showParseUnknownCommandMessage() {
-        System.out.println("I'm sorry! I don't understand that command!");
+        System.out.println(colourTextRed("I'm sorry! I don't understand that command!"));
         printSeparator();
     }
 

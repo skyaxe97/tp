@@ -89,6 +89,6 @@ public class LifEasier {
      * Main entry-point for the LifEasier application.
      */
     public static void main(String[] args) {
-        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(true);
+        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(false);
     }
 }
