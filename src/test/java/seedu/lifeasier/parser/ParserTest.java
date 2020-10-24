@@ -2,7 +2,15 @@ package seedu.lifeasier.parser;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.lifeasier.commands.*;
+import seedu.lifeasier.commands.AddDeadlineCommand;
+import seedu.lifeasier.commands.AddEventCommand;
+import seedu.lifeasier.commands.AddLessonCommand;
+import seedu.lifeasier.commands.Command;
+import seedu.lifeasier.commands.ExitCommand;
+import seedu.lifeasier.commands.FreeTimeCommand;
+import seedu.lifeasier.commands.HelpCommand;
+import seedu.lifeasier.commands.InvalidCommand;
+import seedu.lifeasier.commands.SleepTimeCommand;
 import seedu.lifeasier.ui.Ui;
 
 import java.time.format.DateTimeParseException;
