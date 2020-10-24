@@ -110,7 +110,7 @@ public class Parser {
         logger.log(Level.INFO, "Start check for missing parameters.");
 
         while (isParametersEmpty) {
-            MissingParam param = checkLessonParameters(input);
+            MissingParam param = checkMissingLessonParameters(input);
 
             switch (param) {
             case MODULE_CODE:   // module code is missing
@@ -131,12 +131,15 @@ public class Parser {
                 break;
             default:
                 isParametersEmpty = false;
+                isModuleCodeEmpty = true;
+                isDateEmpty = true;
+                isStartTimeEmpty = true;
+                isEndTimeEmpty = true;
                 break;
             }
 
         }
         logger.log(Level.INFO, "End check for missing parameters");
-
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
         int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
@@ -145,10 +148,15 @@ public class Parser {
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
 
-        String moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
-        String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-        String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String endTime =  input.substring(lastIndexOfToCommand).trim();
+        String tempModuleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
+        String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+        String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+        String tempEndTime = input.substring(lastIndexOfToCommand).trim();
+
+        String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
+        String date = fillIfEmptyParam(ui, tempDate, "/date");
+        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
+        String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
         
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
@@ -190,24 +198,31 @@ public class Parser {
                 break;
             default:
                 isParametersEmpty = false;
+                isDescriptionEmpty = true;
+                isDateEmpty = true;
+                isStartTimeEmpty = true;
+                isEndTimeEmpty = true;
                 break;
             }
 
         }
         logger.log(Level.INFO, "End check for missing parameters.");
-
-        int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
         int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
         int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
         int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+        int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
+
+        String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+        String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+        String tempEndTime = input.substring(lastIndexOfToCommand).trim();
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
-        String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-        String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String endTime =  input.substring(lastIndexOfToCommand).trim();
+        String date = fillIfEmptyParam(ui, tempDate, "/date");
+        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
+        String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
@@ -243,18 +258,21 @@ public class Parser {
                 break;
             default:
                 isParametersEmpty = false;
+                isDescriptionEmpty = true;
+                isEndTimeEmpty = true;
                 break;
             }
 
         }
         logger.log(Level.INFO, "End check for missing parameters.");
-
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
         int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
+        String tempByInput = input.substring(lastIndexOfByCommand).trim();
+
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
-        String byInput = input.substring(lastIndexOfByCommand).trim();
+        String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
 
         resetBoolean();
@@ -547,7 +565,7 @@ public class Parser {
      * @param input String containing user's input.
      * @return An enumeration of the missing parameter.
      */
-    private MissingParam checkLessonParameters(String input) {
+    private MissingParam checkMissingLessonParameters(String input) {
         if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
         } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
@@ -724,6 +742,14 @@ public class Parser {
         input = input + " /by" + byDateTime;
         logger.log(Level.INFO, "End of adding By Time to string.");
 
+        return input;
+    }
+
+    private String fillIfEmptyParam(Ui ui, String input, String param) {
+        if (input.length() == 0) {
+            ui.printEmptyParam(param);
+            input = checkIfEmpty(ui , ui.readCommand());
+        }
         return input;
     }
 

@@ -445,4 +445,8 @@ public class Ui {
             System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
         }
     }
+
+    public void printEmptyParam(String param) {
+        System.out.println("We detected that the field of " + param + " is empty. Please fill it in:");
+    }
 }
