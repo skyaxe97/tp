@@ -46,8 +46,6 @@ public class FreeTimeCommand extends Command {
         int endHour = longestFreeTime[PARAM_END];
         int duration = endHour - startHour;
 
-        assert (startHour < endHour) : "The end cannot be before the start!";
-
         logger.log(Level.INFO, "Showing free time message...");
         ui.showFreeTimeMessage(startHour, endHour, duration);
 
@@ -81,7 +79,7 @@ public class FreeTimeCommand extends Command {
         int[] longestFreeTime = new int[2];
 
         int tempStartOfFreeTime = HOUR_EARLIEST;
-        int tempEndOfFreeTime = HOUR_LATEST;
+        int tempEndOfFreeTime = HOUR_EARLIEST;
 
         assert (0 < HOUR_LATEST && HOUR_LATEST < 25) : "The latest hour checked must be between 0 and 24";
         assert (0 <= HOUR_EARLIEST && HOUR_EARLIEST < HOUR_LATEST) :
@@ -96,8 +94,8 @@ public class FreeTimeCommand extends Command {
                 tempStartOfFreeTime = hour + 1;
             }
 
-            int durationOfTempFreeTimeBlock = tempEndOfFreeTime - tempStartOfFreeTime + 1;
-            int durationOfLongestFreeTimeBlock = longestFreeTime[PARAM_END] - longestFreeTime[PARAM_START] + 1;
+            int durationOfTempFreeTimeBlock = tempEndOfFreeTime - tempStartOfFreeTime;
+            int durationOfLongestFreeTimeBlock = longestFreeTime[PARAM_END] - longestFreeTime[PARAM_START];
 
             if (durationOfTempFreeTimeBlock >= durationOfLongestFreeTimeBlock) {
                 longestFreeTime[PARAM_START] = tempStartOfFreeTime;
