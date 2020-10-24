@@ -98,6 +98,7 @@ public class Parser {
 
     /**
      * Parses the addLesson command that the user inputs.
+     * Also prompts user for missing parameters if there are any.
      *
      * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
@@ -166,6 +167,7 @@ public class Parser {
 
     /**
      * Parses the addEvent command that the user inputs.
+     * Also prompts user for missing parameters if there are any.
      *
      * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
@@ -232,6 +234,7 @@ public class Parser {
 
     /**
      * Parses the addDeadline command that the user inputs.
+     * Also prompts user for missing parameters if there are any.
      *
      * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.

@@ -61,6 +61,9 @@ public class Deadline extends Task {
                 + "repeats weekly " + recurrences + " times";
     }
 
+    /**
+     * Moves a recurring deadline 7 days forward, and decrements remaining recurrences by 1.
+     */
     @Override
     public void moveAndUpdateRecurrences() {
         decrementRecurrences(1);

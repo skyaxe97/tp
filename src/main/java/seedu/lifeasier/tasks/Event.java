@@ -62,6 +62,9 @@ public class Event extends Task {
                 + "repeats weekly " + recurrences + " times";
     }
 
+    /**
+     * Moves a recurring event 7 days forward, and decrements remaining recurrences by 1.
+     */
     @Override
     public void moveAndUpdateRecurrences() {
         decrementRecurrences(1);
