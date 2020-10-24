@@ -122,7 +122,7 @@ public class Parser {
                 isDateEmpty = false;
                 break;
             case START_TIME:
-                input = addStartTimeParam(ui, input);
+                input = addStartTimeParam(ui, input + " ");
                 isStartTimeEmpty = false;
                 break;
             case END_TIME:
@@ -189,7 +189,7 @@ public class Parser {
                 isDateEmpty = false;
                 break;
             case START_TIME:
-                input = addStartTimeParam(ui, input);
+                input = addStartTimeParam(ui, input + " ");
                 isStartTimeEmpty = false;
                 break;
             case END_TIME:
@@ -249,7 +249,7 @@ public class Parser {
 
             switch (param) {
             case DESCRIPTION:   // description is missing
-                input = addDeadlineDescriptionParam(ui, input);
+                input = addDeadlineDescriptionParam(ui, input + " ");
                 isDescriptionEmpty = false;
                 break;
             case END_TIME:
@@ -705,6 +705,7 @@ public class Parser {
         ui.showAddStartTimeMessage();
         String startTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp2 = input.split("/to");
+        System.out.println("weee2");
         input = temp2[0] + "/time " + startTime + " /to" + temp2[1];
         logger.log(Level.INFO, "End of adding Start Time to string.");
 
@@ -738,7 +739,7 @@ public class Parser {
     private String addByDateTime(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding By Time to string.");
         ui.showAddDateTimeMessage();
-        String byDateTime = checkIfEmpty(ui, ui.readCommand());
+        String byDateTime = checkIfEmpty(ui, ui.readCommand()) + " ";
         input = input + " /by" + byDateTime;
         logger.log(Level.INFO, "End of adding By Time to string.");
 
