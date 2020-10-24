@@ -48,28 +48,10 @@ public class EditDeadlineCommand extends Command {
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
 
-            Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTaskToEdit(tasks, userDeadlineChoice);
             logger.log(Level.INFO, "Temporarily hold value of this Deadline");
+            Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTaskToEdit(tasks, userDeadlineChoice);
 
-            ui.showSelectParameterToEdit();
-            ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
-            int userParamChoice = Integer.parseInt(ui.readCommand());
-
-            switch (userParamChoice) {
-
-            case (1):
-                ui.showInputMessage(ui.PARAM_DEADLINE);
-                editDeadlineName(tasks, userDeadlineChoice, ui);
-                break;
-
-            case (2):
-                ui.showInputFormat(ui.PARAM_DEADLINE);
-                editDeadlineTime(tasks, userDeadlineChoice, ui);
-                break;
-
-            default:
-                throw new IndexOutOfBoundsException();
-            }
+            selectParameterToEdit(ui, tasks, userDeadlineChoice);
 
             taskHistory.pushOldCopy(oldCopyOfDeadline, ui);
             logger.log(Level.INFO, "Push old copy of Deadline into taskHistory");
@@ -89,6 +71,28 @@ public class EditDeadlineCommand extends Command {
         }
         storage.saveTasks(); //Edit confirmed, can push old saved into tasks arraylist
         logger.log(Level.INFO, "End of EditDeadlineCommand");
+    }
+
+    public void selectParameterToEdit(Ui ui, TaskList tasks, int userDeadlineChoice) throws ParserException {
+        ui.showSelectParameterToEdit();
+        ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
+        int userParamChoice = Integer.parseInt(ui.readCommand());
+
+        switch (userParamChoice) {
+
+        case (1):
+            ui.showInputMessage(ui.PARAM_DEADLINE);
+            editDeadlineName(tasks, userDeadlineChoice, ui);
+            break;
+
+        case (2):
+            ui.showInputFormat(ui.PARAM_DEADLINE);
+            editDeadlineTime(tasks, userDeadlineChoice, ui);
+            break;
+
+        default:
+            throw new IndexOutOfBoundsException();
+        }
     }
 
 }

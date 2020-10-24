@@ -70,12 +70,10 @@ public class DeleteNotesCommand extends Command {
 
     private void checkIfDelete(Ui ui, NoteList notes, int noteNumber, String input, NoteHistory noteHistory) {
         if (input.trim().equals("Y")) {
-            Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToDelete(notes, noteNumber);
             logger.log(Level.INFO, "Temporarily hold details of this Note");
-
+            Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToDelete(notes, noteNumber);
             notes.remove(noteNumber);
             ui.showNoteDeletedMessage();
-
             noteHistory.pushOldCopy(oldCopyOfNote, ui);
             logger.log(Level.INFO, "Push old copy of Note into noteHistory");
         } else {

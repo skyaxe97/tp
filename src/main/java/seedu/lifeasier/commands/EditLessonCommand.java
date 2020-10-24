@@ -48,28 +48,10 @@ public class EditLessonCommand extends Command {
             int userLessonChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userLessonChoice);
 
-            Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);
             logger.log(Level.INFO, "Temporarily hold value of this Event");
+            Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);
 
-            ui.showSelectParameterToEdit();
-            ui.showEditableParametersMessage(Ui.PARAM_LESSON);
-            int userParamChoice = Integer.parseInt(ui.readCommand());
-
-            switch (userParamChoice) {
-
-            case (1):
-                ui.showInputMessage(ui.PARAM_LESSON);
-                editLessonModuleCode(tasks, userLessonChoice, ui);
-                break;
-
-            case (2):
-                ui.showInputFormat(ui.PARAM_LESSON);
-                editLessonTime(tasks, userLessonChoice, ui);
-                break;
-
-            default:
-                throw new IndexOutOfBoundsException();
-            }
+            selectParameterToEdit(ui, tasks, userLessonChoice);
 
             taskHistory.pushOldCopy(oldCopyOfLesson, ui);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
@@ -89,5 +71,27 @@ public class EditLessonCommand extends Command {
         }
         storage.saveTasks();
         logger.log(Level.INFO, "End of EditLessonCommand");
+    }
+
+    public void selectParameterToEdit(Ui ui, TaskList tasks, int userLessonChoice) throws ParserException {
+        ui.showSelectParameterToEdit();
+        ui.showEditableParametersMessage(Ui.PARAM_LESSON);
+        int userParamChoice = Integer.parseInt(ui.readCommand());
+
+        switch (userParamChoice) {
+
+        case (1):
+            ui.showInputMessage(ui.PARAM_LESSON);
+            editLessonModuleCode(tasks, userLessonChoice, ui);
+            break;
+
+        case (2):
+            ui.showInputFormat(ui.PARAM_LESSON);
+            editLessonTime(tasks, userLessonChoice, ui);
+            break;
+
+        default:
+            throw new IndexOutOfBoundsException();
+        }
     }
 }

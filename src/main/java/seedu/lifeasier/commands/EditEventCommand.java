@@ -48,28 +48,10 @@ public class EditEventCommand extends Command {
             int userEventChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userEventChoice);
 
-            Task oldCopyOfEvent = taskHistory.getCurrCopyOfTaskToEdit(tasks, userEventChoice);
             logger.log(Level.INFO, "Temporarily hold value of this Event");
+            Task oldCopyOfEvent = taskHistory.getCurrCopyOfTaskToEdit(tasks, userEventChoice);
 
-            ui.showSelectParameterToEdit();
-            ui.showEditableParametersMessage(Ui.PARAM_EVENT);
-            int userParamChoice = Integer.parseInt(ui.readCommand());
-
-            switch (userParamChoice) {
-
-            case (1):
-                ui.showInputMessage(ui.PARAM_EVENT);
-                editEventName(tasks, userEventChoice, ui);
-                break;
-
-            case (2):
-                ui.showInputFormat(ui.PARAM_EVENT);
-                editEventTime(tasks, userEventChoice, ui);
-                break;
-
-            default:
-                throw new IndexOutOfBoundsException();
-            }
+            selectParameterToEdit(ui, tasks, userEventChoice);
 
             taskHistory.pushOldCopy(oldCopyOfEvent, ui);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
@@ -89,5 +71,27 @@ public class EditEventCommand extends Command {
         }
         storage.saveTasks();
         logger.log(Level.INFO, "End of EditEventCommand");
+    }
+
+    public void selectParameterToEdit(Ui ui, TaskList tasks, int userEventChoice) throws ParserException {
+        ui.showSelectParameterToEdit();
+        ui.showEditableParametersMessage(Ui.PARAM_EVENT);
+        int userParamChoice = Integer.parseInt(ui.readCommand());
+
+        switch (userParamChoice) {
+
+        case (1):
+            ui.showInputMessage(ui.PARAM_EVENT);
+            editEventName(tasks, userEventChoice, ui);
+            break;
+
+        case (2):
+            ui.showInputFormat(ui.PARAM_EVENT);
+            editEventTime(tasks, userEventChoice, ui);
+            break;
+
+        default:
+            throw new IndexOutOfBoundsException();
+        }
     }
 }
