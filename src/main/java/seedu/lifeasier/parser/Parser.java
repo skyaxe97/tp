@@ -108,6 +108,7 @@ public class Parser {
 
         logger.log(Level.INFO, "Parsing addLesson command...");
         logger.log(Level.INFO, "Start check for missing parameters.");
+
         while (isParametersEmpty) {
             MissingParam param = checkLessonParameters(input);
 
