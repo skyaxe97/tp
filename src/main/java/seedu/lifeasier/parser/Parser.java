@@ -314,6 +314,7 @@ public class Parser {
             int firstIndexOfTypeCommand = input.indexOf(PARAM_TYPE);
             int lastIndexOfTypeCommand = input.indexOf(PARAM_TYPE) + PARAM_TYPE.length();
             if (firstIndexOfTypeCommand == -1) {
+                logger.log(Level.SEVERE, "deleteTask command missing TYPE keyword");
                 throw new ParserException();
             }
 
@@ -352,6 +353,7 @@ public class Parser {
                 int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
                 if (firstIndexOfByCommand == -1) {
+                    logger.log(Level.SEVERE, "Input missing BY keyword");
                     throw new ParserException();
                 }
 
@@ -380,10 +382,11 @@ public class Parser {
                 return times;
 
             default:
-                throw new ParserException();
+                break;
             }
 
         } catch (DateTimeParseException e) {
+            logger.log(Level.SEVERE, "Time input is not in the correct format");
             ui.showLocalDateTimeParseError();
         }
         return times;
@@ -794,13 +797,16 @@ public class Parser {
                 return parseDeleteTaskCommand(input);
 
             default:
+                logger.log(Level.SEVERE, "User input command is invalid");
                 throw new ParserException();
             }
 
         } catch (IndexOutOfBoundsException e) {
+            logger.log(Level.SEVERE, "User input command is invalid");
             ui.showParseIncorrectCommandFormatMessage();
 
         } catch (DateTimeParseException e) {
+            logger.log(Level.SEVERE, "Time input is invalid");
             ui.showParseIncorrectDateTimeMessage();
         }
 
