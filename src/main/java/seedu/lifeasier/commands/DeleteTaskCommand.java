@@ -41,8 +41,8 @@ public class DeleteTaskCommand extends Command {
             }
             logger.log(Level.INFO, "Start of DeleteTaskCommand");
 
-            ui.showSelectTaskToDelete(type);
             printMatchingTasks(tasks, ui, type, name);
+            ui.showSelectTaskToDelete(type);
 
             int userTaskChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userTaskChoice);
