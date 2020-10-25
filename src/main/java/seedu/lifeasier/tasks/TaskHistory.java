@@ -4,6 +4,10 @@ import seedu.lifeasier.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * The TaskHistory class represents the list of changes made to Task objects,
+ * edits or deletions in particular.
+ */
 public class TaskHistory {
 
     private int changeCount;
@@ -52,6 +56,13 @@ public class TaskHistory {
         decrementChangeCount();
     }
 
+    /**
+     * Returns a copy of the Task object before it is edited.
+     *
+     * @param tasks represents the TaskList object.
+     * @param userIndexChoice the index of the Task object the user wants to edit.
+     *
+     */
     public Task getCurrCopyOfTaskToEdit(TaskList tasks, int userIndexChoice) {
         Task task = tasks.getTask(userIndexChoice);
 
@@ -69,6 +80,13 @@ public class TaskHistory {
         return copyTask(tasks, userIndexChoice, task, editID);
     }
 
+    /**
+     * Returns a copy of the Task object before it is deleted.
+     *
+     * @param tasks represents the TaskList object.
+     * @param userIndexChoice the index of the Task object the user wants to delete.
+     *
+     */
     public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userIndexChoice) {
         Task task = tasks.getTask(userIndexChoice);
 

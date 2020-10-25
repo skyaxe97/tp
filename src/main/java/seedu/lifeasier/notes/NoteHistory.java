@@ -4,6 +4,10 @@ import seedu.lifeasier.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * The NoteHistory class represents the list of changes made to Note objects,
+ * edits or deletions in particular.
+ */
 public class NoteHistory {
 
     private int changeCount;
@@ -52,6 +56,13 @@ public class NoteHistory {
         decrementChangeCount();
     }
 
+    /**
+     * Returns a copy of the Note object before it is edited.
+     *
+     * @param notes represents the NoteList object.
+     * @param noteIndex the index of the Note object the user wants to edit.
+     *
+     */
     public Note getCurrCopyOfNoteToEdit(NoteList notes, int noteIndex) {
         Note note = notes.get(noteIndex);
 
@@ -69,6 +80,13 @@ public class NoteHistory {
         return new Note(note, editID);
     }
 
+    /**
+     * Returns a copy of the Note object before it is deleted.
+     *
+     * @param notes represents the NoteList object.
+     * @param noteIndex the index of the Note object the user wants to delete.
+     *
+     */
     public Note getCurrCopyOfNoteToDelete(NoteList notes, int noteIndex) {
         Note note = notes.get(noteIndex);
 
