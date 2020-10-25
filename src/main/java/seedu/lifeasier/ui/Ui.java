@@ -87,7 +87,7 @@ public class Ui {
      * @param string String to be coloured.
      * @return Green coloured string.
      */
-    private String colourTextGreen(String string) {
+    protected String colourTextGreen(String string) {
         return ANSI_GREEN + string + ANSI_RESET;
     }
 
@@ -97,7 +97,7 @@ public class Ui {
      * @param string String to be coloured.
      * @return Red coloured string.
      */
-    private String colourTextRed(String string) {
+    protected String colourTextRed(String string) {
         return ANSI_RED + string + ANSI_RESET;
     }
 
@@ -107,7 +107,7 @@ public class Ui {
      * @param string String to be coloured
      * @return Cyan coloured string.
      */
-    private String colourTextCyan(String string) {
+    protected String colourTextCyan(String string) {
         return ANSI_CYAN + string + ANSI_RESET;
     }
 
