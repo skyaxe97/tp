@@ -705,7 +705,6 @@ public class Parser {
         ui.showAddStartTimeMessage();
         String startTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp2 = input.split("/to");
-        System.out.println("weee2");
         input = temp2[0] + "/time " + startTime + " /to" + temp2[1];
         logger.log(Level.INFO, "End of adding Start Time to string.");
 
