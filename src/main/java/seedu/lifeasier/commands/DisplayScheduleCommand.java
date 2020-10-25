@@ -27,7 +27,7 @@ public class DisplayScheduleCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         LocalDate currDate = LocalDate.now();
         if (isDisplayWeek) {
-            scheduleUi.displayWeekSchedule(tasks);
+            scheduleUi.showHome(tasks);
         } else {
             taskHistory.printTaskHistory();
             int taskCountForToday = scheduleUi.getTaskCountForToday(tasks, currDate);

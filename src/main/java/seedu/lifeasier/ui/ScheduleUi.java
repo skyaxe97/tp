@@ -21,6 +21,7 @@ public class ScheduleUi {
         timetable.showTimetable(tasks);
         System.out.println();
         displayUpcomingDeadlines(tasks);
+        System.out.println(Ui.SEPARATOR);
     }
 
     private void displayUpcomingDeadlines(TaskList tasks) {
@@ -35,11 +36,6 @@ public class ScheduleUi {
                 id++;
             }
         }
-    }
-
-    public void displayWeekSchedule(TaskList tasks) {
-        timetable.showTimetable(tasks);
-        displayUpcomingDeadlines(tasks);
     }
 
     public void displayDaySchedule(LocalDate date, TaskList tasks) {

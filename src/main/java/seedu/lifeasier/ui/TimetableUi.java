@@ -11,10 +11,6 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.Color.RED;
-import static org.fusesource.jansi.Ansi.ansi;
-
 /**
  * The TimetableUi class handles the displaying of the schedule in a tabulated format.
  */
@@ -46,7 +42,6 @@ public class TimetableUi {
     }
 
     public void showTimetable(TaskList tasks) {
-        System.out.println(ansi().eraseScreen().fg(RED).a("Hello").fg(GREEN).a(" World").reset());
         generateTimetable(tasks);
         System.out.println(ROW_SEPARATOR);
         for (String row: timetableRows) {
