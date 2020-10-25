@@ -122,7 +122,7 @@ public class TaskStorage {
      * @param taskList List of tasks which the created object will be added into.
      * @param description The description of the task.
      * @param status The current status of the task.
-     * @throws ArrayIndexOutOfBoundsException
+     * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
@@ -141,7 +141,7 @@ public class TaskStorage {
      * @param taskList List of tasks which the created object will be added into.
      * @param description The description of the task.
      * @param status The current status of the task.
-     * @throws ArrayIndexOutOfBoundsException
+     * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
@@ -160,7 +160,7 @@ public class TaskStorage {
      * @param taskList List of tasks which the created object will be added into.
      * @param description The description of the task.
      * @param status The current status of the task.
-     * @throws ArrayIndexOutOfBoundsException
+     * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description,
                                    Boolean status) throws ArrayIndexOutOfBoundsException {
