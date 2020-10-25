@@ -748,7 +748,7 @@ public class Parser {
     private String fillIfEmptyParam(Ui ui, String input, String param) {
         if (input.length() == 0) {
             ui.printEmptyParam(param);
-            input = checkIfEmpty(ui , ui.readCommand());
+            input = checkIfEmpty(ui, ui.readCommand());
         }
         return input;
     }
