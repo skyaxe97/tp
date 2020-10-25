@@ -149,6 +149,13 @@ public class TimetableUi {
         return Math.max(Math.max(referenceHour, taskStartHour),Math.max(referenceHour, taskEndHour));
     }
 
+    /**
+     * Determines if the current time falls within the current time slot in the time table.
+     *
+     * @param row String with information of current row.
+     * @param currentTime Current time from LocalTime object.
+     * @return true when current time falls within the timetable slot.
+     */
     private boolean determineIfCurrentHour(String row, LocalTime currentTime) {
         String[] rowComponents = row.split("\\|");
         String[] timeRange = rowComponents[1].split("-");
