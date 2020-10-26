@@ -6,6 +6,7 @@ import seedu.lifeasier.tasks.TaskList;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
@@ -23,9 +24,11 @@ public class TimetableUi {
 
     private static TimetableUi timetableUi = null;
     private static ArrayList<String> timetableRows;
+    private Ui ui;
 
     private TimetableUi() {
         timetableRows = new ArrayList<>();
+        this.ui = new Ui();
     }
 
     public static TimetableUi getInstance() {
@@ -37,9 +40,14 @@ public class TimetableUi {
 
     public void showTimetable(TaskList tasks) {
         generateTimetable(tasks);
+        LocalTime currentTime = LocalTime.now();
         System.out.println(ROW_SEPARATOR);
         for (String row: timetableRows) {
-            System.out.println(row);
+            if (determineIfCurrentHour(row, currentTime)) {
+                System.out.println(ui.colourTextCyan(row));
+            } else {
+                System.out.println(row);
+            }
             System.out.println(ROW_SEPARATOR);
         }
     }
@@ -139,5 +147,41 @@ public class TimetableUi {
 
     public int getLaterTime(int referenceHour, int taskStartHour, int taskEndHour) {
         return Math.max(Math.max(referenceHour, taskStartHour),Math.max(referenceHour, taskEndHour));
+    }
+
+    /**
+     * Determines if the current time falls within the current time slot in the time table.
+     *
+     * @param row String with information of current row.
+     * @param currentTime Current time from LocalTime object.
+     * @return true when current time falls within the timetable slot.
+     */
+    private boolean determineIfCurrentHour(String row, LocalTime currentTime) {
+        String[] rowComponents = row.split("\\|");
+        String[] timeRange = rowComponents[1].split("-");
+
+        if (timeRange.length < 2) {
+            return false;
+        }
+
+        try {
+            LocalTime startTime = LocalTime.parse(timeRange[0]);
+            LocalTime endTime = LocalTime.parse(timeRange[1]);
+
+            boolean isAfterStartTime = currentTime.compareTo(startTime) > 0;
+            boolean isBeforeEndTime = currentTime.compareTo(endTime) < 0;
+
+            //Current time is within hourly range
+            if (isAfterStartTime && isBeforeEndTime) {
+                return true;
+            }
+
+        } catch (DateTimeParseException e) {
+            System.out.println(ui.colourTextRed("There was an error parsing the times"));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(ui.colourTextRed("There was an error getting the time ranges"));
+        }
+
+        return false;
     }
 }

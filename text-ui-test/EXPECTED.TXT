@@ -12,7 +12,7 @@ Reading your save data. New saves will be created if no saves are found.
 
 =========================================================================
 =========================================================================
-Hello [NAME], what can I do for you today?
+Hello! What can I do for you today?
  -Type 'help' for a list the list of available commands
 =========================================================================
 These are the commands that are available:
@@ -32,6 +32,7 @@ editDeadline DEADLINE_NAME ----------------------------- Edits a deadline
 deleteTask /type TYPE /name NAME ------------------------- Deletes a task
 addNotes TITLE ------------------------------------------ Adds a new note
 showNotes TITLE ------------------------------------- Shows selected note
+archive ------------------------------------- Archives all existing notes
 editNotes TITLE ----------------------------------- Edits a selected note
 deleteNotes TITLE ------------------------------- Deletes a selected note
 display WEEK/DAY --------------- Displays either weekly or daily schedule
