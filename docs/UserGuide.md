@@ -63,7 +63,7 @@ On successful launch, you will be greeted with a welcome screen as shown below i
 Hello [NAME], what can I do for you today?
  -Type 'help' for a list the list of available commands
 ```
-Figure 2-1: LifEasier’s welcome screen
+*Figure 2-1: LifEasier’s welcome screen*
 
 6. You are now ready to use **LifEasier.** Type commands into the terminal window and press enter to execute the command. E.g Type  help and press enter to bring up the list of  available commands.
 7. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or you have entered invalid information.
@@ -105,7 +105,7 @@ display
 Here is your schedule for today:
 13:00-14:00  CS2113T
 ```
-Figure 3.9-1: An example of using the display command to view your daily schedule
+*Figure 3.9-1: An example of using the display command to view your daily schedule*
 
 `display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.9-2.
 
@@ -144,7 +144,7 @@ display week
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 Here are your upcoming deadlines this week:
 ```
-Figure 3.9-2: An example of using the display week command to view your weekly schedule
+*Figure 3.9-2: An example of using the display week command to view your weekly schedule*
 
 ### 3.10 Viewing Available Free Time: `freeTime`
 ### 3.11 Viewing Available Sleep Time: `sleepTime`
