@@ -6,7 +6,7 @@
 # Gradle build files
 /.gradle/
 /build/
-/LifEasierSaves/
+LifEasierSaves/
 src/main/resources/docs/
 
 # Generated test files
