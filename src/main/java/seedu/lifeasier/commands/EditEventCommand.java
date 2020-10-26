@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditEventCommand extends Command {
-    private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
+    private static Logger logger = Logger.getLogger(EditEventCommand.class.getName());
     private String eventName = "";
 
     public EditEventCommand(String eventName) {
@@ -43,10 +43,20 @@ public class EditEventCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditEventCommand");
+
+            logger.log(Level.INFO, "Printing all matching events...");
             printMatchingEvents(tasks, ui, eventName);
             ui.showSelectTaskToEdit(Ui.PARAM_EVENT);
+
+            logger.log(Level.INFO, "Reading user input for choice of event to edit...");
             int userEventChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userEventChoice);
+
+            ui.showSelectParameterToEdit();
+            ui.showEditableParametersMessage(Ui.PARAM_EVENT);
+
+            logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
+            int userParamChoice = Integer.parseInt(ui.readCommand());
 
             logger.log(Level.INFO, "Temporarily hold value of this Event");
             Task oldCopyOfEvent = taskHistory.getCurrCopyOfTaskToEdit(tasks, userEventChoice);

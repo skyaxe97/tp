@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Handles file archiving in LifEasier.
+ */
 public class FileArchive {
 
     private static Logger logger = Logger.getLogger(NoteStorage.class.getName());
@@ -93,6 +96,12 @@ public class FileArchive {
         return note.getTitle().trim() + System.lineSeparator();
     }
 
+    /**
+     * Creates a new archive save file if one does not exist yet.
+     *
+     * @param archiveSave Current file path of the archive save file.
+     * @throws IOException When an error is encountered writing to the archive file.
+     */
     protected void createArchiveSaveFile(File archiveSave) throws IOException {
         //Create new save if none exist
         if (!archiveSave.exists()) {
@@ -109,6 +118,11 @@ public class FileArchive {
         return notesList.size() == 0;
     }
 
+    /**
+     * Gets the current date and time and formats it for return.
+     *
+     * @return Formatted date time string.
+     */
     protected String getCurrentDateTime() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         String formattedDateTime = currentDateTime.format(FileCommand.DATE_TIME_FORMATTER);

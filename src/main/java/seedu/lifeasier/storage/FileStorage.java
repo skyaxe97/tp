@@ -45,7 +45,7 @@ public class FileStorage {
     public void archiveData() {
         File archiveDirectory = new File(ARCHIVE_PATH);
 
-        ui.showArchiveStartMessge();
+        ui.showArchiveStartMessage();
         logger.log(Level.INFO, "Start archiving process");
         //Create archive directory if non existent
         if (!directoryExists(archiveDirectory)) {
@@ -93,6 +93,12 @@ public class FileStorage {
         return saveFileTasks.exists() && saveFileNotes.exists();
     }
 
+    /**
+     * Handles the creation of new save directories and save files.
+     *
+     * @param saveFileTasks File object with file path to the save file which contains saved task information.
+     * @param saveFileNotes File object with file path to the save file which contains saved note information.
+     */
     private void createNewSaves(File saveFileTasks, File saveFileNotes) {
         File fileDirectory = new File(DIRECTORY_PATH);
 
@@ -109,11 +115,22 @@ public class FileStorage {
         }
     }
 
+    /**
+     * Determines which save files exist and which do not when the save directory exists.
+     *
+     * @param saveFileTasks File object with file path to the save file which contains saved task information.
+     * @param saveFileNotes File object with file path to the save file which contains saved note information.
+     */
     private void handleExistingSaveDirectory(File saveFileTasks, File saveFileNotes) {
         checkForTasksSaveFile(saveFileTasks);
         checkForNotesSaveFile(saveFileNotes);
     }
 
+    /**
+     * Checks if the notes save file exists and creates the save file if it is missing.
+     *
+     * @param saveFileNotes File object with file path to the save file which contains saved note information.
+     */
     private void checkForNotesSaveFile(File saveFileNotes) {
         logger.log(Level.INFO, "Checking for notes save file");
         //Create new save file if task save file does not exist
@@ -125,6 +142,11 @@ public class FileStorage {
         noteStorage.readNotesSave();
     }
 
+    /**
+     * Checks if the tasks save file exists and creates the save file if it is missing.
+     *
+     * @param saveFileTasks File object with file path to the save file which contains saved task information.
+     */
     private void checkForTasksSaveFile(File saveFileTasks) {
         logger.log(Level.INFO, "Checking for task save file");
         //Create new notes save file if notes save file does not exist
@@ -140,6 +162,13 @@ public class FileStorage {
         return fileDirectory.exists();
     }
 
+    /**
+     * Creates the missing save directory and the save files for use.
+     *
+     * @param fileDirectory File object with the save directory path.
+     * @param saveFileTasks File object with file path to the save file which contains saved task information.
+     * @param saveFileNotes File object with file path to the save file which contains saved note information.
+     */
     private void handleMissingSaveDirectory(File fileDirectory, File saveFileTasks, File saveFileNotes) {
         //Attempt creation of new save directory to hold save files
         logger.log(Level.INFO, "Creating save directory");
@@ -161,6 +190,11 @@ public class FileStorage {
         return fileDirectory.mkdir();
     }
 
+    /**
+     * Creates a save file depending on the file path passed.
+     *
+     * @param saveFile File object containing the file path of the save file that is to be created.
+     */
     private void createNewSaveFile(File saveFile) {
         logger.log(Level.INFO, "Creating save file");
         try {
@@ -172,10 +206,16 @@ public class FileStorage {
         }
     }
 
+    /**
+     * Saves all notes in the current task list.
+     */
     public void saveNote() {
         noteStorage.writeToNoteSaveFile();
     }
 
+    /**
+     * Saves all tasks in the current task list.
+     */
     public void saveTasks() {
         taskStorage.writeToTaskSaveFile();
     }

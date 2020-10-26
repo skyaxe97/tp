@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditLessonCommand extends Command {
-    private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
+    private static Logger logger = Logger.getLogger(EditLessonCommand.class.getName());
     private String code = "";
 
     public EditLessonCommand(String code) {
@@ -23,7 +23,7 @@ public class EditLessonCommand extends Command {
     }
 
     public void printLessonsMatchingCode(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui.PARAM_LESSON, code);
+        tasks.printMatchingTasks(Ui.PARAM_LESSON, code);
     }
 
     public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
@@ -43,10 +43,17 @@ public class EditLessonCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditLessonCommand");
+
+            logger.log(Level.INFO, "Printing all matching lessons...");
             printLessonsMatchingCode(tasks, ui, code);
             ui.showSelectTaskToEdit(Ui.PARAM_LESSON);
+
+            logger.log(Level.INFO, "Reading user input for choice of lesson to edit...");
             int userLessonChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userLessonChoice);
+
+            ui.showSelectParameterToEdit();
+            ui.showEditableParametersMessage(Ui.PARAM_LESSON);
 
             logger.log(Level.INFO, "Temporarily hold value of this Event");
             Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);

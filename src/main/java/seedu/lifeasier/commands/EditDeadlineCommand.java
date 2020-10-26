@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditDeadlineCommand extends Command {
-    private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
+    private static Logger logger = Logger.getLogger(EditDeadlineCommand.class.getName());
     private String deadlineName = "";
 
     public EditDeadlineCommand(String deadlineName) {
@@ -43,8 +43,11 @@ public class EditDeadlineCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditDeadlineCommand");
+
+            logger.log(Level.INFO, "Printing all matching deadlines...");
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
+
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
 

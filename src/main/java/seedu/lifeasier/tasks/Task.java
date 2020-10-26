@@ -38,15 +38,6 @@ public abstract class Task {
         return editNumber;
     }
 
-    public String getStatusIcon() {
-        return (isDone ? "\u2713" : "\u2718"); //return tick or X symbol
-    }
-
-    public void markAsDone() {
-        this.isDone = true;
-        taskCounter--;
-    }
-
     public String getDescription() {
         return description;
     }

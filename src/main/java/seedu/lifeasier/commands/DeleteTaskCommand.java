@@ -43,31 +43,37 @@ public class DeleteTaskCommand extends Command {
             if (type.equals("")) {
                 throw new ParserException();
             }
-            logger.log(Level.INFO, "Start of DeleteTaskCommand");
+            logger.log(Level.INFO, "Start of DeleteTaskCommand...");
 
-            ui.showSelectTaskToDelete(type);
+            logger.log(Level.INFO, "Printing all matching tasks...");
             printMatchingTasks(tasks, ui, type, name);
+            ui.showSelectTaskToDelete(type);
 
+            logger.log(Level.INFO, "Reading user input for choice of task to delete...");
             int userTaskChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userTaskChoice);
 
-            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, userTaskChoice);
             logger.log(Level.INFO, "Temporarily hold value of this Task");
+            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, userTaskChoice);
 
+            logger.log(Level.INFO, "Deleting task from taskList...");
             deleteTask(tasks, ui, userTaskChoice);
 
             taskHistory.pushOldCopy(oldCopyOfTask, ui);
             logger.log(Level.INFO, "Push old copy of Task into taskHistory");
 
+            logger.log(Level.INFO, "Saving updated taskList to storage...");
+            storage.saveTasks();
             ui.showDeleteConfirmationMessage();
+
         } catch (ParserException e) {
+            logger.log(Level.SEVERE, "User input is invalid");
             ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input " + type + " name does not match any of the existing "
                     + type + " names.");
             ui.showNoMatchesMessage(type);
         }
-        storage.saveTasks();
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }
 }
