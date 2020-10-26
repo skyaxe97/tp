@@ -519,7 +519,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return Either UndoNoteCommand or UndoTaskCommand depending on the parsed parameter.
      */
-    private Command parseUndoCommand(String input) {
+    private Command parseUndoCommand(String input) throws ParserException {
         Ui ui = new Ui();
         logger.log(Level.INFO, "Parsing undo command...");
 
@@ -540,7 +540,7 @@ public class Parser {
             return new UndoNoteCommand();
         default:
             logger.log(Level.SEVERE, "Error determining undo command type");
-            return new InvalidCommand();
+            throw new ParserException();
         }
     }
 
