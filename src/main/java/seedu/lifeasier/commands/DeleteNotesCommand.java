@@ -23,15 +23,10 @@ public class DeleteNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-        int noteNumber = -1;
-        int matchNumber = 0;
 
-        for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getTitle().contains(title)) {
-                matchNumber++;
-                noteNumber = i;
-            }
-        }
+        int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
+        int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
+
         logger.log(Level.INFO, "End for finding title in note list");
 
         switch (matchNumber) {
@@ -50,7 +45,7 @@ public class DeleteNotesCommand extends Command {
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            NoteCommandFunctions.printMultipleMatches(ui, notes, title);
+            ui.printMultipleNoteMatches(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand());
@@ -95,7 +90,7 @@ public class DeleteNotesCommand extends Command {
                 ui.showSelectWhichNoteToDeleteMessage();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                NoteCommandFunctions.printAllNotes(ui, notes);
+                ui.printAllNotes(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
@@ -106,8 +101,8 @@ public class DeleteNotesCommand extends Command {
                 String input = checkConfirmationMessage(ui, ui.readCommand());
                 checkIfDelete(ui, notes, noteNumber -  1, input);
 
-                storage.saveNote();
             }
+            storage.saveNote();
             ui.printSeparator();
             logger.log(Level.INFO, "End of DeleteNotesCommand");
         } catch (IndexOutOfBoundsException e) {
