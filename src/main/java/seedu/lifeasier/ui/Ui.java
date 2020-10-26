@@ -495,6 +495,26 @@ public class Ui {
         System.out.println("Invalid undo type, please try again!");
     }
 
+    public void showInvalidUndoAction() {
+        System.out.println("Nothing to undo!");
+    }
+
+    public void showUndoTaskEditMessage() {
+        System.out.println("This task has been reverted back to its previous version!");
+    }
+
+    public void showUndoTaskDeleteMessage() {
+        System.out.println("This deleted task has been successfully restored!");
+    }
+
+    public void showUndoNoteEditMessage() {
+        System.out.println("This note has been reverted back to its previous version!");
+    }
+
+    public void showUndoNoteDeleteMessage() {
+        System.out.println("This deleted note has been successfully restored!");
+    }
+
     public void printEmptyParam(String param) {
         System.out.println("We detected that you did not fill in the field of " + param + ". Please fill it in:");
     }

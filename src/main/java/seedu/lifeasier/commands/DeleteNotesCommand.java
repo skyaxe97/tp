@@ -1,10 +1,12 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.notes.EmptyNoteListException;
+import seedu.lifeasier.notes.Note;
 import seedu.lifeasier.notes.NoteCommandFunctions;
 import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.notes.TitleNotFoundException;
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
@@ -23,7 +25,7 @@ public class DeleteNotesCommand extends Command {
         this.title = title;
     }
 
-    private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
+    private void findTitle(Ui ui, NoteList notes, String title, NoteHistory noteHistory) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
 
         int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
@@ -40,7 +42,7 @@ public class DeleteNotesCommand extends Command {
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmDeleteMessage();
             String input = checkConfirmationMessage(ui, ui.readCommand());
-            checkIfDelete(ui, notes, noteNumber, input);
+            checkIfDelete(ui, notes, noteNumber, input, noteHistory);
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
@@ -56,15 +58,19 @@ public class DeleteNotesCommand extends Command {
 
             ui.showConfirmDeleteMessage();
             input = checkConfirmationMessage(ui, ui.readCommand());
-            checkIfDelete(ui, notes, noteNumber, input);
+            checkIfDelete(ui, notes, noteNumber, input, noteHistory);
         }
 
     }
 
-    private void checkIfDelete(Ui ui, NoteList notes, int noteNumber, String input) {
+    private void checkIfDelete(Ui ui, NoteList notes, int noteNumber, String input, NoteHistory noteHistory) {
         if (input.trim().equals("Y")) {
+            logger.log(Level.INFO, "Temporarily hold details of this Note");
+            Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToDelete(notes, noteNumber);
             notes.remove(noteNumber);
             ui.showNoteDeletedMessage();
+            noteHistory.pushOldCopy(oldCopyOfNote, ui);
+            logger.log(Level.INFO, "Push old copy of Note into noteHistory");
         } else {
             ui.showNoteNotDeletedMessage();
         }
@@ -88,7 +94,7 @@ public class DeleteNotesCommand extends Command {
             ui.printSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
-                findTitle(ui, notes, title);
+                findTitle(ui, notes, title, noteHistory);
             } else {
                 ui.showSelectWhichNoteToDeleteMessage();
 
@@ -102,7 +108,7 @@ public class DeleteNotesCommand extends Command {
 
                 ui.showConfirmDeleteMessage();
                 String input = checkConfirmationMessage(ui, ui.readCommand());
-                checkIfDelete(ui, notes, noteNumber -  1, input);
+                checkIfDelete(ui, notes, noteNumber -  1, input, noteHistory);
 
             }
             storage.saveNote();

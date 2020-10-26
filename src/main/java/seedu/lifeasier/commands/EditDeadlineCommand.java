@@ -5,8 +5,9 @@ import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.TaskHistory;
+import seedu.lifeasier.tasks.Task;
 import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 
@@ -47,32 +48,17 @@ public class EditDeadlineCommand extends Command {
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
 
-            logger.log(Level.INFO, "Reading user input for choice of deadline to edit...");
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
-            ui.showSelectParameterToEdit();
-            ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
 
-            logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
-            int userParamChoice = Integer.parseInt(ui.readCommand());
+            logger.log(Level.INFO, "Temporarily hold value of this Deadline");
+            Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTaskToEdit(tasks, userDeadlineChoice);
 
-            switch (userParamChoice) {
+            selectParameterToEdit(ui, tasks, userDeadlineChoice);
 
-            case (1):
-                ui.showInputMessage(ui.PARAM_DEADLINE);
-                logger.log(Level.INFO, "Editing deadline name...");
-                editDeadlineName(tasks, userDeadlineChoice, ui);
-                break;
-
-            case (2):
-                ui.showInputFormat(ui.PARAM_DEADLINE);
-                logger.log(Level.INFO, "Editing deadline time...");
-                editDeadlineTime(tasks, userDeadlineChoice, ui);
-                break;
-
-            default:
-                throw new IndexOutOfBoundsException();
-            }
+            taskHistory.pushOldCopy(oldCopyOfDeadline, ui);
+            logger.log(Level.INFO, "Push old copy of Deadline into taskHistory");
+            storage.saveTasks();
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
@@ -87,9 +73,29 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesMessage("deadline");
         }
-
-        logger.log(Level.INFO, "Saving updated taskList to storage...");
-        storage.saveTasks();
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
+
+    public void selectParameterToEdit(Ui ui, TaskList tasks, int userDeadlineChoice) throws ParserException {
+        ui.showSelectParameterToEdit();
+        ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
+        int userParamChoice = Integer.parseInt(ui.readCommand());
+
+        switch (userParamChoice) {
+
+        case (1):
+            ui.showInputMessage(ui.PARAM_DEADLINE);
+            editDeadlineName(tasks, userDeadlineChoice, ui);
+            break;
+
+        case (2):
+            ui.showInputFormat(ui.PARAM_DEADLINE);
+            editDeadlineTime(tasks, userDeadlineChoice, ui);
+            break;
+
+        default:
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
 }

@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import static java.util.stream.Collectors.toList;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class TaskList {
@@ -38,6 +38,10 @@ public class TaskList {
 
     public Task getTask(int index) {
         return taskList.get(index);
+    }
+
+    public void setTask(int index, Task task) {
+        taskList.set(index, task);
     }
 
     public void addTask(Task task) {

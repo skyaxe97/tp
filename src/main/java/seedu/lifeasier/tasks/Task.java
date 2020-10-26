@@ -20,12 +20,22 @@ public abstract class Task {
         taskCounter++;
     }
 
+    public Task(Task task, int editNumber) {
+        this.description = task.description;
+        this.isDone = task.isDone;
+        setEditNumber(editNumber);
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     public void setEditNumber(int number) {
         this.editNumber = number;
+    }
+
+    public int getEditNumber() {
+        return editNumber;
     }
 
     public String getDescription() {
