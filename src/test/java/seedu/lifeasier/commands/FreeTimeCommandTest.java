@@ -1,13 +1,19 @@
 package seedu.lifeasier.commands;
 
 import org.junit.jupiter.api.Test;
+import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.Event;
 import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -16,6 +22,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FreeTimeCommandTest {
+
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
+
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+    }
+
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
+    }
 
     @Test
     void isFreeTime_busyHour_false() {
@@ -61,6 +82,76 @@ class FreeTimeCommandTest {
         int[] longestFreeTime = command.getLongestFreeTime(tasks);
 
         assertEquals(4, (longestFreeTime[1] - longestFreeTime[0]));
+    }
+
+    @Test
+    void executeFreeTimeCommand_freeDay_6HoursFree() {
+        setUpStreams();
+        Ui ui = new Ui();
+        NoteList notes = new NoteList();
+        TaskList tasks = new TaskList();
+        FileStorage storage = new FileStorage("saveFileTasks.txt",
+                "saveFileNotes.txt", ui, notes, tasks);
+        Parser parser = new Parser();
+        NoteHistory noteHistory = new NoteHistory();
+        TaskHistory taskHistory = new TaskHistory();
+
+        FreeTimeCommand command = new FreeTimeCommand();
+
+        LocalDate today = LocalDate.now();
+
+        LocalDateTime start1 = today.atTime(10, 0);
+        LocalDateTime end1 = today.atTime(12, 0);
+        LocalDateTime start2 = today.atTime(18, 0);
+        LocalDateTime end2 = today.atTime(23, 0);
+
+
+        tasks.addEvent("first event", start1, end1, 0);
+        tasks.addEvent("second event", start2, end2, 0);
+
+        command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+
+        assertEquals(("You have 6 hours of free time between 12:00 and 18:00!" + System.lineSeparator()
+                +  "You can try scheduling something in this time!" + System.lineSeparator()
+                + "=========================================================================" + System.lineSeparator()),
+                outContent.toString());
+
+        restoreStreams();
+    }
+
+    @Test
+    void executeFreeTimeCommand_busyDay_0HoursFree() {
+        setUpStreams();
+        Ui ui = new Ui();
+        NoteList notes = new NoteList();
+        TaskList tasks = new TaskList();
+        FileStorage storage = new FileStorage("saveFileTasks.txt",
+                "saveFileNotes.txt", ui, notes, tasks);
+        Parser parser = new Parser();
+        NoteHistory noteHistory = new NoteHistory();
+        TaskHistory taskHistory = new TaskHistory();
+
+        FreeTimeCommand command = new FreeTimeCommand();
+
+        LocalDate today = LocalDate.now();
+
+        LocalDateTime start1 = today.atTime(6, 0);
+        LocalDateTime end1 = today.atTime(13, 30);
+        LocalDateTime start2 = today.atTime(14, 0);
+        LocalDateTime end2 = today.atTime(23, 30);
+
+
+        tasks.addEvent("first event", start1, end1, 0);
+        tasks.addEvent("second event", start2, end2, 0);
+
+        command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+
+        assertEquals(("Unfortunately you have no free time today!" + System.lineSeparator()
+                +  "You might want to relax a little!" + System.lineSeparator()
+                + "=========================================================================" + System.lineSeparator()),
+                outContent.toString());
+
+        restoreStreams();
     }
 
 

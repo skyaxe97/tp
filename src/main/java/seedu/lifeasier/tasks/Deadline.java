@@ -15,6 +15,12 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    public Deadline(String description, LocalDateTime by, int recurrences) {
+        super(description);
+        this.by = by;
+        this.recurrences = recurrences;
+    }
+
     public Deadline(String description, LocalDateTime by, boolean isDone) {
         super(description);
         this.by = by;
@@ -57,6 +63,16 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D] " + super.toString() + " by (" + by.format(format) + ")";
+        return "Deadline: " + super.toString() + " by (" + by.format(format) + "), "
+                + "repeats weekly " + recurrences + " times";
+    }
+
+    /**
+     * Moves a recurring deadline 7 days forward, and decrements remaining recurrences by 1.
+     */
+    @Override
+    public void moveAndUpdateRecurrences() {
+        decrementRecurrences(1);
+        by = by.plusDays(7);
     }
 }

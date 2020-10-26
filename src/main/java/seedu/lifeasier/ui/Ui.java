@@ -1,6 +1,7 @@
 package seedu.lifeasier.ui;
 
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.tasks.Task;
 
 import java.util.Scanner;
 
@@ -126,7 +127,7 @@ public class Ui {
         System.out.println(colourTextGreen(MESSAGE_HELP_COMMAND));
     }
 
-    public void showAddConfirmationMessage(String task) {
+    public void showAddConfirmationMessage(Task task) {
         System.out.println(colourTextGreen("Done! I've added \"" + task + "\" to your calendar"));
         printSeparator();
     }
@@ -363,7 +364,7 @@ public class Ui {
 
     public void showFreeTimeMessage(int startHour, int endHour, int duration) {
 
-        if (duration != 0) {
+        if (duration > 0) {
             System.out.println("You have " + duration + " hours of free time between " + startHour
                     + ":00 and " + endHour + ":00!");
             System.out.println("You can try scheduling something in this time!");
@@ -469,6 +470,10 @@ public class Ui {
 
     public void showAddDateTimeMessage() {
         System.out.println("Please input the Date Time:");
+    }
+
+    public void showAddRecurrencesMessage() {
+        System.out.println("Please input the number of times to repeat:");
     }
 
     public void printMultipleNoteMatches(NoteList notes, String title) {

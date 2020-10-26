@@ -13,6 +13,7 @@ import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.ScheduleUi;
 import seedu.lifeasier.ui.Ui;
 
+import java.time.LocalDate;
 import java.util.logging.LogManager;
 
 /**
@@ -53,6 +54,8 @@ public class LifEasier {
         }
 
         storage.readSaveFiles();
+
+        tasks.updateTasks(LocalDate.now());
 
         showStartupSequence();
 

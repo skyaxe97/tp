@@ -16,14 +16,14 @@ import java.util.logging.Logger;
 
 public class EditDeadlineCommand extends Command {
     private static Logger logger = Logger.getLogger(EditDeadlineCommand.class.getName());
-    private String deadlineName = "";
+    private String deadlineName;
 
     public EditDeadlineCommand(String deadlineName) {
         this.deadlineName = deadlineName;
     }
 
     public void printMatchingDeadlines(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui.PARAM_DEADLINE, code);
+        tasks.printMatchingTasks(Ui.PARAM_DEADLINE, code);
     }
 
     public void editDeadlineName(TaskList tasks, int index, Ui ui) {
@@ -31,7 +31,7 @@ public class EditDeadlineCommand extends Command {
     }
 
     public void editDeadlineTime(TaskList tasks, int index, Ui ui) throws ParserException {
-        tasks.editDeadlineTime(index, ui);;
+        tasks.editDeadlineTime(index, ui);
     }
 
     private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
@@ -84,12 +84,12 @@ public class EditDeadlineCommand extends Command {
         switch (userParamChoice) {
 
         case (1):
-            ui.showInputMessage(ui.PARAM_DEADLINE);
+            ui.showInputMessage(Ui.PARAM_DEADLINE);
             editDeadlineName(tasks, userDeadlineChoice, ui);
             break;
 
         case (2):
-            ui.showInputFormat(ui.PARAM_DEADLINE);
+            ui.showInputFormat(Ui.PARAM_DEADLINE);
             editDeadlineTime(tasks, userDeadlineChoice, ui);
             break;
 
