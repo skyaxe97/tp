@@ -418,11 +418,6 @@ public class Ui {
         System.out.println("Do you want to change the title or description? (T/D)\n");
     }
 
-    public void showNoteNotEditedMessage() {
-        System.out.println("OK! Note not edited!");
-        printSeparator();
-    }
-
     public void showInvalidTitleDescriptionConfirmationMessage() {
         System.out.println("T for title and D for Description\n");
     }

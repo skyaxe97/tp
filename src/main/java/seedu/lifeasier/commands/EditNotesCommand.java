@@ -30,7 +30,6 @@ public class EditNotesCommand extends Command {
         int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
         int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
 
-
         logger.log(Level.INFO, "End for finding title in note list");
 
         switch (matchNumber) {

@@ -931,6 +931,10 @@ public class Parser {
             resetBoolean();
             logger.log(Level.SEVERE, "Time input is invalid");
             ui.showParseIncorrectDateTimeMessage();
+        } catch (NumberFormatException e) {
+            resetBoolean();
+            logger.log(Level.SEVERE, "/repeats input is an invalid number");
+            ui.showNumberFormatMessage();
         }
 
         return new InvalidCommand();
