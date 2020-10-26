@@ -8,7 +8,6 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
     protected int recurrences;
-    protected static int taskCounter = 0;
     protected int editNumber;
 
     private static final String TIME_FORMAT = "%02d:00";
@@ -19,7 +18,6 @@ public abstract class Task {
         this.recurrences = 0;
         this.isDone = false;
         this.editNumber = DEFAULT_EDIT_NUMBER;
-        taskCounter++;
     }
 
     public Task(Task task, int editNumber) {
