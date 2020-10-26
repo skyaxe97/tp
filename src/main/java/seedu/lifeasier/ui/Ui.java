@@ -414,10 +414,6 @@ public class Ui {
         System.out.println("OK! Note deleted!");
     }
 
-    public void showConfirmEditMessage() {
-        System.out.println("Is this the note you want to edit? (Y/N)\n");
-    }
-
     public void showEditWhichPartMessage() {
         System.out.println("Do you want to change the title or description? (T/D)\n");
     }

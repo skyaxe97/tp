@@ -566,26 +566,6 @@ public class Parser {
     }
 
     /**
-     * Parses the user Y/N inputs.
-     *
-     * @param input String containing the user's input.
-     * @param ui Input and output interaction with the user.
-     * @return A "Y" or "N" string.
-     */
-    public String parseUserInputYesOrNo(String input, Ui ui) {
-        logger.log(Level.INFO, "Start check for Y/N input");
-
-        while (!input.trim().equals("Y") && !input.trim().equals("N")) {
-            ui.showInvalidConfirmationMessage();
-            input = ui.readCommand();
-
-        }
-        logger.log(Level.INFO, "End check for Y/N input");
-
-        return input;
-    }
-
-    /**
      * Parses the user T/D inputs.
      *
      * @param input String containing the user's input.

@@ -40,9 +40,9 @@ public class EditNotesCommand extends Command {
         case 1:
             logger.log(Level.INFO, "One match found");
             System.out.println(notes.get(noteNumber).toString());
-            ui.showConfirmEditMessage();
 
-            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand(), noteHistory);
+            ui.showEditWhichPartMessage();
+            changeTitleOrDescription(ui, parser, notes, noteNumber, ui.readCommand(), noteHistory);
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
@@ -56,23 +56,9 @@ public class EditNotesCommand extends Command {
             NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
 
             System.out.println(notes.get(noteNumber).toString());
-            ui.showConfirmEditMessage();
-
-            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand(), noteHistory);
-        }
-
-    }
-
-    private void promptUserInput(Ui ui, Parser parser, NoteList notes, int noteNumber,
-                                 String input, NoteHistory noteHistory) {
-        if (parser.parseUserInputYesOrNo(input, ui).equals("Y")) {
-            logger.log(Level.INFO, "Y is inputted");
             ui.showEditWhichPartMessage();
-            input = parser.parseUserInputTOrD(input, ui);
-            changeTitleOrDescription(ui, parser, notes, noteNumber, input, noteHistory);
-        } else {
-            logger.log(Level.INFO, "N is inputted");
-            ui.showNoteNotEditedMessage();
+
+            changeTitleOrDescription(ui, parser, notes, noteNumber, ui.readCommand(), noteHistory);
         }
 
     }
@@ -82,6 +68,7 @@ public class EditNotesCommand extends Command {
         Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToEdit(notes, noteNumber);
         logger.log(Level.INFO, "Temporarily hold details of this Note");
 
+        input = parser.parseUserInputTOrD(input, ui);
         if (input.trim().equals("T")) {
             logger.log(Level.INFO, "T is inputted");
             System.out.println("Current Title: " + notes.get(noteNumber).getTitle());
@@ -126,8 +113,8 @@ public class EditNotesCommand extends Command {
                 NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
 
                 System.out.println(notes.get(noteNumber - 1).toString());
-                ui.showConfirmEditMessage();
-                promptUserInput(ui, parser, notes, noteNumber - 1, ui.readCommand(), noteHistory);
+                ui.showEditWhichPartMessage();
+                changeTitleOrDescription(ui, parser, notes, noteNumber - 1, ui.readCommand(), noteHistory);
 
             }
             storage.saveNote();
