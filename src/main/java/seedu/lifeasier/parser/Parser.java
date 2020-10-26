@@ -126,11 +126,11 @@ public class Parser {
                 isDateEmpty = false;
                 break;
             case START_TIME:
-                input = addStartTimeParam(ui, input + " ");
+                input = addStartTimeParam(ui, input);
                 isStartTimeEmpty = false;
                 break;
             case END_TIME:
-                input = addEndTimeParam(ui, input);
+                input = addEndTimeParam(ui, input + " ");
                 isEndTimeEmpty = false;
                 break;
             case RECURRENCES:
@@ -163,12 +163,13 @@ public class Parser {
         String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String tempEndTime =  input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
-        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
         String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
@@ -239,12 +240,13 @@ public class Parser {
         String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String tempEndTime = input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
-        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
+        String recurrencesString =  fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
@@ -273,7 +275,7 @@ public class Parser {
 
             switch (param) {
             case DESCRIPTION:   // description is missing
-                input = addDeadlineDescriptionParam(ui, input + " ");
+                input = addDeadlineDescriptionParam(ui, input);
                 isDescriptionEmpty = false;
                 break;
             case END_TIME:
@@ -301,11 +303,12 @@ public class Parser {
         int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String tempByInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
+        String tempRecurencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
         int recurrences = Integer.parseInt(recurrencesString);
 
         resetBoolean();
