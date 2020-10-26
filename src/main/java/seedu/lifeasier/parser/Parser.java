@@ -193,7 +193,7 @@ public class Parser {
         logger.log(Level.INFO, "Start check for missing parameters.");
 
         while (isParametersEmpty) {
-            MissingParam param = checkEventParameters(input);
+            MissingParam param = checkMissingEventParameters(input);
             switch (param) {
             case DESCRIPTION:   // description is missing
                 input = addEventDescriptionParam(ui, input);
@@ -271,7 +271,7 @@ public class Parser {
         logger.log(Level.INFO, "Start check for missing parameters.");
 
         while (isParametersEmpty) {
-            MissingParam param = checkDeadlineParameters(input);
+            MissingParam param = checkMissingDeadlineParameters(input);
 
             switch (param) {
             case DESCRIPTION:   // description is missing
@@ -655,7 +655,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return An enumeration of the missing parameter.
      */
-    private MissingParam checkEventParameters(String input) {
+    private MissingParam checkMissingEventParameters(String input) {
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
 
@@ -681,7 +681,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return An enumeration of the missing parameter.
      */
-    private MissingParam checkDeadlineParameters(String input) {
+    private MissingParam checkMissingDeadlineParameters(String input) {
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
 
