@@ -55,6 +55,7 @@ public class EditLessonCommand extends Command {
 
             taskHistory.pushOldCopy(oldCopyOfLesson, ui);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
+            storage.saveTasks();
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
@@ -69,7 +70,6 @@ public class EditLessonCommand extends Command {
             logger.log(Level.SEVERE, "Input deadline name does not match any of the existing deadline names.");
             ui.showNoMatchesMessage("deadline");
         }
-        storage.saveTasks();
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
 

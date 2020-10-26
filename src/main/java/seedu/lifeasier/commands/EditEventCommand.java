@@ -55,6 +55,7 @@ public class EditEventCommand extends Command {
 
             taskHistory.pushOldCopy(oldCopyOfEvent, ui);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
+            storage.saveTasks();
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
@@ -69,7 +70,6 @@ public class EditEventCommand extends Command {
             logger.log(Level.SEVERE, "Input event name does not match any of the existing event names.");
             ui.showNoMatchesMessage(ui.PARAM_EVENT);
         }
-        storage.saveTasks();
         logger.log(Level.INFO, "End of EditEventCommand");
     }
 

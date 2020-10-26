@@ -29,7 +29,6 @@ public class UndoNoteCommand extends Command {
             } else {
                 ui.showUndoNoteDeleteMessage();
             }
-            System.out.println(noteHistory.getLastNote());
 
             noteHistory.popLastNote();
 

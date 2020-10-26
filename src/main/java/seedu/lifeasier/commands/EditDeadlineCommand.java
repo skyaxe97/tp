@@ -55,6 +55,7 @@ public class EditDeadlineCommand extends Command {
 
             taskHistory.pushOldCopy(oldCopyOfDeadline, ui);
             logger.log(Level.INFO, "Push old copy of Deadline into taskHistory");
+            storage.saveTasks();
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
@@ -69,7 +70,6 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesMessage("deadline");
         }
-        storage.saveTasks(); //Edit confirmed, can push old saved into tasks arraylist
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 

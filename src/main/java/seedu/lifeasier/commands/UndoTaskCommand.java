@@ -29,7 +29,6 @@ public class UndoTaskCommand extends Command {
             } else {
                 ui.showUndoTaskDeleteMessage();
             }
-            System.out.println(taskHistory.getLastTask());
 
             taskHistory.popLastTask();
 

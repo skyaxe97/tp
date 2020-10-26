@@ -16,7 +16,7 @@ public class Note {
     public Note(Note note, int editNumber) {
         this.title = note.title;
         this.description = note.description;
-        this.editNumber = editNumber;
+        setEditNumber(editNumber);
     }
 
     public String getTitle() {

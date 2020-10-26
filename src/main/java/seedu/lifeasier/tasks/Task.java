@@ -23,7 +23,7 @@ public abstract class Task {
     public Task(Task task, int editNumber) {
         this.description = task.description;
         this.isDone = task.isDone;
-        this.editNumber = editNumber;
+        setEditNumber(editNumber);
     }
 
     public void setDescription(String description) {
