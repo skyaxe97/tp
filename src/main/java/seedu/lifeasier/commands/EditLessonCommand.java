@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditLessonCommand extends Command {
-    private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
+    private static Logger logger = Logger.getLogger(EditLessonCommand.class.getName());
     private String code = "";
 
     public EditLessonCommand(String code) {
@@ -39,12 +39,18 @@ public class EditLessonCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         try {
             logger.log(Level.INFO, "Start of EditLessonCommand");
+
+            logger.log(Level.INFO, "Printing all matching lessons...");
             printLessonsMatchingCode(tasks, ui, code);
             ui.showSelectTaskToEdit(Ui.PARAM_LESSON);
+
+            logger.log(Level.INFO, "Reading user input for choice of lesson to edit...");
             int userLessonChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userLessonChoice);
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_LESSON);
+
+            logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
             int userParamChoice = Integer.parseInt(ui.readCommand());
 
             switch (userParamChoice) {
@@ -76,6 +82,8 @@ public class EditLessonCommand extends Command {
             logger.log(Level.SEVERE, "Input deadline name does not match any of the existing deadline names.");
             ui.showNoMatchesMessage("deadline");
         }
+
+        logger.log(Level.INFO, "Saving updated taskList to storage...");
         storage.saveTasks();
         logger.log(Level.INFO, "End of EditLessonCommand");
     }

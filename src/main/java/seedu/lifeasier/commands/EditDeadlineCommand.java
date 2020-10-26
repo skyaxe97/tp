@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditDeadlineCommand extends Command {
-    private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
+    private static Logger logger = Logger.getLogger(EditDeadlineCommand.class.getName());
     private String deadlineName = "";
 
     public EditDeadlineCommand(String deadlineName) {
@@ -39,23 +39,31 @@ public class EditDeadlineCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
         try {
             logger.log(Level.INFO, "Start of EditDeadlineCommand");
+
+            logger.log(Level.INFO, "Printing all matching deadlines...");
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
+
+            logger.log(Level.INFO, "Reading user input for choice of deadline to edit...");
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
+
+            logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
             int userParamChoice = Integer.parseInt(ui.readCommand());
 
             switch (userParamChoice) {
 
             case (1):
                 ui.showInputMessage(ui.PARAM_DEADLINE);
+                logger.log(Level.INFO, "Editing deadline name...");
                 editDeadlineName(tasks, userDeadlineChoice, ui);
                 break;
 
             case (2):
                 ui.showInputFormat(ui.PARAM_DEADLINE);
+                logger.log(Level.INFO, "Editing deadline time...");
                 editDeadlineTime(tasks, userDeadlineChoice, ui);
                 break;
 
@@ -76,6 +84,8 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesMessage("deadline");
         }
+
+        logger.log(Level.INFO, "Saving updated taskList to storage...");
         storage.saveTasks();
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
