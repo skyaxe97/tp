@@ -42,8 +42,49 @@
 ### 3.7 Editing a Deadline: `editDeadline`
 ### 3.8 Deleting a Task: `deleteTask`
 ### 3.9 Displaying Schedule: `display`
+
 ### 3.10 Viewing Available Free Time: `freeTime`
+Displays your longest block of free time for that day based on the schedule.
+Use this command to find out when is a good time to schedule something.
+
+##### Notes on freeTime Command:
+- The system only searches for free time between 7:00 and 24:00. This is to promote a healthy sleep cycle.
+Format: `freeTime`
+
+###### Example:
+An example of how to use the freeTime command is shown in Figure 3.10-1.
+```
+freeTime
+You have 10 hours of free time between 14:00 and 24:00!
+You can try scheduling something in this time!
+=========================================================================
+```
+*Figure 3.10-1: An example of using the freeTime command.*
+
+
 ### 3.11 Viewing Available Sleep Time: `sleepTime`
+Displays how much time you have available to sleep based on your schedule for that day and the day after.
+Use this command to find out if you can have a good rest after a long day.
+
+##### Notes on sleepTime Command:
+- The system recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
+- The system will also count the hour before your first activity in the day as busy,
+to give you time to wake up and get ready. E.g. if your first activity is at 9:00, 
+the system will tell you that you have nothing on only until 8:00.
+
+Format: sleepTime
+
+###### Example:
+An example of how to use the sleepTime command is shown in Figure 3.11-1.
+```
+sleepTime
+You have nothing on from 14:00 today to 8:00 tomorrow!
+You can sleep for the recommended 8 hours or longer!
+=========================================================================
+```
+*Figure 3.11-1: An example of using sleepTime command*
+
+
 ### 3.12 Adding a New Note: `addNotes`
 ### 3.13 Showing Notes: `showNotes`
 ### 3.14 Deleting a Note: `deleteNotes`
@@ -55,6 +96,17 @@
 
 ### 4.1 Storing Data
 ### 4.2 Recurring Tasks and Auto Deletion
+
+ **LifEasier** automatically shifts the date for any tasks 7 days forward if their original date is past, 
+ and they are set to repeat. **LifEasier** does this for every task in your schedule every time it starts up.
+ E.g. If you start up **LifEasier** on the 24th of October, and you had a repeating class that last occurred 
+ on the 23rd of October, the lesson will be moved 7 days forward to the 30th of October. This ensures your
+ repeating lessons, events and deadlines will always be moved forward as long as they are meant to repeat.
+
+ If it is past the date of your task, and if the task does not repeat, it will automatically be removed instead.
+ By automatically deleting those tasks that have already been completed, **LifEasier** ensures your save files do 
+ not become unnecessarily large.
+
 
 ## 5.0 FAQ
 
