@@ -1,7 +1,5 @@
 package seedu.lifeasier.notes;
 
-import seedu.lifeasier.ui.Ui;
-
 public class NoteCommandFunctions {
 
     public static void checkEmptyList(NoteList notes) throws EmptyNoteListException {
@@ -10,21 +8,29 @@ public class NoteCommandFunctions {
         }
     }
 
-    public static void printMultipleMatches(Ui ui, NoteList notes, String title) {
-        ui.printMultipleNoteMatches(notes, title);
-
-    }
-
-    public static void printAllNotes(Ui ui, NoteList notes) {
-        ui.printAllNotes(notes);
-
-    }
-
     public static void checkForIndexOutOfBounds(NoteList notes, int noteNumber) throws IndexOutOfBoundsException {
         if (noteNumber - 1 > notes.size()) {
             throw new IndexOutOfBoundsException();
         }
     }
 
+    public static int checkNumberOfNoteMatches(NoteList notes, String title) {
+        int matchNumber = 0;
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getTitle().contains(title)) {
+                matchNumber++;
+            }
+        }
+        return matchNumber;
+    }
 
+    public static int findNoteNumber(NoteList notes, String title) {
+        int noteNumber = -1;
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getTitle().contains(title)) {
+                noteNumber = i;
+            }
+        }
+        return noteNumber;
+    }
 }
