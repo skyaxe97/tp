@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 public class EditLessonCommand extends Command {
     private static Logger logger = Logger.getLogger(EditLessonCommand.class.getName());
-    private String code = "";
+    private String code;
 
     public EditLessonCommand(String code) {
         this.code = code;
@@ -88,12 +88,12 @@ public class EditLessonCommand extends Command {
         switch (userParamChoice) {
 
         case (1):
-            ui.showInputMessage(ui.PARAM_LESSON);
+            ui.showInputMessage(Ui.PARAM_LESSON);
             editLessonModuleCode(tasks, userLessonChoice, ui);
             break;
 
         case (2):
-            ui.showInputFormat(ui.PARAM_LESSON);
+            ui.showInputFormat(Ui.PARAM_LESSON);
             editLessonTime(tasks, userLessonChoice, ui);
             break;
 

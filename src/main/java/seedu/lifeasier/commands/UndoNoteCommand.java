@@ -32,7 +32,7 @@ public class UndoNoteCommand extends Command {
             ui.showOldNote(noteHistory);
             noteHistory.popLastNote();
             storage.saveNote();
-            
+
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidUndoAction();
         }

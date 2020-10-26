@@ -17,6 +17,13 @@ public class Lesson extends Task {
         this.end = end;
     }
 
+    public Lesson(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+        super(description);
+        this.start = start;
+        this.end = end;
+        this.recurrences = recurrences;
+    }
+
     public Lesson(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
         super(description);
         this.start = start;
@@ -58,7 +65,17 @@ public class Lesson extends Task {
 
     @Override
     public String toString() {
-        return "[L] " + super.toString() + " (" + start.format(format) + " to " + end.format(format) + ")";
+        return "Lesson: " + super.toString() + " (" + start.format(format) + " to " + end.format(format) + "), "
+                + "repeats weekly " + recurrences + " times";
     }
 
+    /**
+     * Moves a recurring lesson 7 days forward, and decrements remaining recurrences by 1.
+     */
+    @Override
+    public void moveAndUpdateRecurrences() {
+        decrementRecurrences(1);
+        start = start.plusDays(7);
+        end = end.plusDays(7);
+    }
 }

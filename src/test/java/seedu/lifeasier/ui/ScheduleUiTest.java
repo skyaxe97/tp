@@ -26,7 +26,7 @@ class ScheduleUiTest {
     @Test
     void getTaskCountForToday_TaskListWithFiveItems_Five() {
         for (int i = 0; i < 5; i++) {
-            NONEMPTY_TASK_LIST.addDeadline("test" + i, SAMPLE_DATETIME);
+            NONEMPTY_TASK_LIST.addDeadline("test" + i, SAMPLE_DATETIME, 0);
         }
 
         int taskCount = scheduleUiTest.getTaskCountForToday(ScheduleUiTest.NONEMPTY_TASK_LIST, SAMPLE_DATE);

@@ -16,14 +16,14 @@ import java.util.logging.Logger;
 
 public class EditEventCommand extends Command {
     private static Logger logger = Logger.getLogger(EditEventCommand.class.getName());
-    private String eventName = "";
+    private String eventName;
 
     public EditEventCommand(String eventName) {
         this.eventName = eventName;
     }
 
     public void printMatchingEvents(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui.PARAM_EVENT, code);
+        tasks.printMatchingTasks(Ui.PARAM_EVENT, code);
     }
 
     public void editEventName(TaskList tasks, int index, Ui ui) {
@@ -78,7 +78,7 @@ public class EditEventCommand extends Command {
             ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input event name does not match any of the existing event names.");
-            ui.showNoMatchesMessage(ui.PARAM_EVENT);
+            ui.showNoMatchesMessage(Ui.PARAM_EVENT);
         }
         logger.log(Level.INFO, "End of EditEventCommand");
     }
@@ -91,12 +91,12 @@ public class EditEventCommand extends Command {
         switch (userParamChoice) {
 
         case (1):
-            ui.showInputMessage(ui.PARAM_EVENT);
+            ui.showInputMessage(Ui.PARAM_EVENT);
             editEventName(tasks, userEventChoice, ui);
             break;
 
         case (2):
-            ui.showInputFormat(ui.PARAM_EVENT);
+            ui.showInputFormat(Ui.PARAM_EVENT);
             editEventTime(tasks, userEventChoice, ui);
             break;
 
