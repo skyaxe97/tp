@@ -108,8 +108,9 @@ public class Parser {
 
         logger.log(Level.INFO, "Parsing addLesson command...");
         logger.log(Level.INFO, "Start check for missing parameters.");
+
         while (isParametersEmpty) {
-            MissingParam param = checkLessonParameters(input);
+            MissingParam param = checkMissingLessonParameters(input);
 
             switch (param) {
             case MODULE_CODE:   // module code is missing
@@ -121,7 +122,7 @@ public class Parser {
                 isDateEmpty = false;
                 break;
             case START_TIME:
-                input = addStartTimeParam(ui, input);
+                input = addStartTimeParam(ui, input + " ");
                 isStartTimeEmpty = false;
                 break;
             case END_TIME:
@@ -130,12 +131,15 @@ public class Parser {
                 break;
             default:
                 isParametersEmpty = false;
+                isModuleCodeEmpty = true;
+                isDateEmpty = true;
+                isStartTimeEmpty = true;
+                isEndTimeEmpty = true;
                 break;
             }
 
         }
         logger.log(Level.INFO, "End check for missing parameters");
-
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
         int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
@@ -144,12 +148,16 @@ public class Parser {
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
 
-        String moduleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
-        String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-        String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String endTime =  input.substring(lastIndexOfToCommand).trim();
+        String tempModuleCode = input.substring(lastIndexOfCodeCommand, firstIndexOfDateCommand).trim();
+        String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+        String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+        String tempEndTime = input.substring(lastIndexOfToCommand).trim();
 
-        System.out.println(moduleCode + " " + date + " " + startTime + " " + endTime);
+        String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
+        String date = fillIfEmptyParam(ui, tempDate, "/date");
+        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
+        String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
+        
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
@@ -168,6 +176,7 @@ public class Parser {
 
         logger.log(Level.INFO, "Parsing addEvent command...");
         logger.log(Level.INFO, "Start check for missing parameters.");
+        
         while (isParametersEmpty) {
             MissingParam param = checkEventParameters(input);
             switch (param) {
@@ -180,7 +189,7 @@ public class Parser {
                 isDateEmpty = false;
                 break;
             case START_TIME:
-                input = addStartTimeParam(ui, input);
+                input = addStartTimeParam(ui, input + " ");
                 isStartTimeEmpty = false;
                 break;
             case END_TIME:
@@ -189,24 +198,31 @@ public class Parser {
                 break;
             default:
                 isParametersEmpty = false;
+                isDescriptionEmpty = true;
+                isDateEmpty = true;
+                isStartTimeEmpty = true;
+                isEndTimeEmpty = true;
                 break;
             }
 
         }
         logger.log(Level.INFO, "End check for missing parameters.");
-
-        int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
         int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
         int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
         int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+        int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
+
+        String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+        String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+        String tempEndTime = input.substring(lastIndexOfToCommand).trim();
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
-        String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-        String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String endTime =  input.substring(lastIndexOfToCommand).trim();
+        String date = fillIfEmptyParam(ui, tempDate, "/date");
+        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
+        String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
@@ -233,7 +249,7 @@ public class Parser {
 
             switch (param) {
             case DESCRIPTION:   // description is missing
-                input = addDeadlineDescriptionParam(ui, input);
+                input = addDeadlineDescriptionParam(ui, input + " ");
                 isDescriptionEmpty = false;
                 break;
             case END_TIME:
@@ -242,18 +258,21 @@ public class Parser {
                 break;
             default:
                 isParametersEmpty = false;
+                isDescriptionEmpty = true;
+                isEndTimeEmpty = true;
                 break;
             }
 
         }
         logger.log(Level.INFO, "End check for missing parameters.");
-
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
         int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
+        String tempByInput = input.substring(lastIndexOfByCommand).trim();
+
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
-        String byInput = input.substring(lastIndexOfByCommand).trim();
+        String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
 
         resetBoolean();
@@ -314,6 +333,7 @@ public class Parser {
             int firstIndexOfTypeCommand = input.indexOf(PARAM_TYPE);
             int lastIndexOfTypeCommand = input.indexOf(PARAM_TYPE) + PARAM_TYPE.length();
             if (firstIndexOfTypeCommand == -1) {
+                logger.log(Level.SEVERE, "deleteTask command missing TYPE keyword");
                 throw new ParserException();
             }
 
@@ -352,6 +372,7 @@ public class Parser {
                 int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
                 if (firstIndexOfByCommand == -1) {
+                    logger.log(Level.SEVERE, "Input missing BY keyword");
                     throw new ParserException();
                 }
 
@@ -380,10 +401,11 @@ public class Parser {
                 return times;
 
             default:
-                throw new ParserException();
+                break;
             }
 
         } catch (DateTimeParseException e) {
+            logger.log(Level.SEVERE, "Time input is not in the correct format");
             ui.showLocalDateTimeParseError();
         }
         return times;
@@ -551,7 +573,7 @@ public class Parser {
      * @param string The string to be checked.
      * @return A non-empty string.
      */
-    private String checkIfEmpty(Ui ui, String string) {
+    public String checkIfEmpty(Ui ui, String string) {
         logger.log(Level.INFO, "Start check for empty string");
         while (string.trim().length() == 0) {     // empty string
             ui.showEmptyDescriptionMessage();
@@ -594,7 +616,7 @@ public class Parser {
      * @param input String containing user's input.
      * @return An enumeration of the missing parameter.
      */
-    private MissingParam checkLessonParameters(String input) {
+    private MissingParam checkMissingLessonParameters(String input) {
         if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
         } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
@@ -767,10 +789,18 @@ public class Parser {
     private String addByDateTime(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding By Time to string.");
         ui.showAddDateTimeMessage();
-        String byDateTime = checkIfEmpty(ui, ui.readCommand());
+        String byDateTime = checkIfEmpty(ui, ui.readCommand()) + " ";
         input = input + " /by" + byDateTime;
         logger.log(Level.INFO, "End of adding By Time to string.");
 
+        return input;
+    }
+
+    private String fillIfEmptyParam(Ui ui, String input, String param) {
+        if (input.length() == 0) {
+            ui.printEmptyParam(param);
+            input = checkIfEmpty(ui, ui.readCommand());
+        }
         return input;
     }
 
@@ -846,13 +876,16 @@ public class Parser {
                 return parseUndoCommand(input);
 
             default:
+                logger.log(Level.SEVERE, "User input command is invalid");
                 throw new ParserException();
             }
 
         } catch (IndexOutOfBoundsException e) {
+            logger.log(Level.SEVERE, "User input command is invalid");
             ui.showParseIncorrectCommandFormatMessage();
 
         } catch (DateTimeParseException e) {
+            logger.log(Level.SEVERE, "Time input is invalid");
             ui.showParseIncorrectDateTimeMessage();
         }
 

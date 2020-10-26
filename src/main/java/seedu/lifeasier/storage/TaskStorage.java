@@ -131,7 +131,6 @@ public class TaskStorage {
 
         //Create new event in tasks
         taskList.add(new Lesson(description, lessonStartTime, lessonEndTime, status));
-        tasks.increaseTaskCount();
     }
 
     /**
@@ -150,7 +149,6 @@ public class TaskStorage {
 
         //Create new event in tasks
         taskList.add(new Event(description, eventStartTime, eventEndTime, status));
-        tasks.increaseTaskCount();
     }
 
     /**
@@ -168,7 +166,6 @@ public class TaskStorage {
 
         //Create new deadline in tasks
         taskList.add(new Deadline(description, deadlineTimeInfo, status));
-        tasks.increaseTaskCount();
     }
 
     /**

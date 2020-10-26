@@ -33,6 +33,8 @@ deleteTask /type TYPE /name NAME ------------------------- Deletes a task
 addNotes TITLE ------------------------------------------ Adds a new note
 showNotes TITLE ------------------------------------- Shows selected note
 archive ------------------------------------- Archives all existing notes
+editNotes TITLE ----------------------------------- Edits a selected note
+deleteNotes TITLE ------------------------------- Deletes a selected note
 display WEEK/DAY --------------- Displays either weekly or daily schedule
 freeTime ------------------------ Tells you when you have free time today
 sleepTime --------------------- Tells you how much time you have to sleep

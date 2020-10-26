@@ -9,8 +9,12 @@ import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AddEventCommand extends Command {
+
+    private static Logger logger = Logger.getLogger(AddEventCommand.class.getName());
 
     private String description;
     private LocalDateTime start;
@@ -26,8 +30,12 @@ public class AddEventCommand extends Command {
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
+        logger.log(Level.INFO, "Adding event to taskList...");
         tasks.addEvent(description, start, end);
+
+        logger.log(Level.INFO, "Saving updated taskList to storage...");
         storage.saveTasks();
+
         ui.showAddConfirmationMessage("Event: " + description  + " from "
                 + start.format(format) + " to " + end.format(format));
     }

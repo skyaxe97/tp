@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditEventCommand extends Command {
-    private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
+    private static Logger logger = Logger.getLogger(EditEventCommand.class.getName());
     private String eventName = "";
 
     public EditEventCommand(String eventName) {
@@ -42,12 +42,18 @@ public class EditEventCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditEventCommand");
+
+            logger.log(Level.INFO, "Printing all matching events...");
             printMatchingEvents(tasks, ui, eventName);
             ui.showSelectTaskToEdit(Ui.PARAM_EVENT);
+
+            logger.log(Level.INFO, "Reading user input for choice of event to edit...");
             int userEventChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userEventChoice);
             ui.showSelectParameterToEdit();
             ui.showEditableParametersMessage(Ui.PARAM_EVENT);
+
+            logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
             int userParamChoice = Integer.parseInt(ui.readCommand());
 
             switch (userParamChoice) {
@@ -63,6 +69,7 @@ public class EditEventCommand extends Command {
                 break;
 
             default:
+                logger.log(Level.SEVERE, "Input provided out of bounds");
                 throw new IndexOutOfBoundsException();
             }
 
@@ -79,6 +86,8 @@ public class EditEventCommand extends Command {
             logger.log(Level.SEVERE, "Input event name does not match any of the existing event names.");
             ui.showNoMatchesMessage(ui.PARAM_EVENT);
         }
+
+        logger.log(Level.INFO, "Saving updated taskList to storage...");
         storage.saveTasks();
         logger.log(Level.INFO, "End of EditEventCommand");
     }

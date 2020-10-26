@@ -23,15 +23,11 @@ public class EditNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, Parser parser, String title) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-        int noteNumber = -1;
-        int matchNumber = 0;
 
-        for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getTitle().contains(title)) {
-                matchNumber++;
-                noteNumber = i;
-            }
-        }
+        int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
+        int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
+
+
         logger.log(Level.INFO, "End for finding title in note list");
 
         switch (matchNumber) {
@@ -42,14 +38,14 @@ public class EditNotesCommand extends Command {
             logger.log(Level.INFO, "One match found");
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmEditMessage();
-            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand());
+            editNote(ui, parser, notes, noteNumber, ui.readCommand());
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            NoteCommandFunctions.printMultipleMatches(ui, notes, title);
+            ui.printMultipleNoteMatches(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
@@ -57,17 +53,17 @@ public class EditNotesCommand extends Command {
 
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmEditMessage();
-            promptUserInput(ui, parser, notes, noteNumber, ui.readCommand());
+            editNote(ui, parser, notes, noteNumber, ui.readCommand());
         }
 
     }
 
-    private void promptUserInput(Ui ui, Parser parser, NoteList notes, int noteNumber, String input) {
+    private void editNote(Ui ui, Parser parser, NoteList notes, int noteNumber, String input) {
         if (parser.parseUserInputYesOrNo(input, ui).equals("Y")) {
             logger.log(Level.INFO, "Y is inputted");
             ui.showEditWhichPartMessage();
-            input = parser.parseUserInputTOrD(input, ui);
-            changeTitleOrDescription(ui, notes, noteNumber, input);
+            input = parser.parseUserInputTOrD(ui.readCommand(), ui);
+            changeTitleOrDescription(ui, parser, notes, noteNumber, input);
         } else {
             logger.log(Level.INFO, "N is inputted");
             ui.showNoteNotEditedMessage();
@@ -75,26 +71,25 @@ public class EditNotesCommand extends Command {
 
     }
 
-    private void changeTitleOrDescription(Ui ui, NoteList notes, int noteNumber, String input) {
+    private void changeTitleOrDescription(Ui ui, Parser parser, NoteList notes, int noteNumber, String input) {
         if (input.trim().equals("T")) {
             logger.log(Level.INFO, "T is inputted");
             System.out.println("Current Title: " + notes.get(noteNumber).getTitle());
             ui.showEditTitleMessage();
-            input = ui.readCommand();
+            input = parser.checkIfEmpty(ui, ui.readCommand());
             notes.get(noteNumber).setTitle(input);
             logger.log(Level.INFO, "Title is changed");
             System.out.println("OK! Your title is now: " + notes.get(noteNumber).getTitle());
-            ui.printSeparator();
         } else {
             logger.log(Level.INFO, "D is inputted");
             System.out.println("Current description:\n" + notes.get(noteNumber).getDescription());
             ui.showEditDescriptionMessage();
-            input = ui.readCommand();
+            input = parser.checkIfEmpty(ui, ui.readCommand());
             notes.get(noteNumber).setDescription(input);
             logger.log(Level.INFO, "Description is changed");
             System.out.println("OK! Your description is now: " + notes.get(noteNumber).getDescription());
-            ui.printSeparator();
         }
+        ui.printSeparator();
     }
 
     @Override
@@ -110,7 +105,7 @@ public class EditNotesCommand extends Command {
                 ui.showSelectWhichNoteToEditMessage();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                NoteCommandFunctions.printAllNotes(ui, notes);
+                ui.printAllNotes(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
@@ -118,7 +113,7 @@ public class EditNotesCommand extends Command {
 
                 System.out.println(notes.get(noteNumber - 1).toString());
                 ui.showConfirmEditMessage();
-                promptUserInput(ui, parser, notes, noteNumber - 1, ui.readCommand());
+                editNote(ui, parser, notes, noteNumber - 1, ui.readCommand());
 
             }
             storage.saveNote();

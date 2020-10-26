@@ -59,6 +59,8 @@ public class Ui {
             + "addNotes TITLE ------------------------------------------ Adds a new note\n"
             + "showNotes TITLE ------------------------------------- Shows selected note\n"
             + "archive ------------------------------------- Archives all existing notes\n"
+            + "editNotes TITLE ----------------------------------- Edits a selected note\n"
+            + "deleteNotes TITLE ------------------------------- Deletes a selected note\n"
             + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
             + "freeTime ------------------------ Tells you when you have free time today\n"
             + "sleepTime --------------------- Tells you how much time you have to sleep\n"
@@ -301,7 +303,7 @@ public class Ui {
     }
 
     public void showNumberFormatMessage() {
-        System.out.println("\nPlease input only a number!");
+        System.out.println("\nOpps! The input must be a number!");
         printSeparator();
     }
 
@@ -491,5 +493,9 @@ public class Ui {
 
     public void showInvalidUndoType() {
         System.out.println("Invalid undo type, please try again!");
+    }
+
+    public void printEmptyParam(String param) {
+        System.out.println("We detected that you did not fill in the field of " + param + ". Please fill it in:");
     }
 }
