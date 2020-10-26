@@ -64,10 +64,10 @@ public class EditNotesCommand extends Command {
 
     private void changeTitleOrDescription(Ui ui, Parser parser, NoteList notes, int noteNumber, String input,
                                           NoteHistory noteHistory) {
-        Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToEdit(notes, noteNumber);
         logger.log(Level.INFO, "Temporarily hold details of this Note");
 
         input = parser.parseUserInputTOrD(input, ui);
+        Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToEdit(notes, noteNumber);
         if (input.trim().equals("T")) {
             logger.log(Level.INFO, "T is inputted");
             System.out.println("Current Title: " + notes.get(noteNumber).getTitle());
