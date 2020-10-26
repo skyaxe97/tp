@@ -35,7 +35,7 @@ public class NoteStorage {
     }
 
     /**
-     * Reads and loads all saved note information.
+     * Handles reading saved note information.
      */
     protected void readNotesSave() {
         logger.log(Level.INFO, "Read Notes save file start");
@@ -56,6 +56,11 @@ public class NoteStorage {
         logger.log(Level.INFO, "Read Notes save file end");
     }
 
+    /**
+     * Reads and adds all saved notes in the save file back into program.
+     *
+     * @param fileScanner Scanner object to read file information.
+     */
     protected void createNoteList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding notes from save");
 
@@ -109,6 +114,12 @@ public class NoteStorage {
         logger.log(Level.INFO, "Write to Notes save end");
     }
 
+    /**
+     * Converts the raw information from a note object into a save format in plain text.
+     *
+     * @param note Note object which data is to be converted into a save format.
+     * @return String data in the save format.
+     */
     protected String convertNoteToString(Note note) {
         return note.getTitle().trim() + SAVE_DELIMITER + note.getDescription().trim() + System.lineSeparator();
     }

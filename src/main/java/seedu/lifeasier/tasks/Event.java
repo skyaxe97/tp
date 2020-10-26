@@ -31,6 +31,13 @@ public class Event extends Task {
         this.isDone = isDone;
     }
 
+    public Event(Task task, int editNumber) {
+        super(task, editNumber);
+        this.start = ((Event) task).start;
+        this.end = ((Event) task).end;
+        this.isDone = task.isDone;
+    }
+
     @Override
     public String getType() {
         return type;

@@ -1,13 +1,16 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.notes.EmptyNoteListException;
+import seedu.lifeasier.notes.NoteCommandFunctions;
+import seedu.lifeasier.notes.NoteHistory;
+import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.notes.TitleNotFoundException;
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
-import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.notes.NoteCommandFunctions;
-import seedu.lifeasier.parser.Parser;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,15 +24,11 @@ public class ShowNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-        int noteNumber = -1;
-        int matchNumber = 0;
 
-        for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getTitle().contains(title)) {
-                matchNumber++;
-                noteNumber = i;
-            }
-        }
+        int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
+        int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
+
+        logger.log(Level.INFO, "End for finding title in note list");
 
         switch (matchNumber) {
         case 0:     // no matches
@@ -44,18 +43,19 @@ public class ShowNotesCommand extends Command {
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            NoteCommandFunctions.printMultipleMatches(ui, notes, title);
+            ui.printMultipleNoteMatches(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand());
             NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
             System.out.println(notes.get(noteNumber - 1).toString());
         }
-        logger.log(Level.INFO, "End for finding title in note list");
+
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
+                        NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
             ui.printSeparator();
@@ -66,7 +66,7 @@ public class ShowNotesCommand extends Command {
                 ui.showSelectWhichNoteToViewMessage();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                NoteCommandFunctions.printAllNotes(ui, notes);
+                ui.printAllNotes(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());

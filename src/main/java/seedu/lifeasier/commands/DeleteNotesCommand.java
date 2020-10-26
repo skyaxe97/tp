@@ -1,12 +1,16 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.notes.EmptyNoteListException;
+import seedu.lifeasier.notes.Note;
+import seedu.lifeasier.notes.NoteCommandFunctions;
+import seedu.lifeasier.notes.NoteHistory;
+import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.notes.TitleNotFoundException;
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
-import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.notes.NoteCommandFunctions;
 import seedu.lifeasier.parser.Parser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,17 +25,12 @@ public class DeleteNotesCommand extends Command {
         this.title = title;
     }
 
-    private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
+    private void findTitle(Ui ui, NoteList notes, String title, NoteHistory noteHistory) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-        int noteNumber = -1;
-        int matchNumber = 0;
 
-        for (int i = 0; i < notes.size(); i++) {
-            if (notes.get(i).getTitle().contains(title)) {
-                matchNumber++;
-                noteNumber = i;
-            }
-        }
+        int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
+        int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
+
         logger.log(Level.INFO, "End for finding title in note list");
 
         switch (matchNumber) {
@@ -43,14 +42,14 @@ public class DeleteNotesCommand extends Command {
             System.out.println(notes.get(noteNumber).toString());
             ui.showConfirmDeleteMessage();
             String input = checkConfirmationMessage(ui, ui.readCommand());
-            checkIfDelete(ui, notes, noteNumber, input);
+            checkIfDelete(ui, notes, noteNumber, input, noteHistory);
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            NoteCommandFunctions.printMultipleMatches(ui, notes, title);
+            ui.printMultipleNoteMatches(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand());
@@ -59,15 +58,19 @@ public class DeleteNotesCommand extends Command {
 
             ui.showConfirmDeleteMessage();
             input = checkConfirmationMessage(ui, ui.readCommand());
-            checkIfDelete(ui, notes, noteNumber, input);
+            checkIfDelete(ui, notes, noteNumber, input, noteHistory);
         }
 
     }
 
-    private void checkIfDelete(Ui ui, NoteList notes, int noteNumber, String input) {
+    private void checkIfDelete(Ui ui, NoteList notes, int noteNumber, String input, NoteHistory noteHistory) {
         if (input.trim().equals("Y")) {
+            logger.log(Level.INFO, "Temporarily hold details of this Note");
+            Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToDelete(notes, noteNumber);
             notes.remove(noteNumber);
             ui.showNoteDeletedMessage();
+            noteHistory.pushOldCopy(oldCopyOfNote, ui);
+            logger.log(Level.INFO, "Push old copy of Note into noteHistory");
         } else {
             ui.showNoteNotDeletedMessage();
         }
@@ -84,18 +87,19 @@ public class DeleteNotesCommand extends Command {
     }
 
     @Override
-    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser) {
+    public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
+                        NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of DeleteNotesCommand");
             ui.printSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
-                findTitle(ui, notes, title);
+                findTitle(ui, notes, title, noteHistory);
             } else {
                 ui.showSelectWhichNoteToDeleteMessage();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                NoteCommandFunctions.printAllNotes(ui, notes);
+                ui.printAllNotes(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
@@ -104,10 +108,10 @@ public class DeleteNotesCommand extends Command {
 
                 ui.showConfirmDeleteMessage();
                 String input = checkConfirmationMessage(ui, ui.readCommand());
-                checkIfDelete(ui, notes, noteNumber -  1, input);
+                checkIfDelete(ui, notes, noteNumber -  1, input, noteHistory);
 
-                storage.saveNote();
             }
+            storage.saveNote();
             ui.printSeparator();
             logger.log(Level.INFO, "End of DeleteNotesCommand");
         } catch (IndexOutOfBoundsException e) {

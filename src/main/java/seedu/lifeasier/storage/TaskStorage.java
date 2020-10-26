@@ -38,6 +38,9 @@ public class TaskStorage {
         this.ui = new Ui();
     }
 
+    /**
+     * Handles saved task information.
+     */
     protected void readTasksSave() {
         logger.log(Level.INFO, "Read Tasks save file start");
         try {
@@ -55,6 +58,11 @@ public class TaskStorage {
         logger.log(Level.INFO, "Read Tasks save file end");
     }
 
+    /**
+     * Reads and adds all saved task information back into the program.
+     *
+     * @param fileScanner Scanner object to read file information.
+     */
     protected void createTaskList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding tasks list from save file");
 
@@ -93,6 +101,12 @@ public class TaskStorage {
         }
     }
 
+    /**
+     * Checks for missing information in each line of saved data read.
+     *
+     * @param taskComponents String array of read save data after separator has been removed.
+     * @throws ArrayIndexOutOfBoundsException When data is missing.
+     */
     private void checkForMissingDataInSave(String[] taskComponents) throws ArrayIndexOutOfBoundsException {
         for (String information : taskComponents) {
             if (information.equals(BLANK_STRING)) {
@@ -101,6 +115,15 @@ public class TaskStorage {
         }
     }
 
+    /**
+     * Creates a new lesson object based on the save data read and adds it into the program.
+     *
+     * @param taskComponents String array of read save data after separator has been removed.
+     * @param taskList List of tasks which the created object will be added into.
+     * @param description The description of the task.
+     * @param status The current status of the task.
+     * @throws ArrayIndexOutOfBoundsException When data is missing.
+     */
     protected void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
         LocalDateTime lessonStartTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
@@ -108,9 +131,17 @@ public class TaskStorage {
 
         //Create new event in tasks
         taskList.add(new Lesson(description, lessonStartTime, lessonEndTime, status));
-        tasks.increaseTaskCount();
     }
 
+    /**
+     * Creates a new lesson object based on the save data read and adds it into the program.
+     *
+     * @param taskComponents String array of read save data after separator has been removed.
+     * @param taskList List of tasks which the created object will be added into.
+     * @param description The description of the task.
+     * @param status The current status of the task.
+     * @throws ArrayIndexOutOfBoundsException When data is missing.
+     */
     protected void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description, Boolean status)
             throws ArrayIndexOutOfBoundsException {
         LocalDateTime eventStartTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
@@ -118,16 +149,23 @@ public class TaskStorage {
 
         //Create new event in tasks
         taskList.add(new Event(description, eventStartTime, eventEndTime, status));
-        tasks.increaseTaskCount();
     }
 
+    /**
+     * Creates a new lesson object based on the save data read and adds it into the program.
+     *
+     * @param taskComponents String array of read save data after separator has been removed.
+     * @param taskList List of tasks which the created object will be added into.
+     * @param description The description of the task.
+     * @param status The current status of the task.
+     * @throws ArrayIndexOutOfBoundsException When data is missing.
+     */
     protected void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description,
                                    Boolean status) throws ArrayIndexOutOfBoundsException {
         LocalDateTime deadlineTimeInfo = fileCommand.convertToLocalDateTime(taskComponents[3]);
 
         //Create new deadline in tasks
         taskList.add(new Deadline(description, deadlineTimeInfo, status));
-        tasks.increaseTaskCount();
     }
 
     /**
@@ -175,6 +213,14 @@ public class TaskStorage {
         }
     }
 
+    /**
+     * Converts a lesson object into a save format.
+     *
+     * @param task Task object to be converted into a save format.
+     * @param taskType The type of task being converted.
+     * @return Formatted string in the save format.
+     * @throws ClassCastException When the wrong class type is passed in and cannot be casted correctly.
+     */
     protected String convertLessonToString(Task task, String taskType) throws ClassCastException {
         Lesson lesson = (Lesson) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
@@ -182,6 +228,14 @@ public class TaskStorage {
                 + lesson.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
+    /**
+     * Converts an event object into a save format.
+     *
+     * @param task Task object to be converted into a save format.
+     * @param taskType The type of task being converted.
+     * @return Formatted string in the save format.
+     * @throws ClassCastException When the wrong class type is passed in and cannot be casted correctly.
+     */
     protected String convertEventToString(Task task, String taskType) throws ClassCastException {
         Event event = (Event) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
@@ -189,6 +243,14 @@ public class TaskStorage {
                 + event.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
     }
 
+    /**
+     * Converts a deadline object into a save format.
+     *
+     * @param task Task object to be converted into a save format.
+     * @param taskType The type of task being converted.
+     * @return Formatted string in the save format.
+     * @throws ClassCastException When the wrong class type is passed in and cannot be casted correctly.
+     */
     protected String convertDeadlineToString(Task task, String taskType) throws ClassCastException {
         Deadline deadline = (Deadline) task;
         return taskType + SAVE_DELIMITER + task.getStatus() + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER

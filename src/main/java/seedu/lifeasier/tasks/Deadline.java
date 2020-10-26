@@ -27,6 +27,12 @@ public class Deadline extends Task {
         this.isDone = isDone;
     }
 
+    public Deadline(Task task, int editNumber) {
+        super(task, editNumber);
+        this.by = ((Deadline) task).by;
+        this.isDone = task.isDone;
+    }
+
     public LocalDateTime getBy() {
         return by;
     }

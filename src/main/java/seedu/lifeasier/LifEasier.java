@@ -1,10 +1,14 @@
 package seedu.lifeasier;
 
+import org.fusesource.jansi.AnsiConsole;
+
 import seedu.lifeasier.commands.Command;
+import seedu.lifeasier.notes.NoteHistory;
+import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
-import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.ScheduleUi;
 import seedu.lifeasier.ui.Ui;
@@ -24,6 +28,8 @@ public class LifEasier {
     private NoteList notes;
     private FileStorage storage;
     private ScheduleUi scheduleUi;
+    private NoteHistory noteHistory;
+    private TaskHistory taskHistory;
 
     public LifEasier(String fileNameTasks, String fileNameNotes) {
         ui = new Ui();
@@ -32,6 +38,10 @@ public class LifEasier {
         notes = new NoteList();
         storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
         scheduleUi = new ScheduleUi();
+        noteHistory = new NoteHistory();
+        taskHistory = new TaskHistory();
+
+        AnsiConsole.systemInstall();
     }
 
     /**
@@ -57,7 +67,7 @@ public class LifEasier {
 
             try {
                 Command userCommand = parser.parseCommand(fullCommand, ui);
-                userCommand.execute(ui, notes, tasks, storage, parser);
+                userCommand.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
@@ -68,6 +78,7 @@ public class LifEasier {
         }
 
         ui.showGoodbyeMessage();
+        AnsiConsole.systemUninstall();
     }
 
     public void showStartupSequence() {
@@ -81,6 +92,6 @@ public class LifEasier {
      * Main entry-point for the LifEasier application.
      */
     public static void main(String[] args) {
-        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(true);
+        new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(false);
     }
 }

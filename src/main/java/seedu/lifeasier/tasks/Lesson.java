@@ -31,6 +31,13 @@ public class Lesson extends Task {
         this.isDone = isDone;
     }
 
+    public Lesson(Task task, int editNumber) {
+        super(task, editNumber);
+        this.start = ((Lesson) task).start;
+        this.end = ((Lesson) task).end;
+        this.isDone = task.isDone;
+    }
+
     @Override
     public String getType() {
         return type;
