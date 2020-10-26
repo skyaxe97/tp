@@ -514,4 +514,8 @@ public class Ui {
     public void printEmptyParam(String param) {
         System.out.println("We detected that you did not fill in the field of " + param + ". Please fill it in:");
     }
+
+    public void showRecurrencesNumberFormatError() {
+        System.out.println("The input for /repeats is not a number! Please try again:");
+    }
 }

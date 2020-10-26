@@ -173,7 +173,7 @@ public class Parser {
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
-        int recurrences = Integer.parseInt(recurrencesString);
+        int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddLessonCommand(moduleCode, start, end, recurrences);
@@ -250,7 +250,7 @@ public class Parser {
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
-        int recurrences = Integer.parseInt(recurrencesString);
+        int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddEventCommand(description, start, end, recurrences);
@@ -309,7 +309,7 @@ public class Parser {
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
         String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
-        int recurrences = Integer.parseInt(recurrencesString);
+        int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddDeadlineCommand(description, by, recurrences);
@@ -844,6 +844,23 @@ public class Parser {
             input = checkIfEmpty(ui, ui.readCommand());
         }
         return input;
+    }
+
+    private int checkIfNumber(Ui ui, String input) {
+        while (!isNumeric(input)) {
+            ui.showRecurrencesNumberFormatError();
+            input = ui.readCommand();
+        }
+        return Integer.parseInt(input);
+    }
+
+    private boolean isNumeric(String input) {
+        try {
+            int number = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
