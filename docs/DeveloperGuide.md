@@ -68,6 +68,27 @@ Click New... and find the directory of the JDK
 
 ## 3.0 Design
 ### 3.1 Architecture
+This section elaborates on the high-level architecture of the **LifEasier** application. It provides a brief introduction to each component, and how these components interact with one another. 
+
+
+*Fig. 1 Architecture diagram for LifEasier*
+LifEasier is comprised of 7 components, which are listed below together with their functions (shown in Fig 1):
+
+1. LifEasier: The main class of the application.
+2. Ui: Displays messages to the user, and takes in the user’s commands
+3. Parser: Understands the user’s commands, and creates the necessary Command objects.
+4. Command: Carries out the user’s command
+5. TaskList: Holds the task data of the app in memory.
+6. NoteList: Holds the note data of the app in memory.
+7. Storage: Reads and writes data from the hard disk.
+
+Each of these components are expanded on in more detail in their respective sections.
+
+Figure 2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
+
+
+*Fig 2. Sequence diagram of “addDeadline”.*
+
 ### 3.2 Components
 #### 3.2.1 LifEasier Component
 #### 3.2.2 UI Component
@@ -86,8 +107,7 @@ Click New... and find the directory of the JDK
 ### 4.6 Displaying Schedule (Johannine)
 The displaySchedule command presents the TaskList contents in a timetable format, given that it is specified to display the full week. Otherwise it displays the current day’s schedule in a list form, with the Task items sorted by date.
 
-<insert>
-Figure 4.7-1: Sequence diagram for displaying week or day schedule
+*Figure 4.7-1: Sequence diagram for displaying week or day schedule*
 
 #####Implementation
 The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format (e.g. from Monday to Sunday).
