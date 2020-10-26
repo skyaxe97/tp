@@ -29,8 +29,9 @@ public class UndoTaskCommand extends Command {
             } else {
                 ui.showUndoTaskDeleteMessage();
             }
-
+            ui.showOldTask(taskHistory);
             taskHistory.popLastTask();
+            storage.saveTasks();
 
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidUndoAction();
