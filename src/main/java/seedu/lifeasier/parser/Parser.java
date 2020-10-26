@@ -203,11 +203,11 @@ public class Parser {
                 isDateEmpty = false;
                 break;
             case START_TIME:
-                input = addStartTimeParam(ui, input + " ");
+                input = addStartTimeParam(ui, input);
                 isStartTimeEmpty = false;
                 break;
             case END_TIME:
-                input = addEndTimeParam(ui, input);
+                input = addEndTimeParam(ui, input + " ");
                 isEndTimeEmpty = false;
                 break;
             case RECURRENCES:
@@ -246,7 +246,6 @@ public class Parser {
         String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
         String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
-
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
         int recurrences = Integer.parseInt(recurrencesString);
@@ -278,7 +277,7 @@ public class Parser {
                 isDescriptionEmpty = false;
                 break;
             case END_TIME:
-                input = addByDateTime(ui, input);
+                input = addByDateTime(ui, input + " ");
                 isEndTimeEmpty = false;
                 break;
             case RECURRENCES:
@@ -831,7 +830,7 @@ public class Parser {
     private String addRecurrencesParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding recurrences to string.)");
         ui.showAddRecurrencesMessage();
-        String recurrences = checkIfEmpty(ui, ui.readCommand()) + " ";
+        String recurrences = checkIfEmpty(ui, ui.readCommand());
         input = input + " /repeats " + recurrences;
         logger.log(Level.INFO, "End of adding recurrences to string.)");
 
