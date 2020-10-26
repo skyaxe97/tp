@@ -238,7 +238,7 @@ public class Parser {
 
         String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-        String tempEndTime = input.substring(lastIndexOfToCommand).trim();
+        String tempEndTime = input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
         String date = fillIfEmptyParam(ui, tempDate, "/date");
@@ -301,7 +301,7 @@ public class Parser {
         int firstIndexOfRepeatsCommand = input.indexOf(PARAM_REPEATS);
         int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
-        String tempByInput = input.substring(lastIndexOfByCommand).trim();
+        String tempByInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");

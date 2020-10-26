@@ -1,11 +1,13 @@
 package seedu.lifeasier.commands;
 
 import org.junit.jupiter.api.Test;
+import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.Event;
 import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
@@ -91,6 +93,8 @@ class FreeTimeCommandTest {
         FileStorage storage = new FileStorage("saveFileTasks.txt",
                 "saveFileNotes.txt", ui, notes, tasks);
         Parser parser = new Parser();
+        NoteHistory noteHistory = new NoteHistory();
+        TaskHistory taskHistory = new TaskHistory();
 
         FreeTimeCommand command = new FreeTimeCommand();
 
@@ -105,7 +109,7 @@ class FreeTimeCommandTest {
         tasks.addEvent("first event", start1, end1, 0);
         tasks.addEvent("second event", start2, end2, 0);
 
-        command.execute(ui, notes, tasks, storage, parser);
+        command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(("You have 6 hours of free time between 12:00 and 18:00!" + System.lineSeparator()
                 +  "You can try scheduling something in this time!" + System.lineSeparator()
@@ -124,6 +128,8 @@ class FreeTimeCommandTest {
         FileStorage storage = new FileStorage("saveFileTasks.txt",
                 "saveFileNotes.txt", ui, notes, tasks);
         Parser parser = new Parser();
+        NoteHistory noteHistory = new NoteHistory();
+        TaskHistory taskHistory = new TaskHistory();
 
         FreeTimeCommand command = new FreeTimeCommand();
 
@@ -138,7 +144,7 @@ class FreeTimeCommandTest {
         tasks.addEvent("first event", start1, end1, 0);
         tasks.addEvent("second event", start2, end2, 0);
 
-        command.execute(ui, notes, tasks, storage, parser);
+        command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(("Unfortunately you have no free time today!" + System.lineSeparator()
                 +  "You might want to relax a little!" + System.lineSeparator()

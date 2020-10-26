@@ -1,11 +1,13 @@
 package seedu.lifeasier.commands;
 
 import org.junit.jupiter.api.Test;
+import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.Event;
 import seedu.lifeasier.tasks.Task;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
@@ -118,6 +120,8 @@ class SleepTimeCommandTest {
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         TaskList tasks = new TaskList();
+        NoteHistory noteHistory = new NoteHistory();
+        TaskHistory taskHistory = new TaskHistory();
         FileStorage storage = new FileStorage("saveFileTasks.txt",
                 "saveFileNotes.txt", ui, notes, tasks);
         Parser parser = new Parser();
@@ -136,7 +140,7 @@ class SleepTimeCommandTest {
         tasks.addEvent("first event", start1, end1, 0);
         tasks.addEvent("second event", start2, end2, 0);
 
-        command.execute(ui, notes, tasks, storage, parser);
+        command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(("You have nothing on from 23:00 today to 5:00 tomorrow!" + System.lineSeparator()
                 +  "You can sleep for up to 6 hours!" + System.lineSeparator()
@@ -152,13 +156,15 @@ class SleepTimeCommandTest {
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         TaskList tasks = new TaskList();
+        NoteHistory noteHistory = new NoteHistory();
+        TaskHistory taskHistory = new TaskHistory();
         FileStorage storage = new FileStorage("saveFileTasks.txt",
                 "saveFileNotes.txt", ui, notes, tasks);
         Parser parser = new Parser();
 
         SleepTimeCommand command = new SleepTimeCommand();
 
-        command.execute(ui, notes, tasks, storage, parser);
+        command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(("You have nothing on for today and tomorrow!" + System.lineSeparator()
                 +  "You can sleep for the recommended 8 hours or longer!" + System.lineSeparator()
