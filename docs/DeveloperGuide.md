@@ -16,14 +16,16 @@
         * [3.2.7 Storage Component](#327-storage-component)
 * [4.0 Implementation](#40-implementation)
     * [4.1 Adding Lessons, Events, Deadlines (Fairuz)](#41-adding-lessons-events-deadlines-fairuz)
-    * [4.2 Editing and Deleting Lessons, Events, Deadlines (Fairuz)](#42-editing-lessons-events-deadlines-fairuz)
-    * [4.3 Adding Notes (Edmund)](#43-adding-notes-edmund)
-    * [4.4 Editing and Deleting Notes (Edmund)](#44-editing-and-deleting-notes-edmund)
-    * [4.5 Storing and Archiving Notes (Danzel)](#45-storing-and-archiving-notes-danzel)
-    * [4.6 Displaying Schedule (Johannine)](#46-undoing-changes-made-to-tasks-and-notes-johannine)
-    * [4.7 Displaying Free Time and Sleep Time (Daniel)](#47-displaying-free-time-and-sleep-time-daniel)
-    * [4.8 Parsing Commands (Edmund / Daniel?)](#48-parsing-commands-edmund--daniel)
-    * [4.9 Recurring Tasks and Auto Deletion (Daniel)](#49-recurring-tasks-and-auto-deletion-daniel)
+    * [4.2 Editing Lessons, Events, Deadlines (Fairuz)](#42-editing-lessons-events-deadlines-fairuz)
+    * [4.3 Deleting Lessons, Events, Deadlines (Fairuz)](#43-deleting-of-lessons-events-deadlines-fairuz)
+    * [4.4 Adding Notes (Edmund)](#44-adding-notes-edmund)
+    * [4.5 Editing and Deleting Notes (Edmund)](#45-editing-and-deleting-notes-edmund)
+    * [4.6 Undoing Changes Made to Tasks and Notes (Johannine)](#46-undoing-changes-made-to-tasks-and-notes-johannine)
+    * [4.7 Storing and Archiving Notes (Danzel)](#47-storing-and-archiving-notes-danzel)
+    * [4.8 Displaying Schedule (Johannine)](#48-displaying-schedule-johannine)
+    * [4.9 Displaying Free Time and Sleep Time (Daniel)](#49-displaying-free-time-and-sleep-time-daniel)
+    * [4.10 Parsing Commands (Edmund)](#410-parsing-commands-edmund)
+    * [4.11 Recurring Tasks and Auto Deletion (Daniel)](#411-recurring-tasks-and-auto-deletion-daniel)
 * [5.0 Product Scope](#50-product-scope)
     * [5.1 Target user profile](#51-target-user-profile)
     * [5.2 Value proposition](#52-value-proposition)
@@ -42,12 +44,12 @@ This developer guide documents the design, architecture and instructions for tes
 
 ## 2.0 Setting Up
 
-###2.1 Prerequisites
+### 2.1 Prerequisites
 
 1. JDK 11
 2. Intellij IDE
 
-###2.2 Setting Up the Project
+### 2.2 Setting Up the Project
 
 1. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 
@@ -63,7 +65,7 @@ Click New... and find the directory of the JDK
 
 1. Click OK to accept the default settings.
 
-###2.3 Verifying Setup
+### 2.3 Verifying Setup
 
 1. Run the seedu.LifEasier.Main and try a few commands.
 
@@ -237,7 +239,7 @@ The command has to handle separate types of tasks as printing all tasks and forc
 ![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
 _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 
-### 4.3 Adding Notes (Edmund)
+### 4.4 Adding Notes (Edmund)
 
 The addNotes command adds user’s notes to the NoteList with a specified title and description. 
 
@@ -263,7 +265,7 @@ by the user as it affects the usability and searchability of the NoteList. As su
 be implemented to prevent any hiccups by the user.
 
 
-### 4.4 Editing and Deleting Notes (Edmund)
+### 4.5 Editing and Deleting Notes (Edmund)
 
 The editNotes command allows the user to change the title or description of their notes stored in the NoteList.
 The deleteNotes command allows the user to remove the specified notes completely from the NoteList.
@@ -315,7 +317,7 @@ Figure 4.5-2 illustrates the above steps via a Sequence Diagram.
 ![Figure 4.5-2](images/DeveloperGuide/Figure 4.5-2.png)
 _Figure 4.5-2: Sequence diagram for deleteNotesCommand
 
-#####Design Considerations
+##### Design Considerations
 
 * Any number inputs by the user must be checked through to ensure that it is not out of the available indexes 
 in the array. 
@@ -325,7 +327,7 @@ in any of the notes nor can he input an invalid title such as an empty string.
 * In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
 an exception caught.
 
-### 4.6 Undoing changes made to Tasks and Notes (Johannine)
+### 4.6 Undoing Changes Made to Tasks and Notes (Johannine)
 
 The undo feature allows the user to undo any changes made to Task or Note objects, particularly edits and deletions.
 
@@ -351,7 +353,7 @@ _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 To allow for multiple undos on the same Task (or Note) object, the editNumber of Tasks (orNotes) that have been edited before must be checked. If it is anything but the default assigned value(-999999), then its existing editNumber will be taken and used as the editID for all successive copies made of it. This is to allow the application to always find the same instance of the Task (or Note) inside the TaskList (or NoteList) when restoring previous versions.
 
-### 4.5 Storing and Archiving Notes (Danzel)
+### 4.7 Storing and Archiving Notes (Danzel)
 
 The storing and saving of data in the **LifEasier** app is done automatically after every change such as adding, editing, 
 deleting a component such as a lesson, deadline, event or note. The following section documents how the data storing 
@@ -435,7 +437,7 @@ To ensure that the displayed timetable is easy to read and offers a quick view o
 
 Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the timings of Tasks were rounded to the hour. This was an intentional design choice to keep the timetable neat and not overloaded with too much details.
 
-### 4.7 Displaying Free Time and Sleep Time (Daniel)
+### 4.9 Displaying Free Time and Sleep Time (Daniel)
 
 ##### Implementation
 
@@ -465,9 +467,9 @@ _Figure 4.8-2: Sequence diagram for sleepTimeCommand execution_
  command, this was an intentional design choice to not overload the user with too much unnecessary details. 
 
 
-### 4.8 Parsing Commands (Edmund / Daniel)
+### 4.10 Parsing Commands (Edmund)
 
-### 4.9 Recurring Tasks and Auto Deletion (Daniel)
+### 4.11 Recurring Tasks and Auto Deletion (Daniel)
 
 ##### Implementation
 
