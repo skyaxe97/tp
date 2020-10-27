@@ -23,6 +23,7 @@
     * [4.6 Displaying Schedule (Johannine)](#46-displaying-schedule-johannine)
     * [4.7 Displaying Free Time and Sleep Time (Daniel)](#47-displaying-free-time-and-sleep-time-daniel)
     * [4.8 Parsing Commands (Edmund / Daniel?)](#48-parsing-commands-edmund--daniel)
+    * [4.9 Recurring Tasks and Auto Deletion (Daniel)](#49-recurring-tasks-and-auto-deletion-daniel)
 * [5.0 Product Scope](#50-product-scope)
     * [5.1 Target user profile](#51-target-user-profile)
     * [5.2 Value proposition](#52-value-proposition)
@@ -126,7 +127,7 @@ _Figure 4.8-2: Sequence diagram for sleepTimeCommand execution_
 1. Because of the way that the TaskList stores Tasks in an unsorted way, the  freeTime and sleepTime commands
  must iterate through the entire list every time to check if a particular time slot has nothing scheduled.
  This corresponds to a time complexity of O(N). This was chosen as the way to implement this function as the
- size of TaskList can be said to be relatively small. As such, the repeated iteration would not result in 
+ size of TaskList is relatively small. As such, the repeated iteration would not result in 
  significant impacts on the timing performance.
  
 1. The functions also only provide an accuracy resolution which is rounded to the hour. Similar to the displaySchedule
@@ -134,6 +135,25 @@ _Figure 4.8-2: Sequence diagram for sleepTimeCommand execution_
 
 
 ### 4.8 Parsing Commands (Edmund / Daniel)
+
+### 4.9 Recurring Tasks and Auto Deletion (Daniel)
+
+##### Implementation
+
+Every time **LifEasier** starts up, it automatically updates the dates of recurring tasks, and deletes tasks that are 
+in the past and no longer set to repeat. **LifEasier** performs this step after loading the tasks and notes from the
+save files into NoteList and TaskList. It does so by iterating through the list, and checking the `start` variable
+ of each task. If the date of `start` is before the current date, the `recurrences` variable is checked. If 
+ `recurrences = 0`, the task is deleted. Else, the task's date is moved forward by 1 week and `recurrences` is 
+decremented by 1 until the date of `start` is on or after the current date, or `recurrences` hits 0.
+
+
+##### Design Considerations
+
+1. **LifEasier** only updates tasks on startup, instead of after every command. This was done intentionally to ensure
+that each command does not take too much time to run. However, if a user keeps **LifEasier** open over the course of a
+few days, they might need to restart it to ensure that their tasks are updated.
+
 
 ## 5.0 Product Scope
 
