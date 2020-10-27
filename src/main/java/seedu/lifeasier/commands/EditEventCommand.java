@@ -23,7 +23,7 @@ public class EditEventCommand extends Command {
     }
 
     public void printMatchingEvents(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(Ui.PARAM_EVENT, code);
+        tasks.printMatchingTasks(ui.PARAM_EVENT, code, ui);
     }
 
     public void editEventName(TaskList tasks, int index, Ui ui) {

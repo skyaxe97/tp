@@ -144,14 +144,15 @@ public class TaskList {
         }
     }
 
-    public void printMatchingTasks(String type, String description) throws TaskNotFoundException {
+    public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
         logger.log(Level.INFO, "Start of printing all matching " + type);
         indexOfLastMatch = 0;
         boolean noMatches = true;
         for (int i = 0; i < getTaskCount(); i++) {
             if (checkMatchingTasks(i, type, description)) {
-                System.out.println((i + 1) + ". " + getTask(i).toString());
+                String task = getTask(i).toString();
+                ui.printMatchingTask(i + 1, task);
                 indexOfLastMatch = i;
                 noMatches = false;
             }

@@ -34,7 +34,7 @@ public class DeleteTaskCommand extends Command {
      * @throws TaskNotFoundException If no matching tasks are found.
      */
     private void printMatchingTasks(TaskList tasks, Ui ui, String type, String name) throws TaskNotFoundException {
-        tasks.printMatchingTasks(type, name);
+        tasks.printMatchingTasks(type, name, ui);
     }
 
     private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
