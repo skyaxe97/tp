@@ -76,12 +76,12 @@ Click New... and find the directory of the JDK
 
 ### 3.1 Architecture
 
-This section elaborates on the high-level architecture of the **LifEasier** application. It provides a brief introduction to each component, and how these components interact with one another. 
+This section elaborates on the high-level architecture of the **LifEasier** application. It provides a brief introduction to each component, and how these components interact with one another. Figure 3.1-1 provides an overview of the architecture.
 
+![Figure 3.1-1](images/DeveloperGuide/Figure%203.1-1.png) 
+_Figure 3.1-1 Architecture diagram for LifEasier_
 
-_Fig. 1 Architecture diagram for LifEasier_
-
-LifEasier is comprised of 7 components, which are listed below together with their functions (shown in Fig 1):
+LifEasier is comprised of 7 components, which are listed below together with their functions:
 
 1. LifEasier: The main class of the application.
 2. Ui: Displays messages to the user, and takes in the user’s commands
@@ -93,10 +93,10 @@ LifEasier is comprised of 7 components, which are listed below together with the
 
 Each of these components are expanded on in more detail in their respective sections.
 
-Figure 2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
+Figure 3.1-2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
 
 
-_Fig 2. Sequence diagram of “addDeadline”._
+_Figure 3.1-2 Sequence diagram of “addDeadline”._
 
 ### 3.2 Components
 
@@ -132,7 +132,7 @@ Command class. What is important to note is that each type of command class (e.g
  implements an abstract execute() method that carries out the command. Figure 3.2.4-1 below shows the classes that 
  inherit from the Command class.
  
- ![Figure 3.2.4-1](images/DeveloperGuide/Figure3.2.4-1.jpg)  
+ ![Figure 3.2.4-1](images/DeveloperGuide/Figure%203.2.4-1.png)  
  _Figure 3.2.4-1: The classes that inherit from the Command class_
  
 #### 3.2.5 TaskList Component
@@ -441,30 +441,31 @@ Because of the way the timetable time slots increment on an hourly basis, functi
 
 ##### Implementation
 
-The freeTime command displays to the user their longest block of free time for that day, while the 
+The `freeTime` command displays to the user their longest block of free time for that day. The `sleepTime`
  command displays to the user how much time they have available to sleep based on that day’s and the
  next day’s schedule. Both commands are implemented similarly. They both find the longest uninterrupted block
  of free time within a certain time period by checking if individual hour-long time blocks in this time period
  are free. The commands then use the start and end time values found to calculate a duration, and pass all
- three values to the Ui to display to the user. Figure 4.8-1 shows the sequence diagram for the freeTimeCommand,
- and Figure 4.8-2 shows the sequence diagram for the sleepTimeCommand.
+ three values to the Ui to display to the user. Figure 4.9-1 shows the sequence diagram for the `freeTimeCommand`,
+ and Figure 4.9-2 shows the sequence diagram for the `sleepTimeCommand`.
 
-![Figure 4.8-1](images/DeveloperGuide/Figure4.8-1.jpg)  
-_Figure 4.8-1: Sequence diagram for freeTimeCommand execution_
+![Figure 4.9-1](images/DeveloperGuide/Figure%204.9-1.png)  
+_Figure 4.9-1: Sequence diagram for freeTimeCommand execution_
 
-![Figure 4.8-2](images/DeveloperGuide/Figure4.8-2.jpg)  
-_Figure 4.8-2: Sequence diagram for sleepTimeCommand execution_
+
+![Figure 4.9-2](images/DeveloperGuide/Figure%204.9-2.png)  
+_Figure 4.9-2: Sequence diagram for sleepTimeCommand execution_
 
 ##### Design Considerations
 
-1. Because of the way that the TaskList stores Tasks in an unsorted way, the  freeTime and sleepTime commands
+1. Because of the way that the `TaskList` stores `Tasks` in an unsorted way, the  `freeTime` and `sleepTime` commands
  must iterate through the entire list every time to check if a particular time slot has nothing scheduled.
  This corresponds to a time complexity of O(N). This was chosen as the way to implement this function as the
- size of TaskList is relatively small. As such, the repeated iteration would not result in 
+ size of `TaskList` is relatively small. As such, the repeated iteration would not result in 
  significant impacts on the timing performance.
  
-1. The functions also only provide an accuracy resolution which is rounded to the hour. Similar to the displaySchedule
- command, this was an intentional design choice to not overload the user with too much unnecessary details. 
+1. The functions also only provide an accuracy resolution which is rounded to the hour. Similar to the `displaySchedule`
+ command, this was an intentional design choice to not overload the user with too many unnecessary details. 
 
 
 ### 4.10 Parsing Commands (Edmund)
