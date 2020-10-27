@@ -845,7 +845,7 @@ public class Parser {
         return input;
     }
 
-    private int checkIfNumber(Ui ui, String input) {
+    public int checkIfNumber(Ui ui, String input) {
         while (!isNumeric(input)) {
             ui.showRecurrencesNumberFormatError();
             input = ui.readCommand();

@@ -37,8 +37,17 @@ public class DeleteTaskCommand extends Command {
         tasks.printMatchingTasks(type, name, ui);
     }
 
-    private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
-        tasks.checkForIndexOutOfBounds(userInput);
+    private int readUserInput(Ui ui, Parser parser, TaskList tasks) {
+        while (true) {
+            try {
+                int newIndex = parser.checkIfNumber(ui, ui.readCommand()) - 1;
+                tasks.checkForIndexOutOfBounds(newIndex);
+                return newIndex;
+            } catch (IndexOutOfBoundsException e) {
+                ui.showIndexOutOfBoundsMessage();
+                continue;
+            }
+        }
     }
 
     /**
@@ -75,14 +84,13 @@ public class DeleteTaskCommand extends Command {
             ui.showSelectTaskToDelete(type);
 
             logger.log(Level.INFO, "Reading user input for choice of task to delete...");
-            int userTaskChoice = ui.readSingleIntInput() - 1;
-            checkForIndexOutOfBounds(tasks, userTaskChoice);
+            int userIndex = readUserInput(ui, parser, tasks);
 
             logger.log(Level.INFO, "Temporarily hold value of this Task");
-            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, userTaskChoice);
+            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, userIndex);
 
             logger.log(Level.INFO, "Deleting task from taskList...");
-            deleteTask(tasks, ui, userTaskChoice);
+            deleteTask(tasks, ui, userIndex);
 
             taskHistory.pushOldCopy(oldCopyOfTask, ui);
             logger.log(Level.INFO, "Push old copy of Task into taskHistory");
@@ -98,6 +106,9 @@ public class DeleteTaskCommand extends Command {
             logger.log(Level.SEVERE, "Input " + type + " name does not match any of the existing "
                     + type + " names.");
             ui.showNoMatchesMessage(type);
+        } catch (IndexOutOfBoundsException e) {
+            logger.log(Level.SEVERE, "User input is out of bounds");
+            ui.showIndexOutOfBoundsMessage();
         }
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }

@@ -548,4 +548,8 @@ public class Ui {
     public void printMatchingTask(int index, String task) {
         System.out.println(index + ". " + task);
     }
+
+    public void showIndexOutOfBoundsMessage() {
+        System.out.println("The number you have inputted is out of bounds");
+    }
 }
