@@ -16,6 +16,8 @@ public class DisplayScheduleCommand extends Command {
     private boolean isDisplayWeek;
     private final ScheduleUi scheduleUi = new ScheduleUi();
 
+    private static final String NO_TASKS_TODAY_MESSAGE = "You have nothing on for today!";
+
     public DisplayScheduleCommand(String toDisplay) {
         this.isDisplayWeek = toDisplay.equals("week");
     }
@@ -25,13 +27,16 @@ public class DisplayScheduleCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         LocalDate currDate = LocalDate.now();
         if (isDisplayWeek) {
-            scheduleUi.displayWeekSchedule(tasks);
+            scheduleUi.showHome(tasks);
         } else {
-            if (scheduleUi.getTaskCountForToday(tasks, currDate) != 0) {
+            taskHistory.printTaskHistory();
+            int taskCountForToday = scheduleUi.getTaskCountForToday(tasks, currDate);
+
+            if (taskCountForToday > 0) {
                 System.out.println("Here is your schedule for today:");
                 scheduleUi.displayDaySchedule(currDate, tasks);
             } else {
-                System.out.println("You have nothing on for today!");
+                System.out.println(NO_TASKS_TODAY_MESSAGE);
             }
         }
     }

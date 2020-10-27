@@ -1,6 +1,7 @@
 package seedu.lifeasier.ui;
 
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.tasks.Task;
 
 import java.util.Scanner;
 
@@ -126,7 +127,7 @@ public class Ui {
         System.out.println(colourTextGreen(MESSAGE_HELP_COMMAND));
     }
 
-    public void showAddConfirmationMessage(String task) {
+    public void showAddConfirmationMessage(Task task) {
         System.out.println(colourTextGreen("Done! I've added \"" + task + "\" to your calendar"));
         printSeparator();
     }
@@ -363,7 +364,7 @@ public class Ui {
 
     public void showFreeTimeMessage(int startHour, int endHour, int duration) {
 
-        if (duration != 0) {
+        if (duration > 0) {
             System.out.println("You have " + duration + " hours of free time between " + startHour
                     + ":00 and " + endHour + ":00!");
             System.out.println("You can try scheduling something in this time!");
@@ -471,6 +472,10 @@ public class Ui {
         System.out.println("Please input the Date Time:");
     }
 
+    public void showAddRecurrencesMessage() {
+        System.out.println("Please input the number of times to repeat:");
+    }
+
     public void printMultipleNoteMatches(NoteList notes, String title) {
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
@@ -493,6 +498,26 @@ public class Ui {
 
     public void showInvalidUndoType() {
         System.out.println("Invalid undo type, please try again!");
+    }
+
+    public void showInvalidUndoAction() {
+        System.out.println("Nothing to undo!");
+    }
+
+    public void showUndoTaskEditMessage() {
+        System.out.println("This task has been reverted back to its previous version!");
+    }
+
+    public void showUndoTaskDeleteMessage() {
+        System.out.println("This deleted task has been successfully restored!");
+    }
+
+    public void showUndoNoteEditMessage() {
+        System.out.println("This note has been reverted back to its previous version!");
+    }
+
+    public void showUndoNoteDeleteMessage() {
+        System.out.println("This deleted note has been successfully restored!");
     }
 
     public void printEmptyParam(String param) {

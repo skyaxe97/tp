@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import static java.util.stream.Collectors.toList;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class TaskList {
@@ -40,6 +40,10 @@ public class TaskList {
         return taskList.get(index);
     }
 
+    public void setTask(int index, Task task) {
+        taskList.set(index, task);
+    }
+
     public void addTask(Task task) {
         taskList.add(task);
     }
@@ -50,10 +54,12 @@ public class TaskList {
      * @param description description of event.
      * @param start start date/time of event.
      * @param end end date/time of event.
+     * @param recurrences number of times to repeat.
      */
-    public void addEvent(String description, LocalDateTime start, LocalDateTime end) {
-        Event event = new Event(description, start, end);
+    public Task addEvent(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+        Event event = new Event(description, start, end, recurrences);
         addTask(event);
+        return event;
     }
 
     /**
@@ -62,10 +68,12 @@ public class TaskList {
      * @param moduleCode module code of lesson.
      * @param start start date/time of lesson.
      * @param end end date/time of lesson.
+     * @param recurrences number of times to repeat.
      */
-    public void addLesson(String moduleCode, LocalDateTime start, LocalDateTime end) {
-        Lesson lesson = new Lesson(moduleCode, start, end);
+    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
+        Lesson lesson = new Lesson(moduleCode, start, end, recurrences);
         addTask(lesson);
+        return lesson;
     }
 
     /**
@@ -73,10 +81,12 @@ public class TaskList {
      *
      * @param description description of task.
      * @param by deadline of task.
+     * @param recurrences number of times to repeat.
      */
-    public void addDeadline(String description, LocalDateTime by) {
-        Deadline deadline = new Deadline(description, by);
+    public Task addDeadline(String description, LocalDateTime by, int recurrences) {
+        Deadline deadline = new Deadline(description, by, recurrences);
         addTask(deadline);
+        return deadline;
     }
 
     public void editTaskDescription(int index, Ui ui) {
@@ -166,6 +176,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Returns an ArrayList of Tasks from one specific day.
+     *
+     * @param day Day to get tasks from.
+     * @return ArrayList of Tasks from one specific day.
+     */
     public ArrayList<Task> getTasksFromOneDay(LocalDate day) {
         return (ArrayList<Task>) taskList.stream()
                 .filter((t) -> t.getStart().toLocalDate().equals(day))
@@ -174,6 +190,33 @@ public class TaskList {
 
     public void sort() {
         taskList.sort(Comparator.comparing(Task::getStart));
+    }
+
+    /**
+     * Cleans up the taskList.
+     * Deletes tasks if they have no more recurrences and are in the past.
+     * Updates tasks' dates if they have more recurrences and are in the past.
+     *
+     * @param day Day behind which tasks will be updated and deleted.
+     */
+    public void updateTasks(LocalDate day) {
+
+        ArrayList<Task> tasksToBeRemoved = new ArrayList<>();
+
+        for (Task task : taskList) {
+
+            if ((task.isHappeningBefore(day)) && (task.getRecurrences() == 0)) {
+                tasksToBeRemoved.add(task);
+
+            } else if ((task.isHappeningBefore(day)) && (task.getRecurrences() > 0)) {
+                task.moveAndUpdateRecurrences();
+            }
+        }
+
+        for (Task task : tasksToBeRemoved) {
+            taskList.remove(task);
+        }
+
     }
 
 }

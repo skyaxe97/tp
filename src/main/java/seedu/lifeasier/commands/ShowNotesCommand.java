@@ -5,11 +5,12 @@ import seedu.lifeasier.notes.NoteCommandFunctions;
 import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
 import seedu.lifeasier.notes.TitleNotFoundException;
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
-import seedu.lifeasier.parser.Parser;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

@@ -7,7 +7,7 @@ import java.time.LocalTime;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
-    protected static int taskCounter = 0;
+    protected int recurrences;
     protected int editNumber;
 
     private static final String TIME_FORMAT = "%02d:00";
@@ -15,9 +15,15 @@ public abstract class Task {
 
     public Task(String description) {
         this.description = description;
+        this.recurrences = 0;
         this.isDone = false;
         this.editNumber = DEFAULT_EDIT_NUMBER;
-        taskCounter++;
+    }
+
+    public Task(Task task, int editNumber) {
+        this.description = task.description;
+        this.isDone = task.isDone;
+        setEditNumber(editNumber);
     }
 
     public void setDescription(String description) {
@@ -28,12 +34,24 @@ public abstract class Task {
         this.editNumber = number;
     }
 
+    public int getEditNumber() {
+        return editNumber;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public boolean getStatus() {
         return isDone;
+    }
+
+    public int getRecurrences() {
+        return recurrences;
+    }
+
+    public void decrementRecurrences(int by) {
+        recurrences = recurrences - by;
     }
 
     public abstract String getType();
@@ -50,6 +68,8 @@ public abstract class Task {
     public abstract void setStart(LocalDateTime start);
 
     public abstract void setEnd(LocalDateTime end);
+
+    public abstract void moveAndUpdateRecurrences();
 
 
     public boolean isWithinTimeSlot(int timeSlotStartHour) {
