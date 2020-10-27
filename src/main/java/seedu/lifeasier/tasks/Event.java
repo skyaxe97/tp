@@ -24,18 +24,10 @@ public class Event extends Task {
         this.recurrences = recurrences;
     }
 
-    public Event(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
-        super(description);
-        this.start = start;
-        this.end = end;
-        this.isDone = isDone;
-    }
-
     public Event(Task task, int editNumber) {
         super(task, editNumber);
         this.start = ((Event) task).start;
         this.end = ((Event) task).end;
-        this.isDone = task.isDone;
     }
 
     @Override

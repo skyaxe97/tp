@@ -90,7 +90,7 @@ public class Ui {
      * @param string String to be coloured.
      * @return Green coloured string.
      */
-    protected String colourTextGreen(String string) {
+    public String colourTextGreen(String string) {
         return ANSI_GREEN + string + ANSI_RESET;
     }
 
@@ -100,7 +100,7 @@ public class Ui {
      * @param string String to be coloured.
      * @return Red coloured string.
      */
-    protected String colourTextRed(String string) {
+    public String colourTextRed(String string) {
         return ANSI_RED + string + ANSI_RESET;
     }
 
@@ -110,7 +110,7 @@ public class Ui {
      * @param string String to be coloured
      * @return Cyan coloured string.
      */
-    protected String colourTextCyan(String string) {
+    public String colourTextCyan(String string) {
         return ANSI_CYAN + string + ANSI_RESET;
     }
 
@@ -154,30 +154,33 @@ public class Ui {
     }
 
     public void showSelectTaskToEdit(String type) {
-        System.out.println("Please select the " + type + " you want to edit.");
+        System.out.println(colourTextCyan("Please select the " + type + " you want to edit."));
     }
 
     public void showSelectParameterToEdit() {
-        System.out.println("Please select the parameter you want to edit.");
+        System.out.println(colourTextCyan("Please select the parameter you want to edit."));
     }
 
     public void showSelectTaskToDelete(String type) {
-        System.out.println("Please select the " + type + " you want to delete.");
+        System.out.println(colourTextCyan("Please select the " + type + " you want to delete."));
     }
 
     public void showInputFormat(String type) {
         switch (type) {
 
         case (PARAM_EVENT):
-            System.out.println("Please input your new time in this format: " + NEW_EVENT_TIME_INPUT_FORMAT);
+            System.out.println(colourTextCyan("Please input your new time in this format: "
+                    + NEW_EVENT_TIME_INPUT_FORMAT));
             break;
 
         case (PARAM_DEADLINE):
-            System.out.println("Please input your new time in this format: " + NEW_DEADLINE_TIME_INPUT_FORMAT);
+            System.out.println(colourTextCyan("Please input your new time in this format: "
+                    + NEW_DEADLINE_TIME_INPUT_FORMAT));
             break;
 
         case (PARAM_LESSON):
-            System.out.println("Please input your new time in this format: " + NEW_LESSON_TIME_INPUT_FORMAT);
+            System.out.println(colourTextCyan("Please input your new time in this format: "
+                    + NEW_LESSON_TIME_INPUT_FORMAT));
             break;
 
         default:
@@ -189,15 +192,15 @@ public class Ui {
         switch (type) {
 
         case (PARAM_LESSON):
-            System.out.println("Please input your new Module Code");
+            System.out.println(colourTextCyan("Please input your new Module Code"));
             break;
 
         case (PARAM_DEADLINE):
-            System.out.println("Please input your new Deadline name");
+            System.out.println(colourTextCyan("Please input your new Deadline name"));
             break;
 
         case (PARAM_EVENT):
-            System.out.println("Please input your new Event name");
+            System.out.println(colourTextCyan("Please input your new Event name"));
             break;
 
         default:
@@ -246,11 +249,11 @@ public class Ui {
     }
 
     public void showNoteTitleMessage() {
-        System.out.println("Please put in a title:\n");
+        System.out.println(colourTextCyan("Please put in a title:\n"));
     }
 
     public void showNoteDescriptionMessage() {
-        System.out.println("Alright! Please fill in your notes.\n");
+        System.out.println(colourTextCyan("Alright! Please fill in your notes.\n"));
     }
 
     public void showFileCreationError() {
@@ -294,17 +297,17 @@ public class Ui {
     }
 
     public void showInvalidNumberMessage() {
-        System.out.println("The number you inputted is invalid!");
+        System.out.println(colourTextRed("The number you inputted is invalid!"));
         printSeparator();
     }
 
     public void showNoTitleFoundMessage() {
-        System.out.println("The title you inputted is not found...");
+        System.out.println(colourTextRed("The title you inputted is not found..."));
         printSeparator();
     }
 
     public void showNumberFormatMessage() {
-        System.out.println("\nOpps! The input must be a number!");
+        System.out.println(colourTextRed("\nOpps! The input must be a number!"));
         printSeparator();
     }
 
@@ -331,149 +334,151 @@ public class Ui {
     }
 
     public void showParseIncorrectCommandFormatMessage() {
-        System.out.println("I'm sorry! Please double check the input of your format!");
-        System.out.println("Use the help command for formats of all the commands!");
+        System.out.println(colourTextRed("I'm sorry! Please double check the input of your format!"));
+        System.out.println(colourTextGreen("Use the help command for formats of all the commands!"));
         printSeparator();
     }
 
     public void showParseIncorrectDateTimeMessage() {
-        System.out.println("I'm sorry! Please ensure your dates are in the format dd-mm-yy,");
-        System.out.println("and your times are in the format hh:mm!");
+        System.out.println(colourTextRed("I'm sorry! Please ensure your dates are in the format dd-mm-yy,"));
+        System.out.println(colourTextRed("and your times are in the format hh:mm!"));
         printSeparator();
     }
 
     public void showEmptyDescriptionMessage() {
-        System.out.println("Empty description! =O\n");
+        System.out.println(colourTextRed("Empty description! =O\n"));
     }
 
     public void showNoMatchesMessage(String type) {
-        System.out.println("Sorry! There is no " + type + " matching your query. Please re-enter your command.");
+        System.out.println(colourTextRed("Sorry! There is no " + type + " matching your query. Please "
+                + "re-enter your command."));
     }
 
     public void showNoteAddedMessage() {
-        System.out.println("Ok! I've taken note of this note!");
+        System.out.println(colourTextGreen("Ok! I've taken note of this note!"));
     }
 
     public void showMultipleMatchesFoundMessage() {
-        System.out.println("Multiple matches found! Please select the one you are looking for:\n");
+        System.out.println(colourTextCyan("Multiple matches found! Please select the one you are looking "
+                + "for:\n"));
     }
 
     public void showSelectWhichNoteToViewMessage() {
-        System.out.println("Please select the notes you want to view:\n");
+        System.out.println(colourTextCyan("Please select the notes you want to view:\n"));
     }
 
     public void showFreeTimeMessage(int startHour, int endHour, int duration) {
 
         if (duration > 0) {
-            System.out.println("You have " + duration + " hours of free time between " + startHour
-                    + ":00 and " + endHour + ":00!");
-            System.out.println("You can try scheduling something in this time!");
+            System.out.println(colourTextGreen("You have " + duration + " hours of free time between "
+                    + startHour + ":00 and " + endHour + ":00!"));
+            System.out.println(colourTextCyan("You can try scheduling something in this time!"));
 
         } else {
-            System.out.println("Unfortunately you have no free time today!");
-            System.out.println("You might want to relax a little!");
+            System.out.println(colourTextRed("Unfortunately you have no free time today!"));
+            System.out.println(colourTextGreen("You might want to relax a little!"));
         }
 
         printSeparator();
     }
 
     public void showNothingScheduledMessage() {
-        System.out.println("You have nothing on for today and tomorrow!");
+        System.out.println(colourTextGreen("You have nothing on for today and tomorrow!"));
     }
 
     public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
-        System.out.println("You have nothing on from " + earliestSleepTime + ":00 today to " + latestWakeTime
-                + ":00 tomorrow!");
+        System.out.println(colourTextGreen("You have nothing on from " + earliestSleepTime + ":00 today to "
+                + latestWakeTime + ":00 tomorrow!"));
     }
 
     public void showSleepDurationMessage(int duration) {
-        System.out.println("You can sleep for up to " + duration + " hours!");
+        System.out.println(colourTextGreen("You can sleep for up to " + duration + " hours!"));
     }
 
     public void showExcessSleepDurationMessage() {
-        System.out.println("You can sleep for the recommended 8 hours or longer!");
+        System.out.println(colourTextGreen("You can sleep for the recommended 8 hours or longer!"));
     }
 
     public void showSelectWhichNoteToDeleteMessage() {
-        System.out.println("Please select the notes you want to delete:\n");
+        System.out.println(colourTextCyan("Please select the notes you want to delete:\n"));
     }
 
     public void showConfirmDeleteMessage() {
-        System.out.println("Is this the note you want to delete? (Y/N)\n");
+        System.out.println(colourTextCyan("Is this the note you want to delete? (Y/N)\n"));
     }
 
     public void showInvalidConfirmationMessage() {
-        System.out.println("Y for Yes and N for No\n");
+        System.out.println(colourTextCyan("Y for Yes and N for No\n"));
     }
 
     public void showNoteNotDeletedMessage() {
-        System.out.println("OK! Note not deleted!");
+        System.out.println(colourTextGreen("OK! Note not deleted!"));
     }
 
     public void showNoteDeletedMessage() {
-        System.out.println("OK! Note deleted!");
+        System.out.println(colourTextGreen("OK! Note deleted!"));
     }
 
     public void showConfirmEditMessage() {
-        System.out.println("Is this the note you want to edit? (Y/N)\n");
+        System.out.println(colourTextCyan("Is this the note you want to edit? (Y/N)\n"));
     }
 
     public void showEditWhichPartMessage() {
-        System.out.println("Do you want to change the title or description? (T/D)\n");
+        System.out.println(colourTextCyan("Do you want to change the title or description? (T/D)\n"));
     }
 
     public void showNoteNotEditedMessage() {
-        System.out.println("OK! Note not edited!");
+        System.out.println(colourTextGreen("OK! Note not edited!"));
         printSeparator();
     }
 
     public void showInvalidTitleDescriptionConfirmationMessage() {
-        System.out.println("T for title and D for Description\n");
+        System.out.println(colourTextRed("T for title and D for Description\n"));
     }
 
     public void showEditTitleMessage() {
-        System.out.println("Please input the title you want to change to:\n");
+        System.out.println(colourTextCyan("Please input the title you want to change to:\n"));
     }
 
     public void showEditDescriptionMessage() {
-        System.out.println("\nPlease input the description you want to change to:\n");
+        System.out.println(colourTextCyan("\nPlease input the description you want to change to:\n"));
     }
 
     public void showSelectWhichNoteToEditMessage() {
-        System.out.println("Please select the notes you want to edit:\n");
+        System.out.println(colourTextCyan("Please select the notes you want to edit:\n"));
     }
 
     public void showEmptyNoteListMessage() {
-        System.out.println("There's no Notes!");
+        System.out.println(colourTextGreen("There's no Notes!"));
         printSeparator();
     }
 
     public void showAddModuleCodeMessage() {
-        System.out.println("Please input the module code:");
+        System.out.println(colourTextCyan("Please input the module code:"));
     }
 
     public void showAddDateMessage() {
-        System.out.println("Please input the date:");
+        System.out.println(colourTextCyan("Please input the date:"));
     }
 
     public void showAddStartTimeMessage() {
-        System.out.println("Please input the start time:");
+        System.out.println(colourTextCyan("Please input the start time:"));
     }
 
     public void showAddEndTimeMessage() {
-        System.out.println("Please input the end time:");
+        System.out.println(colourTextCyan("Please input the end time:"));
     }
 
     public void showAddDescriptionMessage() {
-        System.out.println("Please input the description:");
+        System.out.println(colourTextCyan("Please input the description:"));
     }
 
     public void showAddDateTimeMessage() {
-        System.out.println("Please input the Date Time:");
+        System.out.println(colourTextCyan("Please input the Date Time:"));
     }
 
     public void showAddRecurrencesMessage() {
-        System.out.println("Please input the number of times to repeat:");
+        System.out.println(colourTextCyan("Please input the number of times to repeat:"));
     }
 
     public void printMultipleNoteMatches(NoteList notes, String title) {
@@ -492,35 +497,40 @@ public class Ui {
 
     public void showEnterUndoTypeMessage() {
         printSeparator();
-        System.out.println("To undo a change in tasks, please enter: task");
-        System.out.println("To undo a change in notes, please enter: note");
+        System.out.println(colourTextCyan("To undo a change in tasks, please enter:") + "task");
+        System.out.println(colourTextCyan("To undo a change in notes, please enter:") + "note");
     }
 
     public void showInvalidUndoType() {
-        System.out.println("Invalid undo type, please try again!");
+        System.out.println(colourTextRed("Invalid undo type, please try again!"));
     }
 
     public void showInvalidUndoAction() {
-        System.out.println("Nothing to undo!");
+        System.out.println(colourTextGreen("Nothing to undo!"));
     }
 
     public void showUndoTaskEditMessage() {
-        System.out.println("This task has been reverted back to its previous version!");
+        System.out.println(colourTextGreen("This task has been reverted back to its previous version!"));
     }
 
     public void showUndoTaskDeleteMessage() {
-        System.out.println("This deleted task has been successfully restored!");
+        System.out.println(colourTextGreen("This deleted task has been successfully restored!"));
     }
 
     public void showUndoNoteEditMessage() {
-        System.out.println("This note has been reverted back to its previous version!");
+        System.out.println(colourTextGreen("This note has been reverted back to its previous version!"));
     }
 
     public void showUndoNoteDeleteMessage() {
-        System.out.println("This deleted note has been successfully restored!");
+        System.out.println(colourTextGreen("This deleted note has been successfully restored!"));
     }
 
     public void printEmptyParam(String param) {
-        System.out.println("We detected that you did not fill in the field of " + param + ". Please fill it in:");
+        System.out.println(colourTextRed("We detected that you did not fill in the field of " + param
+                + ". Please fill it in:"));
+    }
+
+    public void showUndeterminableRecurrenceError() {
+        System.out.println(colourTextRed("There was an error reading the task recurrence"));
     }
 }
