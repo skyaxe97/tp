@@ -1,17 +1,17 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.EmptyNoteListException;
-import seedu.lifeasier.notes.Note;
-import seedu.lifeasier.notes.NoteCommandFunctions;
-import seedu.lifeasier.notes.NoteHistory;
-import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.notes.TitleNotFoundException;
+import seedu.lifeasier.model.notes.EmptyNoteListException;
+import seedu.lifeasier.model.notes.Note;
+import seedu.lifeasier.model.notes.NoteCommandFunctions;
+import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.notes.NoteList;
+import seedu.lifeasier.model.notes.TitleNotFoundException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
-import seedu.lifeasier.parser.Parser;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

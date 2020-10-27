@@ -1,9 +1,9 @@
 package seedu.lifeasier.ui;
 
 import org.fusesource.jansi.AnsiConsole;
-import seedu.lifeasier.tasks.Deadline;
-import seedu.lifeasier.tasks.Task;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.tasks.Deadline;
+import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
