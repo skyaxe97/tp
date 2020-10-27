@@ -255,13 +255,11 @@ and passed on to NoteStorage. Figure 4.4 illustrates the flow of addNotes throug
 ![Figure 4.4-1][(images/DeveloperGuide/Figure 4.4-1.png)
 _Figure 4.4-1: Sequence diagram for addNotesCommand_
 
-
 ##### Design Considerations
 
 An empty string must be defined clearly (a long string of spaces/no string) and must not be inputted 
 by the user as it affects the usability and searchability of the NoteList. As such, checks would need to
 be implemented to prevent any hiccups by the user.
-
 
 ### 4.5 Editing and Deleting Notes (Edmund)
 
