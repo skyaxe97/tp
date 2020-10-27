@@ -1,6 +1,6 @@
 # LifEasier User Guide
 
-##Table of Contents
+## Table of Contents
 
 * [1.0 Introduction](#10-introduction)
 * [2.0 Quick Start](#20-quick-start)
