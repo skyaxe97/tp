@@ -1,6 +1,7 @@
 # LifEasier User Guide
 
-##Table of Contents
+## Table of Contents
+
 * [1.0 Introduction](#10-introduction)
 * [2.0 Quick Start](#20-quick-start)
 * [3.0 User Features](#30-user-features)
@@ -12,15 +13,16 @@
     * [3.6 Editing an Event: `editEvent`](#36-editing-an-event-editevent)
     * [3.7 Editing a Deadline: `editDeadline`](#37-editing-a-deadline-editdeadline)
     * [3.8 Deleting a Task: `deleteTask`](#38-deleting-a-task-deletetask)
-    * [3.9 Displaying Schedule: `display`](#39-displaying-schedule-display)
-    * [3.10 Viewing Available Free Time: `freeTime`](#310-viewing-available-free-time-freetime)
-    * [3.11 Viewing Available Sleep Time: `sleepTime`](#311-viewing-available-sleep-time-sleeptime)
-    * [3.12 Adding a New Note: `addNotes`](#312-adding-a-new-note-addnotes)
-    * [3.13 Showing Notes: `showNotes`](#313-showing-notes-shownotes)
-    * [3.14 Deleting a Note: `deleteNotes`](#314-deleting-a-note-deletenotes)
-    * [3.15 Editing a Note: `editNotes`](#315-editing-a-note-editnotes)
-    * [3.16 Archiving Notes: `archive`](#316-archiving-notes-archive)
-    * [3.17 Exiting: `exit`](#317-exiting-exit)
+    * [3.9 Undoing an Edit or Deletion: `undo`](#39-undoing-an-edit-or-deletion--undo)
+    * [3.10 Displaying Schedule: `display`](#310-displaying-schedule-display)
+    * [3.11 Viewing Available Free Time: `freeTime`](#311-viewing-available-free-time-freetime)
+    * [3.12 Viewing Available Sleep Time: `sleepTime`](#312-viewing-available-sleep-time-sleeptime)
+    * [3.13 Adding a New Note: `addNotes`](#313-adding-a-new-note-addnotes)
+    * [3.14 Showing Notes: `showNotes`](#314-showing-notes-shownotes)
+    * [3.15 Deleting a Note: `deleteNotes`](#315-deleting-a-note-deletenotes)
+    * [3.16 Editing a Note: `editNotes`](#316-editing-a-note-editnotes)
+    * [3.17 Archiving Notes: `archive`](#317-archiving-notes-archive)
+    * [3.18 Exiting: `exit`](#318-exiting-exit)
 * [4. Other Features](#40-other-features)
     * [4.1 Storing Data](#41-storing-data)
     * [4.2 Recurring Tasks and Auto Deletion](#42-recurring-tasks-and-auto-deletion)
@@ -128,21 +130,22 @@ _Figure 3.1-1: An example of using the help command_
 ### 3.6 Editing an Event: `editEvent`
 ### 3.7 Editing a Deadline: `editDeadline`
 ### 3.8 Deleting a Task: `deleteTask`
-### 3.9 Undoing an edit or deletion:  `undo`
+
+### 3.9 Undoing an Edit or Deletion:  `undo`
 
 Undoes the most recent edits or deletions made on tasks or notes.
 
-#####Notes on undo command:
+##### Notes on undo Command:
 Tasks refer to lessons, deadlines and events.
 
 Format: `undo TYPE`
 
-#####Notes on undo Command Format:
+##### Notes on undo Command Format:
 * The `TYPE` can either be `task` or `note`.
 * If not specified, the system will prompt you to enter `task` or `note`.
 
-######Example:
-An example of how to use the undo command is shown in Figure 3.8-1.
+###### Example:
+An example of how to use the undo command is shown in Figure 3.9-1.
 ```
 undo
 =========================================================================
@@ -152,18 +155,18 @@ task
 This task has been reverted back to its previous version!
 Deadline: homework by (28 Oct 2020, 09:00), repeats weekly 0 times
 ```
-Figure 3.9-1: An example of using the deleteTask command
+Figure 3.9-1: An example of using the undo command
 
 ### 3.10 Displaying Schedule: `display`
 Displays your current schedule. Use this command to view what your schedule is like for today or for the whole week.
 Format: `display [WEEK]`
 
-#####Notes on display Command Format:
+##### Notes on display Command Format:
 * If `WEEK` is specified, the schedule for the week will be shown. If not, the schedule for the day will be shown instead.
 * The `display week` command displays the schedule of the upcoming week, in 1 hour intervals. 
 * The entire row with all tasks that fall in the current hour will be coloured in cyan for your ease of reference. 
 
-######Examples:
+###### Examples:
 `display` displays the schedule for today. An example of how to use the display command is shown below in Figure 3.9-1.
 
 ```
@@ -212,49 +215,55 @@ Here are your upcoming deadlines this week:
 ```
 *Figure 3.10-2: An example of using the display week command to view your weekly schedule*
 
-### 3.10 Viewing Available Free Time: `freeTime`
+### 3.11 Viewing Available Free Time: `freeTime`
+
 Displays your longest block of free time for that day based on the schedule.
 Use this command to find out when is a good time to schedule something.
 
 ##### Notes on freeTime Command:
+
 - The system only searches for free time between 7:00 and 24:00. This is to promote a healthy sleep cycle.
 Format: `freeTime`
 
 ###### Example:
-An example of how to use the freeTime command is shown in Figure 3.10-1.
+
+An example of how to use the freeTime command is shown in Figure 3.11-1.
 ```
 freeTime
 You have 10 hours of free time between 14:00 and 24:00!
 You can try scheduling something in this time!
 =========================================================================
 ```
-*Figure 3.10-1: An example of using the freeTime command.*
+_Figure 3.11-1: An example of using the freeTime command._
 
 
-### 3.11 Viewing Available Sleep Time: `sleepTime`
+### 3.12 Viewing Available Sleep Time: `sleepTime`
+
 Displays how much time you have available to sleep based on your schedule for that day and the day after.
 Use this command to find out if you can have a good rest after a long day.
 
 ##### Notes on sleepTime Command:
-- The system recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
-- The system will also count the hour before your first activity in the day as busy,
+
+* The system recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
+* The system will also count the hour before your first activity in the day as busy,
 to give you time to wake up and get ready. E.g. if your first activity is at 9:00, 
 the system will tell you that you have nothing on only until 8:00.
 
 Format: sleepTime
 
 ###### Example:
-An example of how to use the sleepTime command is shown in Figure 3.11-1.
+
+An example of how to use the sleepTime command is shown in Figure 3.12-1.
 ```
 sleepTime
 You have nothing on from 14:00 today to 8:00 tomorrow!
 You can sleep for the recommended 8 hours or longer!
 =========================================================================
 ```
-*Figure 3.11-1: An example of using sleepTime command*
+_Figure 3.12-1: An example of using sleepTime command_
 
 
-### 3.12 Adding a New Note: `addNotes`
+### 3.13 Adding a New Note: `addNotes`
 Adds and stores a note. Use this command to take notes from your classes or events.
 Format: addNotes [TITLE]
 
@@ -263,7 +272,7 @@ Format: addNotes [TITLE]
 - If TITLE is not provided, LifEasier will prompt you for a notes title.
 
 ###### Example:
-An example of how to use the addNotes command is shown in Figure 3.12-1.
+An example of how to use the addNotes command is shown in Figure 3.13-1.
 ```
 addNotes Cats are the best!
 =========================================================================
@@ -273,9 +282,9 @@ Cats are the cutest in the world :D
 Ok! I've taken note of this note!
 =========================================================================
 ```
-*Figure 3.12-1: An example of using the addNotes command
+*Figure 3.13-1: An example of using the addNotes command
 
-### 3.13 Showing Notes: `showNotes`
+### 3.14 Showing Notes: `showNotes`
 Displays a note/list of notes. Use this command to view the notes you have taken before.
 Format: showNotes [TITLE] 
 
@@ -287,7 +296,7 @@ will be displayed.
 displayed in a list. 
 
 ###### Example:
-An example of how to use the showNotes command is shown in Figure 3.13-1.
+An example of how to use the showNotes command is shown in Figure 3.14-1.
 ```
 showNotes Cats
 =========================================================================
@@ -297,9 +306,9 @@ Cats are the cutest in the world :D
 
 =========================================================================
 ```
-*Figure 3.13-1: An example of using the showNotes command
+*Figure 3.14-1: An example of using the showNotes command
 
-### 3.14 Deleting a Note: `deleteNotes`
+### 3.15 Deleting a Note: `deleteNotes`
 Deletes a note from the list. Use this command to remove the notes you no longer need.
 Format: deleteNotes [TITLE] 
 
@@ -312,7 +321,7 @@ displayed in a list.
 - Entering “Y” would delete the note from the list. Entering “N” would exit the command without deletion. 
 
 ###### Example:
-An example of how to use the deleteNotes command is shown in Figure 3.14-1.
+An example of how to use the deleteNotes command is shown in Figure 3.15-1.
 ```
 deleteNotes
 =========================================================================
@@ -331,9 +340,9 @@ Y
 OK! Note deleted!
 =========================================================================
 ```
-*Figure 3.14-1: An example of using the deleteNotes command
+*Figure 3.15-1: An example of using the deleteNotes command
 
-### 3.15 Editing a Note: `editNotes`
+### 3.16 Editing a Note: `editNotes`
 Edits a note from the list. Use this command to make changes to notes you have taken before.
 Format: editNotes [TITLE] 
 
@@ -349,7 +358,7 @@ exit the command without deletion.
 show the current description and prompt for a new description.
 
 ###### Example:
-An example of how to use the editNotes command is shown in Figure 3.15-1.
+An example of how to use the editNotes command is shown in Figure 3.16-1.
 ```
 editNotes Cats
 =========================================================================
@@ -374,9 +383,9 @@ I really love cats!
 OK! Your description is now: I really love cats!
 =========================================================================
 ```
-*Figure 3.15-1: An example of using the editNotes command
+*Figure 3.16-1: An example of using the editNotes command
 
-### 3.16 Archiving Notes: `archive`
+### 3.17 Archiving Notes: `archive`
 Archives all existing notes. Use this command to store all your notes in a separate save file. These notes will no 
 longer be displayed anywhere.
 
@@ -390,7 +399,7 @@ Format: `archive`
 * There is no way to undo this action, so use the `archive` command with care.
 
 ###### Example:
-An example of how to use the archive command is shown in Figure 3.16-1.
+An example of how to use the archive command is shown in Figure 3.17-1.
 ````
 archive
 =========================================================================
@@ -398,20 +407,20 @@ Starting archiving...
 Archiving successful!
 =========================================================================
 ````
-_Figure 3.16-1: An example of using the archive command_
+_Figure 3.17-1: An example of using the archive command_
 
-### 3.17 Exiting: `exit`
+### 3.18 Exiting: `exit`
 Exits the programme. Use this command when you are done using LifEasier.
 
 Format: `exit`
 
 ###### Example:
-An example of how to use the exit command is shown in Figure 3.17-1.
+An example of how to use the exit command is shown in Figure 3.18-1.
 ````
 exit
 Goodbye, hope to see you again soon!
 ````
-_Figure 3.17-1: An example of using the exit command_
+_Figure 3.18-1: An example of using the exit command_
 
 ## 4.0 Other Features
 This section covers some of the features which do not rely on your input to be executed. Rather, they happen in the 

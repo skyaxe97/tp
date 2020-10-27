@@ -23,7 +23,7 @@ public class EditLessonCommand extends Command {
     }
 
     public void printLessonsMatchingCode(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui.PARAM_LESSON, code, ui);
+        tasks.printMatchingTasks(Ui.PARAM_LESSON, code, ui);
     }
 
     public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
