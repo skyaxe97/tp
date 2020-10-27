@@ -516,7 +516,7 @@ public class Ui {
     }
 
     public void showOldTask(TaskHistory taskHistory) {
-        System.out.println(taskHistory.getLastTask());
+        System.out.println(taskHistory.getLastTask().toString());
     }
 
     public void showUndoNoteEditMessage() {

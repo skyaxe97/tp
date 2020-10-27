@@ -26,7 +26,7 @@ public class UndoTaskCommand extends Command {
 
             if (lastTaskEditNumber > 0) {
                 ui.showUndoTaskEditMessage();
-            } else {
+            } else if (lastTaskEditNumber < 0){
                 ui.showUndoTaskDeleteMessage();
             }
             ui.showOldTask(taskHistory);
@@ -36,5 +36,6 @@ public class UndoTaskCommand extends Command {
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidUndoAction();
         }
+        ui.printSeparator();
     }
 }
