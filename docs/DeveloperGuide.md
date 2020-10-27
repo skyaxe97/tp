@@ -164,83 +164,81 @@ The following section will go into further details on how the different features
 
 ### 4.1 Adding Lessons, Events, Deadlines (Fairuz)
 
-The addLesson/addEvent/addDeadline command adds the specific task into the TaskList.
+The `addLesson`, `addEvent` and `addDeadline` commands adds the specific task into the `TaskList`.
 
 ##### Implementation
 
 Due to the different parameters required by the addition of different types of tasks, each command has
  a specific intended parameter to be input by the user.
 
-For example, if the user uses the addEvent command, the user will have to input the EVENT_NAME,
- START_TIME and END_TIME, whereas if the user uses the addDeadline command, the user will have input DEADLINE_NAME and BY.
+For example, if the user uses the `addEvent` command, the user will have to input the `EVENT_NAME`,
+ `START_TIME` and `END_TIME`, whereas if the user uses the `addDeadline` command, the user will have input `DEADLINE_NAME` and `BY`.
 
-When the command is called, the class invokes the TaskList class method to add the specific task to
- the TaskList, after which Storage is called to save the updated TaskList to the local save file. Figure 4.1-1 shows the 
- sequence diagram for the addDeadlineCommand. This sequence diagram is applicable to the other two addEventCommand and 
- addLessonCommand, with the only difference being in their parameters.
+When the command is called, the class invokes the `TaskList` class method to add the specific task to
+ the `TaskList`, after which `Storage` is called to save the updated `TaskList` to the local save file. Figure 4.1-1 shows the 
+ sequence diagram for the `addDeadlineCommand`. This sequence diagram is applicable to the other two `addEventCommand` and 
+ `addLessonCommand`, with the only difference being in their parameters.
  
- ![Figure 4.1-1](images/DeveloperGuide/Figure 4.1-1.png)  
+ ![Figure 4.1-1](images/DeveloperGuide/Figure%204.1-1.png)  
  _Figure 4.1-1: Sequence diagram for addDeadlineCommand execution_
 
 ##### Design Considerations
 
-The success and accuracy of the command is heavily dependent on the values passed to the command by the Parser class.
- Thus, checks have to be thoroughly conducted by the Parser class before the Command class is invoked.
+The success and accuracy of the command is heavily dependent on the values passed to the command by the `Parser` class.
+ Thus, checks have to be thoroughly conducted by the `Parser` class before the `Command` class is invoked.
 
 ### 4.2 Editing Lessons, Events, Deadlines (Fairuz)
 
-The editEventCommand, editDeadlineCommand and editLessonCommand allows the user to edit existing
- tasks in the TaskList according to the type of task.
+The `editEventCommand`, `editDeadlineCommand` and `editLessonCommand` allows the user to edit existing
+ tasks in the `TaskList` according to the type of task.
 
 ##### Implementation
 
-These command classes will be invoked when the user inputs the editTask command, followed by
+These command classes will be invoked when the user inputs the `editTask` command, followed by
  the type of task to be edited. 
 
-The user also has an option to input the task’s name, or part of it, after which LifEasier
+The user also has an option to input the task’s name, or part of it, after which **LifEasier**
  will print out all tasks matching the type, and the user query. If the user chooses to leave
- that search parameter blank, LifEasier will print out all the tasks of the intended type.
+ that search parameter blank, **LifEasier** will print out all the tasks of the intended type.
  The program will then prompt User to input the index of the task to be edited.
 
-Upon receiving a valid index of a task to be edited, LifEasier will prompt the User for the
- parameter to be edited - Name or Time. 
+Upon receiving a valid index of a task to be edited, **LifEasier** will prompt the User for the
+ parameter to be edited - `Name` or `Time`. 
 
-Upon receiving a valid option of parameter to edit, LifEasier will prompt the User to input
- the new descriptions. If the User input is valid according to the required format, LifEasier will print a confirmation
- of the edit. The edited task will then be saved by Storage. Figure 4.2-1 illustrates the flow of editDeadlineCommand 
- through a sequence diagram. The logic of this class remains the same among the different types of Tasks.
+Upon receiving a valid option of parameter to edit, **LifEasier** will prompt the User to input
+ the new descriptions. If the User input is valid according to the required format, **LifEasier** will print a confirmation
+ of the edit. The edited task will then be saved by `Storage`. Figure 4.2-1 illustrates the flow of `editDeadlineCommand` 
+ through a sequence diagram. The logic of this class remains the same among the different types of `Tasks`.
 
-![Figure 4.2-1](images/DeveloperGuide/Figure 4.2-1.png)  
-![Figure 4.2-1.1](images/DeveloperGuide/Figure 4.2-1.1.png)  
+![Figure 4.2-1](images/DeveloperGuide/Figure%204.2-1.png)    
 _Figure 4.2-1: Sequence diagram for editDeadlineCommand execution_
 
 ##### Design Considerations
 
 Due to the difference in the types of tasks and their parameters, this functionality was designed to guide the User
- explicitly to ensure accurate inputs and thus efficiency.
+ explicitly to ensure accurate inputs and thus efficiency. This will have minimal impact on the efficiency of the program,
+ while improving the quality of use for the User.
  
 ### 4.3 Deleting of Lessons, Events, Deadlines (Fairuz)
 
-The deleteTaskCommand allows the user to delete any task (lesson, event or deadline) from the TaskList.
-
+The `deleteTaskCommand` allows the user to delete any `Task` (lesson, event or deadline) from the `TaskList`.
 
 ##### Implementation
+The User first enters the `deleteTask` command and appends the type of task to be deleted. **LifEasier** will then print
+ out the list of tasks of the intended type. For example, when User inputs `deleteTask /type event`, **LifEasier** will 
+ print out all `Events` in the `TaskList`.
 
-The User first enters the deleteTask command and appends the type of task to be deleted. LifEasier will then print
- out the list of tasks of the intended type. For example, when User inputs “deleteTask /type event”, LifEasier will 
- print out all Events in the TaskList.
-
-LifEasier will then prompt the user to select the Task to be deleted by inputting the index of the Task as seen from
- the terminal. Before the Task is deleted, a temporary copy of the current state of the Task will be saved by 
- TaskHistory. The Task is then deleted and LifEasier will print the confirmation of the deletion. The old copy of the 
- Task will then be pushed to TaskHistory, and the updated TaskList will be saved by Storage. Figure 4.3 will illustrate 
- the flow of the deleteTaskCommand through a sequence diagram.
+**LifEasier** will then prompt the user to select the `Task` to be deleted by inputting the index of the `Task` as seen from
+ the terminal. Before the `Task` is deleted, a temporary copy of the current state of the `Task` will be saved by 
+ `TaskHistory`. The `Task` is then deleted and **LifEasier** will print the confirmation of the deletion. The old copy of the 
+ `Task` will then be pushed to `TaskHistory`, and the updated `TaskList` will be saved by `Storage`. Figure 4.3 will illustrate 
+ the flow of the `deleteTaskCommand` through a sequence diagram.
 
 ##### Design Considerations
 
 The command has to handle separate types of tasks as printing all tasks and forcing the User to look up the whole table
- would be impractical in the long run. The enhanced capability with TaskHistory to allow the User to undo any action is 
- crucial as its initial functionality did not have the ability to restore any accidentally deleted Tasks.
+ would be impractical in the long run. The enhanced capability with `TaskHistory` to allow the User to undo any action is 
+ crucial as its initial functionality did not have the ability to restore any accidentally deleted `Tasks`.
 
 ![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
 _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
@@ -263,13 +261,11 @@ and passed on to NoteStorage. Figure 4.4 illustrates the flow of addNotes throug
 ![Figure 4.4-1][(images/DeveloperGuide/Figure 4.4-1.png)
 _Figure 4.4-1: Sequence diagram for addNotesCommand_
 
-
 ##### Design Considerations
 
 An empty string must be defined clearly (a long string of spaces/no string) and must not be inputted 
 by the user as it affects the usability and searchability of the NoteList. As such, checks would need to
 be implemented to prevent any hiccups by the user.
-
 
 ### 4.5 Editing and Deleting Notes (Edmund)
 
