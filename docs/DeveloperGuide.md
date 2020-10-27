@@ -100,6 +100,7 @@ and archiving system of **LifEasier** was implemented, followed by the considera
 Figure 4.6-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
 that exist then as shown in the class diagram. These have been omitted for simplicity.
 
+![Class Diagram Image](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageClassDiagram.png?raw=true)
 *Figure 4.6-1: Class Diagram for all storage components*
 
 Figure 4.6-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
@@ -107,6 +108,7 @@ the main `LifEasier` class creates a new `FileStorage` object, which starts the 
 data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
+![Startup file load sequence diagram](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageLaunchSequenceDiagram.png?raw=true)
 *Figure 4.6-2: Sequence diagram for save data reading on startup*
 
 By default, the save directory is set as *LifEasierSaves* under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
@@ -121,6 +123,7 @@ requiring a few more additional steps to correctly convert the tasks’ `LocalDa
 readable save files. The format in which the `LocalDateTime` objects are converted to can be found in the `DateTimeFormatter` object in the 
 `FileCommand` class.
 
+![Save sequence diagram](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageSaveSequenceDiagram.png?raw=true)
 *Figure 4.6-3: Sequence diagram for saving of user note data*
 
 ##### Implementation - Note Archiving
