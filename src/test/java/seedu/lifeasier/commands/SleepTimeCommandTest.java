@@ -1,14 +1,14 @@
 package seedu.lifeasier.commands;
 
 import org.junit.jupiter.api.Test;
-import seedu.lifeasier.notes.NoteHistory;
-import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.Event;
-import seedu.lifeasier.tasks.Task;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.tasks.Event;
+import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.ByteArrayOutputStream;

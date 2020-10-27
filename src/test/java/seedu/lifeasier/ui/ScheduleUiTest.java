@@ -1,7 +1,7 @@
 package seedu.lifeasier.ui;
 
 import org.junit.jupiter.api.Test;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

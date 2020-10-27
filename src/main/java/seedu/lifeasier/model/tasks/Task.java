@@ -1,4 +1,4 @@
-package seedu.lifeasier.tasks;
+package seedu.lifeasier.model.tasks;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

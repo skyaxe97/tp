@@ -1,4 +1,4 @@
-package seedu.lifeasier.tasks;
+package seedu.lifeasier.model.tasks;
 
 import seedu.lifeasier.ui.Ui;
 
