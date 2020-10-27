@@ -419,10 +419,6 @@ public class Ui {
         System.out.println(colourTextGreen("OK! Note deleted!"));
     }
 
-    public void showConfirmEditMessage() {
-        System.out.println(colourTextCyan("Is this the note you want to edit? (Y/N)\n"));
-    }
-
     public void showEditWhichPartMessage() {
         System.out.println(colourTextCyan("Do you want to change the title or description? (T/D)\n"));
     }
@@ -431,7 +427,7 @@ public class Ui {
         System.out.println(colourTextGreen("OK! Note not edited!"));
         printSeparator();
     }
-
+    
     public void showInvalidTitleDescriptionConfirmationMessage() {
         System.out.println(colourTextRed("T for title and D for Description\n"));
     }
@@ -532,5 +528,9 @@ public class Ui {
 
     public void showUndeterminableRecurrenceError() {
         System.out.println(colourTextRed("There was an error reading the task recurrence"));
+    }
+
+    public void showRecurrencesNumberFormatError() {
+        System.out.println("The input for /repeats is not a number! Please try again:");
     }
 }
