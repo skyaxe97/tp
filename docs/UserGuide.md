@@ -72,7 +72,7 @@ For more detailed information, please visit the online user guide at:
 
 =========================================================================
 ````
-*Figure 3.1-1: An example of using the help command*
+_Figure 3.1-1: An example of using the help command_
 
 ### 3.2 Adding a Lesson: `addLesson`
 ### 3.3 Adding an Event: `addEvent`
@@ -110,7 +110,7 @@ Starting archiving...
 Archiving successful!
 =========================================================================
 ````
-*Figure 3.16-1: An example of using the archive command*
+_Figure 3.16-1: An example of using the archive command_
 
 ### 3.17 Exiting: `exit`
 Exits the programme. Use this command when you are done using LifEasier.
@@ -123,7 +123,7 @@ An example of how to use the exit command is shown in Figure 3.17-1.
 exit
 Goodbye, hope to see you again soon!
 ````
-*Figure 3.17-1: An example of using the exit command*
+_Figure 3.17-1: An example of using the exit command_
 
 ## 4.0 Other Features
 This section covers some of the features which do not rely on your input to be executed. Rather, they happen in the 
