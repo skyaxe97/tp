@@ -1,6 +1,7 @@
 # LifEasier User Guide
 
 ##Table of Contents
+
 * [1.0 Introduction](#10-introduction)
 * [2.0 Quick Start](#20-quick-start)
 * [3.0 User Features](#30-user-features)
@@ -44,14 +45,17 @@
 ### 3.9 Displaying Schedule: `display`
 
 ### 3.10 Viewing Available Free Time: `freeTime`
+
 Displays your longest block of free time for that day based on the schedule.
 Use this command to find out when is a good time to schedule something.
 
 ##### Notes on freeTime Command:
+
 - The system only searches for free time between 7:00 and 24:00. This is to promote a healthy sleep cycle.
 Format: `freeTime`
 
 ###### Example:
+
 An example of how to use the freeTime command is shown in Figure 3.10-1.
 ```
 freeTime
@@ -59,22 +63,25 @@ You have 10 hours of free time between 14:00 and 24:00!
 You can try scheduling something in this time!
 =========================================================================
 ```
-*Figure 3.10-1: An example of using the freeTime command.*
+_Figure 3.10-1: An example of using the freeTime command._
 
 
 ### 3.11 Viewing Available Sleep Time: `sleepTime`
+
 Displays how much time you have available to sleep based on your schedule for that day and the day after.
 Use this command to find out if you can have a good rest after a long day.
 
 ##### Notes on sleepTime Command:
-- The system recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
-- The system will also count the hour before your first activity in the day as busy,
+
+* The system recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
+* The system will also count the hour before your first activity in the day as busy,
 to give you time to wake up and get ready. E.g. if your first activity is at 9:00, 
 the system will tell you that you have nothing on only until 8:00.
 
 Format: sleepTime
 
 ###### Example:
+
 An example of how to use the sleepTime command is shown in Figure 3.11-1.
 ```
 sleepTime
@@ -82,7 +89,7 @@ You have nothing on from 14:00 today to 8:00 tomorrow!
 You can sleep for the recommended 8 hours or longer!
 =========================================================================
 ```
-*Figure 3.11-1: An example of using sleepTime command*
+_Figure 3.11-1: An example of using sleepTime command_
 
 
 ### 3.12 Adding a New Note: `addNotes`
