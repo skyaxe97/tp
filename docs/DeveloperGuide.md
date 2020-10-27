@@ -635,7 +635,7 @@ Test deletion of tasks and notes with the following commands.
 Use the following command to archive all currently loaded notes.
 * `archive`
 
-Now, when `showNotes` is used, there should be no notes listed. Navigate to the “LifEaserSaves” directory created in the same folder as LifEasier.jar was run, to find the created “Archives” directory. Your archived notes will be found in the created text file named corresponding to the date and time the archive command was run.
+Now, when `showNotes` is used, there should be no notes listed. Navigate to the _LifEasierSaves_ directory created in the same folder as `LifEasier.jar` was run, to find the created _Archives_ directory. Your archived notes will be found in the created text file named corresponding to the date and time the archive command was run.
 
 To show free time and sleep time, use the following commands.
 * `freeTime`
