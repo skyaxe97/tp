@@ -156,8 +156,142 @@ The command has to handle separate types of tasks as printing all tasks and forc
 ![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
 _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 ### 4.3 Adding Notes (Edmund)
+
+The addNotes command adds user’s notes to the NoteList with a specified title and description. 
+
+#####Implementation
+The addNotes command first starts with 2 paths: with or without title. If a title is added alongside the 
+“addNotes” (ie. the user inputs “addNotes cats”) then the title is passed on to a method (isValidTitle) that would 
+check for a blank input. Conversely, if no title is appended, then the system would prompt the user for the title. 
+Either way, the system would still check for if the user inputs an empty title. 
+Next, the system would prompt the user for a description. Similar to title, the same method (isValidTitle), to check 
+if the user has inputted an empty String.
+Finally, if both title and description are of valid input, then the 2 parameters would be added to the NoteList 
+and passed on to NoteStorage. Figure 4.4 illustrates the flow of addNotes through a sequence diagram.
+
+![Figure 4.4-1][(images/DeveloperGuide/Figure 4.4-1.png)
+_Figure 4.4-1: Sequence diagram for addNotesCommand
+
+#####Design Considerations
+An empty string must be defined clearly (a long string of spaces/no string) and must not be inputted 
+by the user as it affects the usability and searchability of the NoteList. As such, checks would need to
+be implemented to prevent any hiccups by the user.
+
+
 ### 4.4 Editing and Deleting Notes (Edmund)
+The editNotes command allows the user to change the title or description of their notes stored in the NoteList.
+The deleteNotes command allows the user to remove the specified notes completely from the NoteList.
+
+#####Implementation
+Below illustrates the steps taken by each command to ensure their execution.
+######editNotes
+1. checkEmptyList would be called to ensure the NoteList is not empty before proceeding on with the execution. 
+If an empty list is detected, the command would terminate with a prompt of empty list to the user.
+2. A condition of whether the user has pre-inputted the title is checked.
+#######a. If the user pre-inputs a title, the findTitle function would go through the list to find the title. 
+If the input title does not match any of the titles in the list, the command would terminate with a 
+message: “title is not found”. If a match is found, the system prints out the note and asks for which part to edit. 
+In the case of multiple matches, the system would print all matching cases and ask the user to select amongst them.
+Following the confirmation, a “N” would terminate the command while a “Y” would proceed to ask which part of the note 
+would the user like to edit. “T” would mean editing the title while “D” would mean editing the description.
+#######b. If the user did not pre-input the title, the system would print all notes currently in the list and ask for 
+the user to select which note to edit among them. Following the confirmation for edit, a “N” would terminate the command 
+while a “Y” would proceed to ask which part of the note would the user like to edit. “T” would mean editing the title 
+while “D” would mean editing the description.
+       
+3. The new edited note would then be passed on to storage for saving.
+
+Figure 4.5-1 illustrates the above steps via a sequence diagram.
+![Figure 4.5-1][(images/DeveloperGuide/Figure 4.5-1.png)
+_Figure 4.5-1: Sequence diagram for editNotesCommand
+
+######editNotes
+1. checkEmptyList would be called to ensure the NoteList is not empty before proceeding on with the execution. 
+If an empty list is detected, the command would terminate with a prompt of empty list to the user.
+2. A condition of whether the user has pre-inputted the title is checked.
+#######a. If the user has included a title in the command, the findTitle function would go through the list to 
+find the title. If the input title does not match any of the titles in the list, the command would terminate with 
+a message: “title is not found”. If a match is found, the system prints out the note and asks for confirmation 
+for deletion. In the case of multiple matches, the system would print all matching cases and ask the user to select 
+amongst them. Following the confirmation, a “N” would terminate the command while a “Y” would proceed to remove the 
+note from the list.
+#######b. If the user did not pre-input the title, the system would print all notes currently in the list and ask 
+for the user to select which note to delete among them. Following the confirmation for deletion, a “N” would terminate 
+the command while a “Y” would proceed to remove the note from the list.
+
+3. The current note list would then be saved by the Storage class.
+
+Figure 4.5-2 illustrates the above steps via a Sequence Diagram.
+![Figure 4.5-2][(images/DeveloperGuide/Figure 4.5-2.png)
+_Figure 4.5-2: Sequence diagram for deleteNotesCommand
+
+#####Design Considerations
+- Any number inputs by the user must be checked through to ensure that it is not out of the available indexes 
+in the array. 
+- The function must deal with incorrect title inputs by the user. The user cannot input a title that is not found 
+in any of the notes nor can he input an invalid title such as an empty string.
+
+- In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
+an exception caught.
+
 ### 4.5 Storing and Archiving Notes (Danzel)
+The storing and saving of data in the **LifEasier** app is done automatically after every change such as adding, editing, 
+deleting a component such as a lesson, deadline, event or note. The following section documents how the data storing 
+and archiving system of **LifEasier** was implemented, followed by the considerations taken during the design of the storage components.
+
+##### Implementation - Data saving and storing
+Figure 4.6-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
+that exist then as shown in the class diagram. These have been omitted for simplicity.
+
+![Class Diagram Image](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageClassDiagram.png?raw=true)
+_Figure 4.6-1: Class Diagram for all storage components_
+
+Figure 4.6-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
+the main `LifEasier` class creates a new `FileStorage` object, which starts the save reading process to load in all the previously stored 
+data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
+Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
+
+![Startup file load sequence diagram](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageLaunchSequenceDiagram.png?raw=true)
+_Figure 4.6-2: Sequence diagram for save data reading on startup_
+
+By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
+The names of the tasks and notes save files are passed in as arguments from the main method in the `LifEasier` class, where the first 
+argument dictates the resulting name of the tasks save file, while the second determines the name of the notes save file. Save directory 
+names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
+
+Whenever a new task or note is added, edited or deleted, the `saveTask()` or `saveNote()` methods in the `FileStorage` class is called depending 
+on whether the changed item was a task or a note, to begin the data saving process. Figure 4.6-3 shows the sequence diagram taken by the program 
+to save the user’s notes data. The saving process for tasks and notes are implemented in similar ways, with the saving process for tasks 
+requiring a few more additional steps to correctly convert the tasks’ `LocalDateTime` information into formatted Strings to allow for more 
+readable save files. The format in which the `LocalDateTime` objects are converted to can be found in the `DateTimeFormatter` object in the 
+`FileCommand` class.
+
+![Save sequence diagram](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageSaveSequenceDiagram.png?raw=true)
+_Figure 4.6-3: Sequence diagram for saving of user note data_
+
+##### Implementation - Note Archiving
+The `archive` command immediately moves all currently loaded notes into a newly generated text file in the `Archives` directory found within the 
+_LifEasierSaves_ directory. If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
+current date in the **DD-MM-YY** format, and the time the archive command was run in the **HH:MM** format, separated by a **T**. The current save 
+file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` is 
+cleared. Archived notes will not be read by the program anymore and any changes can be made to the created archive save file.
+
+The `archive` command checks for the size of the current `noteList` before execution, and as such, when an empty `noteList` is detected, 
+the archiving process will not be started.
+
+##### Design Considerations
+In order to ensure users get the best hassle free and user-friendly experience while using **LifEasier**, saves are automatically done after any change 
+that affects any user added tasks and notes. While the constant clearing and rewriting of the save data whenever a change occurs may affect performance 
+when the save files get larger, it was decided that the convenience of an automatic saving system outweighs the performance costs, and the assurance 
+granted to users that their data is constantly saved without needing their manual intervention.
+
+Saves were also designed to be stored in simple plain text and easily accessible to users to allow experienced users to modify 
+the save files directly and easily, if required. 
+
+In the event of corrupted or missing data, the `storage` component defends and protects the app from potential issues that might arise from 
+reading in this data by throwing exceptions to stop any further data reading. Any data read up to that point is untouched, and the app will 
+continue to run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
+
 ### 4.6 Displaying Schedule (Johannine)
 ### 4.7 Displaying Free Time and Sleep Time (Daniel)
 ##### Implementation

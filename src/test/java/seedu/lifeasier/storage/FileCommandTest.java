@@ -37,16 +37,6 @@ class FileCommandTest {
     }
 
     @Test
-    void convertToBoolean_validString_convertedToTrue() {
-        assertEquals(true, fileCommand.convertToBoolean("True"));
-    }
-
-    @Test
-    void convertToBoolean_invalidString_convertedToTrue() {
-        assertEquals(false, fileCommand.convertToBoolean("True  "));
-    }
-
-    @Test
     void clearSaveFile_testFilePath_emptyFile() {
         try {
             FileWriter testFileWriter = new FileWriter(TEST_FILEPATH, true);
