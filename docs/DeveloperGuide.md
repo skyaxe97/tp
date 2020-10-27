@@ -228,14 +228,14 @@ The User first enters the `deleteTask` command and appends the type of task to b
  `Task` will then be pushed to `TaskHistory`, and the updated `TaskList` will be saved by `Storage`. Figure 4.3 will illustrate 
  the flow of the `deleteTaskCommand` through a sequence diagram.
 
+![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
+_Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
+
 ##### Design Considerations
 
 The command has to handle separate types of tasks as printing all tasks and forcing the User to look up the whole table
  would be impractical in the long run. The enhanced capability with `TaskHistory` to allow the User to undo any action is 
  crucial as its initial functionality did not have the ability to restore any accidentally deleted `Tasks`.
-
-![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
-_Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 
 ### 4.4 Adding Notes (Edmund)
 
