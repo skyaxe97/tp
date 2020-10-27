@@ -95,7 +95,7 @@ Each of these components are expanded on in more detail in their respective sect
 
 Figure 2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
 
-
+![Figure 3.1-2](images/DeveloperGuide/Figure 3.1-2.png)  
 _Fig 2. Sequence diagram of “addDeadline”._
 
 ### 3.2 Components
@@ -241,34 +241,36 @@ _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 
 ### 4.4 Adding Notes (Edmund)
 
-The addNotes command adds user’s notes to the NoteList with a specified title and description. 
+The `addNotes` command adds user’s notes to the NoteList with a specified title and description. 
 
 ##### Implementation
 
-The addNotes command first starts with 2 paths: with or without title. If a title is added alongside the 
-“addNotes” (ie. the user inputs “addNotes cats”) then the title is passed on to a method (isValidTitle) that would 
+The `addNotes` command first starts with 2 paths: with or without title. If a title is added alongside the 
+“addNotes” (ie. the user inputs “addNotes cats”) then the title is passed on to a method `isValidTitle` that would 
 check for a blank input. Conversely, if no title is appended, then the system would prompt the user for the title. 
 Either way, the system would still check for if the user inputs an empty title. 
-Next, the system would prompt the user for a description. Similar to title, the same method (isValidTitle), to check 
+Next, the system would prompt the user for a description. Similar to title, the same method `isValidTitle`, to check 
 if the user has inputted an empty String.
-Finally, if both title and description are of valid input, then the 2 parameters would be added to the NoteList 
-and passed on to NoteStorage. Figure 4.4 illustrates the flow of addNotes through a sequence diagram.
+Finally, if both title and description are of valid input, then the 2 parameters would be added to the `NoteList` 
+and passed on to `NoteStorage`. 
 
-![Figure 4.4-1][(images/DeveloperGuide/Figure 4.4-1.png)
+Figure 4.4-1 below illustrates the flow of `addNotes` through a sequence diagram.
+
+![Figure 4.4-1](images/DeveloperGuide/Figure 4.4-1.png)
 _Figure 4.4-1: Sequence diagram for addNotesCommand_
 
 
 ##### Design Considerations
 
 An empty string must be defined clearly (a long string of spaces/no string) and must not be inputted 
-by the user as it affects the usability and searchability of the NoteList. As such, checks would need to
+by the user as it affects the usability and searchability of the `NoteList`. As such, checks would need to
 be implemented to prevent any hiccups by the user.
 
 
 ### 4.5 Editing and Deleting Notes (Edmund)
 
-The editNotes command allows the user to change the title or description of their notes stored in the NoteList.
-The deleteNotes command allows the user to remove the specified notes completely from the NoteList.
+The `editNotes` command allows the user to change the title or description of their notes stored in the `NoteList`.
+The `deleteNotes` command allows the user to remove the specified notes completely from the `NoteList`.
 
 ##### Implementation
 
@@ -276,46 +278,46 @@ Below illustrates the steps taken by each command to ensure their execution.
 
 ###### editNotes
 
-1. checkEmptyList would be called to ensure the NoteList is not empty before proceeding on with the execution. 
+1. `checkEmptyList` would be called to ensure the `NoteList` is not empty before proceeding on with the execution. 
 If an empty list is detected, the command would terminate with a prompt of empty list to the user.
 1. A condition of whether the user has pre-inputted the title is checked.
-    * If the user pre-inputs a title, the findTitle function would go through the list to find the title. 
-If the input title does not match any of the titles in the list, the command would terminate with a 
-message: “title is not found”. If a match is found, the system prints out the note and asks for which part to edit. 
-In the case of multiple matches, the system would print all matching cases and ask the user to select amongst them.
-Following the confirmation, a “N” would terminate the command while a “Y” would proceed to ask which part of the note 
-would the user like to edit. “T” would mean editing the title while “D” would mean editing the description.
+    * If the user pre-inputs a title, the findTitle function would go through the list to find the title. If the input 
+    title does not match any of the titles in the list, the command would terminate with a message: 
+    “title is not found”. If a match is found, the system prints out the note and asks for which part to edit. 
+    In the case of multiple matches, the system would print all matching cases and ask the user to select amongst them. 
+    Following the confirmation, a “T” would mean editing the title while “D” would mean editing the description.
     * If the user did not pre-input the title, the system would print all notes currently in the list and ask for 
-the user to select which note to edit among them. Following the confirmation for edit, a “N” would terminate the command 
-while a “Y” would proceed to ask which part of the note would the user like to edit. “T” would mean editing the title 
+the user to select which note to edit among them. Following the confirmation, a “T” would mean editing the title 
 while “D” would mean editing the description.
        
 1. The new edited note would then be passed on to storage for saving.
 
 Figure 4.5-1 illustrates the above steps via a sequence diagram.
+
 ![Figure 4.5-1](images/DeveloperGuide/Figure 4.5-1.png)
 _Figure 4.5-1: Sequence diagram for editNotesCommand_
 
-###### editNotes
+###### deleteNotes
 
 1. checkEmptyList would be called to ensure the NoteList is not empty before proceeding on with the execution. 
 If an empty list is detected, the command would terminate with a prompt of empty list to the user.
 1. A condition of whether the user has pre-inputted the title is checked.
-    * If the user has included a title in the command, the findTitle function would go through the list to 
+    * If the user has included a title in the command, the `findTitle` function would go through the list to 
 find the title. If the input title does not match any of the titles in the list, the command would terminate with 
 a message: “title is not found”. If a match is found, the system prints out the note and asks for confirmation 
 for deletion. In the case of multiple matches, the system would print all matching cases and ask the user to select 
-amongst them. Following the confirmation, a “N” would terminate the command while a “Y” would proceed to remove the 
-note from the list.
+amongst them. Following the confirmation, a “N” would terminate the command while a “Y” would proceed to remove 
+the note from the list.
     * If the user did not pre-input the title, the system would print all notes currently in the list and ask 
 for the user to select which note to delete among them. Following the confirmation for deletion, a “N” would terminate 
 the command while a “Y” would proceed to remove the note from the list.
 
-1. The current note list would then be saved by the Storage class.
+1. The current note list would then be saved by the `Storage` class.
 
 Figure 4.5-2 illustrates the above steps via a Sequence Diagram.
+
 ![Figure 4.5-2](images/DeveloperGuide/Figure 4.5-2.png)
-_Figure 4.5-2: Sequence diagram for deleteNotesCommand
+_Figure 4.5-2: Sequence diagram for deleteNotesCommand_
 
 ##### Design Considerations
 
@@ -468,6 +470,21 @@ _Figure 4.8-2: Sequence diagram for sleepTimeCommand execution_
 
 
 ### 4.10 Parsing Commands (Edmund)
+
+The `Parser` determines what command is to be executed given by the user input. If the user input does not match any of 
+the specified commands, an unknown command message would be returned.
+
+##### Implementation
+The type of command is determined by the parser through the first string of the input and passed through a switch 
+statement. If it matches with any of the cases, the corresponding `parse` command would be executed. Otherwise, it would 
+return an invalid command. The corresponding parsers would check whether all parameters are inputted before passing 
+them into their respective commands. This is done by checking the user input for any missing initials (/code, /time, etc.) 
+and appending any of these missing parameters into a new string with all the parameters present. With the required 
+parameters filled, the corresponding parser would pass them to their command functions.	
+
+##### Design Considerations
+The user cannot input an empty string as a parameter. This would avoid issues of invalid parameters passing on to the 
+commands, which can result in error in the program. As such, checks are to be done on the user input.  
 
 ### 4.11 Recurring Tasks and Auto Deletion (Daniel)
 
