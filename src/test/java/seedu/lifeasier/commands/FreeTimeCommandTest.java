@@ -111,8 +111,9 @@ class FreeTimeCommandTest {
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals(("You have 6 hours of free time between 12:00 and 18:00!" + System.lineSeparator()
-                +  "You can try scheduling something in this time!" + System.lineSeparator()
+        assertEquals((ui.colourTextGreen("You have 6 hours of free time between 12:00 and 18:00!")
+                + System.lineSeparator()
+                + ui.colourTextCyan("You can try scheduling something in this time!") + System.lineSeparator()
                 + "=========================================================================" + System.lineSeparator()),
                 outContent.toString());
 
@@ -146,8 +147,8 @@ class FreeTimeCommandTest {
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals(("Unfortunately you have no free time today!" + System.lineSeparator()
-                +  "You might want to relax a little!" + System.lineSeparator()
+        assertEquals((ui.colourTextRed("Unfortunately you have no free time today!") + System.lineSeparator()
+                + ui.colourTextGreen("You might want to relax a little!") + System.lineSeparator()
                 + "=========================================================================" + System.lineSeparator()),
                 outContent.toString());
 

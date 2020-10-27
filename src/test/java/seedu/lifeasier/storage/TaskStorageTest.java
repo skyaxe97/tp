@@ -22,12 +22,14 @@ class TaskStorageTest {
 
     public static final String SAVE_DELIMITER = "=-=";
     public static final String TEST_FILEPATH = "testSave.txt";
-    public static final String EXPECTED_LESSON = "lesson" + SAVE_DELIMITER + "false" + SAVE_DELIMITER + "CS2113T"
-            + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "09-04-21 18:00" + System.lineSeparator();
-    public static final String EXPECTED_EVENT = "event" + SAVE_DELIMITER + "false" + SAVE_DELIMITER + "Concert"
-            + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "09-04-21 18:00" + System.lineSeparator();
-    public static final String EXPECTED_DEADLINE = "deadline" + SAVE_DELIMITER + "false" + SAVE_DELIMITER
-            + "Return Books" + SAVE_DELIMITER + "09-04-21 18:00" + System.lineSeparator();
+    public static final String EXPECTED_LESSON = "lesson" + SAVE_DELIMITER + "CS2113T"
+            + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "0"
+            + System.lineSeparator();
+    public static final String EXPECTED_EVENT = "event" + SAVE_DELIMITER + "Concert"
+            + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "0"
+            + System.lineSeparator();
+    public static final String EXPECTED_DEADLINE = "deadline" + SAVE_DELIMITER
+            + "Return Books" + SAVE_DELIMITER + "09-04-21 18:00" + SAVE_DELIMITER + "0" + System.lineSeparator();
 
     private TaskStorage taskStorage;
     private FileCommand fileCommand;
@@ -55,7 +57,7 @@ class TaskStorageTest {
             fileCommand.clearSaveFile(TEST_FILEPATH);
 
             FileWriter fileWriter = new FileWriter(TEST_FILEPATH, true);
-            fileWriter.write("deadline=-=false=-=Go Home=-=16-10-20 23:59");
+            fileWriter.write("deadline=-=Go Home=-=16-10-20 23:59=-=0");
             fileWriter.close();
 
             tasks.getTaskList().clear();
@@ -64,9 +66,10 @@ class TaskStorageTest {
             Task testTask = tasks.getTask(0);
             Boolean isCorrectType = testTask.getType().equals("deadline");
             Boolean isCorrectDescription = testTask.getDescription().equals("Go Home");
+            Boolean isCorrectRecurrence = testTask.getRecurrences() == 0;
             Boolean isCorrectSize = tasks.getTaskList().size() == 1;
 
-            assertTrue(isCorrectType && isCorrectDescription && isCorrectSize);
+            assertTrue(isCorrectType && isCorrectDescription && isCorrectRecurrence && isCorrectSize);
 
         } catch (IOException e) {
             System.out.println("Testing error - Could not read/write to file");
@@ -85,12 +88,16 @@ class TaskStorageTest {
             fileCommand.clearSaveFile(TEST_FILEPATH);
 
             FileWriter fileWriter = new FileWriter(TEST_FILEPATH, true);
-            fileWriter.write("lesson=-=false=-=CS1231=-=17-10-20 09:00=-=17-10-20 12:00" + System.lineSeparator());
-            fileWriter.write("deadline=-=false=-=Go Home=-=16-10-20 23:59" + System.lineSeparator());
-            fileWriter.write("event=-=false=-=Another Concert=-=16-10-20 22:00=-=16-10-20 23:59"
+            fileWriter.write("lesson=-=CS1231=-=17-10-20 09:00=-=17-10-20 12:00=-=0"
                     + System.lineSeparator());
-            fileWriter.write("lesson=-=false=-==-=20-10-20 09:00=-=20-10-20 12:00" + System.lineSeparator());
-            fileWriter.write("lesson=-=false=-=CS2101=-=20-10-20 09:00=-=20-10-20 12:00" + System.lineSeparator());
+            fileWriter.write("deadline=-=Go Home=-=16-10-20 23:59=-=0"
+                    + System.lineSeparator());
+            fileWriter.write("event=-=Another Concert=-=16-10-20 22:00=-=16-10-20 23:59=-=0"
+                    + System.lineSeparator());
+            fileWriter.write("lesson=-==-=20-10-20 09:00=-=20-10-20 12:00=-=0"
+                    + System.lineSeparator());
+            fileWriter.write("lesson=-=CS2101=-=20-10-20 09:00=-=20-10-20 12:00=-=0"
+                    + System.lineSeparator());
             fileWriter.close();
 
             tasks.getTaskList().clear();
@@ -118,13 +125,13 @@ class TaskStorageTest {
 
             ArrayList<Task> taskList = tasks.getTaskList();
             taskList.clear();
-            String[] eventComponents = {"event", "false", "Concert", "09-04-21 09:00", "09-04-21 12:00"};
-            String[] deadlineComponents = {"deadline", "false", "Go home", "09-04-21 09:00"};
-            String[] lessonComponents = {"lesson", "false", "CS1231", "09-04-21 09:00", "09-04-21 12:00"};
+            String[] eventComponents = {"event", "Concert", "09-04-21 09:00", "09-04-21 12:00", "0"};
+            String[] deadlineComponents = {"deadline", "Go home", "09-04-21 09:00", "0"};
+            String[] lessonComponents = {"lesson", "CS1231", "09-04-21 09:00", "09-04-21 12:00", "0"};
 
-            taskStorage.rebuildEvent(eventComponents, taskList, eventComponents[2], false);
-            taskStorage.rebuildDeadline(deadlineComponents, taskList, deadlineComponents[2], false);
-            taskStorage.rebuildLesson(lessonComponents, taskList, lessonComponents[2], false);
+            taskStorage.rebuildEvent(eventComponents, taskList, eventComponents[1]);
+            taskStorage.rebuildDeadline(deadlineComponents, taskList, deadlineComponents[1]);
+            taskStorage.rebuildLesson(lessonComponents, taskList, lessonComponents[1]);
 
             taskStorage.writeToTaskSaveFile();
             taskList.clear();
@@ -140,11 +147,10 @@ class TaskStorageTest {
     @Test
     void rebuildEvent_validInputs_eventAdded() {
         ArrayList<Task> taskList = tasks.getTaskList();
-        String[] taskComponents = {"event", "false", "Concert", "09-04-21 09:00", "09-04-21 12:00"};
-        Boolean taskStatus = fileCommand.convertToBoolean(taskComponents[1]);
+        String[] taskComponents = {"event", "Concert", "09-04-21 09:00", "09-04-21 12:00", "0"};
 
         taskList.clear();
-        taskStorage.rebuildEvent(taskComponents, taskList, taskComponents[2], taskStatus);
+        taskStorage.rebuildEvent(taskComponents, taskList, taskComponents[1]);
 
         assertTrue(taskList.size() == 1 && taskList.get(0).getType().equals("event"));
     }
@@ -152,11 +158,10 @@ class TaskStorageTest {
     @Test
     void rebuildDeadline_validInputs_deadlineAdded() {
         ArrayList<Task> taskList = tasks.getTaskList();
-        String[] taskComponents = {"deadline", "false", "Go home", "09-04-21 09:00"};
-        Boolean taskStatus = fileCommand.convertToBoolean(taskComponents[1]);
+        String[] taskComponents = {"deadline", "Go home", "09-04-21 09:00", "0"};
 
         taskList.clear();
-        taskStorage.rebuildDeadline(taskComponents, taskList, taskComponents[2], taskStatus);
+        taskStorage.rebuildDeadline(taskComponents, taskList, taskComponents[1]);
 
         assertTrue(taskList.size() == 1 && taskList.get(0).getType().equals("deadline"));
     }
@@ -164,60 +169,59 @@ class TaskStorageTest {
     @Test
     void rebuildLesson_validInputs_lessonAdded() {
         ArrayList<Task> taskList = tasks.getTaskList();
-        String[] taskComponents = {"lesson", "false", "CS1231", "09-04-21 09:00", "09-04-21 12:00"};
-        Boolean taskStatus = fileCommand.convertToBoolean(taskComponents[1]);
+        String[] taskComponents = {"lesson", "CS1231", "09-04-21 09:00", "09-04-21 12:00", "0"};
 
         taskList.clear();
-        taskStorage.rebuildLesson(taskComponents, taskList, taskComponents[2], taskStatus);
+        taskStorage.rebuildLesson(taskComponents, taskList, taskComponents[1]);
 
         assertTrue(taskList.size() == 1 && taskList.get(0).getType().equals("lesson"));
     }
 
     @Test
     void convertDeadlineToString_invalidClass_ClassCastException() {
-        Event testEvent = new Event("Test event", startTime, endTime);
+        Event testEvent = new Event("Test event", startTime, endTime, 0);
 
         assertThrows(ClassCastException.class, () -> {
-            taskStorage.convertDeadlineToString(testEvent, "deadline");
+            taskStorage.convertDeadlineToString(testEvent, "deadline", 0);
         });
     }
 
     @Test
     void convertEventToString_invalidClass_ClassCastException() {
-        Deadline testDeadline = new Deadline("Test Deadline", startTime);
+        Deadline testDeadline = new Deadline("Test Deadline", startTime, 0);
 
         assertThrows(ClassCastException.class, () -> {
-            taskStorage.convertEventToString(testDeadline, "event");
+            taskStorage.convertEventToString(testDeadline, "event", 0);
         });
     }
 
     @Test
     void convertLessonToString_invalidClass_ClassCastException() {
-        Deadline testDeadline = new Deadline("Test Deadline", startTime);
+        Deadline testDeadline = new Deadline("Test Deadline", startTime, 0);
 
         assertThrows(ClassCastException.class, () -> {
-            taskStorage.convertLessonToString(testDeadline, "lesson");
+            taskStorage.convertLessonToString(testDeadline, "lesson", 0);
         });
     }
 
     @Test
     void convertLessonToString_validInput_conversionPasses() {
-        Lesson testLesson = new Lesson("CS2113T", startTime, endTime);
-        String convertedString = taskStorage.convertLessonToString(testLesson, "lesson");
+        Lesson testLesson = new Lesson("CS2113T", startTime, endTime, 0);
+        String convertedString = taskStorage.convertLessonToString(testLesson, "lesson", 0);
         assertEquals(EXPECTED_LESSON, convertedString);
     }
 
     @Test
     void convertEventToString_validInput_conversionPasses() {
-        Event testEvent = new Event("Concert", startTime, endTime);
-        String convertedString = taskStorage.convertEventToString(testEvent, "event");
+        Event testEvent = new Event("Concert", startTime, endTime, 0);
+        String convertedString = taskStorage.convertEventToString(testEvent, "event", 0);
         assertEquals(EXPECTED_EVENT, convertedString);
     }
 
     @Test
     void convertDeadlineToString_validInput_conversionPasses() {
-        Deadline testDeadline = new Deadline("Return Books", startTime);
-        String convertedString = taskStorage.convertDeadlineToString(testDeadline, "deadline");
+        Deadline testDeadline = new Deadline("Return Books", startTime, 0);
+        String convertedString = taskStorage.convertDeadlineToString(testDeadline, "deadline", 0);
         assertEquals(EXPECTED_DEADLINE, convertedString);
     }
 
