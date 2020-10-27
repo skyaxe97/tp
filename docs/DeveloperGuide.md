@@ -74,7 +74,7 @@ Command class. What is important to note is that each type of command class (e.g
  implements an abstract execute() method that carries out the command. Figure 3.2.4-1 below shows the classes that 
  inherit from the Command class.
  
- 
+ ![Figure 3.2.4-1](images/DeveloperGuide/Figure3.2.4-1.jpg)  
  _Figure 3.2.4-1: The classes that inherit from the Command class_
  
 #### 3.2.5 TaskList Component
@@ -113,9 +113,11 @@ The freeTime command displays to the user their longest block of free time for t
  are free. The commands then use the start and end time values found to calculate a duration, and pass all
  three values to the Ui to display to the user. Figure 4.8-1 shows the sequence diagram for the freeTimeCommand,
  and Figure 4.8-2 shows the sequence diagram for the sleepTimeCommand.
- 
+
+![Figure 4.8-1](images/DeveloperGuide/Figure4.8-1.jpg)  
 _Figure 4.8-1: Sequence diagram for freeTimeCommand execution_
 
+![Figure 4.8-2](images/DeveloperGuide/Figure4.8-2.jpg)  
 _Figure 4.8-2: Sequence diagram for sleepTimeCommand execution_
 
 
