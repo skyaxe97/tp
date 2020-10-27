@@ -90,13 +90,20 @@ public class TaskStorage {
                     throw new StorageException();
                 }
                 logger.log(Level.INFO, "Rebuilt task: " + taskType);
+
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.showSaveDataMissingError();
             logger.log(Level.WARNING, "Missing data from save file");
+
+        } catch (NumberFormatException e) {
+            ui.showUndeterminableRecurrenceError();
+            logger.log(Level.WARNING, "Unable to read recurrence field");
+
         } catch (StorageException e) {
             ui.showUndeterminableTaskError();
             logger.log(Level.SEVERE, "Read task type failed");
+
         }
     }
 
@@ -123,12 +130,13 @@ public class TaskStorage {
      * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description)
-            throws ArrayIndexOutOfBoundsException {
+            throws ArrayIndexOutOfBoundsException, NumberFormatException {
         LocalDateTime lessonStartTime = fileCommand.convertToLocalDateTime(taskComponents[2]);
         LocalDateTime lessonEndTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
+        int recurrence = Integer.parseInt(taskComponents[4]);
 
         //Create new event in tasks
-        taskList.add(new Lesson(description, lessonStartTime, lessonEndTime));
+        taskList.add(new Lesson(description, lessonStartTime, lessonEndTime, recurrence));
     }
 
     /**
@@ -140,12 +148,13 @@ public class TaskStorage {
      * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description)
-            throws ArrayIndexOutOfBoundsException {
+            throws ArrayIndexOutOfBoundsException, NumberFormatException {
         LocalDateTime eventStartTime = fileCommand.convertToLocalDateTime(taskComponents[2]);
         LocalDateTime eventEndTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
+        int recurrence = Integer.parseInt(taskComponents[4]);
 
         //Create new event in tasks
-        taskList.add(new Event(description, eventStartTime, eventEndTime));
+        taskList.add(new Event(description, eventStartTime, eventEndTime, recurrence));
     }
 
     /**
@@ -157,11 +166,12 @@ public class TaskStorage {
      * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description)
-            throws ArrayIndexOutOfBoundsException {
+            throws ArrayIndexOutOfBoundsException, NumberFormatException {
         LocalDateTime deadlineTimeInfo = fileCommand.convertToLocalDateTime(taskComponents[2]);
+        int recurrence = Integer.parseInt(taskComponents[3]);
 
         //Create new deadline in tasks
-        taskList.add(new Deadline(description, deadlineTimeInfo));
+        taskList.add(new Deadline(description, deadlineTimeInfo, recurrence));
     }
 
     /**
@@ -178,15 +188,16 @@ public class TaskStorage {
             //Append each tasks information into save file for tasks
             for (Task task : taskList) {
                 String taskType = task.getType();
+                int recurrence = task.getRecurrences();
                 switch (taskType) {
                 case "deadline":
-                    dataToSave = convertDeadlineToString(task, taskType);
+                    dataToSave = convertDeadlineToString(task, taskType, recurrence);
                     break;
                 case "event":
-                    dataToSave = convertEventToString(task, taskType);
+                    dataToSave = convertEventToString(task, taskType, recurrence);
                     break;
                 case "lesson":
-                    dataToSave = convertLessonToString(task, taskType);
+                    dataToSave = convertLessonToString(task, taskType, recurrence);
                     break;
                 default:
                     dataToSave = DEFAULT_DATA;
@@ -217,11 +228,12 @@ public class TaskStorage {
      * @return Formatted string in the save format.
      * @throws ClassCastException When the wrong class type is passed in and cannot be casted correctly.
      */
-    protected String convertLessonToString(Task task, String taskType) throws ClassCastException {
+    protected String convertLessonToString(Task task, String taskType, int recurrence) throws ClassCastException {
         Lesson lesson = (Lesson) task;
         return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + lesson.getStart().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER
-                + lesson.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
+                + lesson.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER + recurrence
+                + System.lineSeparator();
     }
 
     /**
@@ -232,11 +244,12 @@ public class TaskStorage {
      * @return Formatted string in the save format.
      * @throws ClassCastException When the wrong class type is passed in and cannot be casted correctly.
      */
-    protected String convertEventToString(Task task, String taskType) throws ClassCastException {
+    protected String convertEventToString(Task task, String taskType, int recurrence) throws ClassCastException {
         Event event = (Event) task;
         return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
                 + event.getStart().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER
-                + event.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
+                + event.getEnd().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER + recurrence
+                + System.lineSeparator();
     }
 
     /**
@@ -247,10 +260,11 @@ public class TaskStorage {
      * @return Formatted string in the save format.
      * @throws ClassCastException When the wrong class type is passed in and cannot be casted correctly.
      */
-    protected String convertDeadlineToString(Task task, String taskType) throws ClassCastException {
+    protected String convertDeadlineToString(Task task, String taskType, int recurrence) throws ClassCastException {
         Deadline deadline = (Deadline) task;
         return taskType + SAVE_DELIMITER + task.getDescription() + SAVE_DELIMITER
-                + deadline.getBy().format(FileCommand.DATE_TIME_FORMATTER) + System.lineSeparator();
+                + deadline.getBy().format(FileCommand.DATE_TIME_FORMATTER) + SAVE_DELIMITER + recurrence
+                + System.lineSeparator();
     }
 
 }

@@ -523,4 +523,8 @@ public class Ui {
     public void printEmptyParam(String param) {
         System.out.println("We detected that you did not fill in the field of " + param + ". Please fill it in:");
     }
+
+    public void showUndeterminableRecurrenceError() {
+        System.out.println(colourTextRed("There was an error reading the task recurrence"));
+    }
 }
