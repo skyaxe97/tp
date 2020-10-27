@@ -51,32 +51,34 @@ This developer guide documents the design, architecture and instructions for tes
 
 1. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 
-2. Set up the correct JDK version for Gradle.
+1. Set up the correct JDK version for Gradle.
 Click `Configure` > `Project Defaults` > `Project Structure`
 Click New... and find the directory of the JDK
 
-3. Click Import Project
+1. Click Import Project
 
-4. Locate the build.gradle file and select it. Click OK.
+1. Locate the build.gradle file and select it. Click OK.
 
-5. Click Open as Project
+1. Click Open as Project
 
-6. Click OK to accept the default settings.
+1. Click OK to accept the default settings.
 
 ###2.3 Verifying Setup
 
 1. Run the seedu.LifEasier.Main and try a few commands.
 
-2. Run the tests to ensure they all pass. This can be done by executing the command `gradlew build` in IntelliJ’s terminal.
+1. Run the tests to ensure they all pass. This can be done by executing the command `gradlew build` in IntelliJ’s terminal.
 
 
 ## 3.0 Design
+
 ### 3.1 Architecture
 
 This section elaborates on the high-level architecture of the **LifEasier** application. It provides a brief introduction to each component, and how these components interact with one another. 
 
 
-*Fig. 1 Architecture diagram for LifEasier*
+_Fig. 1 Architecture diagram for LifEasier_
+
 LifEasier is comprised of 7 components, which are listed below together with their functions (shown in Fig 1):
 
 1. LifEasier: The main class of the application.
@@ -92,7 +94,7 @@ Each of these components are expanded on in more detail in their respective sect
 Figure 2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
 
 
-*Fig 2. Sequence diagram of “addDeadline”.*
+_Fig 2. Sequence diagram of “addDeadline”._
 
 ### 3.2 Components
 
@@ -212,6 +214,8 @@ Due to the difference in the types of tasks and their parameters, this functiona
 ### 4.3 Deleting of Lessons, Events, Deadlines (Fairuz)
 
 The deleteTaskCommand allows the user to delete any task (lesson, event or deadline) from the TaskList.
+
+
 ##### Implementation
 
 The User first enters the deleteTask command and appends the type of task to be deleted. LifEasier will then print
@@ -237,7 +241,7 @@ _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 
 The addNotes command adds user’s notes to the NoteList with a specified title and description. 
 
-#####Implementation
+##### Implementation
 
 The addNotes command first starts with 2 paths: with or without title. If a title is added alongside the 
 “addNotes” (ie. the user inputs “addNotes cats”) then the title is passed on to a method (isValidTitle) that would 
@@ -251,7 +255,8 @@ and passed on to NoteStorage. Figure 4.4 illustrates the flow of addNotes throug
 ![Figure 4.4-1][(images/DeveloperGuide/Figure 4.4-1.png)
 _Figure 4.4-1: Sequence diagram for addNotesCommand_
 
-#####Design Considerations
+
+##### Design Considerations
 
 An empty string must be defined clearly (a long string of spaces/no string) and must not be inputted 
 by the user as it affects the usability and searchability of the NoteList. As such, checks would need to
@@ -263,26 +268,22 @@ be implemented to prevent any hiccups by the user.
 The editNotes command allows the user to change the title or description of their notes stored in the NoteList.
 The deleteNotes command allows the user to remove the specified notes completely from the NoteList.
 
-#####Implementation
+##### Implementation
 
 Below illustrates the steps taken by each command to ensure their execution.
 
-######editNotes
+###### editNotes
 
 1. checkEmptyList would be called to ensure the NoteList is not empty before proceeding on with the execution. 
 If an empty list is detected, the command would terminate with a prompt of empty list to the user.
 1. A condition of whether the user has pre-inputted the title is checked.
-
-####### a. If the user pre-inputs a title, the findTitle function would go through the list to find the title. 
-
+    * If the user pre-inputs a title, the findTitle function would go through the list to find the title. 
 If the input title does not match any of the titles in the list, the command would terminate with a 
 message: “title is not found”. If a match is found, the system prints out the note and asks for which part to edit. 
 In the case of multiple matches, the system would print all matching cases and ask the user to select amongst them.
 Following the confirmation, a “N” would terminate the command while a “Y” would proceed to ask which part of the note 
 would the user like to edit. “T” would mean editing the title while “D” would mean editing the description.
-
-####### b. If the user did not pre-input the title, the system would print all notes currently in the list and ask for 
-
+    * If the user did not pre-input the title, the system would print all notes currently in the list and ask for 
 the user to select which note to edit among them. Following the confirmation for edit, a “N” would terminate the command 
 while a “Y” would proceed to ask which part of the note would the user like to edit. “T” would mean editing the title 
 while “D” would mean editing the description.
@@ -290,32 +291,28 @@ while “D” would mean editing the description.
 1. The new edited note would then be passed on to storage for saving.
 
 Figure 4.5-1 illustrates the above steps via a sequence diagram.
-![Figure 4.5-1][(images/DeveloperGuide/Figure 4.5-1.png)
+![Figure 4.5-1](images/DeveloperGuide/Figure 4.5-1.png)
 _Figure 4.5-1: Sequence diagram for editNotesCommand_
 
-######editNotes
+###### editNotes
 
 1. checkEmptyList would be called to ensure the NoteList is not empty before proceeding on with the execution. 
 If an empty list is detected, the command would terminate with a prompt of empty list to the user.
 1. A condition of whether the user has pre-inputted the title is checked.
-
-#######a. If the user has included a title in the command, the findTitle function would go through the list to 
-
+    * If the user has included a title in the command, the findTitle function would go through the list to 
 find the title. If the input title does not match any of the titles in the list, the command would terminate with 
 a message: “title is not found”. If a match is found, the system prints out the note and asks for confirmation 
 for deletion. In the case of multiple matches, the system would print all matching cases and ask the user to select 
 amongst them. Following the confirmation, a “N” would terminate the command while a “Y” would proceed to remove the 
 note from the list.
-
-#######b. If the user did not pre-input the title, the system would print all notes currently in the list and ask 
-
+    * If the user did not pre-input the title, the system would print all notes currently in the list and ask 
 for the user to select which note to delete among them. Following the confirmation for deletion, a “N” would terminate 
 the command while a “Y” would proceed to remove the note from the list.
 
 1. The current note list would then be saved by the Storage class.
 
 Figure 4.5-2 illustrates the above steps via a Sequence Diagram.
-![Figure 4.5-2][(images/DeveloperGuide/Figure 4.5-2.png)
+![Figure 4.5-2](images/DeveloperGuide/Figure 4.5-2.png)
 _Figure 4.5-2: Sequence diagram for deleteNotesCommand
 
 #####Design Considerations
@@ -332,7 +329,7 @@ an exception caught.
 
 The undo feature allows the user to undo any changes made to Task or Note objects, particularly edits and deletions.
 
-#####Implementation
+##### Implementation
 
 To implement the undo feature, the concept of a stack was used to hold all the history of previous versions of Tasks (or Notes) before they are changed.
 
@@ -350,7 +347,7 @@ The corresponding confirmation message to be displayed is determined by whether 
 
 _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
-#####Design Considerations
+##### Design Considerations
 
 To allow for multiple undos on the same Task (or Note) object, the editNumber of Tasks (orNotes) that have been edited before must be checked. If it is anything but the default assigned value(-999999), then its existing editNumber will be taken and used as the editID for all successive copies made of it. This is to allow the application to always find the same instance of the Task (or Note) inside the TaskList (or NoteList) when restoring previous versions.
 
@@ -422,7 +419,7 @@ The displaySchedule command presents the TaskList contents in a timetable format
 
 _Figure 4.7-1: Sequence diagram for displaying week or day schedule_
 
-#####Implementation
+##### Implementation
 
 The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format (e.g. from Monday to Sunday).
 
@@ -432,7 +429,7 @@ The timetable is modelled using an ArrayList, with each entry containing a row o
 
 The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into a string, before it is finally added to the ArrayList of timetable rows.
 
-#####Design Considerations
+##### Design Considerations
 
 To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the entire TaskList every time it is called, in order to arrange the Tasks accordingly and update any changes.
 
@@ -545,8 +542,6 @@ The project also uses Github Actions for Continuous Integration (CI). The config
 * *glossary item* - Definition
 
 ## Appendix A: Project Requirements
-
-
 
 ## Appendix B: Guidelines on Manual Testing
 
