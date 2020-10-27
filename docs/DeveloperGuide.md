@@ -101,7 +101,7 @@ When the command is called, the class invokes the TaskList class method to add t
  sequence diagram for the addDeadlineCommand. This sequence diagram is applicable to the other two addEventCommand and 
  addLessonCommand, with the only difference being in their parameters.
  
- ![Figure 4.1-1](images/DeveloperGuide/Figure 4.1-1.png)  
+ ![Figure 4.1-1](images/DeveloperGuide/Figure%204.1-1.png)  
  _Figure 4.1-1: Sequence diagram for addDeadlineCommand execution_
 
 ##### Design Considerations
@@ -127,8 +127,8 @@ Upon receiving a valid option of parameter to edit, LifEasier will prompt the Us
  of the edit. The edited task will then be saved by Storage. Figure 4.2-1 illustrates the flow of editDeadlineCommand 
  through a sequence diagram. The logic of this class remains the same among the different types of Tasks.
 
-![Figure 4.2-1](images/DeveloperGuide/Figure 4.2-1.png)  
-![Figure 4.2-1.1](images/DeveloperGuide/Figure 4.2-1.1.png)  
+![Figure 4.2-1](images/DeveloperGuide/Figure%204.2-1.png)  
+![Figure 4.2-1.1](images/DeveloperGuide/Figure%204.2-1.1.png)  
 _Figure 4.2-1: Sequence diagram for editDeadlineCommand execution_
 
 ##### Design Considerations
