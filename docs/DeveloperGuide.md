@@ -143,7 +143,32 @@ The Storage component handles saving of the users’ notes and tasks to persiste
 ### 4.3 Adding Notes (Edmund)
 ### 4.4 Editing and Deleting Notes (Edmund)
 ### 4.5 Storing and Archiving Notes (Danzel)
-### 4.6 Displaying Schedule (Johannine)
+
+### 4.6 Undoing changes made to Tasks and Notes (Johannine)
+
+The undo feature allows the user to undo any changes made to Task or Note objects, particularly edits and deletions.
+
+*Implementation*
+To implement the undo feature, the concept of a stack was used to hold all the history of previous versions of Tasks (or Notes) before they are changed.
+
+At every instance where a particular Task (or Note) is edited or deleted, using commands such as editDeadline, deleteTask or editNote, a copy of the Task (or Note) is made as the changes are being made. Every Task or Note object has an editNumber attributed to it, which is assigned a positive value if it has been edited, and a negative value if it has been deleted.
+
+The copy made is temporarily stored as a new Task (or Note) object until the edit or deletion is successful. The copy of the old unchanged Task (or Note) is then pushed into an array called taskHistory (or NoteHistory), which holds all the previous copies of the object.
+
+Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a Task. The concept in a similar manner for that of Note objects.
+
+*Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks 
+
+When the undo command is called, it retrieves the editNumber of the copied Task (or Note) at the top of the stack in taskHistory (or noteHistory), and iterates through the existing TaskList (or NoteList) to see which Task (or Note) has the corresponding editNumber. If there is a match, the existing Task is replaced with the old copy, and then the old copy is removed from the Tasklist.
+
+The corresponding confirmation message to be displayed is determined by whether the editNumber is positive or negative.
+
+*Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks*
+
+*Design Considerations*
+To allow for multiple undos on the same Task (or Note) object, the editNumber of Tasks (orNotes) that have been edited before must be checked. If it is anything but the default assigned value(-999999), then its existing editNumber will be taken and used as the editID for all successive copies made of it. This is to allow the application to always find the same instance of the Task (or Note) inside the TaskList (or NoteList) when restoring previous versions.
+
+### 4.8 Displaying Schedule (Johannine)
 The displaySchedule command presents the TaskList contents in a timetable format, given that it is specified to display the full week. Otherwise it displays the current day’s schedule in a list form, with the Task items sorted by date.
 
 *Figure 4.7-1: Sequence diagram for displaying week or day schedule*
