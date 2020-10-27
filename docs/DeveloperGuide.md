@@ -35,6 +35,9 @@
 * [9.0 Testing / Logging](#90-testing--logging)
 * [10.0 Dev Ops](#100-dev-ops)
 * [11.0 Glossary](#110-glossary)
+* [Appendix A: Project Requirements](#appendix-a-project-requirements)
+* [Appendix B: Guidelines on Manual Testing](#appendix-b-guidelines-on-manual-testing)
+* [Appendix C: Effort](#appendix-c-effort)
 
 ## 1.0 Introduction
 
@@ -261,11 +264,13 @@ and passed on to NoteStorage. Figure 4.4 illustrates the flow of addNotes throug
 ![Figure 4.4-1][(images/DeveloperGuide/Figure 4.4-1.png)
 _Figure 4.4-1: Sequence diagram for addNotesCommand_
 
+
 ##### Design Considerations
 
 An empty string must be defined clearly (a long string of spaces/no string) and must not be inputted 
 by the user as it affects the usability and searchability of the NoteList. As such, checks would need to
 be implemented to prevent any hiccups by the user.
+
 
 ### 4.5 Editing and Deleting Notes (Edmund)
 
@@ -331,7 +336,7 @@ an exception caught.
 
 ### 4.6 Undoing Changes Made to Tasks and Notes (Johannine)
 
-The `undo` feature allows the user to undo any changes made to `Task` or `Note` objects, particularly edits and deletions.
+The undo feature allows the user to undo any changes made to Task or Note objects, particularly edits and deletions.
 
 ##### Implementation
 
@@ -343,12 +348,14 @@ The copy made is temporarily stored as a new `Task` (or `Note`) object until the
 
 Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept in a similar manner for that of `Note` objects.
 
+![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
 _Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
 When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which `Task` (or `Note`) has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the old copy, and then the old copy is removed from the `Tasklist`.
 
 The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
 
+![Figure 4.6-2](images/DeveloperGuide/Figure 4.6-2.png)
 _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 ##### Design Considerations
@@ -495,22 +502,46 @@ few days, they might need to restart it to ensure that their tasks are updated.
 
 ### 5.1 Target user profile
 
-{Describe the target user profile}
-
+NUS Computer Engineering students who struggle with keeping track of classes and deadlines, and managing their time to 
+have a social life with their busy schedule.
+ 
 ### 5.2 Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+**LifEasier** is a timetabling application with added abilities to add their own reminders and social events designed to
+ help students keep track of everything that they need to do. The application could help them take down and organise 
+ their notes as well.
+ 
+This will make their lives easier as they can more accurately keep track of what they are supposed to do, and what they 
+have already completed.
 
 ## 6.0 User Stories
 
 |Version| As a ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
-|v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
-|v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
+|v1.0|first time user|be able to access help to see what commands are available|learn to use the app|
+|v1.0|student|be able to add additional classes to the timetable|create my timetable with the relevant information|
+|v1.0|student|be able to take down notes and have them organised|have an easy way to take down notes during lecture|
+|v1.0|forgetful student|be reminded of my upcoming deadlines|be on time for all my deadlines|
+|v1.0|frequent user|know what I have going on for the day and when|I can have some motivation to start the day right|
+|v1.0|frequent user|be reminded of my regular weekly activities|keep track of the time I need to prepare for classes/homework|
+|v1.0|intermediate user|be able to enter detailed information into command|the app can help keep track of more details for me|
+|v2.0|student|be able to tell how much free time I have in the day|time manage my activities better|
+|v2.0|forgetful student|schedule one time events according to my timetable|avoid  manually deleting events from the calendar when they are over|
+|v2.0|tired student|be able to tell how much sleep I can get|plan my sleep schedule and be less tired|
+|v2.0|lazy user|edit my events and classes as they change|avoid having to delete and add them again|
+|v2.0|disorganised user|have the application recommend me the time I can do my personal stuff|avoid spending too much time planning|
+|v2.0|frequent user|have a way to edit the notes I have taken|update any additional information in the future|
+|v2.0|frequent user|be able to have quick access to all related notes of a subject|will be able to revise more efficiently|
+|v2.0|intermediate user|set recurring events / classes|avoid having to repeat multiple commands for the same thing|
+|v2.0|long time user|be able to store/archive different semester schedule and notes|show it to my descendants|
+|v2.0|experienced user|have a way to delete unwanted tasks|remove clutter|
 
 ## 7.0 Non-Functional Requirements
 
-{Give non-functional requirements}
+1. The application should work on any mainstream OS that has Java 11 or above installed.
+1. The application has to be lightweight and can be used on a device with storage issues.
+1. The application does not end abruptly when invalid inputs are passed.
+1. The file size of the application is below 100MB.
 
 ## 8.0 Documentation
 Apart from PDF versions of our User Guide and Developer Guide, separate versions are also managed under the
