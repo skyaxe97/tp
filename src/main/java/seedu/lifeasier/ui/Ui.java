@@ -542,10 +542,15 @@ public class Ui {
     }
 
     public void showRecurrencesNumberFormatError() {
-        System.out.println("The input for /repeats is not a number! Please try again:");
+        System.out.println(colourTextRed("The input for /repeats is not a number! Please try again:"));
     }
 
     public void printMatchingTask(int index, String task) {
         System.out.println(index + ". " + task);
+    }
+
+    public void showInvalidTimeLogicMessage() {
+        System.out.println(colourTextRed("Start time must be before end time"));
+        printSeparator();
     }
 }
