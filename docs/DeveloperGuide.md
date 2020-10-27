@@ -35,6 +35,9 @@
 * [9.0 Testing / Logging](#90-testing--logging)
 * [10.0 Dev Ops](#100-dev-ops)
 * [11.0 Glossary](#110-glossary)
+* [Appendix A: Project Requirements](#appendix-a-project-requirements)
+* [Appendix B: Guidelines on Manual Testing](#appendix-b-guidelines-on-manual-testing)
+* [Appendix C: Effort](#appendix-c-effort)
 
 ## 1.0 Introduction
 
@@ -333,25 +336,40 @@ The undo feature allows the user to undo any changes made to Task or Note object
 
 ##### Implementation
 
-To implement the undo feature, the concept of a stack was used to hold all the history of previous versions of Tasks (or Notes) before they are changed.
+To implement the undo feature, the concept of a stack was used to hold all the history of previous versions of Tasks 
+(or Notes) before they are changed.
 
-At every instance where a particular Task (or Note) is edited or deleted, using commands such as editDeadline, deleteTask or editNote, a copy of the Task (or Note) is made as the changes are being made. Every Task or Note object has an editNumber attributed to it, which is assigned a positive value if it has been edited, and a negative value if it has been deleted.
+At every instance where a particular Task (or Note) is edited or deleted, using commands such as editDeadline, 
+deleteTask or editNote, a copy of the Task (or Note) is made as the changes are being made. Every Task or Note object 
+has an editNumber attributed to it, which is assigned a positive value if it has been edited, and a negative value if 
+it has been deleted.
 
-The copy made is temporarily stored as a new Task (or Note) object until the edit or deletion is successful. The copy of the old unchanged Task (or Note) is then pushed into an array called taskHistory (or NoteHistory), which holds all the previous copies of the object.
+The copy made is temporarily stored as a new Task (or Note) object until the edit or deletion is successful. The copy 
+of the old unchanged Task (or Note) is then pushed into an array called taskHistory (or NoteHistory), which holds all 
+the previous copies of the object.
 
-Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a Task. The concept in a similar manner for that of Note objects.
+Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a Task. The concept works
+similarly for that of Note objects.
 
+![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
 _Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
-When the undo command is called, it retrieves the editNumber of the copied Task (or Note) at the top of the stack in taskHistory (or noteHistory), and iterates through the existing TaskList (or NoteList) to see which Task (or Note) has the corresponding editNumber. If there is a match, the existing Task is replaced with the old copy, and then the old copy is removed from the Tasklist.
+When the undo command is called, it retrieves the editNumber of the copied Task (or Note) at the top of the stack in 
+taskHistory (or noteHistory), and iterates through the existing TaskList (or NoteList) to see which Task (or Note) has 
+the corresponding editNumber. If there is a match, the existing Task is replaced with the old copy, and then the old 
+copy is removed from the Tasklist.
 
 The corresponding confirmation message to be displayed is determined by whether the editNumber is positive or negative.
 
+![Figure 4.6-2](images/DeveloperGuide/Figure 4.6-2.png)
 _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 ##### Design Considerations
 
-To allow for multiple undos on the same Task (or Note) object, the editNumber of Tasks (orNotes) that have been edited before must be checked. If it is anything but the default assigned value(-999999), then its existing editNumber will be taken and used as the editID for all successive copies made of it. This is to allow the application to always find the same instance of the Task (or Note) inside the TaskList (or NoteList) when restoring previous versions.
+To allow for multiple undos on the same Task (or Note) object, the editNumber of Tasks (orNotes) that have been edited 
+before must be checked. If it is anything but the default assigned value(-999999), then its existing editNumber will be 
+taken and used as the editID for all successive copies made of it. This is to allow the application to always find the 
+same instance of the Task (or Note) inside the TaskList (or NoteList) when restoring previous versions.
 
 ### 4.7 Storing and Archiving Notes (Danzel)
 
@@ -417,25 +435,36 @@ continue to run as per normal. **Manual intervention from the user** is required
 
 ### 4.8 Displaying Schedule (Johannine)
 
-The displaySchedule command presents the TaskList contents in a timetable format, given that it is specified to display the full week. Otherwise it displays the current day’s schedule in a list form, with the Task items sorted by date.
+The displaySchedule command presents the TaskList contents in a timetable format, given that it is specified to display 
+the full week. Otherwise it displays the current day’s schedule in a list form, with the Task items sorted by date.
 
 _Figure 4.7-1: Sequence diagram for displaying week or day schedule_
 
 ##### Implementation
 
-The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format (e.g. from Monday to Sunday).
+The timetable is structured in such a way that the first column always starts with the schedule of the current day, 
+followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed 
+format (e.g. from Monday to Sunday).
 
-Changes to the timetable are updated at every call of the showTimetable() method, which first involves the generation of the timetable by loading the contents of the TaskList into it, then printing it row by row.
+Changes to the timetable are updated at every call of the showTimetable() method, which first involves the generation 
+of the timetable by loading the contents of the TaskList into it, then printing it row by row.
 
-The timetable is modelled using an ArrayList, with each entry containing a row of the timetable as a string. The individual cell entries of the timetable are collected by iterating through each day, each time slot and then through the TaskList to see which tasks fall on that particular day and are held during that particular time slot.
+The timetable is modelled using an ArrayList, with each entry containing a row of the timetable as a string. The 
+individual cell entries of the timetable are collected by iterating through each day, each time slot and then through 
+the TaskList to see which tasks fall on that particular day and are held during that particular time slot.
 
-The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into a string, before it is finally added to the ArrayList of timetable rows.
+The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted 
+into a string, before it is finally added to the ArrayList of timetable rows.
 
 ##### Design Considerations
 
-To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the entire TaskList every time it is called, in order to arrange the Tasks accordingly and update any changes.
+To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that 
+of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the 
+entire TaskList every time it is called, in order to arrange the Tasks accordingly and update any changes.
 
-Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the timings of Tasks were rounded to the hour. This was an intentional design choice to keep the timetable neat and not overloaded with too much details.
+Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the 
+timings of Tasks were rounded to the hour. This was an intentional design choice to keep the timetable neat and not 
+overloaded with too much details.
 
 ### 4.9 Displaying Free Time and Sleep Time (Daniel)
 
@@ -492,22 +521,46 @@ few days, they might need to restart it to ensure that their tasks are updated.
 
 ### 5.1 Target user profile
 
-{Describe the target user profile}
-
+NUS Computer Engineering students who struggle with keeping track of classes and deadlines, and managing their time to 
+have a social life with their busy schedule.
+ 
 ### 5.2 Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+**LifEasier** is a timetabling application with added abilities to add their own reminders and social events designed to
+ help students keep track of everything that they need to do. The application could help them take down and organise 
+ their notes as well.
+ 
+This will make their lives easier as they can more accurately keep track of what they are supposed to do, and what they 
+have already completed.
 
 ## 6.0 User Stories
 
 |Version| As a ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
-|v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
-|v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
+|v1.0|first time user|be able to access help to see what commands are available|learn to use the app|
+|v1.0|student|be able to add additional classes to the timetable|create my timetable with the relevant information|
+|v1.0|student|be able to take down notes and have them organised|have an easy way to take down notes during lecture|
+|v1.0|forgetful student|be reminded of my upcoming deadlines|be on time for all my deadlines|
+|v1.0|frequent user|know what I have going on for the day and when|I can have some motivation to start the day right|
+|v1.0|frequent user|be reminded of my regular weekly activities|keep track of the time I need to prepare for classes/homework|
+|v1.0|intermediate user|be able to enter detailed information into command|the app can help keep track of more details for me|
+|v2.0|student|be able to tell how much free time I have in the day|time manage my activities better|
+|v2.0|forgetful student|schedule one time events according to my timetable|avoid  manually deleting events from the calendar when they are over|
+|v2.0|tired student|be able to tell how much sleep I can get|plan my sleep schedule and be less tired|
+|v2.0|lazy user|edit my events and classes as they change|avoid having to delete and add them again|
+|v2.0|disorganised user|have the application recommend me the time I can do my personal stuff|avoid spending too much time planning|
+|v2.0|frequent user|have a way to edit the notes I have taken|update any additional information in the future|
+|v2.0|frequent user|be able to have quick access to all related notes of a subject|will be able to revise more efficiently|
+|v2.0|intermediate user|set recurring events / classes|avoid having to repeat multiple commands for the same thing|
+|v2.0|long time user|be able to store/archive different semester schedule and notes|show it to my descendants|
+|v2.0|experienced user|have a way to delete unwanted tasks|remove clutter|
 
 ## 7.0 Non-Functional Requirements
 
-{Give non-functional requirements}
+1. The application should work on any mainstream OS that has Java 11 or above installed.
+1. The application has to be lightweight and can be used on a device with storage issues.
+1. The application does not end abruptly when invalid inputs are passed.
+1. The file size of the application is below 100MB.
 
 ## 8.0 Documentation
 Apart from PDF versions of our User Guide and Developer Guide, separate versions are also managed under the
