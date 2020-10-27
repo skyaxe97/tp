@@ -25,18 +25,10 @@ public class Lesson extends Task {
         this.recurrences = recurrences;
     }
 
-    public Lesson(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
-        super(description);
-        this.start = start;
-        this.end = end;
-        this.isDone = isDone;
-    }
-
     public Lesson(Task task, int editNumber) {
         super(task, editNumber);
         this.start = ((Lesson) task).start;
         this.end = ((Lesson) task).end;
-        this.isDone = task.isDone;
     }
 
     @Override
