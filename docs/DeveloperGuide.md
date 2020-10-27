@@ -35,6 +35,9 @@
 * [9.0 Testing / Logging](#90-testing--logging)
 * [10.0 Dev Ops](#100-dev-ops)
 * [11.0 Glossary](#110-glossary)
+* [Appendix A: Project Requirements](#appendix-a-project-requirements)
+* [Appendix B: Guidelines on Manual Testing](#appendix-b-guidelines-on-manual-testing)
+* [Appendix C: Effort](#appendix-c-effort)
 
 ## 1.0 Introduction
 
@@ -44,59 +47,63 @@ This developer guide documents the design, architecture and instructions for tes
 
 ## 2.0 Setting Up
 
+The following section will provide information on how to set up **LifEasier** for development.
+
 ### 2.1 Prerequisites
 
-1. JDK 11
+1. `JDK 11`
 2. Intellij IDE
 
 ### 2.2 Setting Up the Project
 
-1. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+1. Open _IntelliJ_ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
 
 1. Set up the correct JDK version for Gradle.
 Click `Configure` > `Project Defaults` > `Project Structure`
-Click New... and find the directory of the JDK
+Click `New...` and find the directory of the JDK.
 
-1. Click Import Project
+1. Click Import Project.
 
-1. Locate the build.gradle file and select it. Click OK.
+1. Locate the `build.gradle` file and select it. Click `OK`.
 
-1. Click Open as Project
+1. Click `Open as Project`.
 
-1. Click OK to accept the default settings.
+1. Click `OK` to accept the default settings.
 
 ### 2.3 Verifying Setup
 
-1. Run the seedu.LifEasier.Main and try a few commands.
+1. Run the `seedu.LifEasier.Main` and try a few commands.
 
-1. Run the tests to ensure they all pass. This can be done by executing the command `gradlew build` in IntelliJ’s terminal.
+1. Run the tests to ensure they all pass. This can be done by executing the command `gradlew build` in _IntelliJ’s_ terminal.
 
 
 ## 3.0 Design
 
+The following sections will go into detail on the design and architecture of **LifEasier**.
+
 ### 3.1 Architecture
 
-This section elaborates on the high-level architecture of the **LifEasier** application. It provides a brief introduction to each component, and how these components interact with one another. 
+This section elaborates on the high-level architecture of the **LifEasier** application. It provides a brief introduction to each component, and how these components interact with one another. Figure 3.1-1 provides an overview of the architecture.
 
+![Figure 3.1-1](images/DeveloperGuide/Figure%203.1-1.png) 
+_Figure 3.1-1 Architecture diagram for LifEasier_
 
-_Fig. 1 Architecture diagram for LifEasier_
+LifEasier is comprised of 7 components, which are listed below together with their functions:
 
-LifEasier is comprised of 7 components, which are listed below together with their functions (shown in Fig 1):
-
-1. LifEasier: The main class of the application.
-2. Ui: Displays messages to the user, and takes in the user’s commands
-3. Parser: Understands the user’s commands, and creates the necessary Command objects.
-4. Command: Carries out the user’s command
-5. TaskList: Holds the task data of the app in memory.
-6. NoteList: Holds the note data of the app in memory.
-7. Storage: Reads and writes data from the hard disk.
+1. `LifEasier`: The main class of the application.
+1. `Ui`: Displays messages to the user, and takes in the user’s commands
+1. `Parser`: Understands the user’s commands, and creates the necessary Command objects.
+1. `Command`: Carries out the user’s command
+1. `TaskList`: Holds the task data of the app in memory.
+1. `NoteList`: Holds the note data of the app in memory.
+1. `Storage`: Reads and writes data from the hard disk.
 
 Each of these components are expanded on in more detail in their respective sections.
 
-Figure 2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
+Figure 3.1-2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
 
 ![Figure 3.1-2](images/DeveloperGuide/Figure 3.1-2.png)  
-_Fig 2. Sequence diagram of “addDeadline”._
+_Figure 3.1-2. Sequence diagram of “addDeadline”._
 
 ### 3.2 Components
 
@@ -105,136 +112,136 @@ This section expands on the various components that were first seen in the Archi
 
 #### 3.2.1 LifEasier Component
 
-The LifEasier component is the main class of the application. It initialises all other components,
+The **LifEasier** component is the main class of the application. It initialises all other components,
  and is used as the centre of all other components.
 
 
 #### 3.2.2 UI Component
 
-The UI component reads the user’s inputs and displays messages and content to the user. It consists of a main Ui,
- a ScheduleUi and a TimetableUi. The ScheduleUi handles all outputs to do with displaying a user’s schedule.
-  To do this, it uses the TimetableUi to display a specialised timetable view of the weekly schedule. 
-  The main Ui handles everything else, such as displaying general messages and reading the user’s inputs. 
+The `UI` component reads the uthe user. It consists ofser’s inputs and displays messages and content to  a main `Ui`,
+ a `ScheduleUi` and a `TimetableUi`. The `ScheduleUi` handles all outputs to do with displaying a user’s schedule.
+  To do this, it uses the `TimetableUi` to display a specialised timetable view of the weekly schedule. 
+  The main `Ui` handles everything else, such as displaying general messages and reading the user’s inputs. 
 
 
 #### 3.2.3 Parser Component
 
-The Parser component takes the user’s inputs from the Ui component, and makes sense of these commands. If the
- commands are incomplete, it calls the Ui component to prompt the user for more input until the commands have 
- the parameters required to execute. Once this condition is fulfilled, it returns a Command object to LifEasier
+The `Parser` component takes the user’s inputs from the `Ui` component, and makes sense of these commands. If the
+ commands are incomplete, it calls the `Ui` component to prompt the user for more input until the commands have 
+ the parameters required to execute. Once this condition is fulfilled, it returns a `Command` object to **LifEasier**
   for the commands to be executed.
   
   
 #### 3.2.4 Command Component
 
-The Command component consists of an abstract Command class and the many different commands that inherit the 
-Command class. What is important to note is that each type of command class (e.g. addLessonCommand, showNotesCommand)
- implements an abstract execute() method that carries out the command. Figure 3.2.4-1 below shows the classes that 
- inherit from the Command class.
+The `Command` component consists of an abstract `Command` class and the many different commands that inherit the 
+`Command` class. What is important to note is that each type of command class (e.g. `addLessonCommand`, `showNotesCommand`)
+ implements an abstract `execute()` method that carries out the command. Figure 3.2.4-1 below shows the classes that 
+ inherit from the `Command` class.
  
- ![Figure 3.2.4-1](images/DeveloperGuide/Figure3.2.4-1.jpg)  
+ ![Figure 3.2.4-1](images/DeveloperGuide/Figure%203.2.4-1.png)  
  _Figure 3.2.4-1: The classes that inherit from the Command class_
  
 #### 3.2.5 TaskList Component
 
-The TaskList component handles the instantiation and modifications to the overall list of tasks. Specifically,
- it handles any addition, edition, deletion on the TaskList. This component will heavily interact with the Command 
+The `TaskList` component handles the instantiation and modifications to the overall list of tasks. Specifically,
+ it handles any addition, edition, deletion on the `TaskList`. This component will heavily interact with the `Command`
  component as most commands will include modifications to the overall TaskList.
  
  
 #### 3.2.6 NoteList Component
 
-The NoteList component contains all the users notes. Similar to the TaskList component, it interacts heavily with 
-the Command component to modify the user’s notes.
+The `NoteList` component contains all the users notes. Similar to the `TaskList` component, it interacts heavily with 
+the `Command` component to modify the user’s notes.
 
 
 #### 3.2.7 Storage Component
 
-The Storage component handles saving of the users’ notes and tasks to persistent storage.
- It does this after every addition, change, or deletion to the TaskList component or NoteList component. 
- It also handles the moving of the stored notes to a separate archive file if instructed.
+The `Storage` component handles saving of the users’ notes and tasks to persistent storage.
+ It does this after every addition, change, or deletion to the `TaskList` component or `NoteList` component. 
+ It also handles the moving of the stored `notes` to a separate `archive` file if instructed.
 
 ## 4.0 Implementation
 
+The following section will go into further details on how the different features of **LifEasier** were implemented.
+
 ### 4.1 Adding Lessons, Events, Deadlines (Fairuz)
 
-The addLesson/addEvent/addDeadline command adds the specific task into the TaskList.
+The `addLesson`, `addEvent` and `addDeadline` commands adds the specific task into the `TaskList`.
 
 ##### Implementation
 
 Due to the different parameters required by the addition of different types of tasks, each command has
  a specific intended parameter to be input by the user.
 
-For example, if the user uses the addEvent command, the user will have to input the EVENT_NAME,
- START_TIME and END_TIME, whereas if the user uses the addDeadline command, the user will have input DEADLINE_NAME and BY.
+For example, if the user uses the `addEvent` command, the user will have to input the `EVENT_NAME`,
+ `START_TIME` and `END_TIME`, whereas if the user uses the `addDeadline` command, the user will have input `DEADLINE_NAME` and `BY`.
 
-When the command is called, the class invokes the TaskList class method to add the specific task to
- the TaskList, after which Storage is called to save the updated TaskList to the local save file. Figure 4.1-1 shows the 
- sequence diagram for the addDeadlineCommand. This sequence diagram is applicable to the other two addEventCommand and 
- addLessonCommand, with the only difference being in their parameters.
+When the command is called, the class invokes the `TaskList` class method to add the specific task to
+ the `TaskList`, after which `Storage` is called to save the updated `TaskList` to the local save file. Figure 4.1-1 shows the 
+ sequence diagram for the `addDeadlineCommand`. This sequence diagram is applicable to the other two `addEventCommand` and 
+ `addLessonCommand`, with the only difference being in their parameters.
  
- ![Figure 4.1-1](images/DeveloperGuide/Figure 4.1-1.png)  
+ ![Figure 4.1-1](images/DeveloperGuide/Figure%204.1-1.png)  
  _Figure 4.1-1: Sequence diagram for addDeadlineCommand execution_
 
 ##### Design Considerations
 
-The success and accuracy of the command is heavily dependent on the values passed to the command by the Parser class.
- Thus, checks have to be thoroughly conducted by the Parser class before the Command class is invoked.
+The success and accuracy of the command is heavily dependent on the values passed to the command by the `Parser` class.
+ Thus, checks have to be thoroughly conducted by the `Parser` class before the `Command` class is invoked.
 
 ### 4.2 Editing Lessons, Events, Deadlines (Fairuz)
 
-The editEventCommand, editDeadlineCommand and editLessonCommand allows the user to edit existing
- tasks in the TaskList according to the type of task.
+The `editEventCommand`, `editDeadlineCommand` and `editLessonCommand` allows the user to edit existing
+ tasks in the `TaskList` according to the type of task.
 
 ##### Implementation
 
-These command classes will be invoked when the user inputs the editTask command, followed by
+These command classes will be invoked when the user inputs the `editTask` command, followed by
  the type of task to be edited. 
 
-The user also has an option to input the task’s name, or part of it, after which LifEasier
+The user also has an option to input the task’s name, or part of it, after which **LifEasier**
  will print out all tasks matching the type, and the user query. If the user chooses to leave
- that search parameter blank, LifEasier will print out all the tasks of the intended type.
+ that search parameter blank, **LifEasier** will print out all the tasks of the intended type.
  The program will then prompt User to input the index of the task to be edited.
 
-Upon receiving a valid index of a task to be edited, LifEasier will prompt the User for the
- parameter to be edited - Name or Time. 
+Upon receiving a valid index of a task to be edited, **LifEasier** will prompt the User for the
+ parameter to be edited - `Name` or `Time`. 
 
-Upon receiving a valid option of parameter to edit, LifEasier will prompt the User to input
- the new descriptions. If the User input is valid according to the required format, LifEasier will print a confirmation
- of the edit. The edited task will then be saved by Storage. Figure 4.2-1 illustrates the flow of editDeadlineCommand 
- through a sequence diagram. The logic of this class remains the same among the different types of Tasks.
+Upon receiving a valid option of parameter to edit, **LifEasier** will prompt the User to input
+ the new descriptions. If the User input is valid according to the required format, **LifEasier** will print a confirmation
+ of the edit. The edited task will then be saved by `Storage`. Figure 4.2-1 illustrates the flow of `editDeadlineCommand` 
+ through a sequence diagram. The logic of this class remains the same among the different types of `Tasks`.
 
-![Figure 4.2-1](images/DeveloperGuide/Figure 4.2-1.png)  
-![Figure 4.2-1.1](images/DeveloperGuide/Figure 4.2-1.1.png)  
+![Figure 4.2-1](images/DeveloperGuide/Figure%204.2-1.png)    
 _Figure 4.2-1: Sequence diagram for editDeadlineCommand execution_
 
 ##### Design Considerations
 
 Due to the difference in the types of tasks and their parameters, this functionality was designed to guide the User
- explicitly to ensure accurate inputs and thus efficiency.
+ explicitly to ensure accurate inputs and thus efficiency. This will have minimal impact on the efficiency of the program,
+ while improving the quality of use for the User.
  
 ### 4.3 Deleting of Lessons, Events, Deadlines (Fairuz)
 
-The deleteTaskCommand allows the user to delete any task (lesson, event or deadline) from the TaskList.
-
+The `deleteTaskCommand` allows the user to delete any `Task` (lesson, event or deadline) from the `TaskList`.
 
 ##### Implementation
+The User first enters the `deleteTask` command and appends the type of task to be deleted. **LifEasier** will then print
+ out the list of tasks of the intended type. For example, when User inputs `deleteTask /type event`, **LifEasier** will 
+ print out all `Events` in the `TaskList`.
 
-The User first enters the deleteTask command and appends the type of task to be deleted. LifEasier will then print
- out the list of tasks of the intended type. For example, when User inputs “deleteTask /type event”, LifEasier will 
- print out all Events in the TaskList.
-
-LifEasier will then prompt the user to select the Task to be deleted by inputting the index of the Task as seen from
- the terminal. Before the Task is deleted, a temporary copy of the current state of the Task will be saved by 
- TaskHistory. The Task is then deleted and LifEasier will print the confirmation of the deletion. The old copy of the 
- Task will then be pushed to TaskHistory, and the updated TaskList will be saved by Storage. Figure 4.3 will illustrate 
- the flow of the deleteTaskCommand through a sequence diagram.
+**LifEasier** will then prompt the user to select the `Task` to be deleted by inputting the index of the `Task` as seen from
+ the terminal. Before the `Task` is deleted, a temporary copy of the current state of the `Task` will be saved by 
+ `TaskHistory`. The `Task` is then deleted and **LifEasier** will print the confirmation of the deletion. The old copy of the 
+ `Task` will then be pushed to `TaskHistory`, and the updated `TaskList` will be saved by `Storage`. Figure 4.3 will illustrate 
+ the flow of the `deleteTaskCommand` through a sequence diagram.
 
 ##### Design Considerations
 
 The command has to handle separate types of tasks as printing all tasks and forcing the User to look up the whole table
- would be impractical in the long run. The enhanced capability with TaskHistory to allow the User to undo any action is 
- crucial as its initial functionality did not have the ability to restore any accidentally deleted Tasks.
+ would be impractical in the long run. The enhanced capability with `TaskHistory` to allow the User to undo any action is 
+ crucial as its initial functionality did not have the ability to restore any accidentally deleted `Tasks`.
 
 ![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
 _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
@@ -335,25 +342,27 @@ The undo feature allows the user to undo any changes made to Task or Note object
 
 ##### Implementation
 
-To implement the undo feature, the concept of a stack was used to hold all the history of previous versions of Tasks (or Notes) before they are changed.
+To implement the `undo` feature, the concept of a stack was used to hold all the history of previous versions of `Tasks` (or `Notes`) before they are changed.
 
-At every instance where a particular Task (or Note) is edited or deleted, using commands such as editDeadline, deleteTask or editNote, a copy of the Task (or Note) is made as the changes are being made. Every Task or Note object has an editNumber attributed to it, which is assigned a positive value if it has been edited, and a negative value if it has been deleted.
+At every instance where a particular `Task` (or `Note`) is edited or deleted, using commands such as `editDeadline`, `deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is made as the changes are being made. Every `Task` or `Note` object has an `editNumber` attributed to it, which is assigned a positive value if it has been edited, and a negative value if it has been deleted.
 
-The copy made is temporarily stored as a new Task (or Note) object until the edit or deletion is successful. The copy of the old unchanged Task (or Note) is then pushed into an array called taskHistory (or NoteHistory), which holds all the previous copies of the object.
+The copy made is temporarily stored as a new `Task` (or `Note`) object until the edit or deletion is successful. The copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `NoteHistory`), which holds all the previous copies of the object.
 
-Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a Task. The concept in a similar manner for that of Note objects.
+Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept in a similar manner for that of `Note` objects.
 
+![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
 _Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
-When the undo command is called, it retrieves the editNumber of the copied Task (or Note) at the top of the stack in taskHistory (or noteHistory), and iterates through the existing TaskList (or NoteList) to see which Task (or Note) has the corresponding editNumber. If there is a match, the existing Task is replaced with the old copy, and then the old copy is removed from the Tasklist.
+When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which `Task` (or `Note`) has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the old copy, and then the old copy is removed from the `Tasklist`.
 
-The corresponding confirmation message to be displayed is determined by whether the editNumber is positive or negative.
+The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
 
+![Figure 4.6-2](images/DeveloperGuide/Figure 4.6-2.png)
 _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 ##### Design Considerations
 
-To allow for multiple undos on the same Task (or Note) object, the editNumber of Tasks (orNotes) that have been edited before must be checked. If it is anything but the default assigned value(-999999), then its existing editNumber will be taken and used as the editID for all successive copies made of it. This is to allow the application to always find the same instance of the Task (or Note) inside the TaskList (or NoteList) when restoring previous versions.
+To allow for multiple undos on the same `Task` (or `Note`) object, the `editNumber` of `Tasks` (or `Notes`) that have been edited before must be checked. If it is anything but the default assigned _value(-999999)_, then its existing `editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the application to always find the same instance of the `Task` (or `Note`) inside the `TaskList` (or `NoteList`) when restoring previous versions.
 
 ### 4.7 Storing and Archiving Notes (Danzel)
 
@@ -363,19 +372,19 @@ and archiving system of **LifEasier** was implemented, followed by the considera
 
 ##### Implementation - Data saving and storing
 
-Figure 4.6-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
+Figure 4.7-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
 that exist then as shown in the class diagram. These have been omitted for simplicity.
 
 ![Class Diagram Image](images/DeveloperGuide/StorageClassDiagram.png)
-_Figure 4.6-1: Class Diagram for all storage components_
+_Figure 4.7-1: Class Diagram for all storage components_
 
-Figure 4.6-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
+Figure 4.7-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
 the main `LifEasier` class creates a new `FileStorage` object, which starts the save reading process to load in all the previously stored 
 data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
 ![Startup file load sequence diagram](images/DeveloperGuide/StorageLaunchSequenceDiagram.png)
-_Figure 4.6-2: Sequence diagram for save data reading on startup_
+_Figure 4.7-2: Sequence diagram for save data reading on startup_
 
 By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
 The names of the tasks and notes save files are passed in as arguments from the main method in the `LifEasier` class, where the first 
@@ -383,14 +392,14 @@ argument dictates the resulting name of the tasks save file, while the second de
 names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
 
 Whenever a new task or note is added, edited or deleted, the `saveTask()` or `saveNote()` methods in the `FileStorage` class is called depending 
-on whether the changed item was a task or a note, to begin the data saving process. Figure 4.6-3 shows the sequence diagram taken by the program 
+on whether the changed item was a task or a note, to begin the data saving process. Figure 4.7-3 shows the sequence diagram taken by the program 
 to save the user’s notes data. The saving process for tasks and notes are implemented in similar ways, with the saving process for tasks 
 requiring a few more additional steps to correctly convert the tasks’ `LocalDateTime` information into formatted Strings to allow for more 
 readable save files. The format in which the `LocalDateTime` objects are converted to can be found in the `DateTimeFormatter` object in the 
 `FileCommand` class.
 
 ![Save sequence diagram](images/DeveloperGuide/StorageSaveSequenceDiagram.png)
-_Figure 4.6-3: Sequence diagram for saving of user note data_
+_Figure 4.7-3: Sequence diagram for saving of user note data_
 
 ##### Implementation - Note Archiving
 
@@ -419,54 +428,55 @@ continue to run as per normal. **Manual intervention from the user** is required
 
 ### 4.8 Displaying Schedule (Johannine)
 
-The displaySchedule command presents the TaskList contents in a timetable format, given that it is specified to display the full week. Otherwise it displays the current day’s schedule in a list form, with the Task items sorted by date.
+The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to display the full week. Otherwise, it displays the current day’s schedule in a list form, with the `Task` items sorted by date.
 
 _Figure 4.7-1: Sequence diagram for displaying week or day schedule_
 
 ##### Implementation
 
-The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format (e.g. from Monday to Sunday).
+The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format _(e.g. from Monday to Sunday)_.
 
-Changes to the timetable are updated at every call of the showTimetable() method, which first involves the generation of the timetable by loading the contents of the TaskList into it, then printing it row by row.
+Changes to the timetable are updated at every call of the `showTimetable()` method, which first involves the generation of the timetable by loading the contents of the `TaskList` into it, then printing it row by row.
 
-The timetable is modelled using an ArrayList, with each entry containing a row of the timetable as a string. The individual cell entries of the timetable are collected by iterating through each day, each time slot and then through the TaskList to see which tasks fall on that particular day and are held during that particular time slot.
+The timetable is modelled using an `ArrayList`, with each entry containing a row of the timetable as a string. The individual cell entries of the timetable are collected by iterating through each day, each time slot and then through the `TaskList` to see which tasks fall on that particular day and are held during that particular time slot.
 
-The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into a string, before it is finally added to the ArrayList of timetable rows.
+The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into a string, before it is finally added to the `ArrayList` of timetable rows.
 
 ##### Design Considerations
 
-To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the entire TaskList every time it is called, in order to arrange the Tasks accordingly and update any changes.
+To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the entire `TaskList` every time it is called, in order to arrange the `Tasks` accordingly and update any changes.
 
-Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the timings of Tasks were rounded to the hour. This was an intentional design choice to keep the timetable neat and not overloaded with too much details.
+Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not overloaded with too much details.
 
 ### 4.9 Displaying Free Time and Sleep Time (Daniel)
 
 ##### Implementation
 
-The freeTime command displays to the user their longest block of free time for that day, while the 
+The `freeTime` command displays to the user their longest block of free time for that day. The `sleepTime`
  command displays to the user how much time they have available to sleep based on that day’s and the
  next day’s schedule. Both commands are implemented similarly. They both find the longest uninterrupted block
  of free time within a certain time period by checking if individual hour-long time blocks in this time period
  are free. The commands then use the start and end time values found to calculate a duration, and pass all
- three values to the Ui to display to the user. Figure 4.8-1 shows the sequence diagram for the freeTimeCommand,
- and Figure 4.8-2 shows the sequence diagram for the sleepTimeCommand.
+ three values to the Ui to display to the user. Figure 4.9-1 shows the sequence diagram for the `freeTimeCommand`,
+ and Figure 4.9-2 shows the sequence diagram for the `sleepTimeCommand`.
 
-![Figure 4.8-1](images/DeveloperGuide/Figure4.8-1.jpg)  
-_Figure 4.8-1: Sequence diagram for freeTimeCommand execution_
+![Figure 4.9-1](images/DeveloperGuide/Figure%204.9-1.png)  
+_Figure 4.9-1: Sequence diagram for freeTimeCommand execution_
 
-![Figure 4.8-2](images/DeveloperGuide/Figure4.8-2.jpg)  
-_Figure 4.8-2: Sequence diagram for sleepTimeCommand execution_
+
+![Figure 4.9-2](images/DeveloperGuide/Figure%204.9-2.png)  
+_Figure 4.9-2: Sequence diagram for sleepTimeCommand execution_
 
 ##### Design Considerations
 
-1. Because of the way that the TaskList stores Tasks in an unsorted way, the  freeTime and sleepTime commands
+1. Because of the way that the `TaskList` stores `Tasks` in an unsorted way, the  `freeTime` and `sleepTime` commands
  must iterate through the entire list every time to check if a particular time slot has nothing scheduled.
  This corresponds to a time complexity of O(N). This was chosen as the way to implement this function as the
- size of TaskList is relatively small. As such, the repeated iteration would not result in 
+ size of `TaskList` is relatively small. As such, the repeated iteration would not result in 
  significant impacts on the timing performance.
  
-1. The functions also only provide an accuracy resolution which is rounded to the hour. Similar to the displaySchedule
- command, this was an intentional design choice to not overload the user with too much unnecessary details. 
+1. The functions also only provide an accuracy resolution which is rounded to the hour. Similar to the `displaySchedule`
+ command, this was an intentional design choice to not overload the user with too many unnecessary details. 
 
 
 ### 4.10 Parsing Commands (Edmund)
@@ -509,22 +519,46 @@ few days, they might need to restart it to ensure that their tasks are updated.
 
 ### 5.1 Target user profile
 
-{Describe the target user profile}
-
+NUS Computer Engineering students who struggle with keeping track of classes and deadlines, and managing their time to 
+have a social life with their busy schedule.
+ 
 ### 5.2 Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+**LifEasier** is a timetabling application with added abilities to add their own reminders and social events designed to
+ help students keep track of everything that they need to do. The application could help them take down and organise 
+ their notes as well.
+ 
+This will make their lives easier as they can more accurately keep track of what they are supposed to do, and what they 
+have already completed.
 
 ## 6.0 User Stories
 
 |Version| As a ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
-|v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
-|v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
+|v1.0|first time user|be able to access help to see what commands are available|learn to use the app|
+|v1.0|student|be able to add additional classes to the timetable|create my timetable with the relevant information|
+|v1.0|student|be able to take down notes and have them organised|have an easy way to take down notes during lecture|
+|v1.0|forgetful student|be reminded of my upcoming deadlines|be on time for all my deadlines|
+|v1.0|frequent user|know what I have going on for the day and when|I can have some motivation to start the day right|
+|v1.0|frequent user|be reminded of my regular weekly activities|keep track of the time I need to prepare for classes/homework|
+|v1.0|intermediate user|be able to enter detailed information into command|the app can help keep track of more details for me|
+|v2.0|student|be able to tell how much free time I have in the day|time manage my activities better|
+|v2.0|forgetful student|schedule one time events according to my timetable|avoid  manually deleting events from the calendar when they are over|
+|v2.0|tired student|be able to tell how much sleep I can get|plan my sleep schedule and be less tired|
+|v2.0|lazy user|edit my events and classes as they change|avoid having to delete and add them again|
+|v2.0|disorganised user|have the application recommend me the time I can do my personal stuff|avoid spending too much time planning|
+|v2.0|frequent user|have a way to edit the notes I have taken|update any additional information in the future|
+|v2.0|frequent user|be able to have quick access to all related notes of a subject|will be able to revise more efficiently|
+|v2.0|intermediate user|set recurring events / classes|avoid having to repeat multiple commands for the same thing|
+|v2.0|long time user|be able to store/archive different semester schedule and notes|show it to my descendants|
+|v2.0|experienced user|have a way to delete unwanted tasks|remove clutter|
 
 ## 7.0 Non-Functional Requirements
 
-{Give non-functional requirements}
+1. The application should work on any mainstream OS that has Java 11 or above installed.
+1. The application has to be lightweight and can be used on a device with storage issues.
+1. The application does not end abruptly when invalid inputs are passed.
+1. The file size of the application is below 100MB.
 
 ## 8.0 Documentation
 Apart from PDF versions of our User Guide and Developer Guide, separate versions are also managed under the
