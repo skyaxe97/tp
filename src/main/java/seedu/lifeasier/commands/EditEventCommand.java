@@ -81,6 +81,7 @@ public class EditEventCommand extends Command {
         ui.showSelectParameterToEdit();
         ui.showEditableParametersMessage(Ui.PARAM_EVENT);
         int userParamChoice = Integer.parseInt(ui.readCommand());
+        logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
 
         switch (userParamChoice) {
 
@@ -97,5 +98,6 @@ public class EditEventCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
+        ui.printSeparator();
     }
 }

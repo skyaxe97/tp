@@ -1,7 +1,10 @@
 package seedu.lifeasier.ui;
 
+import seedu.lifeasier.notes.NoteHistory;
 import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.tasks.TaskHistory;
 import seedu.lifeasier.tasks.Task;
+
 
 import java.util.Scanner;
 
@@ -513,12 +516,20 @@ public class Ui {
         System.out.println(colourTextGreen("This deleted task has been successfully restored!"));
     }
 
+    public void showOldTask(TaskHistory taskHistory) {
+        System.out.println(taskHistory.getLastTask().toString());
+    }
+
     public void showUndoNoteEditMessage() {
         System.out.println(colourTextGreen("This note has been reverted back to its previous version!"));
     }
 
     public void showUndoNoteDeleteMessage() {
         System.out.println(colourTextGreen("This deleted note has been successfully restored!"));
+    }
+
+    public void showOldNote(NoteHistory noteHistory) {
+        System.out.println(noteHistory.getLastNote());
     }
 
     public void printEmptyParam(String param) {
