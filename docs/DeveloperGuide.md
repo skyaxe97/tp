@@ -237,14 +237,14 @@ The User first enters the `deleteTask` command and appends the type of task to b
  `Task` will then be pushed to `TaskHistory`, and the updated `TaskList` will be saved by `Storage`. Figure 4.3 will illustrate 
  the flow of the `deleteTaskCommand` through a sequence diagram.
 
+![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
+_Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
+
 ##### Design Considerations
 
 The command has to handle separate types of tasks as printing all tasks and forcing the User to look up the whole table
  would be impractical in the long run. The enhanced capability with `TaskHistory` to allow the User to undo any action is 
  crucial as its initial functionality did not have the ability to restore any accidentally deleted `Tasks`.
-
-![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
-_Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 
 ### 4.4 Adding Notes (Edmund)
 
@@ -662,7 +662,7 @@ Test deletion of tasks and notes with the following commands.
 Use the following command to archive all currently loaded notes.
 * `archive`
 
-Now, when `showNotes` is used, there should be no notes listed. Navigate to the “LifEaserSaves” directory created in the same folder as LifEasier.jar was run, to find the created “Archives” directory. Your archived notes will be found in the created text file named corresponding to the date and time the archive command was run.
+Now, when `showNotes` is used, there should be no notes listed. Navigate to the _LifEasierSaves_ directory created in the same folder as `LifEasier.jar` was run, to find the created _Archives_ directory. Your archived notes will be found in the created text file named corresponding to the date and time the archive command was run.
 
 To show free time and sleep time, use the following commands.
 * `freeTime`
