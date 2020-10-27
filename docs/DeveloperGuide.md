@@ -101,7 +101,7 @@ Figure 4.6-1 shows the simplified class diagram of all the components in the sto
 that exist then as shown in the class diagram. These have been omitted for simplicity.
 
 ![Class Diagram Image](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageClassDiagram.png?raw=true)
-*Figure 4.6-1: Class Diagram for all storage components*
+_Figure 4.6-1: Class Diagram for all storage components_
 
 Figure 4.6-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
 the main `LifEasier` class creates a new `FileStorage` object, which starts the save reading process to load in all the previously stored 
@@ -109,9 +109,9 @@ data of the user, if available. Else, new save directories and save files are cr
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
 ![Startup file load sequence diagram](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageLaunchSequenceDiagram.png?raw=true)
-*Figure 4.6-2: Sequence diagram for save data reading on startup*
+_Figure 4.6-2: Sequence diagram for save data reading on startup_
 
-By default, the save directory is set as *LifEasierSaves* under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
+By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
 The names of the tasks and notes save files are passed in as arguments from the main method in the `LifEasier` class, where the first 
 argument dictates the resulting name of the tasks save file, while the second determines the name of the notes save file. Save directory 
 names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
@@ -124,11 +124,11 @@ readable save files. The format in which the `LocalDateTime` objects are convert
 `FileCommand` class.
 
 ![Save sequence diagram](https://github.com/AY2021S1-CS2113T-W13-4/tp/tree/master/docs/images/DeveloperGuide/StorageSaveSequenceDiagram.png?raw=true)
-*Figure 4.6-3: Sequence diagram for saving of user note data*
+_Figure 4.6-3: Sequence diagram for saving of user note data_
 
 ##### Implementation - Note Archiving
 The `archive` command immediately moves all currently loaded notes into a newly generated text file in the `Archives` directory found within the 
-*LifEasierSaves* directory. If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
+_LifEasierSaves_ directory. If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
 current date in the **DD-MM-YY** format, and the time the archive command was run in the **HH:MM** format, separated by a **T**. The current save 
 file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` is 
 cleared. Archived notes will not be read by the program anymore and any changes can be made to the created archive save file.
