@@ -342,18 +342,28 @@ The undo feature allows the user to undo any changes made to Task or Note object
 
 ##### Implementation
 
-To implement the `undo` feature, the concept of a stack was used to hold all the history of previous versions of `Tasks` (or `Notes`) before they are changed.
+To implement the `undo` feature, the concept of a stack was used to hold all the history of previous versions of `Tasks` 
+(or `Notes`) before they are changed.
 
-At every instance where a particular `Task` (or `Note`) is edited or deleted, using commands such as `editDeadline`, `deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is made as the changes are being made. Every `Task` or `Note` object has an `editNumber` attributed to it, which is assigned a positive value if it has been edited, and a negative value if it has been deleted.
+At every instance where a particular `Task` (or `Note`) is edited or deleted, using commands such as `editDeadline`, 
+`deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is made as the changes are being made. Every `Task` or 
+`Note` object has an `editNumber` attributed to it, which is assigned a positive value if it has been edited, and a 
+negative value if it has been deleted.
 
-The copy made is temporarily stored as a new `Task` (or `Note`) object until the edit or deletion is successful. The copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `NoteHistory`), which holds all the previous copies of the object.
+The copy made is temporarily stored as a new `Task` (or `Note`) object until the edit or deletion is successful. The 
+copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `NoteHistory`), 
+which holds all the previous copies of the object.
 
-Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept in a similar manner for that of `Note` objects.
+Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
+works in a similar manner for that of `Note` objects.
 
 ![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
 _Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
-When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which `Task` (or `Note`) has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the old copy, and then the old copy is removed from the `Tasklist`.
+When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the 
+stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which 
+`Task` (or `Note`) has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the 
+old copy, and then the old copy is removed from the `Tasklist`.
 
 The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
 
@@ -362,7 +372,11 @@ _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 ##### Design Considerations
 
-To allow for multiple undos on the same `Task` (or `Note`) object, the `editNumber` of `Tasks` (or `Notes`) that have been edited before must be checked. If it is anything but the default assigned _value(-999999)_, then its existing `editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the application to always find the same instance of the `Task` (or `Note`) inside the `TaskList` (or `NoteList`) when restoring previous versions.
+To allow for multiple undos on the same `Task` (or `Note`) object, the `editNumber` of `Tasks` (or `Notes`) that have 
+been edited before must be checked. If it is anything but the default assigned _value(-999999)_, then its existing 
+`editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the 
+application to always find the same instance of the `Task` (or `Note`) inside the `TaskList` (or `NoteList`) when 
+restoring previous versions.
 
 ### 4.7 Storing and Archiving Notes (Danzel)
 
@@ -428,25 +442,38 @@ continue to run as per normal. **Manual intervention from the user** is required
 
 ### 4.8 Displaying Schedule (Johannine)
 
-The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to display the full week. Otherwise, it displays the current day’s schedule in a list form, with the `Task` items sorted by date.
+The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to 
+display the full week. Otherwise, it displays the current day’s schedule in a list form, with the `Task` items sorted 
+by date.
 
-_Figure 4.7-1: Sequence diagram for displaying week or day schedule_
+![Figure 4.8-1](images/DeveloperGuide/Figure 4.8-1.png)
+_Figure 4.8-1: Sequence diagram for displaying week or day schedule_
 
 ##### Implementation
 
-The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format _(e.g. from Monday to Sunday)_.
+The timetable is structured in such a way that the first column always starts with the schedule of the current day, 
+followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed 
+format _(e.g. from Monday to Sunday)_.
 
-Changes to the timetable are updated at every call of the `showTimetable()` method, which first involves the generation of the timetable by loading the contents of the `TaskList` into it, then printing it row by row.
+Changes to the timetable are updated at every call of the `showTimetable()` method, which first involves the generation 
+of the timetable by loading the contents of the `TaskList` into it, then printing it row by row.
 
-The timetable is modelled using an `ArrayList`, with each entry containing a row of the timetable as a string. The individual cell entries of the timetable are collected by iterating through each day, each time slot and then through the `TaskList` to see which tasks fall on that particular day and are held during that particular time slot.
+The timetable is modelled using an `ArrayList`, with each entry containing a row of the timetable as a string. The 
+individual cell entries of the timetable are collected by iterating through each day, each time slot and then through 
+the `TaskList` to see which tasks fall on that particular day and are held during that particular time slot.
 
-The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into a string, before it is finally added to the `ArrayList` of timetable rows.
+The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into 
+a string, before it is finally added to the `ArrayList` of timetable rows.
 
 ##### Design Considerations
 
-To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the entire `TaskList` every time it is called, in order to arrange the `Tasks` accordingly and update any changes.
+To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that 
+of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the 
+entire `TaskList` every time it is called, in order to arrange the `Tasks` accordingly and update any changes.
 
-Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not overloaded with too much details.
+Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the 
+timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not 
+overloaded with too much details.
 
 ### 4.9 Displaying Free Time and Sleep Time (Daniel)
 
