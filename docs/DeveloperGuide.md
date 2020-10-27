@@ -44,59 +44,63 @@ This developer guide documents the design, architecture and instructions for tes
 
 ## 2.0 Setting Up
 
+The following section will provide information on how to set up **LifEasier** for development.
+
 ### 2.1 Prerequisites
 
-1. JDK 11
+1. `JDK 11`
 2. Intellij IDE
 
 ### 2.2 Setting Up the Project
 
-1. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+1. Open _IntelliJ_ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
 
 1. Set up the correct JDK version for Gradle.
 Click `Configure` > `Project Defaults` > `Project Structure`
-Click New... and find the directory of the JDK
+Click `New...` and find the directory of the JDK.
 
-1. Click Import Project
+1. Click Import Project.
 
-1. Locate the build.gradle file and select it. Click OK.
+1. Locate the `build.gradle` file and select it. Click `OK`.
 
-1. Click Open as Project
+1. Click `Open as Project`.
 
-1. Click OK to accept the default settings.
+1. Click `OK` to accept the default settings.
 
 ### 2.3 Verifying Setup
 
-1. Run the seedu.LifEasier.Main and try a few commands.
+1. Run the `seedu.LifEasier.Main` and try a few commands.
 
-1. Run the tests to ensure they all pass. This can be done by executing the command `gradlew build` in IntelliJ’s terminal.
+1. Run the tests to ensure they all pass. This can be done by executing the command `gradlew build` in _IntelliJ’s_ terminal.
 
 
 ## 3.0 Design
+
+The following sections will go into detail on the design and architecture of **LifEasier**.
 
 ### 3.1 Architecture
 
 This section elaborates on the high-level architecture of the **LifEasier** application. It provides a brief introduction to each component, and how these components interact with one another. 
 
 
-_Fig. 1 Architecture diagram for LifEasier_
+_Figure 3.1-1 Architecture diagram for LifEasier_
 
-LifEasier is comprised of 7 components, which are listed below together with their functions (shown in Fig 1):
+**LifEasier** is comprised of 7 components, which are listed below together with their functions _(shown in Figure 3.1-1)_:
 
-1. LifEasier: The main class of the application.
-2. Ui: Displays messages to the user, and takes in the user’s commands
-3. Parser: Understands the user’s commands, and creates the necessary Command objects.
-4. Command: Carries out the user’s command
-5. TaskList: Holds the task data of the app in memory.
-6. NoteList: Holds the note data of the app in memory.
-7. Storage: Reads and writes data from the hard disk.
+1. `LifEasier`: The main class of the application.
+2. `Ui`: Displays messages to the user, and takes in the user’s commands
+3. `Parser`: Understands the user’s commands, and creates the necessary Command objects.
+4. `Command`: Carries out the user’s command
+5. `TaskList`: Holds the task data of the app in memory.
+6. `NoteList`: Holds the note data of the app in memory.
+7. `Storage`: Reads and writes data from the hard disk.
 
 Each of these components are expanded on in more detail in their respective sections.
 
-Figure 2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
+Figure 3.1-2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
 
 
-_Fig 2. Sequence diagram of “addDeadline”._
+_Figure 3.1-2 Sequence diagram of “addDeadline”._
 
 ### 3.2 Components
 
@@ -105,56 +109,58 @@ This section expands on the various components that were first seen in the Archi
 
 #### 3.2.1 LifEasier Component
 
-The LifEasier component is the main class of the application. It initialises all other components,
+The **LifEasier** component is the main class of the application. It initialises all other components,
  and is used as the centre of all other components.
 
 
 #### 3.2.2 UI Component
 
-The UI component reads the user’s inputs and displays messages and content to the user. It consists of a main Ui,
- a ScheduleUi and a TimetableUi. The ScheduleUi handles all outputs to do with displaying a user’s schedule.
-  To do this, it uses the TimetableUi to display a specialised timetable view of the weekly schedule. 
-  The main Ui handles everything else, such as displaying general messages and reading the user’s inputs. 
+The `UI` component reads the uthe user. It consists ofser’s inputs and displays messages and content to  a main `Ui`,
+ a `ScheduleUi` and a `TimetableUi`. The `ScheduleUi` handles all outputs to do with displaying a user’s schedule.
+  To do this, it uses the `TimetableUi` to display a specialised timetable view of the weekly schedule. 
+  The main `Ui` handles everything else, such as displaying general messages and reading the user’s inputs. 
 
 
 #### 3.2.3 Parser Component
 
-The Parser component takes the user’s inputs from the Ui component, and makes sense of these commands. If the
- commands are incomplete, it calls the Ui component to prompt the user for more input until the commands have 
- the parameters required to execute. Once this condition is fulfilled, it returns a Command object to LifEasier
+The `Parser` component takes the user’s inputs from the `Ui` component, and makes sense of these commands. If the
+ commands are incomplete, it calls the `Ui` component to prompt the user for more input until the commands have 
+ the parameters required to execute. Once this condition is fulfilled, it returns a `Command` object to **LifEasier**
   for the commands to be executed.
   
   
 #### 3.2.4 Command Component
 
-The Command component consists of an abstract Command class and the many different commands that inherit the 
-Command class. What is important to note is that each type of command class (e.g. addLessonCommand, showNotesCommand)
- implements an abstract execute() method that carries out the command. Figure 3.2.4-1 below shows the classes that 
- inherit from the Command class.
+The `Command` component consists of an abstract `Command` class and the many different commands that inherit the 
+`Command` class. What is important to note is that each type of command class (e.g. `addLessonCommand`, `showNotesCommand`)
+ implements an abstract `execute()` method that carries out the command. Figure 3.2.4-1 below shows the classes that 
+ inherit from the `Command` class.
  
  ![Figure 3.2.4-1](images/DeveloperGuide/Figure3.2.4-1.jpg)  
  _Figure 3.2.4-1: The classes that inherit from the Command class_
  
 #### 3.2.5 TaskList Component
 
-The TaskList component handles the instantiation and modifications to the overall list of tasks. Specifically,
- it handles any addition, edition, deletion on the TaskList. This component will heavily interact with the Command 
+The `TaskList` component handles the instantiation and modifications to the overall list of tasks. Specifically,
+ it handles any addition, edition, deletion on the `TaskList`. This component will heavily interact with the `Command`
  component as most commands will include modifications to the overall TaskList.
  
  
 #### 3.2.6 NoteList Component
 
-The NoteList component contains all the users notes. Similar to the TaskList component, it interacts heavily with 
-the Command component to modify the user’s notes.
+The `NoteList` component contains all the users notes. Similar to the `TaskList` component, it interacts heavily with 
+the `Command` component to modify the user’s notes.
 
 
 #### 3.2.7 Storage Component
 
-The Storage component handles saving of the users’ notes and tasks to persistent storage.
- It does this after every addition, change, or deletion to the TaskList component or NoteList component. 
- It also handles the moving of the stored notes to a separate archive file if instructed.
+The `Storage` component handles saving of the users’ notes and tasks to persistent storage.
+ It does this after every addition, change, or deletion to the `TaskList` component or `NoteList` component. 
+ It also handles the moving of the stored `notes` to a separate `archive` file if instructed.
 
 ## 4.0 Implementation
+
+The following section will go into further details on how the different features of **LifEasier** were implemented.
 
 ### 4.1 Adding Lessons, Events, Deadlines (Fairuz)
 
@@ -329,29 +335,29 @@ an exception caught.
 
 ### 4.6 Undoing Changes Made to Tasks and Notes (Johannine)
 
-The undo feature allows the user to undo any changes made to Task or Note objects, particularly edits and deletions.
+The `undo` feature allows the user to undo any changes made to `Task` or `Note` objects, particularly edits and deletions.
 
 ##### Implementation
 
-To implement the undo feature, the concept of a stack was used to hold all the history of previous versions of Tasks (or Notes) before they are changed.
+To implement the `undo` feature, the concept of a stack was used to hold all the history of previous versions of `Tasks` (or `Notes`) before they are changed.
 
-At every instance where a particular Task (or Note) is edited or deleted, using commands such as editDeadline, deleteTask or editNote, a copy of the Task (or Note) is made as the changes are being made. Every Task or Note object has an editNumber attributed to it, which is assigned a positive value if it has been edited, and a negative value if it has been deleted.
+At every instance where a particular `Task` (or `Note`) is edited or deleted, using commands such as `editDeadline`, `deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is made as the changes are being made. Every `Task` or `Note` object has an `editNumber` attributed to it, which is assigned a positive value if it has been edited, and a negative value if it has been deleted.
 
-The copy made is temporarily stored as a new Task (or Note) object until the edit or deletion is successful. The copy of the old unchanged Task (or Note) is then pushed into an array called taskHistory (or NoteHistory), which holds all the previous copies of the object.
+The copy made is temporarily stored as a new `Task` (or `Note`) object until the edit or deletion is successful. The copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `NoteHistory`), which holds all the previous copies of the object.
 
-Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a Task. The concept in a similar manner for that of Note objects.
+Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept in a similar manner for that of `Note` objects.
 
 _Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
-When the undo command is called, it retrieves the editNumber of the copied Task (or Note) at the top of the stack in taskHistory (or noteHistory), and iterates through the existing TaskList (or NoteList) to see which Task (or Note) has the corresponding editNumber. If there is a match, the existing Task is replaced with the old copy, and then the old copy is removed from the Tasklist.
+When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which `Task` (or `Note`) has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the old copy, and then the old copy is removed from the `Tasklist`.
 
-The corresponding confirmation message to be displayed is determined by whether the editNumber is positive or negative.
+The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
 
 _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 ##### Design Considerations
 
-To allow for multiple undos on the same Task (or Note) object, the editNumber of Tasks (orNotes) that have been edited before must be checked. If it is anything but the default assigned value(-999999), then its existing editNumber will be taken and used as the editID for all successive copies made of it. This is to allow the application to always find the same instance of the Task (or Note) inside the TaskList (or NoteList) when restoring previous versions.
+To allow for multiple undos on the same `Task` (or `Note`) object, the `editNumber` of `Tasks` (or `Notes`) that have been edited before must be checked. If it is anything but the default assigned _value(-999999)_, then its existing `editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the application to always find the same instance of the `Task` (or `Note`) inside the `TaskList` (or `NoteList`) when restoring previous versions.
 
 ### 4.7 Storing and Archiving Notes (Danzel)
 
@@ -361,19 +367,19 @@ and archiving system of **LifEasier** was implemented, followed by the considera
 
 ##### Implementation - Data saving and storing
 
-Figure 4.6-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
+Figure 4.7-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
 that exist then as shown in the class diagram. These have been omitted for simplicity.
 
 ![Class Diagram Image](images/DeveloperGuide/StorageClassDiagram.png)
-_Figure 4.6-1: Class Diagram for all storage components_
+_Figure 4.7-1: Class Diagram for all storage components_
 
-Figure 4.6-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
+Figure 4.7-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
 the main `LifEasier` class creates a new `FileStorage` object, which starts the save reading process to load in all the previously stored 
 data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
 ![Startup file load sequence diagram](images/DeveloperGuide/StorageLaunchSequenceDiagram.png)
-_Figure 4.6-2: Sequence diagram for save data reading on startup_
+_Figure 4.7-2: Sequence diagram for save data reading on startup_
 
 By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
 The names of the tasks and notes save files are passed in as arguments from the main method in the `LifEasier` class, where the first 
@@ -381,14 +387,14 @@ argument dictates the resulting name of the tasks save file, while the second de
 names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
 
 Whenever a new task or note is added, edited or deleted, the `saveTask()` or `saveNote()` methods in the `FileStorage` class is called depending 
-on whether the changed item was a task or a note, to begin the data saving process. Figure 4.6-3 shows the sequence diagram taken by the program 
+on whether the changed item was a task or a note, to begin the data saving process. Figure 4.7-3 shows the sequence diagram taken by the program 
 to save the user’s notes data. The saving process for tasks and notes are implemented in similar ways, with the saving process for tasks 
 requiring a few more additional steps to correctly convert the tasks’ `LocalDateTime` information into formatted Strings to allow for more 
 readable save files. The format in which the `LocalDateTime` objects are converted to can be found in the `DateTimeFormatter` object in the 
 `FileCommand` class.
 
 ![Save sequence diagram](images/DeveloperGuide/StorageSaveSequenceDiagram.png)
-_Figure 4.6-3: Sequence diagram for saving of user note data_
+_Figure 4.7-3: Sequence diagram for saving of user note data_
 
 ##### Implementation - Note Archiving
 
@@ -417,25 +423,25 @@ continue to run as per normal. **Manual intervention from the user** is required
 
 ### 4.8 Displaying Schedule (Johannine)
 
-The displaySchedule command presents the TaskList contents in a timetable format, given that it is specified to display the full week. Otherwise it displays the current day’s schedule in a list form, with the Task items sorted by date.
+The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to display the full week. Otherwise, it displays the current day’s schedule in a list form, with the `Task` items sorted by date.
 
 _Figure 4.7-1: Sequence diagram for displaying week or day schedule_
 
 ##### Implementation
 
-The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format (e.g. from Monday to Sunday).
+The timetable is structured in such a way that the first column always starts with the schedule of the current day, followed by that of the next 6 days. This is so that the user always sees 7 days ahead, rather than a typical fixed format _(e.g. from Monday to Sunday)_.
 
-Changes to the timetable are updated at every call of the showTimetable() method, which first involves the generation of the timetable by loading the contents of the TaskList into it, then printing it row by row.
+Changes to the timetable are updated at every call of the `showTimetable()` method, which first involves the generation of the timetable by loading the contents of the `TaskList` into it, then printing it row by row.
 
-The timetable is modelled using an ArrayList, with each entry containing a row of the timetable as a string. The individual cell entries of the timetable are collected by iterating through each day, each time slot and then through the TaskList to see which tasks fall on that particular day and are held during that particular time slot.
+The timetable is modelled using an `ArrayList`, with each entry containing a row of the timetable as a string. The individual cell entries of the timetable are collected by iterating through each day, each time slot and then through the `TaskList` to see which tasks fall on that particular day and are held during that particular time slot.
 
-The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into a string, before it is finally added to the ArrayList of timetable rows.
+The cell entries which fall on the same time slot and hence the same row, are collected into an array and formatted into a string, before it is finally added to the `ArrayList` of timetable rows.
 
 ##### Design Considerations
 
-To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the entire TaskList every time it is called, in order to arrange the Tasks accordingly and update any changes.
+To ensure that the displayed timetable is easy to read and offers a quick view of the user’s schedule, especially that of the current day, the timetable is not made to be fixed. The display schedule commands must thus iterate through the entire `TaskList` every time it is called, in order to arrange the `Tasks` accordingly and update any changes.
 
-Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the timings of Tasks were rounded to the hour. This was an intentional design choice to keep the timetable neat and not overloaded with too much details.
+Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not overloaded with too much details.
 
 ### 4.9 Displaying Free Time and Sleep Time (Daniel)
 
