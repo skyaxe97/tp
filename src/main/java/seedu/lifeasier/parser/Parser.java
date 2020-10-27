@@ -126,11 +126,11 @@ public class Parser {
                 isDateEmpty = false;
                 break;
             case START_TIME:
-                input = addStartTimeParam(ui, input + " ");
+                input = addStartTimeParam(ui, input);
                 isStartTimeEmpty = false;
                 break;
             case END_TIME:
-                input = addEndTimeParam(ui, input);
+                input = addEndTimeParam(ui, input + " ");
                 isEndTimeEmpty = false;
                 break;
             case RECURRENCES:
@@ -163,16 +163,17 @@ public class Parser {
         String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String tempEndTime =  input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
-        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
         String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
-        int recurrences = Integer.parseInt(recurrencesString);
+        int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddLessonCommand(moduleCode, start, end, recurrences);
@@ -192,7 +193,7 @@ public class Parser {
         logger.log(Level.INFO, "Start check for missing parameters.");
 
         while (isParametersEmpty) {
-            MissingParam param = checkEventParameters(input);
+            MissingParam param = checkMissingEventParameters(input);
             switch (param) {
             case DESCRIPTION:   // description is missing
                 input = addEventDescriptionParam(ui, input);
@@ -239,16 +240,17 @@ public class Parser {
         String tempDate = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
         String tempStartTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
         String tempEndTime = input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
-        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
+        String recurrencesString =  fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
-        int recurrences = Integer.parseInt(recurrencesString);
+        int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddEventCommand(description, start, end, recurrences);
@@ -262,18 +264,17 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddDeadlineCommand with the parameters input by the user.
      */
-
     Command parseAddDeadlineCommand(Ui ui, String input) {
 
         logger.log(Level.INFO, "Parsing addDeadline command...");
         logger.log(Level.INFO, "Start check for missing parameters.");
 
         while (isParametersEmpty) {
-            MissingParam param = checkDeadlineParameters(input);
+            MissingParam param = checkMissingDeadlineParameters(input);
 
             switch (param) {
             case DESCRIPTION:   // description is missing
-                input = addDeadlineDescriptionParam(ui, input + " ");
+                input = addDeadlineDescriptionParam(ui, input);
                 isDescriptionEmpty = false;
                 break;
             case END_TIME:
@@ -301,12 +302,13 @@ public class Parser {
         int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String tempByInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
+        String tempRecurencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-        String recurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
-        int recurrences = Integer.parseInt(recurrencesString);
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
+        int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddDeadlineCommand(description, by, recurrences);
@@ -519,7 +521,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return Either UndoNoteCommand or UndoTaskCommand depending on the parsed parameter.
      */
-    private Command parseUndoCommand(String input) {
+    private Command parseUndoCommand(String input) throws ParserException {
         Ui ui = new Ui();
         logger.log(Level.INFO, "Parsing undo command...");
 
@@ -540,7 +542,7 @@ public class Parser {
             return new UndoNoteCommand();
         default:
             logger.log(Level.SEVERE, "Error determining undo command type");
-            return new InvalidCommand();
+            throw new ParserException();
         }
     }
 
@@ -560,26 +562,6 @@ public class Parser {
             }
         }
         return userInput;
-    }
-
-    /**
-     * Parses the user Y/N inputs.
-     *
-     * @param input String containing the user's input.
-     * @param ui Input and output interaction with the user.
-     * @return A "Y" or "N" string.
-     */
-    public String parseUserInputYesOrNo(String input, Ui ui) {
-        logger.log(Level.INFO, "Start check for Y/N input");
-
-        while (!input.trim().equals("Y") && !input.trim().equals("N")) {
-            ui.showInvalidConfirmationMessage();
-            input = ui.readCommand();
-
-        }
-        logger.log(Level.INFO, "End check for Y/N input");
-
-        return input;
     }
 
     /**
@@ -672,7 +654,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return An enumeration of the missing parameter.
      */
-    private MissingParam checkEventParameters(String input) {
+    private MissingParam checkMissingEventParameters(String input) {
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
 
@@ -698,7 +680,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return An enumeration of the missing parameter.
      */
-    private MissingParam checkDeadlineParameters(String input) {
+    private MissingParam checkMissingDeadlineParameters(String input) {
         int lastIndexOfAddDeadlineCommand = input.indexOf(PARAM_ADD_DEADLINE) + PARAM_ADD_DEADLINE.length();
         int firstIndexOfByCommand = input.indexOf(PARAM_BY);
 
@@ -863,6 +845,23 @@ public class Parser {
         return input;
     }
 
+    private int checkIfNumber(Ui ui, String input) {
+        while (!isNumeric(input)) {
+            ui.showRecurrencesNumberFormatError();
+            input = ui.readCommand();
+        }
+        return Integer.parseInt(input);
+    }
+
+    private boolean isNumeric(String input) {
+        try {
+            int number = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Parses the user's input into a Command object that can later be executed.
      *
@@ -948,6 +947,10 @@ public class Parser {
             resetBoolean();
             logger.log(Level.SEVERE, "Time input is invalid");
             ui.showParseIncorrectDateTimeMessage();
+        } catch (NumberFormatException e) {
+            resetBoolean();
+            logger.log(Level.SEVERE, "/repeats input is an invalid number");
+            ui.showNumberFormatMessage();
         }
 
         return new InvalidCommand();
