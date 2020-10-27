@@ -1,4 +1,4 @@
-package seedu.lifeasier.tasks;
+package seedu.lifeasier.model.tasks;
 
 import seedu.lifeasier.ui.Ui;
 
@@ -71,7 +71,7 @@ public class TaskHistory {
 
         if (taskEditNumber == DEFAULT_EDIT_NUMBER) {
             editID = getEditCount() + 1;
-            tasks.getTask(userIndexChoice).setEditNumber(editID);
+            task.setEditNumber(editID);
         } else {
             editID = taskEditNumber;
         }
@@ -95,7 +95,7 @@ public class TaskHistory {
 
         if (taskEditNumber == DEFAULT_EDIT_NUMBER) {
             deleteID = getDeleteCount() - 1;
-            tasks.getTask(userIndexChoice).setEditNumber(deleteID);
+            task.setEditNumber(deleteID);
         } else {
             deleteID = taskEditNumber;
         }

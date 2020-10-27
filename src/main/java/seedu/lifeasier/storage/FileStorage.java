@@ -1,7 +1,7 @@
 package seedu.lifeasier.storage;
 
-import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.notes.NoteList;
+import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.File;

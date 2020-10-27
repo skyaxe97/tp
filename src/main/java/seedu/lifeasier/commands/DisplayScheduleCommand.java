@@ -1,13 +1,13 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.NoteHistory;
-import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
-import seedu.lifeasier.ui.Ui;
+import seedu.lifeasier.storage.FileStorage;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.ScheduleUi;
-import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDate;
 
@@ -29,7 +29,6 @@ public class DisplayScheduleCommand extends Command {
         if (isDisplayWeek) {
             scheduleUi.showHome(tasks);
         } else {
-            taskHistory.printTaskHistory();
             int taskCountForToday = scheduleUi.getTaskCountForToday(tasks, currDate);
 
             if (taskCountForToday > 0) {
@@ -39,5 +38,6 @@ public class DisplayScheduleCommand extends Command {
                 System.out.println(NO_TASKS_TODAY_MESSAGE);
             }
         }
+        ui.printSeparator();
     }
 }

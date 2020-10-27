@@ -1,12 +1,12 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.Note;
-import seedu.lifeasier.notes.NoteHistory;
-import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.model.notes.Note;
+import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 public class UndoNoteCommand extends Command {
@@ -26,14 +26,16 @@ public class UndoNoteCommand extends Command {
 
             if (lastNoteEditNumber > 0) {
                 ui.showUndoNoteEditMessage();
-            } else {
+            } else if (lastNoteEditNumber < 0) {
                 ui.showUndoNoteDeleteMessage();
             }
-
+            ui.showOldNote(noteHistory);
             noteHistory.popLastNote();
+            storage.saveNote();
 
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidUndoAction();
         }
+        ui.printSeparator();
     }
 }

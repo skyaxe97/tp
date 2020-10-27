@@ -1,13 +1,13 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.NoteHistory;
-import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.Task;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskList;
-import seedu.lifeasier.tasks.TaskNotFoundException;
+import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.parser.Parser;
 
@@ -23,7 +23,7 @@ public class EditLessonCommand extends Command {
     }
 
     public void printLessonsMatchingCode(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui.PARAM_LESSON, code, ui);
+        tasks.printMatchingTasks(Ui.PARAM_LESSON, code, ui);
     }
 
     public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
@@ -97,5 +97,6 @@ public class EditLessonCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
+        ui.printSeparator();
     }
 }

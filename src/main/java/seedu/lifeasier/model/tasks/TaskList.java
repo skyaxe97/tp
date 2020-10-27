@@ -1,4 +1,4 @@
-package seedu.lifeasier.tasks;
+package seedu.lifeasier.model.tasks;
 
 
 import seedu.lifeasier.commands.ShowNotesCommand;
@@ -209,7 +209,10 @@ public class TaskList {
                 tasksToBeRemoved.add(task);
 
             } else if ((task.isHappeningBefore(day)) && (task.getRecurrences() > 0)) {
-                task.moveAndUpdateRecurrences();
+                task.moveAndUpdateRecurrences(day);
+                if (task.getRecurrences() < 0) {
+                    tasksToBeRemoved.add(task);
+                }
             }
         }
 

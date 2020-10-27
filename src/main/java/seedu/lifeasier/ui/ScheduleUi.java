@@ -1,8 +1,8 @@
 package seedu.lifeasier.ui;
 
-import seedu.lifeasier.tasks.Deadline;
-import seedu.lifeasier.tasks.Task;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.tasks.Deadline;
+import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,7 +21,6 @@ public class ScheduleUi {
         timetable.showTimetable(tasks);
         System.out.println();
         displayUpcomingDeadlines(tasks);
-        System.out.println(Ui.SEPARATOR);
     }
 
     private void displayUpcomingDeadlines(TaskList tasks) {
@@ -35,6 +34,10 @@ public class ScheduleUi {
                 System.out.println(id + ". " + task.toString());
                 id++;
             }
+        }
+
+        if (id == 1) {
+            System.out.println("None");
         }
     }
 

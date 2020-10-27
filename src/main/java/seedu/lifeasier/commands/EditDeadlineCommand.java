@@ -1,14 +1,14 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.NoteHistory;
-import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.Task;
-import seedu.lifeasier.tasks.TaskList;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskNotFoundException;
+import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 
 import java.util.logging.Level;
@@ -23,7 +23,7 @@ public class EditDeadlineCommand extends Command {
     }
 
     public void printMatchingDeadlines(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(ui.PARAM_DEADLINE, code, ui);
+        tasks.printMatchingTasks(Ui.PARAM_DEADLINE, code, ui);
     }
 
     public void editDeadlineName(TaskList tasks, int index, Ui ui) {
@@ -96,6 +96,7 @@ public class EditDeadlineCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
+        ui.printSeparator();
     }
 
 }
