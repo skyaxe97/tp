@@ -1,4 +1,4 @@
-package seedu.lifeasier.notes;
+package seedu.lifeasier.model.notes;
 
 import java.util.ArrayList;
 

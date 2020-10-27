@@ -1,8 +1,8 @@
 package test.java.seedu.lifeasier.commands;
 
 import org.junit.jupiter.api.Test;
-import seedu.lifeasier.notes.NoteList;
-import seedu.lifeasier.notes.Note;
+import seedu.lifeasier.model.notes.NoteList;
+import seedu.lifeasier.model.notes.Note;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,13 +1,13 @@
 package seedu.lifeasier.commands;
 
-import seedu.lifeasier.notes.NoteHistory;
-import seedu.lifeasier.notes.NoteList;
+import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
-import seedu.lifeasier.tasks.Deadline;
-import seedu.lifeasier.tasks.Task;
-import seedu.lifeasier.tasks.TaskHistory;
-import seedu.lifeasier.tasks.TaskList;
+import seedu.lifeasier.model.tasks.Deadline;
+import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDate;
