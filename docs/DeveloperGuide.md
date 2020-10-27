@@ -222,7 +222,7 @@ The User first enters the `deleteTask` command and appends the type of task to b
  out the list of tasks of the intended type. For example, when User inputs `deleteTask /type event`, **LifEasier** will 
  print out all `Events` in the `TaskList`.
 
-**LifEasier** will then prompt the user to select the Task to be deleted by inputting the index of the `Task` as seen from
+**LifEasier** will then prompt the user to select the `Task` to be deleted by inputting the index of the `Task` as seen from
  the terminal. Before the `Task` is deleted, a temporary copy of the current state of the `Task` will be saved by 
  `TaskHistory`. The `Task` is then deleted and **LifEasier** will print the confirmation of the deletion. The old copy of the 
  `Task` will then be pushed to `TaskHistory`, and the updated `TaskList` will be saved by `Storage`. Figure 4.3 will illustrate 
