@@ -173,6 +173,10 @@ public class Parser {
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+        if (start.compareTo(end) > 0) {
+            ui.showInvalidTimeLogicMessage();
+            return new InvalidCommand();
+        }
         int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();
@@ -250,6 +254,10 @@ public class Parser {
 
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+        if (start.compareTo(end) > 0) {
+            ui.showInvalidTimeLogicMessage();
+            return new InvalidCommand();
+        }
         int recurrences = checkIfNumber(ui, recurrencesString);
 
         resetBoolean();

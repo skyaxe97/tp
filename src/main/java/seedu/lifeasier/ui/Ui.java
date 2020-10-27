@@ -542,7 +542,7 @@ public class Ui {
     }
 
     public void showRecurrencesNumberFormatError() {
-        System.out.println("The input for /repeats is not a number! Please try again:");
+        System.out.println(colourTextRed("The input for /repeats is not a number! Please try again:"));
     }
 
     public void printMatchingTask(int index, String task) {
@@ -551,5 +551,10 @@ public class Ui {
 
     public void showIndexOutOfBoundsMessage() {
         System.out.println("The number you have inputted is out of bounds");
+    }
+
+    public void showInvalidTimeLogicMessage() {
+        System.out.println(colourTextRed("Start time must be before end time"));
+        printSeparator();
     }
 }
