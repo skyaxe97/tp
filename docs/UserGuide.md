@@ -88,7 +88,33 @@ The following section expands on the features available for you to use in LifEas
 ### 3.6 Editing an Event: `editEvent`
 ### 3.7 Editing a Deadline: `editDeadline`
 ### 3.8 Deleting a Task: `deleteTask`
-### 3.9 Displaying Schedule: `display`
+### 3.9 Undoing an edit or deletion:  `undo`
+
+Undoes the most recent edits or deletions made on tasks or notes.
+
+#####Notes on undo command:
+Tasks refer to lessons, deadlines and events.
+
+Format: `undo TYPE`
+
+#####Notes on undo Command Format:
+* The `TYPE` can either be `task` or `note`.
+* If not specified, the system will prompt you to enter `task` or `note`.
+
+######Example:
+An example of how to use the undo command is shown in Figure 3.8-1.
+```
+undo
+=========================================================================
+To undo a change in tasks, please enter: task
+To undo a change in notes, please enter: note
+task
+This task has been reverted back to its previous version!
+Deadline: homework by (28 Oct 2020, 09:00), repeats weekly 0 times
+```
+Figure 3.9-1: An example of using the deleteTask command
+
+### 3.10 Displaying Schedule: `display`
 Displays your current schedule. Use this command to view what your schedule is like for today or for the whole week.
 Format: `display [WEEK]`
 
@@ -105,7 +131,7 @@ display
 Here is your schedule for today:
 13:00-14:00  CS2113T
 ```
-*Figure 3.9-1: An example of using the display command to view your daily schedule*
+*Figure 3.10-1: An example of using the display command to view your daily schedule*
 
 `display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.9-2.
 
@@ -144,7 +170,7 @@ display week
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 Here are your upcoming deadlines this week:
 ```
-*Figure 3.9-2: An example of using the display week command to view your weekly schedule*
+*Figure 3.10-2: An example of using the display week command to view your weekly schedule*
 
 ### 3.10 Viewing Available Free Time: `freeTime`
 Displays your longest block of free time for that day based on the schedule.
