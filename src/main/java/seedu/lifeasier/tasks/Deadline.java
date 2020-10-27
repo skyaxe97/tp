@@ -1,5 +1,6 @@
 package seedu.lifeasier.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -21,16 +22,9 @@ public class Deadline extends Task {
         this.recurrences = recurrences;
     }
 
-    public Deadline(String description, LocalDateTime by, boolean isDone) {
-        super(description);
-        this.by = by;
-        this.isDone = isDone;
-    }
-
     public Deadline(Task task, int editNumber) {
         super(task, editNumber);
         this.by = ((Deadline) task).by;
-        this.isDone = task.isDone;
     }
 
     public LocalDateTime getBy() {
@@ -71,8 +65,11 @@ public class Deadline extends Task {
      * Moves a recurring deadline 7 days forward, and decrements remaining recurrences by 1.
      */
     @Override
-    public void moveAndUpdateRecurrences() {
-        decrementRecurrences(1);
-        by = by.plusDays(7);
+    public void moveAndUpdateRecurrences(LocalDate day) {
+        while (this.by.toLocalDate().isBefore(day)) {
+            decrementRecurrences(1);
+            by = by.plusDays(7);
+        }
+
     }
 }

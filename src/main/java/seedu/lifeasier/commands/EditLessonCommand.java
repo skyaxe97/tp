@@ -23,7 +23,7 @@ public class EditLessonCommand extends Command {
     }
 
     public void printLessonsMatchingCode(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(Ui.PARAM_LESSON, code);
+        tasks.printMatchingTasks(Ui.PARAM_LESSON, code, ui);
     }
 
     public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
@@ -51,9 +51,6 @@ public class EditLessonCommand extends Command {
             logger.log(Level.INFO, "Reading user input for choice of lesson to edit...");
             int userLessonChoice = ui.readSingleIntInput() - 1;
             checkForIndexOutOfBounds(tasks, userLessonChoice);
-
-            ui.showSelectParameterToEdit();
-            ui.showEditableParametersMessage(Ui.PARAM_LESSON);
 
             logger.log(Level.INFO, "Temporarily hold value of this Event");
             Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);
@@ -100,5 +97,6 @@ public class EditLessonCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
+        ui.printSeparator();
     }
 }

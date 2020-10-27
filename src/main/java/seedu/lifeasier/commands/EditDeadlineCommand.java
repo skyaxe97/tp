@@ -23,7 +23,7 @@ public class EditDeadlineCommand extends Command {
     }
 
     public void printMatchingDeadlines(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
-        tasks.printMatchingTasks(Ui.PARAM_DEADLINE, code);
+        tasks.printMatchingTasks(Ui.PARAM_DEADLINE, code, ui);
     }
 
     public void editDeadlineName(TaskList tasks, int index, Ui ui) {
@@ -96,6 +96,7 @@ public class EditDeadlineCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
+        ui.printSeparator();
     }
 
 }

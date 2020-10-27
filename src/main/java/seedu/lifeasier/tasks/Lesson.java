@@ -1,5 +1,6 @@
 package seedu.lifeasier.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -24,18 +25,10 @@ public class Lesson extends Task {
         this.recurrences = recurrences;
     }
 
-    public Lesson(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
-        super(description);
-        this.start = start;
-        this.end = end;
-        this.isDone = isDone;
-    }
-
     public Lesson(Task task, int editNumber) {
         super(task, editNumber);
         this.start = ((Lesson) task).start;
         this.end = ((Lesson) task).end;
-        this.isDone = task.isDone;
     }
 
     @Override
@@ -73,9 +66,11 @@ public class Lesson extends Task {
      * Moves a recurring lesson 7 days forward, and decrements remaining recurrences by 1.
      */
     @Override
-    public void moveAndUpdateRecurrences() {
-        decrementRecurrences(1);
-        start = start.plusDays(7);
-        end = end.plusDays(7);
+    public void moveAndUpdateRecurrences(LocalDate day) {
+        while (this.start.toLocalDate().isBefore(day)) {
+            decrementRecurrences(1);
+            start = start.plusDays(7);
+            end = end.plusDays(7);
+        }
     }
 }

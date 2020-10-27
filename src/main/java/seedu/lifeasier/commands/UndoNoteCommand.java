@@ -26,14 +26,16 @@ public class UndoNoteCommand extends Command {
 
             if (lastNoteEditNumber > 0) {
                 ui.showUndoNoteEditMessage();
-            } else {
+            } else if (lastNoteEditNumber < 0) {
                 ui.showUndoNoteDeleteMessage();
             }
-
+            ui.showOldNote(noteHistory);
             noteHistory.popLastNote();
+            storage.saveNote();
 
         } catch (IndexOutOfBoundsException e) {
             ui.showInvalidUndoAction();
         }
+        ui.printSeparator();
     }
 }

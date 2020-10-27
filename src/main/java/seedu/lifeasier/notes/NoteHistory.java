@@ -71,7 +71,7 @@ public class NoteHistory {
 
         if (noteEditNumber == DEFAULT_EDIT_NUMBER) {
             editID = getEditCount() + 1;
-            notes.get(noteIndex).setEditNumber(editID);
+            note.setEditNumber(editID);
         } else {
             editID = noteEditNumber;
         }
@@ -95,7 +95,7 @@ public class NoteHistory {
 
         if (noteEditNumber == DEFAULT_EDIT_NUMBER) {
             deleteID = getDeleteCount() - 1;
-            notes.get(noteIndex).setEditNumber(deleteID);
+            note.setEditNumber(deleteID);
         } else {
             deleteID = noteEditNumber;
         }
