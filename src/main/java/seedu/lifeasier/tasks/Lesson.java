@@ -1,5 +1,6 @@
 package seedu.lifeasier.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -73,9 +74,11 @@ public class Lesson extends Task {
      * Moves a recurring lesson 7 days forward, and decrements remaining recurrences by 1.
      */
     @Override
-    public void moveAndUpdateRecurrences() {
-        decrementRecurrences(1);
-        start = start.plusDays(7);
-        end = end.plusDays(7);
+    public void moveAndUpdateRecurrences(LocalDate day) {
+        while (this.start.toLocalDate().isBefore(day)) {
+            decrementRecurrences(1);
+            start = start.plusDays(7);
+            end = end.plusDays(7);
+        }
     }
 }

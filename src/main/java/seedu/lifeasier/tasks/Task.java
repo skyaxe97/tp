@@ -69,7 +69,7 @@ public abstract class Task {
 
     public abstract void setEnd(LocalDateTime end);
 
-    public abstract void moveAndUpdateRecurrences();
+    public abstract void moveAndUpdateRecurrences(LocalDate day);
 
 
     public boolean isWithinTimeSlot(int timeSlotStartHour) {
