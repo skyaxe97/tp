@@ -126,9 +126,127 @@ You can sleep for the recommended 8 hours or longer!
 
 
 ### 3.12 Adding a New Note: `addNotes`
+Adds and stores a note. Use this command to take notes from your classes or events.
+Format: addNotes [TITLE]
+
+##### Notes on addNotes Command Format:
+- Adds and stores a note tagged with  TITLE.
+- If TITLE is not provided, LifEasier will prompt you for a notes title.
+
+###### Example:
+An example of how to use the addNotes command is shown in Figure 3.12-1.
+```
+addNotes Cats are the best!
+=========================================================================
+Alright! Please fill in your notes.
+
+Cats are the cutest in the world :D
+Ok! I've taken note of this note!
+=========================================================================
+```
+*Figure 3.12-1: An example of using the addNotes command
+
 ### 3.13 Showing Notes: `showNotes`
+Displays a note/list of notes. Use this command to view the notes you have taken before.
+Format: showNotes [TITLE] 
+
+##### Notes on showNotes Command Format:
+- If TITLE is specified, the specific note is displayed. If not, a numbered list of all notes 
+will be displayed.
+- TITLE can be a partial title. If there is one match, that note will be shown.
+- If multiple notes with the same TITLE are found, all note titles containing the input will be 
+displayed in a list. 
+
+###### Example:
+An example of how to use the showNotes command is shown in Figure 3.13-1.
+```
+showNotes Cats
+=========================================================================
+Title: Cats are the best!
+
+Cats are the cutest in the world :D
+
+=========================================================================
+```
+*Figure 3.13-1: An example of using the showNotes command
+
 ### 3.14 Deleting a Note: `deleteNotes`
+Deletes a note from the list. Use this command to remove the notes you no longer need.
+Format: deleteNotes [TITLE] 
+
+##### Notes on deleteNotes Command Format:
+- If TITLE is specified, the specific note is displayed and confirmation of delete will be prompted. 
+If no TITLE is inputed, a numbered list of all notes will be displayed.
+- TITLE can be a partial title. If there is one match, that note will be shown.
+- If multiple notes with the same TITLE are found, all note titles containing the input will be 
+displayed in a list.
+- Entering “Y” would delete the note from the list. Entering “N” would exit the command without deletion. 
+
+###### Example:
+An example of how to use the deleteNotes command is shown in Figure 3.14-1.
+```
+deleteNotes
+=========================================================================
+Please select the notes you want to delete:
+
+1. Cats are the best!
+
+1
+Title: Cats are the best!
+
+Cats are the cutest in the world :D
+
+Is this the note you want to delete? (Y/N)
+
+Y
+OK! Note deleted!
+=========================================================================
+```
+*Figure 3.14-1: An example of using the deleteNotes command
+
 ### 3.15 Editing a Note: `editNotes`
+Edits a note from the list. Use this command to make changes to notes you have taken before.
+Format: editNotes [TITLE] 
+
+##### Notes on deleteNotes Command Format:
+- If TITLE is specified, the specific note is displayed and confirmation of edit will be prompted. 
+If no TITLE is inputed, a numbered list of all notes will be displayed.
+- TITLE can be a partial title. If there is one match, that note will be shown.
+- If multiple notes with the same TITLE are found, all note titles containing the input will be 
+displayed in a list.
+- Entering “Y” would further prompt for a change in title or description. Entering “N” would 
+exit the command without deletion. 
+- Entering “T” would show the current title and prompt for a new title. Entering “D” would 
+show the current description and prompt for a new description.
+
+###### Example:
+An example of how to use the editNotes command is shown in Figure 3.15-1.
+```
+editNotes Cats
+=========================================================================
+Title: Cats are the best!
+
+Cats are the cutest in the world :D
+
+Is this the note you want to edit? (Y/N)
+
+Y
+Do you want to change the title or description? (T/D)
+
+T for title and D for Description
+
+D
+Current description:
+Cats are the cutest in the world :D
+
+Please input the description you want to change to:
+
+I really love cats!
+OK! Your description is now: I really love cats!
+=========================================================================
+```
+*Figure 3.15-1: An example of using the editNotes command
+
 ### 3.16 Archiving Notes: `archive`
 Archives all existing notes. Use this command to store all your notes in a separate save file. These notes will no 
 longer be displayed anywhere.
