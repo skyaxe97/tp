@@ -114,16 +114,16 @@ The editEventCommand, editDeadlineCommand and editLessonCommand allows the user 
 These command classes will be invoked when the user inputs the editTask command, followed by
  the type of task to be edited. 
 
-The user also has an option to input the task’s name, or part of it, after which LifEasier
+The user also has an option to input the task’s name, or part of it, after which **LifEasier**
  will print out all tasks matching the type, and the user query. If the user chooses to leave
- that search parameter blank, LifEasier will print out all the tasks of the intended type.
+ that search parameter blank, **LifEasier** will print out all the tasks of the intended type.
  The program will then prompt User to input the index of the task to be edited.
 
-Upon receiving a valid index of a task to be edited, LifEasier will prompt the User for the
+Upon receiving a valid index of a task to be edited, **LifEasier** will prompt the User for the
  parameter to be edited - Name or Time. 
 
-Upon receiving a valid option of parameter to edit, LifEasier will prompt the User to input
- the new descriptions. If the User input is valid according to the required format, LifEasier will print a confirmation
+Upon receiving a valid option of parameter to edit, **LifEasier** will prompt the User to input
+ the new descriptions. If the User input is valid according to the required format, **LifEasier** will print a confirmation
  of the edit. The edited task will then be saved by Storage. Figure 4.2-1 illustrates the flow of editDeadlineCommand 
  through a sequence diagram. The logic of this class remains the same among the different types of Tasks.
 
@@ -138,13 +138,13 @@ Due to the difference in the types of tasks and their parameters, this functiona
 ### 4.3 Deleting of Lessons, Events, Deadlines (Fairuz)
 The deleteTaskCommand allows the user to delete any task (lesson, event or deadline) from the TaskList.
 ##### Implementation
-The User first enters the deleteTask command and appends the type of task to be deleted. LifEasier will then print
- out the list of tasks of the intended type. For example, when User inputs “deleteTask /type event”, LifEasier will 
+The User first enters the deleteTask command and appends the type of task to be deleted. **LifEasier** will then print
+ out the list of tasks of the intended type. For example, when User inputs “deleteTask /type event”, **LifEasier** will 
  print out all Events in the TaskList.
 
-LifEasier will then prompt the user to select the Task to be deleted by inputting the index of the Task as seen from
+**LifEasier** will then prompt the user to select the Task to be deleted by inputting the index of the Task as seen from
  the terminal. Before the Task is deleted, a temporary copy of the current state of the Task will be saved by 
- TaskHistory. The Task is then deleted and LifEasier will print the confirmation of the deletion. The old copy of the 
+ TaskHistory. The Task is then deleted and **LifEasier** will print the confirmation of the deletion. The old copy of the 
  Task will then be pushed to TaskHistory, and the updated TaskList will be saved by Storage. Figure 4.3 will illustrate 
  the flow of the deleteTaskCommand through a sequence diagram.
 
