@@ -209,6 +209,9 @@ public class TaskList {
 
             } else if ((task.isHappeningBefore(day)) && (task.getRecurrences() > 0)) {
                 task.moveAndUpdateRecurrences(day);
+                if (task.getRecurrences() < 0) {
+                    tasksToBeRemoved.add(task);
+                }
             }
         }
 
