@@ -23,11 +23,11 @@
     * [3.16 Editing a Note: `editNotes`](#316-editing-a-note-editnotes)
     * [3.17 Archiving Notes: `archive`](#317-archiving-notes-archive)
     * [3.18 Exiting: `exit`](#318-exiting-exit)
-* [4. Other Features](#40-other-features)
+* [4.0 Other Features](#40-other-features)
     * [4.1 Storing Data](#41-storing-data)
     * [4.2 Recurring Tasks and Auto Deletion](#42-recurring-tasks-and-auto-deletion)
-* [5. FAQ](#50-faq)
-* [6. Command Summary](#60-command-summary)
+* [5.0 FAQ](#50-faq)
+* [6.0 Command Summary](#60-command-summary)
 
 ## 1.0 Introduction
 
