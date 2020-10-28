@@ -504,6 +504,7 @@ The `Parser` determines what command is to be executed given by the user input. 
 the specified commands, an unknown command message would be returned.
 
 ##### Implementation
+
 The type of command is determined by the parser through the first string of the input and passed through a switch 
 statement. If it matches with any of the cases, the corresponding `parse` command would be executed. Otherwise, it would 
 return an invalid command. The corresponding parsers would check whether all parameters are inputted before passing 
@@ -512,6 +513,7 @@ and appending any of these missing parameters into a new string with all the par
 parameters filled, the corresponding parser would pass them to their command functions.	
 
 ##### Design Considerations
+
 The user cannot input an empty string as a parameter. This would avoid issues of invalid parameters passing on to the 
 commands, which can result in error in the program. As such, checks are to be done on the user input.  
 
@@ -580,12 +582,13 @@ have already completed.
 1. The file size of the application is below 100MB.
 
 ## 8.0 Documentation
-Apart from PDF versions of our User Guide and Developer Guide, separate versions are also managed under the
- `/docs` folder. The versions under these folders should be the most updated. GitHub Pages and Jekyll are used 
- to generate formatted static websites to host the User Guide and Developer Guide.
+
+Apart from the User Guide and Developer Guide managed under the`/docs` folder, there are also separate PDF versions maintained.
+However, the versions available in the `/docs` folder. should be the most updated. The project uses GitHub Pages and Jekyll to generate formatted static websites to host the User Guide and Developer Guide.
 
 
 ## 9.0 Testing / Logging
+
 The project makes use of Gradle and JUnit5 for testing. There are two ways that tests can be run, which are elaborated
  below.
 
@@ -602,12 +605,13 @@ the `LifEasier.run()` method. Setting `showLogging` to `true` will enable loggin
 disable logging.
 
 ## 10.0 Dev Ops
+
 The project uses Gradle for build automation and dependency management. More information on how to use
  Gradle can be found [here](https://se-education.org/guides/tutorials/gradle.html).
 
 The project also uses Github Actions for Continuous Integration (CI). The configurations file can be found in
- the `.github/workflows` folder. No actions regarding configuration are currently required, but this file can be
-  edited in future to change the configurations if necessary.
+the `.github/workflows` folder. No actions regarding configuration are currently required, but this file can be
+edited in future to change the configurations if necessary.
 
 ## 11.0 Glossary
 
