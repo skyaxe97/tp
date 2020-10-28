@@ -604,6 +604,9 @@ necessary messages. Logging can be enabled or disabled through the use of the `l
 the `LifEasier.run()` method. Setting `showLogging` to `true` will enable logging, and setting it to `false` will 
 disable logging.
 
+The project also has the option to make use of the `text-ui-test` folder to perform IO redirection tests.
+However, this option is not currently recommended due to the hassle of configuring these tests to work with save files which might change every iteration of testing.
+
 ## 10.0 Dev Ops
 
 The project uses Gradle for build automation and dependency management. More information on how to use
@@ -624,9 +627,9 @@ edited in future to change the configurations if necessary.
 Refer to the **LIfEasier User Guide** for the setting up/quick start guide and to view more detailed information of all usable commands. After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
 
 The following are some sample commands to add new tasks and notes into **LifEasier**.
-* `addLesson /code CS2113T /date 28-10-20 /time 14:00 /to 16:00`
-* `addEvent CS2101 Presentation /date 30-10-20 /time 09:00 /to 12:00`
-* `addDeadline Buy some Bread /by  31-01-20 22:00`
+* `addLesson /code CS2113T /date 28-10-20 /time 14:00 /to 16:00 /repeats 10`
+* `addEvent CS2101 Presentation /date 30-10-20 /time 09:00 /to 12:00 /repeats 5`
+* `addDeadline Buy some Bread /by  31-01-20 22:00 /repeats 0`
 * `addNotes`
 * `addNotes Cats are the best!`
 
