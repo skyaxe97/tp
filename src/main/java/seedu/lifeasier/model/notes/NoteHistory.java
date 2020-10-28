@@ -90,15 +90,9 @@ public class NoteHistory {
     public Note getCurrCopyOfNoteToDelete(NoteList notes, int noteIndex) {
         Note note = notes.get(noteIndex);
 
-        int noteEditNumber = note.getEditNumber();
-        int deleteID;
+        int deleteID = getDeleteCount() - 1;
+        note.setEditNumber(deleteID);
 
-        if (noteEditNumber == DEFAULT_EDIT_NUMBER) {
-            deleteID = getDeleteCount() - 1;
-            note.setEditNumber(deleteID);
-        } else {
-            deleteID = noteEditNumber;
-        }
         deleteCount--;
 
         return new Note(note, deleteID);
