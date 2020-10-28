@@ -77,7 +77,7 @@ public class TaskHistory {
         }
         editCount++;
 
-        return copyTask(tasks, userIndexChoice, task, editID);
+        return copyTask(task, editID);
     }
 
     /**
@@ -90,27 +90,21 @@ public class TaskHistory {
     public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userIndexChoice) {
         Task task = tasks.getTask(userIndexChoice);
 
-        int taskEditNumber = task.getEditNumber();
-        int deleteID;
+        int deleteID = getDeleteCount() - 1;
+        task.setEditNumber(deleteID);
 
-        if (taskEditNumber == DEFAULT_EDIT_NUMBER) {
-            deleteID = getDeleteCount() - 1;
-            task.setEditNumber(deleteID);
-        } else {
-            deleteID = taskEditNumber;
-        }
         deleteCount--;
 
-        return copyTask(tasks, userIndexChoice, task, deleteID);
+        return copyTask(task, deleteID);
     }
 
-    public Task copyTask(TaskList tasks, int userIndexChoice, Task task, int editID) {
+    public Task copyTask(Task task, int editID) {
         if (task instanceof Deadline) {
-            return new Deadline(tasks.getTask(userIndexChoice), editID);
+            return new Deadline(task, editID);
         } else if (task instanceof Event) {
-            return new Event(tasks.getTask(userIndexChoice), editID);
+            return new Event(task, editID);
         } else {
-            return new Lesson(tasks.getTask(userIndexChoice), editID);
+            return new Lesson(task, editID);
         }
     }
 

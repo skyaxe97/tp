@@ -11,9 +11,8 @@
         * [3.2.2 UI Component](#322-ui-component)
         * [3.2.3 Parser Component](#323-parser-component)
         * [3.2.4 Command Component](#324-command-component)
-        * [3.2.5 TaskList Component](#325-tasklist-component)
-        * [3.2.6 NoteList Component](#326-notelist-component)
-        * [3.2.7 Storage Component](#327-storage-component)
+        * [3.2.5 Model Component](#325-model-component)
+        * [3.2.6 Storage Component](#326-storage-component)
 * [4.0 Implementation](#40-implementation)
     * [4.1 Adding Lessons, Events, Deadlines (Fairuz)](#41-adding-lessons-events-deadlines-fairuz)
     * [4.2 Editing Lessons, Events, Deadlines (Fairuz)](#42-editing-lessons-events-deadlines-fairuz)
@@ -93,9 +92,8 @@ LifEasier is comprised of 7 components, which are listed below together with the
 1. `LifEasier`: The main class of the application.
 1. `Ui`: Displays messages to the user, and takes in the user’s commands
 1. `Parser`: Understands the user’s commands, and creates the necessary Command objects.
-1. `Command`: Carries out the user’s command
-1. `TaskList`: Holds the task data of the app in memory.
-1. `NoteList`: Holds the note data of the app in memory.
+1. `Command`: Carries out the user’s command.
+1. `Model`: Holds the user's task and note data in memory.
 1. `Storage`: Reads and writes data from the hard disk.
 
 Each of these components are expanded on in more detail in their respective sections.
@@ -142,20 +140,14 @@ The `Command` component consists of an abstract `Command` class and the many dif
  ![Figure 3.2.4-1](images/DeveloperGuide/Figure%203.2.4-1.png)  
  _Figure 3.2.4-1: The classes that inherit from the Command class_
  
-#### 3.2.5 TaskList Component
+#### 3.2.5 Model Component
 
-The `TaskList` component handles the instantiation and modifications to the overall list of tasks. Specifically,
- it handles any addition, edition, deletion on the `TaskList`. This component will heavily interact with the `Command`
- component as most commands will include modifications to the overall TaskList.
+The `Model` component contains all the user's notes and tasks in memory. It is comprised of the `TaskList`, `NoteList`, `TaskHistory` and `NoteHistory` classes.
+The `TaskList` class handles additions, edits and deletions to the user's tasks, while the `TaskHistory` class allows users to undo their most recent task edits.
+Similarly, the `NoteList` class handles additions, edits and deletions to the user's notes, while the `NoteHistory` class allows users to undo their most recent notes edits.
+All classes in the `Model` component interact heavilt with the `Command` component as most commands make use of the user's tasks and notes.
  
- 
-#### 3.2.6 NoteList Component
-
-The `NoteList` component contains all the users notes. Similar to the `TaskList` component, it interacts heavily with 
-the `Command` component to modify the user’s notes.
-
-
-#### 3.2.7 Storage Component
+#### 3.2.6 Storage Component
 
 The `Storage` component handles saving of the users’ notes and tasks to persistent storage.
  It does this after every addition, change, or deletion to the `TaskList` component or `NoteList` component. 
