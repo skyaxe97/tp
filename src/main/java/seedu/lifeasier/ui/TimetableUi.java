@@ -189,7 +189,6 @@ public class TimetableUi {
         String[] timeRange = rowComponents[1].split("-");
 
         if (timeRange.length < 2) {
-            System.out.println(ui.colourTextRed("There was an error getting the time ranges"));
             return false;
         }
 
@@ -213,7 +212,6 @@ public class TimetableUi {
 
             //Current time is within hourly range
             if (isAfterStartTime && isBeforeEndTime) {
-                System.out.println("WITHIN RANGE");
                 return true;
             }
 
@@ -225,7 +223,6 @@ public class TimetableUi {
             System.out.println(ui.colourTextRed("There was an error converting the hour"));
         }
 
-        System.out.println("FALLTHROUGH");
         return false;
     }
 }
