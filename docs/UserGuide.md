@@ -131,12 +131,195 @@ For more detailed information, please visit the online user guide at:
 _Figure 3.1-1: An example of using the help command_
 
 ### 3.2 Adding a Lesson: `addLesson`
+
+Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your schedule.
+Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
+
+##### Notes on addLesson Command Format:
+
+* Adds a `Lesson` coded `MODULE`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
+* The system will prompt you for parameters if they are not provided. 
+* Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
+
+###### Examples:
+
+An example of how to use the addLesson command is shown in Figure 3.2-1.
+```
+addLesson /code CS2101 /date 22-10-20 /time 14:00 /to 16:00
+Done! I've added "Lesson: CS2101 from 22 Oct 2020, 14:00 to 22 Oct 2020, 16:00" to 
+your calendar
+=========================================================================
+```
+*Figure 3.2-1: An example of using the addLesson command*
+
 ### 3.3 Adding an Event: `addEvent`
+Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
+Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
+
+##### Notes on addEvent Command Format:
+
+* Adds an `Event` called `NAME`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
+* The system will prompt you for parameters if they are not provided. 
+* Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
+
+###### Examples:
+
+An example of how to use the addEvent command is shown in Figure 3.3-1.
+```
+addEvent Concert /date 13-07-19 /time 17:00 /to 21:00
+Done! I've added "Event: Concert from 13 Jul 2019, 17:00 to 13 Jul 2019, 21:00" to 
+your calendar
+=========================================================================
+```
+*Figure 3.3-1: An example of using the addEvent command*
+
 ### 3.4 Adding a Deadline: `addDeadline`
+
+Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to your schedule.
+Format: `addDeadline NAME /by DATETIME /repeats TIMES`
+
+##### Notes on addEvent Command Format:
+
+* Adds a `Deadline` called `NAME`, that has to be completed by `DATETIME`, and repeats weekly for `TIMES`.
+* The system will prompt you for parameters if they are not provided. 
+* `DATETIME` has the format of **DD-MM-YY HH:MM**, where the time is in 24-hour clock format. 
+*E.g 7:30pm should be input as 19:30.* 
+
+###### Examples:
+
+An example of how to use the addDeadline command is shown in Figure 3.4-1.
+```
+addDeadline Return books /by 31-12-20 23:59
+Done! I've added "Deadline: Return books by 31 Dec 2020, 23:59" to 
+your calendar
+=========================================================================
+```
+*Figure 3.4-1: An example of using the addDeadline command*
+
 ### 3.5 Editing a Lesson: `editLesson`
+
+Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos in the lessons you have already added.
+Format: `editLesson [CODE]`
+
+##### Notes on editLesson Command Format:
+
+* If `CODE` is provided, all lessons that contain the `CODE` will be printed.
+* The system will prompt you to choose a lesson to be edited.
+* The system will prompt you to choose to edit the `CODE` or the `START/END` time. 
+* If you choose to edit time, System will prompt to input new `TIME` in the format of 
+“`/date DATE /time START /to END`”
+
+###### Examples:
+
+An example of how to use the editLesson command is shown in Figure 3.5-1.
+```
+editLesson CS2101
+4. [L] CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00)
+Please select the lesson you want to edit.
+4
+Please select the parameter you want to edit.
+1. Module Code
+2. Time
+2
+Please input your new time in this format: /date DATE /time START /to END
+/date 22-10-20 /time 14:00 /to 15:45
+Your edit has been saved.
+```
+*Figure 3.5-1: An example of using the editLesson command*
+
 ### 3.6 Editing an Event: `editEvent`
+
+Edits an event in your schedule. Use this command to fix mistakes like typos in the events you have already added.
+Format: `editEvent [NAME]`
+
+##### Notes on editEvent Command Format:
+
+* If `NAME` is provided, all events that contain the `NAME` will be printed. Else, all events
+will be printed.
+* The system will prompt you to choose an `Event` to be edited.
+* The system will prompt you to choose to edit the `NAME` or the `START/END` time. 
+* If you choose to edit time, System will prompt to input new `TIME` in the format of 
+“`/date DATE /time START /to END`”
+
+###### Examples:
+
+An example of how to use the editEvent command is shown in Figure 3.6-1.
+```
+editEvent
+5. [E] Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00)
+Please select the event you want to edit.
+5
+Please select the parameter you want to edit.
+1. Event Name
+2. Time
+1
+Please input your new Event name
+My favourite band's concert
+Your edit has been saved.
+```
+*Figure 3.6-1: An example of using the editEvent command*
+
 ### 3.7 Editing a Deadline: `editDeadline`
+
+Edits a `Deadline` in your schedule. Use this command to fix mistakes like typos in the deadlines you have already added.
+Format: `editDeadline [NAME]`
+
+##### Notes on editDeadline Command Format:
+
+* If `NAME` is provided, all deadlines that contain the `NAME` will be printed. Else, all deadlines
+will be printed.
+* The system will prompt you to choose an `Deadline` to be edited.
+* The system will prompt you to choose to edit the `NAME` or the `BY` time. 
+* If you choose to edit time, System will prompt to input new `BY` time in the format of 
+“`/by DATETIME`”.
+
+###### Examples:
+
+An example of how to use the editDeadline command is shown in Figure 3.7-1.
+```
+editDeadline
+6. [D] Return books by (31 Dec 2020, 23:59)
+Please select the deadline you want to edit.
+6
+Please select the parameter you want to edit.
+1. Deadline Name
+2. Time
+2
+Please input your new time in this format: /by DATETIME
+/by 24-12-20 23:59
+Your edit has been saved.
+```
+*Figure 3.7-1: An example of using the editDeadline command*
+
 ### 3.8 Deleting a Task: `deleteTask`
+
+Deletes a `Task` from your schedule. Use this command to delete any lessons you no 
+longer need to take note of.
+
+##### Notes on deleteTask command:
+
+* Tasks refer to lessons, deadlines and events.
+
+Format: `deleteTask /type TYPE /name NAME`
+
+##### Notes on deleteTask Command Format:
+
+* If `NAME` is provided, all tasks that match the type and contain the `NAME` will be printed. 
+Else, all `Task` that match the type will be printed.
+* The system will prompt you to choose a `Task` to be deleted.
+
+###### Examples:
+
+An example of how to use the deleteTask command is shown in Figure 3.8-1.
+```
+deleteTask /type deadline /name homework
+=========================================================================
+Deadline: homework by (12 Dec 2012, 12:00), repeats weekly 2 times
+Please select the deadline you want to delete.
+2
+The task you selected has been deleted.
+```
+*Figure 3.8-1: An example of using the deleteTask command*
 
 ### 3.9 Undoing an Edit or Deletion:  `undo`
 
