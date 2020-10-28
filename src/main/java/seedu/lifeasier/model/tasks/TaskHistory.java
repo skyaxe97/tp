@@ -1,8 +1,7 @@
 package seedu.lifeasier.model.tasks;
 
-import seedu.lifeasier.ui.Ui;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * The TaskHistory class represents the list of changes made to Task objects,
@@ -29,6 +28,10 @@ public class TaskHistory {
         return taskHistory.get(changeCount - 1);
     }
 
+    public int getChangeCount() {
+        return changeCount;
+    }
+
     public int getEditCount() {
         return editCount;
     }
@@ -42,10 +45,12 @@ public class TaskHistory {
     }
 
     public void decrementChangeCount() {
-        this.changeCount--;
+        if (changeCount > 0) {
+            this.changeCount--;
+        }
     }
 
-    public void pushOldCopy(Task oldCopyOfTask, Ui ui) {
+    public void pushOldCopy(Task oldCopyOfTask) {
         taskHistory.add(oldCopyOfTask);
         incrementChangeCount();
     }
@@ -90,12 +95,26 @@ public class TaskHistory {
     public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userIndexChoice) {
         Task task = tasks.getTask(userIndexChoice);
 
+        deletePrevCopiesOfThisTask(task);
+
         int deleteID = getDeleteCount() - 1;
         task.setEditNumber(deleteID);
 
         deleteCount--;
 
         return copyTask(task, deleteID);
+    }
+
+    private void deletePrevCopiesOfThisTask(Task taskToDelete) {
+        int editNumber = taskToDelete.getEditNumber();
+        Iterator<Task> iterator = taskHistory.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (task.getEditNumber() == editNumber) {
+                iterator.remove();
+                decrementChangeCount();
+            }
+        }
     }
 
     public Task copyTask(Task task, int editID) {

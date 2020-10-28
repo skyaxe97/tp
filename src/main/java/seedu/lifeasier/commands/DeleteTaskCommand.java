@@ -92,7 +92,7 @@ public class DeleteTaskCommand extends Command {
             logger.log(Level.INFO, "Deleting task from taskList...");
             deleteTask(tasks, ui, userIndex);
 
-            taskHistory.pushOldCopy(oldCopyOfTask, ui);
+            taskHistory.pushOldCopy(oldCopyOfTask);
             logger.log(Level.INFO, "Push old copy of Task into taskHistory");
 
             logger.log(Level.INFO, "Saving updated taskList to storage...");
