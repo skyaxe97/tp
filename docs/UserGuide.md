@@ -145,8 +145,8 @@ Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 
 An example of how to use the addLesson command is shown in Figure 3.2-1.
 ```
-addLesson /code CS2101 /date 22-10-20 /time 14:00 /to 16:00
-Done! I've added "Lesson: CS2101 from 22 Oct 2020, 14:00 to 22 Oct 2020, 16:00" to 
+addLesson /code CS2101 /date 22-10-20 /time 14:00 /to 16:00 /repeats 30
+Done! I've added "Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), repeats weekly 30 times" to 
 your calendar
 =========================================================================
 ```
@@ -166,8 +166,8 @@ Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 
 An example of how to use the addEvent command is shown in Figure 3.3-1.
 ```
-addEvent Concert /date 13-07-19 /time 17:00 /to 21:00
-Done! I've added "Event: Concert from 13 Jul 2019, 17:00 to 13 Jul 2019, 21:00" to 
+addEvent Concert /date 13-07-19 /time 17:00 /to 21:00 /repeats 0
+Done! I've added "Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), repeats weekly 0 times" to 
 your calendar
 =========================================================================
 ```
@@ -189,8 +189,8 @@ Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 
 An example of how to use the addDeadline command is shown in Figure 3.4-1.
 ```
-addDeadline Return books /by 31-12-20 23:59
-Done! I've added "Deadline: Return books by 31 Dec 2020, 23:59" to 
+addDeadline Return books /by 31-12-20 23:59 /repeats 0
+Done! I've added "Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times" to 
 your calendar
 =========================================================================
 ```
@@ -214,7 +214,7 @@ Format: `editLesson [CODE]`
 An example of how to use the editLesson command is shown in Figure 3.5-1.
 ```
 editLesson CS2101
-4. [L] CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00)
+4. Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), repeats weekly 30 times
 Please select the lesson you want to edit.
 4
 Please select the parameter you want to edit.
@@ -246,7 +246,7 @@ will be printed.
 An example of how to use the editEvent command is shown in Figure 3.6-1.
 ```
 editEvent
-5. [E] Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00)
+5. Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), repeats weekly 0 times
 Please select the event you want to edit.
 5
 Please select the parameter you want to edit.
@@ -278,7 +278,7 @@ will be printed.
 An example of how to use the editDeadline command is shown in Figure 3.7-1.
 ```
 editDeadline
-6. [D] Return books by (31 Dec 2020, 23:59)
+6. Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times
 Please select the deadline you want to edit.
 6
 Please select the parameter you want to edit.
@@ -588,9 +588,6 @@ Title: Cats are the best!
 
 Cats are the cutest in the world :D
 
-Is this the note you want to edit? (Y/N)
-
-Y
 Do you want to change the title or description? (T/D)
 
 T for title and D for Description
