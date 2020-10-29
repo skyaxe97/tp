@@ -542,7 +542,7 @@ public class Ui {
     }
 
     public void showRecurrencesNumberFormatError() {
-        System.out.println(colourTextRed("The input for /repeats is not a number! Please try again:"));
+        System.out.println(colourTextRed("The input for /repeats is not a valid number! Please try again:"));
     }
 
     public void printMatchingTask(int index, String task) {

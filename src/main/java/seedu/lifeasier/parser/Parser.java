@@ -170,19 +170,13 @@ public class Parser {
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
         String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
-
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
             return new InvalidCommand();
         }
-        int recurrences = checkIfNumber(ui, recurrencesString);
-
-        if (recurrences < 0) {
-            ui.showInvalidRecurrencesError();
-            return new InvalidCommand();
-        }
+        int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddLessonCommand(moduleCode, start, end, recurrences);
@@ -256,19 +250,14 @@ public class Parser {
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
         String recurrencesString =  fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
-
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
             return new InvalidCommand();
         }
-        int recurrences = checkIfNumber(ui, recurrencesString);
-
-        if (recurrences < 0) {
-            ui.showInvalidRecurrencesError();
-            return new InvalidCommand();
-        }
+        int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddEventCommand(description, start, end, recurrences);
@@ -326,12 +315,7 @@ public class Parser {
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
         String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
-        int recurrences = checkIfNumber(ui, recurrencesString);
-
-        if (recurrences < 0) {
-            ui.showInvalidRecurrencesError();
-            return new InvalidCommand();
-        }
+        int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddDeadlineCommand(description, by, recurrences);
@@ -882,8 +866,8 @@ public class Parser {
         return input;
     }
 
-    public int checkIfNumber(Ui ui, String input) {
-        while (!isNumeric(input)) {
+    public int checkIfValidNumber(Ui ui, String input) {
+        while (!isNumeric(input) || Integer.parseInt(input) < 0) {
             ui.showRecurrencesNumberFormatError();
             input = ui.readCommand();
         }
