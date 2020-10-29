@@ -1,8 +1,7 @@
 package seedu.lifeasier.model.notes;
 
-import seedu.lifeasier.ui.Ui;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * The NoteHistory class represents the list of changes made to Note objects,
@@ -29,6 +28,10 @@ public class NoteHistory {
         return noteHistory.get(changeCount - 1);
     }
 
+    public int getChangeCount() {
+        return changeCount;
+    }
+
     public int getEditCount() {
         return editCount;
     }
@@ -42,10 +45,12 @@ public class NoteHistory {
     }
 
     public void decrementChangeCount() {
-        this.changeCount--;
+        if (changeCount > 0) {
+            this.changeCount--;
+        }
     }
 
-    public void pushOldCopy(Note oldCopyOfNote, Ui ui) {
+    public void pushOldCopy(Note oldCopyOfNote) {
         noteHistory.add(oldCopyOfNote);
         incrementChangeCount();
     }
@@ -90,11 +95,25 @@ public class NoteHistory {
     public Note getCurrCopyOfNoteToDelete(NoteList notes, int noteIndex) {
         Note note = notes.get(noteIndex);
 
+        deletePrevCopiesOfThisNote(note);
+
         int deleteID = getDeleteCount() - 1;
         note.setEditNumber(deleteID);
 
         deleteCount--;
 
         return new Note(note, deleteID);
+    }
+
+    private void deletePrevCopiesOfThisNote(Note noteToDelete) {
+        int editNumber = noteToDelete.getEditNumber();
+        Iterator<Note> iterator = noteHistory.iterator();
+        while (iterator.hasNext()) {
+            Note note = iterator.next();
+            if (note.getEditNumber() == editNumber) {
+                iterator.remove();
+                decrementChangeCount();
+            }
+        }
     }
 }

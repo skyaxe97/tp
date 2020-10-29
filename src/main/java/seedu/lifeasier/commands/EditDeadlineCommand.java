@@ -56,7 +56,7 @@ public class EditDeadlineCommand extends Command {
 
             selectParameterToEdit(ui, tasks, userDeadlineChoice);
 
-            taskHistory.pushOldCopy(oldCopyOfDeadline, ui);
+            taskHistory.pushOldCopy(oldCopyOfDeadline);
             logger.log(Level.INFO, "Push old copy of Deadline into taskHistory");
             storage.saveTasks();
 

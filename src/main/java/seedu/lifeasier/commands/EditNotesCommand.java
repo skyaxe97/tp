@@ -86,7 +86,7 @@ public class EditNotesCommand extends Command {
             System.out.println("OK! Your description is now: " + notes.get(noteNumber).getDescription());
         }
 
-        noteHistory.pushOldCopy(oldCopyOfNote, ui);
+        noteHistory.pushOldCopy(oldCopyOfNote);
         logger.log(Level.INFO, "Push old copy of Note into noteHistory");
 
         ui.printSeparator();
