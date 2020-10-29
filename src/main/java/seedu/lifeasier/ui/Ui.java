@@ -549,6 +549,10 @@ public class Ui {
         System.out.println(index + ". " + task);
     }
 
+    public void showIndexOutOfBoundsMessage() {
+        System.out.println("The number you have inputted is out of bounds");
+    }
+
     public void showInvalidTimeLogicMessage() {
         System.out.println(colourTextRed("Start time must be before end time"));
         printSeparator();

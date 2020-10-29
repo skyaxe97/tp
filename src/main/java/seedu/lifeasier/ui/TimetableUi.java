@@ -194,10 +194,21 @@ public class TimetableUi {
 
         try {
             LocalTime startTime = LocalTime.parse(timeRange[0]);
-            LocalTime endTime = LocalTime.parse(timeRange[1]);
-
             boolean isAfterStartTime = currentTime.compareTo(startTime) > 0;
-            boolean isBeforeEndTime = currentTime.compareTo(endTime) < 0;
+
+            LocalTime endTime = LocalTime.parse(timeRange[1]);
+            LocalTime midnight = LocalTime.parse("00:00");
+            boolean isBeforeEndTime = false;
+
+            if (endTime.equals(midnight)) {
+                String[] timeComponents = timeRange[1].split(":");
+                int hour = Integer.parseInt(timeComponents[0]);
+                if (hour < 24) {
+                    isBeforeEndTime = true;
+                }
+            } else {
+                isBeforeEndTime = currentTime.compareTo(endTime) < 0;
+            }
 
             //Current time is within hourly range
             if (isAfterStartTime && isBeforeEndTime) {
@@ -208,6 +219,8 @@ public class TimetableUi {
             System.out.println(ui.colourTextRed("There was an error parsing the times"));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println(ui.colourTextRed("There was an error getting the time ranges"));
+        } catch (NumberFormatException e) {
+            System.out.println(ui.colourTextRed("There was an error converting the hour"));
         }
 
         return false;
