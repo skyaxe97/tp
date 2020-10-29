@@ -116,7 +116,7 @@ The **LifEasier** component is the main class of the application. It initialises
 
 #### 3.2.2 UI Component
 
-The `UI` component reads the uthe user. It consists ofser’s inputs and displays messages and content to  a main `Ui`,
+The `UI` component reads the user’s inputs and displays messages and content to the user. It consists of 3 classes; a main `Ui`,
  a `ScheduleUi` and a `TimetableUi`. The `ScheduleUi` handles all outputs to do with displaying a user’s schedule.
   To do this, it uses the `TimetableUi` to display a specialised timetable view of the weekly schedule. 
   The main `Ui` handles everything else, such as displaying general messages and reading the user’s inputs. 
