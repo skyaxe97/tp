@@ -179,6 +179,11 @@ public class Parser {
         }
         int recurrences = checkIfNumber(ui, recurrencesString);
 
+        if (recurrences < 0) {
+            ui.showInvalidRecurrencesError();
+            return new InvalidCommand();
+        }
+
         resetBoolean();
         return new AddLessonCommand(moduleCode, start, end, recurrences);
     }
@@ -260,6 +265,11 @@ public class Parser {
         }
         int recurrences = checkIfNumber(ui, recurrencesString);
 
+        if (recurrences < 0) {
+            ui.showInvalidRecurrencesError();
+            return new InvalidCommand();
+        }
+
         resetBoolean();
         return new AddEventCommand(description, start, end, recurrences);
     }
@@ -317,6 +327,11 @@ public class Parser {
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
         String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
         int recurrences = checkIfNumber(ui, recurrencesString);
+
+        if (recurrences < 0) {
+            ui.showInvalidRecurrencesError();
+            return new InvalidCommand();
+        }
 
         resetBoolean();
         return new AddDeadlineCommand(description, by, recurrences);

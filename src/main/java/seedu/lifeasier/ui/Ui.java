@@ -557,4 +557,9 @@ public class Ui {
         System.out.println(colourTextRed("Start time must be before end time"));
         printSeparator();
     }
+
+    public void showInvalidRecurrencesError() {
+        System.out.println(colourTextRed("Recurrences must be a positive integer!"));
+        printSeparator();
+    }
 }
