@@ -389,7 +389,7 @@ the main `LifEasier` class creates a new `FileStorage` object, which starts the 
 data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
-![Startup file load sequence diagram](images/DeveloperGuide/StorageLaunchSequenceDiagram.png)
+![Startup file load sequence diagram](images/DeveloperGuide/Figure 4.7-2.png)
 _Figure 4.7-2: Sequence diagram for save data reading on startup_
 
 By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
