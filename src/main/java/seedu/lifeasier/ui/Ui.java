@@ -21,7 +21,8 @@ public class Ui {
     public static final String ANSI_PURPLE = "\u001B[35;1m";
     public static final String ANSI_CYAN = "\u001B[36;1m";
 
-    public static final String SEPARATOR = "=========================================================================";
+    public static final String SEPARATOR = "========================================================================="
+            + "======================================";
     public static final String PARAM_LESSON = "lesson";
     public static final String PARAM_EVENT = "event";
     public static final String PARAM_DEADLINE = "deadline";
