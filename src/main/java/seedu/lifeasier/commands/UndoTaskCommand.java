@@ -15,7 +15,7 @@ public class UndoTaskCommand extends Command {
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
-        try {
+        if (taskHistory.getChangeCount() > 0) {
             Task oldCopyOfTask = taskHistory.getLastTask();
             int lastTaskEditNumber = oldCopyOfTask.getEditNumber();
 
@@ -38,7 +38,7 @@ public class UndoTaskCommand extends Command {
             taskHistory.popLastTask();
             storage.saveTasks();
 
-        } catch (IndexOutOfBoundsException e) {
+        } else {
             ui.showInvalidUndoAction();
         }
         ui.printSeparator();

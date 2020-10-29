@@ -15,7 +15,7 @@ public class UndoNoteCommand extends Command {
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
-        try {
+        if (noteHistory.getChangeCount() > 0) {
             Note oldCopyOfNote = noteHistory.getLastNote();
             int lastNoteEditNumber = oldCopyOfNote.getEditNumber();
 
@@ -38,7 +38,7 @@ public class UndoNoteCommand extends Command {
             noteHistory.popLastNote();
             storage.saveNote();
 
-        } catch (IndexOutOfBoundsException e) {
+        } else {
             ui.showInvalidUndoAction();
         }
         ui.printSeparator();

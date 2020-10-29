@@ -69,7 +69,7 @@ public class DeleteNotesCommand extends Command {
             Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToDelete(notes, noteNumber);
             notes.remove(noteNumber);
             ui.showNoteDeletedMessage();
-            noteHistory.pushOldCopy(oldCopyOfNote, ui);
+            noteHistory.pushOldCopy(oldCopyOfNote);
             logger.log(Level.INFO, "Push old copy of Note into noteHistory");
         } else {
             ui.showNoteNotDeletedMessage();

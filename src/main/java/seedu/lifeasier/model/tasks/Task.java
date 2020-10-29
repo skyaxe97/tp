@@ -20,6 +20,7 @@ public abstract class Task {
 
     public Task(Task task, int editNumber) {
         this.description = task.description;
+        this.recurrences = task.recurrences;
         setEditNumber(editNumber);
     }
 

@@ -57,7 +57,7 @@ public class EditLessonCommand extends Command {
 
             selectParameterToEdit(ui, tasks, userLessonChoice);
 
-            taskHistory.pushOldCopy(oldCopyOfLesson, ui);
+            taskHistory.pushOldCopy(oldCopyOfLesson);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
             storage.saveTasks();
 
