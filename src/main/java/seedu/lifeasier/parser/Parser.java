@@ -703,6 +703,7 @@ public class Parser {
             return MissingParam.COMPLETED;
         }
     }
+    
     /**
      * Checks if the end time for Lessons and Events inputted by user is 24:00
      * and adjust it to become 23:59.
