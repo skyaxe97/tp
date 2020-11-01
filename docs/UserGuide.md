@@ -665,25 +665,12 @@ the save files if necessary.
 
 ### 4.2 Recurring Tasks and Auto Deletion
 
-**LifEasier** automatically shifts the date for any tasks 7 days forward if their original date is past, and they 
-are set to repeat. **LifEasier** does this for every task in your schedule every time it starts up. E.g. If you start 
-up **LifEasier** on the 24th of October, and you had a repeating class that last occurred on the 23rd of October, the 
-lesson will be moved 7 days forward to the 30th of October. This ensures your repeating lessons, events and deadlines 
-will always be moved forward as long as they are meant to repeat.
+**LifEasier** automatically updates the dates of recurring tasks and deletes old tasks.
+It will load your save files and update your tasks automatically every time it starts up.
+Here are some examples of what might happen if you start up **LifEasier** on 24th October:
 
-If it is past the date of your task, and if the task does not repeat, it will automatically be removed instead. 
-By automatically deleting those tasks that have already been completed, **LifEasier** ensures your save files do not 
-become unnecessarily large.
-
- **LifEasier** automatically shifts the date for any tasks 7 days forward if their original date is past, 
- and they are set to repeat. **LifEasier** does this for every task in your schedule every time it starts up.
- E.g. If you start up **LifEasier** on the 24th of October, and you had a repeating class that last occurred 
- on the 23rd of October, the lesson will be moved 7 days forward to the 30th of October. This ensures your
- repeating lessons, events and deadlines will always be moved forward as long as they are meant to repeat.
-
- If it is past the date of your task, and if the task does not repeat, it will automatically be removed instead.
- By automatically deleting those tasks that have already been completed, **LifEasier** ensures your save files do 
- not become unnecessarily large.
+1. If you had a lesson that last occurred on 22nd October, and it is set to repeat 3 more times, it will be updated to occur again on 29th October, and updated to repeat 2 more times.
+2. If you had an event that last occurred on 21st October, and it is set to repeat 0 more times, it will be deleted from your schedule.
 
 
 ## 5.0 FAQ
