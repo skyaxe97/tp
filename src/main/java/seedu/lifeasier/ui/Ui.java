@@ -137,6 +137,16 @@ public class Ui {
         return ANSI_CYAN + string + ANSI_RESET;
     }
 
+    /**
+     * Colours input string to a yellow colour.
+     *
+     * @param string String to be coloured
+     * @return Yellow coloured string.
+     */
+    public String colourTextYellow(String string) {
+        return ANSI_YELLOW + string + ANSI_RESET;
+    }
+
     public void showLogo() {
         printSeparator();
         printSeparator();
@@ -304,7 +314,6 @@ public class Ui {
 
     public void showArchiveEndMessage() {
         System.out.println(colourTextGreen("Archiving successful!"));
-        printSeparator();
     }
 
     public void showFileReadError() {
@@ -580,6 +589,12 @@ public class Ui {
 
     public void showInvalidRecurrencesError() {
         System.out.println(colourTextRed("Recurrences must be a positive integer!"));
+        printSeparator();
+    }
+
+    public void showArchiveEndInformationMessage() {
+        System.out.println(colourTextYellow("Note: All current notes have been archived and will no longer be "
+                + "read by the program"));
         printSeparator();
     }
 }
