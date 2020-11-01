@@ -23,6 +23,7 @@ IMPORTANT INFORMATION:
  * Items in square brackets are optional, e.g [DATE]
  * Commands with the [P] can take partial commands
    e.g addLesson and addLesson /code CS2113 /to 18:00 are valid commands
+ * All dates are in the DD-MM-YY and times in the HH:MM format
 
 COMMANDS
 *****************************************************************************************************

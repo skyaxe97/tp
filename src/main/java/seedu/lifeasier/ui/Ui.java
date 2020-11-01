@@ -55,6 +55,8 @@ public class Ui {
             + " * Commands with the " + ANSI_CYAN + "[P]" + ANSI_RESET +  " can take partial commands\n"
             + "   e.g " + ANSI_YELLOW + "addLesson" + ANSI_RESET + " and " + ANSI_YELLOW
             + "addLesson /code CS2113 /to 18:00" + ANSI_RESET + " are valid commands\n"
+            + " * All dates are in the " + ANSI_CYAN + "DD-MM-YY" + ANSI_RESET + " and times in the "
+            + ANSI_CYAN + "HH:MM" + ANSI_RESET + " format\n"
             + "\n"
             + ANSI_CYAN + "COMMANDS\n" + ANSI_RESET
             + "*****************************************************************************************************\n"
