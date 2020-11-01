@@ -573,7 +573,7 @@ If no TITLE is inputed, a numbered list of all notes will be displayed.
 * If multiple notes with the same TITLE are found, all note titles containing the input will be 
 displayed in a list.
 * Entering “Y” would further prompt for a change in title or description. Entering “N” would 
-exit the command without deletion. 
+exit the command without any edits.
 * Entering “T” would show the current title and prompt for a new title. Entering “D” would 
 show the current description and prompt for a new description.
 
