@@ -40,7 +40,7 @@ public class DeleteTaskCommand extends Command {
     private int readUserInput(Ui ui, Parser parser, TaskList tasks) {
         while (true) {
             try {
-                int newIndex = parser.checkIfNumber(ui, ui.readCommand()) - 1;
+                int newIndex = parser.checkIfValidNumber(ui, ui.readCommand()) - 1;
                 tasks.checkForIndexOutOfBounds(newIndex);
                 return newIndex;
             } catch (IndexOutOfBoundsException e) {
@@ -92,7 +92,7 @@ public class DeleteTaskCommand extends Command {
             logger.log(Level.INFO, "Deleting task from taskList...");
             deleteTask(tasks, ui, userIndex);
 
-            taskHistory.pushOldCopy(oldCopyOfTask, ui);
+            taskHistory.pushOldCopy(oldCopyOfTask);
             logger.log(Level.INFO, "Push old copy of Task into taskHistory");
 
             logger.log(Level.INFO, "Saving updated taskList to storage...");
@@ -110,6 +110,7 @@ public class DeleteTaskCommand extends Command {
             logger.log(Level.SEVERE, "User input is out of bounds");
             ui.showIndexOutOfBoundsMessage();
         }
+        ui.printSeparator();
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }
 }

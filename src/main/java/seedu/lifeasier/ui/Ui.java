@@ -21,7 +21,8 @@ public class Ui {
     public static final String ANSI_PURPLE = "\u001B[35;1m";
     public static final String ANSI_CYAN = "\u001B[36;1m";
 
-    public static final String SEPARATOR = "=========================================================================";
+    public static final String SEPARATOR = "========================================================================="
+            + "======================================";
     public static final String PARAM_LESSON = "lesson";
     public static final String PARAM_EVENT = "event";
     public static final String PARAM_DEADLINE = "deadline";
@@ -46,31 +47,50 @@ public class Ui {
 
     //Help message
     public static final String HELP_MESSAGE = "These are the commands that are available:\n"
-            + ANSI_PURPLE + "Notes about the command format:\n" + ANSI_RESET
+            + ANSI_PURPLE + "IMPORTANT INFORMATION:\n" + ANSI_RESET
             + " * Words in UPPER_CASE are the parameters to be supplied by the user\n"
+            + " * Commands are CASE SENSITIVE\n"
+            + " * Command parameters have to be input in the order as stated\n"
             + " * Items in square brackets are optional, e.g [DATE]\n"
+            + " * Commands with the " + ANSI_CYAN + "[P]" + ANSI_RESET +  " can take partial commands\n"
+            + "   e.g " + ANSI_YELLOW + "addLesson" + ANSI_RESET + " and " + ANSI_YELLOW
+            + "addLesson /code CS2113 /to 18:00" + ANSI_RESET + " are valid commands\n"
+            + " * All dates are in the " + ANSI_CYAN + "DD-MM-YY" + ANSI_RESET + " and times in the "
+            + ANSI_CYAN + "HH:MM" + ANSI_RESET + " format\n"
             + "\n"
             + ANSI_CYAN + "COMMANDS\n" + ANSI_RESET
-            + "*************************************************************************\n"
-            + "help ---------------------------------------- Displays available commands\n"
-            + "addLesson /code MODULE_CODE /date DATE /time START /to END -- Adds lesson\n"
-            + "addEvent EVENT_NAME /date DATE /time START /to END -------- Adds an event\n"
-            + "addDeadline DEADLINE_NAME /by DATETIME ------------------ Adds a deadline\n"
-            + "editLesson MODULE_CODE ----------------------------------- Edits a lesson\n"
-            + "editEvent EVENT_NAME ------------------------------------- Edits an event\n"
-            + "editDeadline DEADLINE_NAME ----------------------------- Edits a deadline\n"
-            + "deleteTask /type TYPE /name NAME ------------------------- Deletes a task\n"
-            + "addNotes TITLE ------------------------------------------ Adds a new note\n"
-            + "showNotes TITLE ------------------------------------- Shows selected note\n"
-            + "archive ------------------------------------- Archives all existing notes\n"
-            + "editNotes TITLE ----------------------------------- Edits a selected note\n"
-            + "deleteNotes TITLE ------------------------------- Deletes a selected note\n"
-            + "display WEEK/DAY --------------- Displays either weekly or daily schedule\n"
-            + "freeTime ------------------------ Tells you when you have free time today\n"
-            + "sleepTime --------------------- Tells you how much time you have to sleep\n"
-            + "exit --------------------------------------- Closes the LifEasier program\n"
-            + "*************************************************************************\n"
-            + ANSI_GREEN + "For more detailed information, please visit the online user guide at:\n" + ANSI_RESET;
+            + "*****************************************************************************************************\n"
+            + "help -------------------------------------------------------------------- Displays available commands\n"
+            + "addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a lesson\n"
+            + "addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds an event\n"
+            + "addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a deadline\n"
+            + "editLesson MODULE_CODE ------------------------------------------------------------ "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits a lesson\n"
+            + "editEvent EVENT_NAME -------------------------------------------------------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits an event\n"
+            + "editDeadline DEADLINE_NAME ------------------------------------------------------ "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits a deadline\n"
+            + "deleteTask /type TYPE /name NAME ----------------------------------------------------- Deletes a task\n"
+            + "addNotes TITLE ------------------------------------------------------------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a new note\n"
+            + "showNotes TITLE -------------------------------------------------------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Shows selected note\n"
+            + "archive ----------------------------------------------------------------- Archives all existing notes\n"
+            + "editNotes TITLE ------------------------------------------------------------ "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits a selected note\n"
+            + "deleteNotes TITLE -------------------------------------------------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET + "Deletes a selected note\n"
+            + "undo TYPE ------------------------------------------------ Undoes the last edit/deleted task or notes\n"
+            + "display [WEEK] --------------------------------------------- Displays either weekly or daily schedule\n"
+            + "freeTime -------------------------------------------- Tells you your longest block of free time today\n"
+            + "sleepTime ------------------------------------------------- Tells you how much time you have to sleep\n"
+            + "exit ------------------------------------------------------------------- Closes the LifEasier program\n"
+            + "*****************************************************************************************************\n"
+            + ANSI_GREEN + "For more detailed information, please visit the online user guide at:\n" + ANSI_RESET
+            + "https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide";
 
     //Input format messages
     public static final String NEW_DEADLINE_TIME_INPUT_FORMAT = "/by DATETIME";
@@ -542,7 +562,7 @@ public class Ui {
     }
 
     public void showRecurrencesNumberFormatError() {
-        System.out.println(colourTextRed("The input for /repeats is not a number! Please try again:"));
+        System.out.println(colourTextRed("The input for /repeats is not a valid number! Please try again:"));
     }
 
     public void printMatchingTask(int index, String task) {
@@ -555,6 +575,11 @@ public class Ui {
 
     public void showInvalidTimeLogicMessage() {
         System.out.println(colourTextRed("Start time must be before end time"));
+        printSeparator();
+    }
+
+    public void showInvalidRecurrencesError() {
+        System.out.println(colourTextRed("Recurrences must be a positive integer!"));
         printSeparator();
     }
 }

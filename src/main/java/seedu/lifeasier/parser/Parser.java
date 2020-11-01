@@ -168,16 +168,15 @@ public class Parser {
         String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
-        String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
+        String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
         String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
-
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
             return new InvalidCommand();
         }
-        int recurrences = checkIfNumber(ui, recurrencesString);
+        int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddLessonCommand(moduleCode, start, end, recurrences);
@@ -249,16 +248,16 @@ public class Parser {
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
-        String endTime =  fillIfEmptyParam(ui, tempEndTime, "/to");
+        String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
         String recurrencesString =  fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
-
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
             return new InvalidCommand();
         }
-        int recurrences = checkIfNumber(ui, recurrencesString);
+        int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddEventCommand(description, start, end, recurrences);
@@ -316,7 +315,7 @@ public class Parser {
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
         String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
-        int recurrences = checkIfNumber(ui, recurrencesString);
+        int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
         return new AddDeadlineCommand(description, by, recurrences);
@@ -436,7 +435,7 @@ public class Parser {
 
                 String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
                 String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-                String endTime =  input.substring(lastIndexOfToCommand).trim();
+                String endTime =  checkForMidnightEndTime(input.substring(lastIndexOfToCommand).trim());
                 LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
                 LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
                 times[INDEX_START] = start;
@@ -703,6 +702,20 @@ public class Parser {
             return MissingParam.COMPLETED;
         }
     }
+    
+    /**
+     * Checks if the end time for Lessons and Events inputted by user is 24:00
+     * and adjust it to become 23:59.
+     *
+     * @param endTimeString String containing the end time from user's input.
+     * @return A string with the corrected end time.
+     */
+    private String checkForMidnightEndTime(String endTimeString) {
+        if (endTimeString.equals("24:00")) {
+            return "23:59";
+        }
+        return endTimeString;
+    }
 
     /**
      * Adds the event description to the string.
@@ -853,8 +866,8 @@ public class Parser {
         return input;
     }
 
-    public int checkIfNumber(Ui ui, String input) {
-        while (!isNumeric(input)) {
+    public int checkIfValidNumber(Ui ui, String input) {
+        while (!isNumeric(input) || Integer.parseInt(input) < 0) {
             ui.showRecurrencesNumberFormatError();
             input = ui.readCommand();
         }

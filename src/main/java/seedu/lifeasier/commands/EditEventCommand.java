@@ -57,7 +57,7 @@ public class EditEventCommand extends Command {
 
             selectParameterToEdit(ui, tasks, userEventChoice);
 
-            taskHistory.pushOldCopy(oldCopyOfEvent, ui);
+            taskHistory.pushOldCopy(oldCopyOfEvent);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
             storage.saveTasks();
 

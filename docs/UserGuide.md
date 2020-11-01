@@ -23,11 +23,11 @@
     * [3.16 Editing a Note: `editNotes`](#316-editing-a-note-editnotes)
     * [3.17 Archiving Notes: `archive`](#317-archiving-notes-archive)
     * [3.18 Exiting: `exit`](#318-exiting-exit)
-* [4. Other Features](#40-other-features)
+* [4.0 Other Features](#40-other-features)
     * [4.1 Storing Data](#41-storing-data)
     * [4.2 Recurring Tasks and Auto Deletion](#42-recurring-tasks-and-auto-deletion)
-* [5. FAQ](#50-faq)
-* [6. Command Summary](#60-command-summary)
+* [5.0 FAQ](#50-faq)
+* [6.0 Command Summary](#60-command-summary)
 
 ## 1.0 Introduction
 
@@ -145,8 +145,8 @@ Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 
 An example of how to use the addLesson command is shown in Figure 3.2-1.
 ```
-addLesson /code CS2101 /date 22-10-20 /time 14:00 /to 16:00
-Done! I've added "Lesson: CS2101 from 22 Oct 2020, 14:00 to 22 Oct 2020, 16:00" to 
+addLesson /code CS2101 /date 22-10-20 /time 14:00 /to 16:00 /repeats 30
+Done! I've added "Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), repeats weekly 30 times" to 
 your calendar
 =========================================================================
 ```
@@ -166,8 +166,8 @@ Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 
 An example of how to use the addEvent command is shown in Figure 3.3-1.
 ```
-addEvent Concert /date 13-07-19 /time 17:00 /to 21:00
-Done! I've added "Event: Concert from 13 Jul 2019, 17:00 to 13 Jul 2019, 21:00" to 
+addEvent Concert /date 13-07-19 /time 17:00 /to 21:00 /repeats 0
+Done! I've added "Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), repeats weekly 0 times" to 
 your calendar
 =========================================================================
 ```
@@ -189,8 +189,8 @@ Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 
 An example of how to use the addDeadline command is shown in Figure 3.4-1.
 ```
-addDeadline Return books /by 31-12-20 23:59
-Done! I've added "Deadline: Return books by 31 Dec 2020, 23:59" to 
+addDeadline Return books /by 31-12-20 23:59 /repeats 0
+Done! I've added "Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times" to 
 your calendar
 =========================================================================
 ```
@@ -214,7 +214,7 @@ Format: `editLesson [CODE]`
 An example of how to use the editLesson command is shown in Figure 3.5-1.
 ```
 editLesson CS2101
-4. [L] CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00)
+4. Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), repeats weekly 30 times
 Please select the lesson you want to edit.
 4
 Please select the parameter you want to edit.
@@ -246,7 +246,7 @@ will be printed.
 An example of how to use the editEvent command is shown in Figure 3.6-1.
 ```
 editEvent
-5. [E] Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00)
+5. Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), repeats weekly 0 times
 Please select the event you want to edit.
 5
 Please select the parameter you want to edit.
@@ -278,7 +278,7 @@ will be printed.
 An example of how to use the editDeadline command is shown in Figure 3.7-1.
 ```
 editDeadline
-6. [D] Return books by (31 Dec 2020, 23:59)
+6. Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times
 Please select the deadline you want to edit.
 6
 Please select the parameter you want to edit.
@@ -573,7 +573,7 @@ If no TITLE is inputed, a numbered list of all notes will be displayed.
 * If multiple notes with the same TITLE are found, all note titles containing the input will be 
 displayed in a list.
 * Entering “Y” would further prompt for a change in title or description. Entering “N” would 
-exit the command without deletion. 
+exit the command without any edits.
 * Entering “T” would show the current title and prompt for a new title. Entering “D” would 
 show the current description and prompt for a new description.
 
@@ -588,9 +588,6 @@ Title: Cats are the best!
 
 Cats are the cutest in the world :D
 
-Is this the note you want to edit? (Y/N)
-
-Y
 Do you want to change the title or description? (T/D)
 
 T for title and D for Description
@@ -668,25 +665,12 @@ the save files if necessary.
 
 ### 4.2 Recurring Tasks and Auto Deletion
 
-**LifEasier** automatically shifts the date for any tasks 7 days forward if their original date is past, and they 
-are set to repeat. **LifEasier** does this for every task in your schedule every time it starts up. E.g. If you start 
-up **LifEasier** on the 24th of October, and you had a repeating class that last occurred on the 23rd of October, the 
-lesson will be moved 7 days forward to the 30th of October. This ensures your repeating lessons, events and deadlines 
-will always be moved forward as long as they are meant to repeat.
+**LifEasier** automatically updates the dates of recurring tasks and deletes old tasks.
+It will load your save files and update your tasks automatically every time it starts up.
+Here are some examples of what might happen if you start up **LifEasier** on 24th October:
 
-If it is past the date of your task, and if the task does not repeat, it will automatically be removed instead. 
-By automatically deleting those tasks that have already been completed, **LifEasier** ensures your save files do not 
-become unnecessarily large.
-
- **LifEasier** automatically shifts the date for any tasks 7 days forward if their original date is past, 
- and they are set to repeat. **LifEasier** does this for every task in your schedule every time it starts up.
- E.g. If you start up **LifEasier** on the 24th of October, and you had a repeating class that last occurred 
- on the 23rd of October, the lesson will be moved 7 days forward to the 30th of October. This ensures your
- repeating lessons, events and deadlines will always be moved forward as long as they are meant to repeat.
-
- If it is past the date of your task, and if the task does not repeat, it will automatically be removed instead.
- By automatically deleting those tasks that have already been completed, **LifEasier** ensures your save files do 
- not become unnecessarily large.
+1. If you had a lesson that last occurred on 22nd October, and it is set to repeat 3 more times, it will be updated to occur again on 29th October, and updated to repeat 2 more times.
+2. If you had an event that last occurred on 21st October, and it is set to repeat 0 more times, it will be deleted from your schedule.
 
 
 ## 5.0 FAQ
