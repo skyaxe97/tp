@@ -116,7 +116,7 @@ The **LifEasier** component is the main class of the application. It initialises
 
 #### 3.2.2 UI Component
 
-The `UI` component reads the uthe user. It consists ofser’s inputs and displays messages and content to  a main `Ui`,
+The `UI` component reads the user’s inputs and displays messages and content to the user. It consists of 3 classes; a main `Ui`,
  a `ScheduleUi` and a `TimetableUi`. The `ScheduleUi` handles all outputs to do with displaying a user’s schedule.
   To do this, it uses the `TimetableUi` to display a specialised timetable view of the weekly schedule. 
   The main `Ui` handles everything else, such as displaying general messages and reading the user’s inputs. 
@@ -504,6 +504,7 @@ The `Parser` determines what command is to be executed given by the user input. 
 the specified commands, an unknown command message would be returned.
 
 ##### Implementation
+
 The type of command is determined by the parser through the first string of the input and passed through a switch 
 statement. If it matches with any of the cases, the corresponding `parse` command would be executed. Otherwise, it would 
 return an invalid command. The corresponding parsers would check whether all parameters are inputted before passing 
@@ -512,6 +513,7 @@ and appending any of these missing parameters into a new string with all the par
 parameters filled, the corresponding parser would pass them to their command functions.	
 
 ##### Design Considerations
+
 The user cannot input an empty string as a parameter. This would avoid issues of invalid parameters passing on to the 
 commands, which can result in error in the program. As such, checks are to be done on the user input.  
 
@@ -580,12 +582,13 @@ have already completed.
 1. The file size of the application is below 100MB.
 
 ## 8.0 Documentation
-Apart from PDF versions of our User Guide and Developer Guide, separate versions are also managed under the
- `/docs` folder. The versions under these folders should be the most updated. GitHub Pages and Jekyll are used 
- to generate formatted static websites to host the User Guide and Developer Guide.
+
+Apart from the User Guide and Developer Guide managed under the`/docs` folder, there are also separate PDF versions maintained.
+However, the versions available in the `/docs` folder. should be the most updated. The project uses GitHub Pages and Jekyll to generate formatted static websites to host the User Guide and Developer Guide.
 
 
 ## 9.0 Testing / Logging
+
 The project makes use of Gradle and JUnit5 for testing. There are two ways that tests can be run, which are elaborated
  below.
 
@@ -601,13 +604,17 @@ necessary messages. Logging can be enabled or disabled through the use of the `l
 the `LifEasier.run()` method. Setting `showLogging` to `true` will enable logging, and setting it to `false` will 
 disable logging.
 
+The project also has the option to make use of the `text-ui-test` folder to perform IO redirection tests.
+However, this option is not currently recommended due to the hassle of configuring these tests to work with save files which might change every iteration of testing.
+
 ## 10.0 Dev Ops
+
 The project uses Gradle for build automation and dependency management. More information on how to use
  Gradle can be found [here](https://se-education.org/guides/tutorials/gradle.html).
 
 The project also uses Github Actions for Continuous Integration (CI). The configurations file can be found in
- the `.github/workflows` folder. No actions regarding configuration are currently required, but this file can be
-  edited in future to change the configurations if necessary.
+the `.github/workflows` folder. No actions regarding configuration are currently required, but this file can be
+edited in future to change the configurations if necessary.
 
 ## 11.0 Glossary
 
@@ -620,9 +627,9 @@ The project also uses Github Actions for Continuous Integration (CI). The config
 Refer to the **LIfEasier User Guide** for the setting up/quick start guide and to view more detailed information of all usable commands. After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
 
 The following are some sample commands to add new tasks and notes into **LifEasier**.
-* `addLesson /code CS2113T /date 28-10-20 /time 14:00 /to 16:00`
-* `addEvent CS2101 Presentation /date 30-10-20 /time 09:00 /to 12:00`
-* `addDeadline Buy some Bread /by  31-01-20 22:00`
+* `addLesson /code CS2113T /date 28-10-20 /time 14:00 /to 16:00 /repeats 10`
+* `addEvent CS2101 Presentation /date 30-10-20 /time 09:00 /to 12:00 /repeats 5`
+* `addDeadline Buy some Bread /by  31-01-20 22:00 /repeats 0`
 * `addNotes`
 * `addNotes Cats are the best!`
 
