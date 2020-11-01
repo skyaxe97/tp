@@ -40,7 +40,7 @@ public class DeleteTaskCommand extends Command {
     private int readUserInput(Ui ui, Parser parser, TaskList tasks) {
         while (true) {
             try {
-                int newIndex = parser.checkIfNumber(ui, ui.readCommand()) - 1;
+                int newIndex = parser.checkIfValidNumber(ui, ui.readCommand()) - 1;
                 tasks.checkForIndexOutOfBounds(newIndex);
                 return newIndex;
             } catch (IndexOutOfBoundsException e) {
