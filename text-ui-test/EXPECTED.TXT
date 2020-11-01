@@ -27,7 +27,7 @@ IMPORTANT INFORMATION:
 COMMANDS
 *****************************************************************************************************
 help -------------------------------------------------------------------- Displays available commands
-addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ------------------ [P]Adds lesson
+addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- [P]Adds a lesson
 addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ [P]Adds an event
 addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- [P]Adds a deadline
 editLesson MODULE_CODE ------------------------------------------------------------ [P]Edits a lesson
@@ -39,9 +39,9 @@ showNotes TITLE -------------------------------------------------------------- [
 archive ----------------------------------------------------------------- Archives all existing notes
 editNotes TITLE ------------------------------------------------------------ [P]Edits a selected note
 deleteNotes TITLE -------------------------------------------------------- [P]Deletes a selected note
-undo TYPE ----------------------------------------------------- Undoes the last edit to task or notes
+undo TYPE ------------------------------------------------ Undoes the last edit/deleted task or notes
 display [WEEK] --------------------------------------------- Displays either weekly or daily schedule
-freeTime ---------------------------------------------------- Tells you when you have free time today
+freeTime -------------------------------------------- Tells you your longest block of free time today
 sleepTime ------------------------------------------------- Tells you how much time you have to sleep
 exit ------------------------------------------------------------------- Closes the LifEasier program
 *****************************************************************************************************
