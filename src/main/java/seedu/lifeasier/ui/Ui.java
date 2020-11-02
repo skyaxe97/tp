@@ -5,7 +5,6 @@ import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.Task;
 
-
 import java.util.Scanner;
 
 /**
