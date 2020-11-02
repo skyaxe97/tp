@@ -60,8 +60,10 @@ public class ShowNotesCommand extends Command {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
             ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
+
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
+
             } else {
                 ui.showSelectWhichNoteToViewPrompt();
 
@@ -72,20 +74,22 @@ public class ShowNotesCommand extends Command {
                 int noteNumber = Integer.parseInt(ui.readCommand());
 
                 NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
-                System.out.println(notes.get(noteNumber - 1).toString());
-
+                ui.showNotesMessage(notes.get(noteNumber - 1).toString());
             }
-            ui.printThickSeparator();
             logger.log(Level.INFO, "End of ShowNotesCommand");
+
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
             ui.showInvalidNumberError();
+
         } catch (TitleNotFoundException e) {
             logger.log(Level.SEVERE, "Input title does not match any of the note titles");
             ui.showNoTitleFoundError();
+
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatError();
+
         } catch (EmptyNoteListException e) {
             logger.log(Level.SEVERE, "Note List is empty");
             ui.showEmptyNoteListMessage();

@@ -657,8 +657,8 @@ public class Ui {
     public void showEnterUndoTypePrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("To undo a change in tasks, please enter:") + "task");
-        System.out.println(colourTextCyan("To undo a change in notes, please enter:") + "note");
+        System.out.println(colourTextCyan("To undo a change in tasks, please enter: ") + "task");
+        System.out.println(colourTextCyan("To undo a change in notes, please enter: ") + "note");
     }
 
     public void showInvalidUndoTypeError() {
@@ -803,5 +803,14 @@ public class Ui {
         printThickSeparator();
         System.out.println("Here is your schedule for today:");
     }
-    
+
+    public void showNotesMessage(String note) {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextGreen("Here is your note:"));
+        System.out.println(note);
+        printThickSeparator();
+        printBlankLine();
+    }
+
 }
