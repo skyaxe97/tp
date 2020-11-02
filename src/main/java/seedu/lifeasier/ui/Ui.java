@@ -643,14 +643,14 @@ public class Ui {
     public void showMultipleNoteMatchesMessage(NoteList notes, String title) {
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
-                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
+                System.out.println(i + 1 + ". " + notes.get(i).getTitle());
             }
         }
     }
 
     public void showAllNotesMessage(NoteList notes) {
         for (int i = 0; i < notes.size(); i++) {
-            System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle());
         }
     }
 
