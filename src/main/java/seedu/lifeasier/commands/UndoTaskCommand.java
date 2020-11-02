@@ -34,12 +34,12 @@ public class UndoTaskCommand extends Command {
                 ui.showUndoTaskDeleteMessage();
             }
 
-            ui.showOldTask(taskHistory);
+            ui.showOldTaskMessage(taskHistory);
             taskHistory.popLastTask();
             storage.saveTasks();
 
         } else {
-            ui.showInvalidUndoAction();
+            ui.showInvalidUndoActionError();
         }
         ui.printSeparator();
     }

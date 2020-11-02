@@ -71,7 +71,7 @@ public class LifEasier {
                 isFinished = userCommand.isFinished();
 
             } catch (ParserException e) {
-                ui.showParseUnknownCommandMessage();
+                ui.showParseUnknownCommandError();
 
             }
 

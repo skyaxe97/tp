@@ -46,7 +46,7 @@ public class EditLessonCommand extends Command {
 
             logger.log(Level.INFO, "Printing all matching lessons...");
             printLessonsMatchingCode(tasks, ui, code);
-            ui.showSelectTaskToEdit(Ui.PARAM_LESSON);
+            ui.showSelectTaskToEditPrompt(Ui.PARAM_LESSON);
 
             logger.log(Level.INFO, "Reading user input for choice of lesson to edit...");
             int userLessonChoice = ui.readSingleIntInput() - 1;
@@ -63,34 +63,34 @@ public class EditLessonCommand extends Command {
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Input is not in the correct format");
             ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input deadline name does not match any of the existing deadline names.");
-            ui.showNoMatchesMessage("deadline");
+            ui.showNoMatchesError("deadline");
         }
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
 
     public void selectParameterToEdit(Ui ui, TaskList tasks, int userLessonChoice) throws ParserException {
-        ui.showSelectParameterToEdit();
+        ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_LESSON);
         int userParamChoice = Integer.parseInt(ui.readCommand());
 
         switch (userParamChoice) {
 
         case (1):
-            ui.showInputMessage(Ui.PARAM_LESSON);
+            ui.showInputPrompt(Ui.PARAM_LESSON);
             editLessonModuleCode(tasks, userLessonChoice, ui);
             break;
 
         case (2):
-            ui.showInputFormat(Ui.PARAM_LESSON);
+            ui.showInputFormatPrompt(Ui.PARAM_LESSON);
             editLessonTime(tasks, userLessonChoice, ui);
             break;
 

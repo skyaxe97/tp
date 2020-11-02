@@ -46,7 +46,7 @@ public class EditDeadlineCommand extends Command {
 
             logger.log(Level.INFO, "Printing all matching deadlines...");
             printMatchingDeadlines(tasks, ui, deadlineName);
-            ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
+            ui.showSelectTaskToEditPrompt(Ui.PARAM_DEADLINE);
 
             int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
             checkForIndexOutOfBounds(tasks, userDeadlineChoice);
@@ -62,34 +62,34 @@ public class EditDeadlineCommand extends Command {
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Input is not in the correct format");
             ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
-            ui.showNoMatchesMessage("deadline");
+            ui.showNoMatchesError("deadline");
         }
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 
     public void selectParameterToEdit(Ui ui, TaskList tasks, int userDeadlineChoice) throws ParserException {
-        ui.showSelectParameterToEdit();
+        ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
         int userParamChoice = Integer.parseInt(ui.readCommand());
 
         switch (userParamChoice) {
 
         case (1):
-            ui.showInputMessage(Ui.PARAM_DEADLINE);
+            ui.showInputPrompt(Ui.PARAM_DEADLINE);
             editDeadlineName(tasks, userDeadlineChoice, ui);
             break;
 
         case (2):
-            ui.showInputFormat(Ui.PARAM_DEADLINE);
+            ui.showInputFormatPrompt(Ui.PARAM_DEADLINE);
             editDeadlineTime(tasks, userDeadlineChoice, ui);
             break;
 

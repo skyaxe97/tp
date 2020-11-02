@@ -46,7 +46,7 @@ public class EditEventCommand extends Command {
 
             logger.log(Level.INFO, "Printing all matching events...");
             printMatchingEvents(tasks, ui, eventName);
-            ui.showSelectTaskToEdit(Ui.PARAM_EVENT);
+            ui.showSelectTaskToEditPrompt(Ui.PARAM_EVENT);
 
             logger.log(Level.INFO, "Reading user input for choice of event to edit...");
             int userEventChoice = ui.readSingleIntInput() - 1;
@@ -63,22 +63,22 @@ public class EditEventCommand extends Command {
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Input is not in the correct format");
             ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input event name does not match any of the existing event names.");
-            ui.showNoMatchesMessage(Ui.PARAM_EVENT);
+            ui.showNoMatchesError(Ui.PARAM_EVENT);
         }
         logger.log(Level.INFO, "End of EditEventCommand");
     }
 
     public void selectParameterToEdit(Ui ui, TaskList tasks, int userEventChoice) throws ParserException {
-        ui.showSelectParameterToEdit();
+        ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_EVENT);
         int userParamChoice = Integer.parseInt(ui.readCommand());
         logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
@@ -86,12 +86,12 @@ public class EditEventCommand extends Command {
         switch (userParamChoice) {
 
         case (1):
-            ui.showInputMessage(Ui.PARAM_EVENT);
+            ui.showInputPrompt(Ui.PARAM_EVENT);
             editEventName(tasks, userEventChoice, ui);
             break;
 
         case (2):
-            ui.showInputFormat(Ui.PARAM_EVENT);
+            ui.showInputFormatPrompt(Ui.PARAM_EVENT);
             editEventTime(tasks, userEventChoice, ui);
             break;
 

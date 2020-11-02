@@ -28,7 +28,7 @@ public class AddNotesCommand extends Command {
         if (input.trim().length() > 0) {
             isEmpty = false;
         } else {
-            ui.showEmptyDescriptionMessage();
+            ui.showEmptyDescriptionError();
         }
         logger.log(Level.INFO, "End of checking empty description inputs");
         return input;
@@ -41,7 +41,7 @@ public class AddNotesCommand extends Command {
             isEmpty = false;
             noteTitle = title;
         } else {
-            ui.showNoteTitleMessage();
+            ui.showNoteTitlePrompt();
             while (isEmpty) {
                 noteTitle = checkForEmpty(ui);
             }
@@ -61,7 +61,7 @@ public class AddNotesCommand extends Command {
 
         isEmpty = true;
         logger.log(Level.INFO, "IsEmpty set back to true");
-        ui.showNoteDescriptionMessage();
+        ui.showNoteDescriptionPrompt();
 
         logger.log(Level.INFO, "Start for assigning noteDescription");
         while (isEmpty) {

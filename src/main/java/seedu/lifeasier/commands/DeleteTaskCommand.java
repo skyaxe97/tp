@@ -45,7 +45,6 @@ public class DeleteTaskCommand extends Command {
                 return newIndex;
             } catch (IndexOutOfBoundsException e) {
                 ui.showIndexOutOfBoundsMessage();
-                continue;
             }
         }
     }
@@ -81,7 +80,7 @@ public class DeleteTaskCommand extends Command {
 
             logger.log(Level.INFO, "Printing all matching tasks...");
             printMatchingTasks(tasks, ui, type, name);
-            ui.showSelectTaskToDelete(type);
+            ui.showSelectTaskToDeletePrompt(type);
 
             logger.log(Level.INFO, "Reading user input for choice of task to delete...");
             int userIndex = readUserInput(ui, parser, tasks);
@@ -105,7 +104,7 @@ public class DeleteTaskCommand extends Command {
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input " + type + " name does not match any of the existing "
                     + type + " names.");
-            ui.showNoMatchesMessage(type);
+            ui.showNoMatchesError(type);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "User input is out of bounds");
             ui.showIndexOutOfBoundsMessage();

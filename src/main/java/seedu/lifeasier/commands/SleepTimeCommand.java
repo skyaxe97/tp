@@ -64,8 +64,6 @@ public class SleepTimeCommand extends Command {
         } else {
             ui.showExcessSleepDurationMessage();
         }
-
-        ui.printSeparator();
     }
 
     /**

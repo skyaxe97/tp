@@ -97,7 +97,7 @@ public class TaskStorage {
             logger.log(Level.WARNING, "Missing data from save file");
 
         } catch (NumberFormatException e) {
-            ui.showUndeterminableRecurrenceError();
+            ui.showIndeterminableRecurrenceError();
             logger.log(Level.WARNING, "Unable to read recurrence field");
 
         } catch (StorageException e) {

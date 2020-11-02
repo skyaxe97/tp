@@ -45,10 +45,10 @@ public class EditNotesCommand extends Command {
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
-            ui.showMultipleMatchesFoundMessage();
+            ui.showMultipleMatchesFoundPrompt();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            ui.printMultipleNoteMatches(notes, title);
+            ui.showMultipleNoteMatchesMessage(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
@@ -71,7 +71,7 @@ public class EditNotesCommand extends Command {
         if (input.trim().equals("T")) {
             logger.log(Level.INFO, "T is inputted");
             System.out.println("Current Title: " + notes.get(noteNumber).getTitle());
-            ui.showEditTitleMessage();
+            ui.showEditTitlePrompt();
             input = parser.checkIfEmpty(ui, ui.readCommand());
             notes.get(noteNumber).setTitle(input);
             logger.log(Level.INFO, "Title is changed");
@@ -79,7 +79,7 @@ public class EditNotesCommand extends Command {
         } else {
             logger.log(Level.INFO, "D is inputted");
             System.out.println("Current description:\n" + notes.get(noteNumber).getDescription());
-            ui.showEditDescriptionMessage();
+            ui.showEditDescriptionPrompt();
             input = parser.checkIfEmpty(ui, ui.readCommand());
             notes.get(noteNumber).setDescription(input);
             logger.log(Level.INFO, "Description is changed");
@@ -102,10 +102,10 @@ public class EditNotesCommand extends Command {
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, parser, title, noteHistory);
             } else {
-                ui.showSelectWhichNoteToEditMessage();
+                ui.showSelectWhichNoteToEditPrompt();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                ui.printAllNotes(notes);
+                ui.showAllNotesMessage(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
@@ -120,13 +120,13 @@ public class EditNotesCommand extends Command {
             logger.log(Level.INFO, "End of EditNotesCommand");
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (TitleNotFoundException e) {
             logger.log(Level.SEVERE, "Input title does not match any of the note titles");
-            ui.showNoTitleFoundMessage();
+            ui.showNoTitleFoundError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         } catch (EmptyNoteListException e) {
             ui.showEmptyNoteListMessage();
         }

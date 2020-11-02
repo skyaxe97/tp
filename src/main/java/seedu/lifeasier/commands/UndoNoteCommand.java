@@ -34,12 +34,12 @@ public class UndoNoteCommand extends Command {
                 ui.showUndoNoteDeleteMessage();
             }
 
-            ui.showOldNote(noteHistory);
+            ui.showOldNoteMessage(noteHistory);
             noteHistory.popLastNote();
             storage.saveNote();
 
         } else {
-            ui.showInvalidUndoAction();
+            ui.showInvalidUndoActionError();
         }
         ui.printSeparator();
     }

@@ -40,23 +40,23 @@ public class DeleteNotesCommand extends Command {
         case 1:
             logger.log(Level.INFO, "One match found");
             System.out.println(notes.get(noteNumber).toString());
-            ui.showConfirmDeleteMessage();
+            ui.showConfirmDeletePrompt();
             String input = checkConfirmationMessage(ui, ui.readCommand());
             checkIfDelete(ui, notes, noteNumber, input, noteHistory);
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
-            ui.showMultipleMatchesFoundMessage();
+            ui.showMultipleMatchesFoundPrompt();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            ui.printMultipleNoteMatches(notes, title);
+            ui.showMultipleNoteMatchesMessage(notes, title);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand());
             NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
             System.out.println(notes.get(noteNumber - 1).toString());
 
-            ui.showConfirmDeleteMessage();
+            ui.showConfirmDeletePrompt();
             input = checkConfirmationMessage(ui, ui.readCommand());
             checkIfDelete(ui, notes, noteNumber, input, noteHistory);
         }
@@ -79,7 +79,7 @@ public class DeleteNotesCommand extends Command {
     private String checkConfirmationMessage(Ui ui, String input) {
         logger.log(Level.INFO, "Start check for Y/N input");
         while (!input.trim().equals("Y") && !input.trim().equals("N")) {
-            ui.showInvalidConfirmationMessage();
+            ui.showInvalidConfirmationPrompt();
             input = ui.readCommand();
         }
         logger.log(Level.INFO, "End check for Y/N input");
@@ -96,17 +96,17 @@ public class DeleteNotesCommand extends Command {
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title, noteHistory);
             } else {
-                ui.showSelectWhichNoteToDeleteMessage();
+                ui.showSelectWhichNoteToDeletePrompt();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                ui.printAllNotes(notes);
+                ui.showAllNotesMessage(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
                 NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
                 System.out.println(notes.get(noteNumber - 1).toString());
 
-                ui.showConfirmDeleteMessage();
+                ui.showConfirmDeletePrompt();
                 String input = checkConfirmationMessage(ui, ui.readCommand());
                 checkIfDelete(ui, notes, noteNumber -  1, input, noteHistory);
 
@@ -116,13 +116,13 @@ public class DeleteNotesCommand extends Command {
             logger.log(Level.INFO, "End of DeleteNotesCommand");
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (TitleNotFoundException e) {
             logger.log(Level.SEVERE, "Input title does not match any of the note titles");
-            ui.showNoTitleFoundMessage();
+            ui.showNoTitleFoundError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         } catch (EmptyNoteListException e) {
             ui.showEmptyNoteListMessage();
         }

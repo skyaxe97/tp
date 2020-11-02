@@ -137,10 +137,10 @@ public class TaskList {
             taskList.remove(index);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a valid number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         }
     }
 
