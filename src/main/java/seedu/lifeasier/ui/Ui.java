@@ -175,7 +175,9 @@ public class Ui {
     }
 
     /**
-     * Returns read user command.
+     * Reads user command and checks if save delimiter has been added to prevent errors.
+     *
+     * @return User command without save delimiters.
      */
     public String readCommand() {
         boolean isCommandWithoutDelimiter = false;
