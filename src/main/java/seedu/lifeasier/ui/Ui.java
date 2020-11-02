@@ -767,7 +767,7 @@ public class Ui {
     public void showMatchingTasksPrompt(String type) {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Here are all your matching" + type +"s:"));
+        System.out.println(colourTextCyan("Here are all your matching" + type + "s:"));
     }
     
 }
