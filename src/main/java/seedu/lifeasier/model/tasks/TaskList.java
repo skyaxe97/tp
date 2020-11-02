@@ -70,7 +70,17 @@ public class TaskList {
      * @param end end date/time of lesson.
      * @param recurrences number of times to repeat.
      */
-    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
+    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences)
+            throws TaskDuplicateException {
+
+        for (Task task : taskList) {
+            if (task instanceof Lesson) {
+                if (((Lesson) task).isDuplicate(moduleCode, start, end)) {
+                    throw new TaskDuplicateException();
+                }
+            }
+        }
+
         Lesson lesson = new Lesson(moduleCode, start, end, recurrences);
         addTask(lesson);
         return lesson;

@@ -1,7 +1,9 @@
 package seedu.lifeasier.model.tasks;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Lesson extends Task {
@@ -72,5 +74,19 @@ public class Lesson extends Task {
             start = start.plusDays(7);
             end = end.plusDays(7);
         }
+    }
+
+    public boolean isDuplicate(String moduleCode, LocalDateTime start, LocalDateTime end) {
+
+        LocalTime existingStartTime = this.start.toLocalTime();
+        LocalTime existingEndTime = this.end.toLocalTime();
+        DayOfWeek existingDay = this.start.getDayOfWeek();
+
+        LocalTime newStartTime = start.toLocalTime();
+        LocalTime newEndTime = end.toLocalTime();
+        DayOfWeek newDay = start.getDayOfWeek();
+
+        return (this.description.equals(moduleCode) && existingStartTime == newStartTime
+                && existingEndTime == newEndTime && existingDay == newDay);
     }
 }

@@ -1,6 +1,7 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.model.tasks.Task;
 import seedu.lifeasier.model.tasks.TaskHistory;
@@ -36,12 +37,18 @@ public class AddLessonCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
 
-        logger.log(Level.INFO, "Adding lesson to taskList...");
-        Task task = tasks.addLesson(moduleCode, start, end, recurrences);
+        try {
+            logger.log(Level.INFO, "Adding lesson to taskList...");
+            Task task = tasks.addLesson(moduleCode, start, end, recurrences);
+            logger.log(Level.INFO, "Saving updated taskList to storage...");
+            tasks.updateTasks(LocalDate.now());
+            storage.saveTasks();
+            ui.showAddConfirmationMessage(task);
 
-        logger.log(Level.INFO, "Saving updated taskList to storage...");
-        tasks.updateTasks(LocalDate.now());
-        storage.saveTasks();
-        ui.showAddConfirmationMessage(task);
+        } catch (TaskDuplicateException e) {
+            ui.showDuplicateTaskError(Ui.PARAM_LESSON);
+        }
+
+
     }
 }

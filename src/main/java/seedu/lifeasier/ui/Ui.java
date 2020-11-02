@@ -582,4 +582,8 @@ public class Ui {
         System.out.println(colourTextRed("Recurrences must be a positive integer!"));
         printSeparator();
     }
+
+    public void showDuplicateTaskError(String type) {
+        System.out.println("This " + type + " already exists in your schedule!");
+    }
 }

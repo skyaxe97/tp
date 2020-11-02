@@ -65,7 +65,6 @@ public abstract class Task {
 
     public abstract void moveAndUpdateRecurrences(LocalDate day);
 
-
     public boolean isWithinTimeSlot(int timeSlotStartHour) {
         return startsBeforeOrAt(timeSlotStartHour) && endsAtOrAfter(timeSlotStartHour + 1);
     }
