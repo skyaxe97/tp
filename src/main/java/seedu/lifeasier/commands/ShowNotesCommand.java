@@ -36,7 +36,7 @@ public class ShowNotesCommand extends Command {
             throw new TitleNotFoundException();
         case 1:
             logger.log(Level.INFO, "One match found");
-            System.out.println(notes.get(noteNumber).toString());
+            ui.showNotesMessage(notes.get(noteNumber).toString());
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
@@ -58,7 +58,6 @@ public class ShowNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
-            ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
 
             if (title.trim().length() > 0) {        // title is already inputted
