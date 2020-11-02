@@ -48,7 +48,7 @@ public class ShowNotesCommand extends Command {
 
             noteNumber = Integer.parseInt(ui.readCommand());
             NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
-            System.out.println(notes.get(noteNumber - 1).toString());
+            ui.showNotesMessage(notes.get(noteNumber - 1).toString());
         }
 
     }
