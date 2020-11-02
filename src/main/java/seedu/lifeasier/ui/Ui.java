@@ -168,8 +168,8 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextGreen("Done! I've added"));
-        System.out.println("\"" + task + "\" ");
-        System.out.println("to your schedule!");
+        System.out.println(colourTextGreen("\"" + task + "\" "));
+        System.out.println(colourTextGreen("to your schedule!"));
         printThickSeparator();
         printBlankLine();
     }
