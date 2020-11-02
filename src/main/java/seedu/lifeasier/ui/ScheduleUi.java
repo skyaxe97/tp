@@ -31,8 +31,8 @@ public class ScheduleUi {
         int id = 1;
 
         for (Task task : tasks.getTaskList()) {
-            if (task instanceof Deadline && task.happensAfter(LocalDateTime.now()) &&
-                    task.isHappeningBefore(dateAfterOneWeek)) {
+            if (task instanceof Deadline && task.happensAfter(LocalDateTime.now())
+                    && task.isHappeningBefore(dateAfterOneWeek)) {
                 System.out.println(id + ". " + task.toString());
                 id++;
             }

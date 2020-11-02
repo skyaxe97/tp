@@ -309,12 +309,12 @@ public class Parser {
         int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String tempByInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
-        String tempRecurencesString = input.substring(lastIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-        String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
         int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();

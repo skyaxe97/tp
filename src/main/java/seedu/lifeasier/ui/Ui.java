@@ -594,8 +594,8 @@ public class Ui {
     }
 
     public void showCurrHourIndicationMessage() {
-        System.out.println(colourTextCyan("NOTE: The row corresponding to the current hour " +
-                "is coloured for easy reference!"));
+        System.out.println(colourTextCyan("NOTE: The row corresponding to the current hour "
+                + "is coloured for easy reference!"));
         printSeparator();
     }
 }
