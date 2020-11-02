@@ -343,8 +343,6 @@ public class Ui {
     }
 
     public void showNoDataToArchiveMessage() {
-        printBlankLine();
-        printThickSeparator();
         System.out.println(colourTextRed("You do not have any data available for archiving."));
         printThickSeparator();
         printBlankLine();
@@ -411,10 +409,6 @@ public class Ui {
     public void showSaveDataMissingError() {
         System.out.println(colourTextRed("Encountered an error while reading from the save file "
                 + "- Data missing/corrupted"));
-    }
-
-    public void showLocalDateTimeParseError() {
-        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task..."));
     }
 
     public void showUndeterminableTaskError() {

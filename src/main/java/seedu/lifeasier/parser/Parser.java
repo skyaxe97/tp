@@ -448,7 +448,7 @@ public class Parser {
 
         } catch (DateTimeParseException e) {
             logger.log(Level.SEVERE, "Time input is not in the correct format");
-            ui.showLocalDateTimeParseError();
+            ui.showParseIncorrectDateTimeError();
         }
         return times;
     }
