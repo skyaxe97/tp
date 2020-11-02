@@ -93,8 +93,10 @@ public class DeleteNotesCommand extends Command {
             logger.log(Level.INFO, "Start of DeleteNotesCommand");
             ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
+
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title, noteHistory);
+
             } else {
                 ui.showSelectWhichNoteToDeletePrompt();
 
@@ -109,20 +111,23 @@ public class DeleteNotesCommand extends Command {
                 ui.showConfirmDeletePrompt();
                 String input = checkConfirmationMessage(ui, ui.readCommand());
                 checkIfDelete(ui, notes, noteNumber -  1, input, noteHistory);
-
             }
+
             storage.saveNote();
-            ui.printThickSeparator();
             logger.log(Level.INFO, "End of DeleteNotesCommand");
+
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
             ui.showInvalidNumberError();
+
         } catch (TitleNotFoundException e) {
             logger.log(Level.SEVERE, "Input title does not match any of the note titles");
             ui.showNoTitleFoundError();
+
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatError();
+
         } catch (EmptyNoteListException e) {
             ui.showEmptyNoteListMessage();
         }

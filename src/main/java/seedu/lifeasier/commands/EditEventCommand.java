@@ -98,6 +98,5 @@ public class EditEventCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
-        ui.printThickSeparator();
     }
 }

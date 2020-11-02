@@ -96,7 +96,6 @@ public class EditDeadlineCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
-        ui.printThickSeparator();
     }
 
 }
