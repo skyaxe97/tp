@@ -516,8 +516,8 @@ public class Ui {
 
     public void showEnterUndoTypeMessage() {
         printSeparator();
-        System.out.println(colourTextCyan("To undo a change in tasks, please enter:") + "task");
-        System.out.println(colourTextCyan("To undo a change in notes, please enter:") + "note");
+        System.out.println(colourTextCyan("To undo a change in tasks, please enter: ") + "task");
+        System.out.println(colourTextCyan("To undo a change in notes, please enter: ") + "note");
     }
 
     public void showInvalidUndoType() {
@@ -584,12 +584,18 @@ public class Ui {
     }
 
     public void showEnterDisplayKeywordMessage() {
-        System.out.println(colourTextCyan("To see your schedule, please enter:") + "week/today/tomorrow");
+        System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
         printSeparator();
     }
 
     public void showInvalidDisplayKeyword() {
         System.out.println("Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!");
+        printSeparator();
+    }
+
+    public void showCurrHourIndicationMessage() {
+        System.out.println(colourTextCyan("NOTE: The row corresponding to the current hour " +
+                "is coloured for easy reference!"));
         printSeparator();
     }
 }

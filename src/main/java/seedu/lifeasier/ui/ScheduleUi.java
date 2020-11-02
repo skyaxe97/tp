@@ -17,7 +17,8 @@ public class ScheduleUi {
     /**
      * Displays the home screen to the user.
      */
-    public void showHome(TaskList tasks) {
+    public void showHome(TaskList tasks, Ui ui) {
+        ui.showCurrHourIndicationMessage();
         timetable.showTimetable(tasks);
         System.out.println();
         displayUpcomingDeadlines(tasks);

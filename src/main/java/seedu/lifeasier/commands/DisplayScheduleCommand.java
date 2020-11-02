@@ -27,7 +27,7 @@ public class DisplayScheduleCommand extends Command {
         LocalDate currDate = LocalDate.now();
         switch (displayKeyword) {
         case "week":
-            scheduleUi.showHome(tasks);
+            scheduleUi.showHome(tasks, ui);
             break;
         case "today":
             displayScheduleFor(currDate, tasks, ui);
