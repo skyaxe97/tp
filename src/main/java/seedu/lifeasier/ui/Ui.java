@@ -500,8 +500,6 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextGreen("You have nothing on for today and tomorrow!"));
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
