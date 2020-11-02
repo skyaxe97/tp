@@ -743,7 +743,7 @@ public class Ui {
     public void showIndexOutOfBoundsMessage() {
         printBlankLine();
         printThickSeparator();
-        System.out.println("The number you have input is out of bounds");
+        System.out.println("The number you have input is out of bounds!");
         printThickSeparator();
         printBlankLine();
     }
@@ -751,7 +751,7 @@ public class Ui {
     public void showInvalidTimeLogicMessage() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("Start time must be before end time"));
+        System.out.println(colourTextRed("Start time must be before end time!"));
         printThickSeparator();
         printBlankLine();
     }
