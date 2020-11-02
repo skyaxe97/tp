@@ -690,8 +690,6 @@ public class Ui {
     }
 
     public void showOldTaskMessage(TaskHistory taskHistory) {
-        printBlankLine();
-        printThickSeparator();
         System.out.println(taskHistory.getLastTask().toString());
         printThickSeparator();
         printBlankLine();
@@ -798,6 +796,12 @@ public class Ui {
         System.out.println(colourTextGreen("OK! Your description is now: \"" + description + "\""));
         printThickSeparator();
         printBlankLine();
+    }
+
+    public void showDayScheduleMessage() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println("Here is your schedule for today:");
     }
     
 }

@@ -37,7 +37,7 @@ public class DisplayScheduleCommand extends Command {
         } else {
             int taskCountForToday = scheduleUi.getTaskCountForToday(tasks, currDate);
             if (taskCountForToday > 0) {
-                System.out.println("Here is your schedule for today:");
+                ui.showDayScheduleMessage();
                 scheduleUi.displayDaySchedule(currDate, tasks);
                 ui.printThickSeparator();
                 ui.printBlankLine();
