@@ -111,7 +111,7 @@ public class EditNotesCommand extends Command {
                 int noteNumber = Integer.parseInt(ui.readCommand());
                 NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
 
-                System.out.println(notes.get(noteNumber - 1).toString());
+                ui.showNotesPrompt(notes.get(noteNumber - 1).toString());
                 ui.showEditWhichPartMessage();
                 changeTitleOrDescription(ui, parser, notes, noteNumber - 1, ui.readCommand(), noteHistory);
 
