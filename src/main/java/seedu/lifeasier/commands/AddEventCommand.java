@@ -8,6 +8,8 @@ import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -37,6 +39,7 @@ public class AddEventCommand extends Command {
         Task task = tasks.addEvent(description, start, end, recurrences);
 
         logger.log(Level.INFO, "Saving updated taskList to storage...");
+        tasks.updateTasks(LocalDate.now());
         storage.saveTasks();
         ui.showAddConfirmationMessage(task);
     }
