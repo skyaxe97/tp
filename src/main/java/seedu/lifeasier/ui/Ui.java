@@ -178,7 +178,22 @@ public class Ui {
      * Returns read user command.
      */
     public String readCommand() {
-        return conversation.nextLine();
+        boolean isCommandWithoutDelimiter = false;
+        String userInput = "";
+        do {
+            userInput = conversation.nextLine();
+
+            try {
+                if (userInput.contains("=-=")) {
+                    throw new SaveDelimiterException();
+                }
+                isCommandWithoutDelimiter = true;
+            } catch (SaveDelimiterException e) {
+                System.out.println(colourTextRed("Inputs cannot contain the character sequence: =-="));
+            }
+        } while (!isCommandWithoutDelimiter);
+
+        return userInput;
     }
 
     public int readSingleIntInput() {
