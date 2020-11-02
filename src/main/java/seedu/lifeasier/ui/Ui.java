@@ -813,4 +813,10 @@ public class Ui {
         printBlankLine();
     }
 
+    public void showNotesPrompt(String note) {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(note);
+    }
+
 }
