@@ -405,8 +405,8 @@ public class Ui {
         printSeparator();
     }
 
-    public void showNothingScheduledMessage() {
-        System.out.println(colourTextGreen("You have nothing on for today and tomorrow!"));
+    public void showNothingScheduledMessage(String dayKeyword) {
+        System.out.println(colourTextGreen(String.format("You have nothing on for %s!", dayKeyword)));
     }
 
     public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
@@ -580,6 +580,16 @@ public class Ui {
 
     public void showInvalidRecurrencesError() {
         System.out.println(colourTextRed("Recurrences must be a positive integer!"));
+        printSeparator();
+    }
+
+    public void showEnterDisplayKeywordMessage() {
+        System.out.println(colourTextCyan("To see your schedule, please enter:") + "week/today/tomorrow");
+        printSeparator();
+    }
+
+    public void showInvalidDisplayKeyword() {
+        System.out.println("Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!");
         printSeparator();
     }
 }

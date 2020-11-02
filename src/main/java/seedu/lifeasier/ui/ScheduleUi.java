@@ -67,7 +67,7 @@ public class ScheduleUi {
         return timedItem.toLocalTime().toString();
     }
 
-    public int getTaskCountForToday(TaskList tasks, LocalDate date) {
+    public int getTaskCountForDay(TaskList tasks, LocalDate date) {
         int count = 0;
         for (Task task : tasks.getTaskList()) {
             if (task.getStart().toLocalDate().equals(date)) {
