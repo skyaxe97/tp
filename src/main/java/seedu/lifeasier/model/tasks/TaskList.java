@@ -146,7 +146,7 @@ public class TaskList {
 
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
-
+        ui.showMatchingTasksPrompt(type);
         logger.log(Level.INFO, "Start of printing all matching " + type);
         indexOfLastMatch = 0;
         boolean noMatches = true;

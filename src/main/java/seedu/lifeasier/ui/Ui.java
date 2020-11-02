@@ -167,9 +167,9 @@ public class Ui {
     public void showAddConfirmationMessage(Task task) {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextGreen("Done! I've added"
-                + "\"" + task + "\" "
-                + "to your schedule!"));
+        System.out.println(colourTextGreen("Done! I've added"));
+        System.out.println("\"" + task + "\" ");
+        System.out.println("to your schedule!");
         printThickSeparator();
         printBlankLine();
     }
