@@ -38,6 +38,6 @@ public class DisplayScheduleCommand extends Command {
                 System.out.println(NO_TASKS_TODAY_MESSAGE);
             }
         }
-        ui.printSeparator();
+        ui.printThickSeparator();
     }
 }

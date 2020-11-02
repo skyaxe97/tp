@@ -91,7 +91,7 @@ public class DeleteNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of DeleteNotesCommand");
-            ui.printSeparator();
+            ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title, noteHistory);
@@ -112,7 +112,7 @@ public class DeleteNotesCommand extends Command {
 
             }
             storage.saveNote();
-            ui.printSeparator();
+            ui.printThickSeparator();
             logger.log(Level.INFO, "End of DeleteNotesCommand");
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");

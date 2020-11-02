@@ -109,7 +109,7 @@ public class DeleteTaskCommand extends Command {
             logger.log(Level.SEVERE, "User input is out of bounds");
             ui.showIndexOutOfBoundsMessage();
         }
-        ui.printSeparator();
+        ui.printThickSeparator();
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }
 }

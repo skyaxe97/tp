@@ -89,7 +89,7 @@ public class EditNotesCommand extends Command {
         noteHistory.pushOldCopy(oldCopyOfNote);
         logger.log(Level.INFO, "Push old copy of Note into noteHistory");
 
-        ui.printSeparator();
+        ui.printThickSeparator();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class EditNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditNotesCommand");
-            ui.printSeparator();
+            ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, parser, title, noteHistory);

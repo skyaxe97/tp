@@ -21,8 +21,12 @@ public class Ui {
     public static final String ANSI_PURPLE = "\u001B[35;1m";
     public static final String ANSI_CYAN = "\u001B[36;1m";
 
-    public static final String SEPARATOR = "========================================================================="
-            + "======================================";
+    public static final String THICK_SEPARATOR = "===================================================================="
+            + "===========================================";
+
+    public static final String THIN_SEPARATOR = "---------------------------------------------------------------------"
+            + "-------------------------------------------";
+
     public static final String PARAM_LESSON = "lesson";
     public static final String PARAM_EVENT = "event";
     public static final String PARAM_DEADLINE = "deadline";
@@ -102,8 +106,12 @@ public class Ui {
         this.conversation = new Scanner(System.in);
     }
 
-    public void printSeparator() {
-        System.out.println(SEPARATOR);
+    public void printThickSeparator() {
+        System.out.println(THICK_SEPARATOR);
+    }
+
+    public void printThinSeparator() {
+        System.out.println(THIN_SEPARATOR);
     }
 
     public void printBlankLine() {
@@ -141,26 +149,26 @@ public class Ui {
     }
 
     public void showLogo() {
-        printSeparator();
-        printSeparator();
+        printThickSeparator();
+        printThickSeparator();
         printLogo();
-        printSeparator();
-        printSeparator();
+        printThickSeparator();
+        printThickSeparator();
     }
 
     public void showGreetingMessage() {
         System.out.println(colourTextCyan(MESSAGE_GREETING));
         System.out.println(colourTextGreen(MESSAGE_HELP_COMMAND));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
 
     }
 
     public void showAddConfirmationMessage(Task task) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("Done! I've added \"" + task + "\" to your calendar"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
@@ -170,9 +178,9 @@ public class Ui {
 
     public void showHelpMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(HELP_MESSAGE);
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
@@ -189,25 +197,25 @@ public class Ui {
 
     public void showSelectTaskToEditPrompt(String type) {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please select the " + type + " you want to edit:"));
     }
 
     public void showSelectParameterToEditPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please select the parameter you want to edit:"));
     }
 
     public void showSelectTaskToDeletePrompt(String type) {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please select the " + type + " you want to delete:"));
     }
 
     public void showInputFormatPrompt(String type) {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         switch (type) {
 
         case (PARAM_EVENT):
@@ -232,7 +240,7 @@ public class Ui {
 
     public void showInputPrompt(String type) {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         switch (type) {
 
         case (PARAM_LESSON):
@@ -254,7 +262,7 @@ public class Ui {
 
     public void showEditableParametersMessage(String type) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         switch (type) {
 
         case (PARAM_LESSON):
@@ -276,45 +284,45 @@ public class Ui {
 
     public void showEditConfirmationMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("Your edit has been saved."));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showDeleteConfirmationMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("The task you selected has been deleted."));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showInvalidInputMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed(ERROR_INVALID_INPUT));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showGoodbyeMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextCyan(MESSAGE_GOODBYE));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showNoteTitlePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please put in a title:"));
     }
 
     public void showNoteDescriptionPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Alright! Please fill in your notes:"));
     }
 
@@ -329,27 +337,27 @@ public class Ui {
 
     public void showNoDataToArchiveMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("You do not have any data available for archiving."));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showFileArchiveError() {
         System.out.println(colourTextRed("There was an error archiving your data"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showArchiveStartMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("Starting archiving..."));
     }
 
     public void showArchiveEndMessage() {
         System.out.println(colourTextGreen("Archiving successful!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
@@ -367,25 +375,25 @@ public class Ui {
 
     public void showInvalidNumberError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("The number you inputted is invalid!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showNoTitleFoundError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("The title you inputted is not found..."));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showNumberFormatError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("Oops! The input must be a number!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
@@ -408,73 +416,73 @@ public class Ui {
 
     public void showParseUnknownCommandError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("I'm sorry! I don't understand that command!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showParseIncorrectCommandFormatError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("I'm sorry! Please double check the input of your format!"));
         System.out.println(colourTextRed("Use the help command for formats of all the commands!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showParseIncorrectDateTimeError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("I'm sorry! Something's wrong with your date or time!"));
         System.out.println(colourTextRed("Please ensure your dates are in the format dd-mm-yy,"
                 + "and your times are in the format hh:mm!"));
         System.out.println(colourTextRed("Also ensure your dates and times are valid numbers!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showEmptyDescriptionError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("Empty description! =O\n"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showNoMatchesError(String type) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("Sorry! There is no " + type + " matching your query. Please "
                 + "re-enter your command."));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showNoteAddedMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("Ok! I've taken note of this note!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showMultipleMatchesFoundPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Multiple matches found! Please select the one you are looking "
                 + "for:"));
     }
 
     public void showSelectWhichNoteToViewPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please select the notes you want to view:"));
     }
 
     public void showFreeTimeMessage(int startHour, int endHour, int duration) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         if (duration > 0) {
             System.out.println(colourTextGreen("You have " + duration + " hours of free time between "
                     + startHour + ":00 and " + endHour + ":00!"));
@@ -484,268 +492,270 @@ public class Ui {
             System.out.println(colourTextRed("Unfortunately you have no free time today!"));
             System.out.println(colourTextRed("You might want to relax a little!"));
         }
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showNothingScheduledMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("You have nothing on for today and tomorrow!"));
+        printThickSeparator();
+        printBlankLine();
     }
 
     public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("You have nothing on from " + earliestSleepTime + ":00 today to "
                 + latestWakeTime + ":00 tomorrow!"));
     }
 
     public void showSleepDurationMessage(int duration) {
         System.out.println(colourTextGreen("You can sleep for up to " + duration + " hours!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showExcessSleepDurationMessage() {
         System.out.println(colourTextGreen("You can sleep for the recommended 8 hours or longer!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showSelectWhichNoteToDeletePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please select the notes you want to delete:"));
     }
 
     public void showConfirmDeletePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Is this the note you want to delete? (Y/N)"));
     }
 
     public void showInvalidConfirmationPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Y for Yes and N for No:"));
     }
 
     public void showNoteNotDeletedMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("OK! Note not deleted!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showNoteDeletedMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("OK! Note deleted!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showEditWhichPartMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextCyan("Do you want to change the title or description? (Enter T/D)"));
     }
 
     public void showNoteNotEditedMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("OK! Note not edited!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
     
     public void showInvalidTitleDescriptionConfirmationPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("T for title and D for Description:"));
     }
 
     public void showEditTitlePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the title you want to change to:"));
     }
 
     public void showEditDescriptionPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the description you want to change to:"));
     }
 
     public void showSelectWhichNoteToEditPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please select the notes you want to edit:"));
     }
 
     public void showEmptyNoteListMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("There's no Notes!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showAddModuleCodePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the module code:"));
     }
 
     public void showAddDatePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the date:"));
     }
 
     public void showAddStartTimePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the start time:"));
     }
 
     public void showAddEndTimePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the end time:"));
     }
 
     public void showAddDescriptionPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the description:"));
     }
 
     public void showAddDateTimePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the Date Time:"));
     }
 
     public void showAddRecurrencesPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Please input the number of times to repeat:"));
     }
 
     public void showMultipleNoteMatchesMessage(NoteList notes, String title) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
                 System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
             }
         }
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showAllNotesMessage(NoteList notes) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         for (int i = 0; i < notes.size(); i++) {
             System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
         }
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showEnterUndoTypePrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("To undo a change in tasks, please enter:") + "task");
         System.out.println(colourTextCyan("To undo a change in notes, please enter:") + "note");
     }
 
     public void showInvalidUndoTypeError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("Invalid undo type, please try again!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showInvalidUndoActionError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("Nothing to undo!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showUndoTaskEditMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("This task has been reverted back to its previous version!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showUndoTaskDeleteMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("This deleted task has been successfully restored!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showOldTaskMessage(TaskHistory taskHistory) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(taskHistory.getLastTask().toString());
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showUndoNoteEditMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("This note has been reverted back to its previous version!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showUndoNoteDeleteMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextGreen("This deleted note has been successfully restored!"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showOldNoteMessage(NoteHistory noteHistory) {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(noteHistory.getLastNote());
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showEmptyParamPrompt(String param) {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("We detected that you did not fill in the field of " + param
                 + ". Please fill it in:"));
     }
 
     public void showIndeterminableRecurrenceError() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("There was an error reading the task recurrence"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showRecurrencesNumberFormatPrompt() {
         printBlankLine();
-        printSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("The input for /repeats is not a valid number! Please try again:"));
     }
 
@@ -755,17 +765,17 @@ public class Ui {
 
     public void showIndexOutOfBoundsMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println("The number you have input is out of bounds");
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
 
     public void showInvalidTimeLogicMessage() {
         printBlankLine();
-        printSeparator();
+        printThickSeparator();
         System.out.println(colourTextRed("Start time must be before end time"));
-        printSeparator();
+        printThickSeparator();
         printBlankLine();
     }
     

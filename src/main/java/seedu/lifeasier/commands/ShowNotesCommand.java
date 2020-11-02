@@ -58,7 +58,7 @@ public class ShowNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
-            ui.printSeparator();
+            ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
@@ -75,7 +75,7 @@ public class ShowNotesCommand extends Command {
                 System.out.println(notes.get(noteNumber - 1).toString());
 
             }
-            ui.printSeparator();
+            ui.printThickSeparator();
             logger.log(Level.INFO, "End of ShowNotesCommand");
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
