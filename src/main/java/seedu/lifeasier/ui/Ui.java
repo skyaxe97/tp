@@ -767,7 +767,37 @@ public class Ui {
     public void showMatchingTasksPrompt(String type) {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Here are all your matching" + type + "s:"));
+        System.out.println(colourTextCyan("Here are all your matching " + type + "s:"));
+    }
+
+    public void showCurrentTitlePrompt(String currentTitle) {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("Current Title: "));
+        System.out.println(currentTitle);
+    }
+
+    public void showTitleChangedMessage(String title) {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextGreen("OK! Your title is now: \"" + title + "\""));
+        printThickSeparator();
+        printBlankLine();
+    }
+
+    public void showCurrentDescriptionPrompt(String currentDescription) {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("Current Description: "));
+        System.out.println(currentDescription);
+    }
+
+    public void showDescriptionChangedMessage(String description) {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextGreen("OK! Your description is now: \"" + description + "\""));
+        printThickSeparator();
+        printBlankLine();
     }
     
 }
