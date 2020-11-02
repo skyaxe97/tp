@@ -68,10 +68,10 @@ public class EditDeadlineCommand extends Command {
             ui.showNumberFormatError();
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidInputMessage();
+            ui.showInvalidCommandFormatMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
-            ui.showNoMatchesError("deadline");
+            ui.showNoMatchesError(Ui.PARAM_DEADLINE);
         }
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }

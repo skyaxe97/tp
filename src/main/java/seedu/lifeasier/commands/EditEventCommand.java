@@ -69,7 +69,7 @@ public class EditEventCommand extends Command {
             ui.showNumberFormatError();
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidInputMessage();
+            ui.showInvalidCommandFormatMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input event name does not match any of the existing event names.");
             ui.showNoMatchesError(Ui.PARAM_EVENT);

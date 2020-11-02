@@ -69,10 +69,10 @@ public class EditLessonCommand extends Command {
             ui.showNumberFormatError();
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidInputMessage();
+            ui.showInvalidCommandFormatMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input deadline name does not match any of the existing deadline names.");
-            ui.showNoMatchesError("deadline");
+            ui.showNoMatchesError(Ui.PARAM_LESSON);
         }
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
