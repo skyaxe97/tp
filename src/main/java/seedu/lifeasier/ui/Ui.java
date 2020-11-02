@@ -40,7 +40,7 @@ public class Ui {
             + "\n";
 
     //Error messages
-    public static final String ERROR_INVALID_INPUT = "Oh no, I do not understand this command! Type 'help' for "
+    public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for "
             + "a list of available commands";
 
     //General UI messages
@@ -305,10 +305,10 @@ public class Ui {
         printBlankLine();
     }
 
-    public void showInvalidInputMessage() {
+    public void showInvalidCommandFormatMessage() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed(ERROR_INVALID_INPUT));
+        System.out.println(colourTextRed("The format of the command is incorrect! Please double check!"));
         printThickSeparator();
         printBlankLine();
     }
@@ -418,7 +418,7 @@ public class Ui {
     public void showParseUnknownCommandError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("I'm sorry! I don't understand that command!"));
+        System.out.println(colourTextRed(ERROR_INVALID_COMMAND));
         printThickSeparator();
         printBlankLine();
     }

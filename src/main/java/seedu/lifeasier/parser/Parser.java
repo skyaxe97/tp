@@ -391,6 +391,7 @@ public class Parser {
             }
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "Invalid command...");
+
         }
         return new DeleteTaskCommand(type, name);
     }
