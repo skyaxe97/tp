@@ -24,7 +24,7 @@ public class Ui {
     public static final String THICK_SEPARATOR = "===================================================================="
             + "===========================================";
 
-    public static final String THIN_SEPARATOR = "---------------------------------------------------------------------"
+    public static final String THIN_SEPARATOR  = "--------------------------------------------------------------------"
             + "-------------------------------------------";
 
     public static final String PARAM_LESSON = "lesson";
@@ -496,7 +496,7 @@ public class Ui {
         printBlankLine();
     }
 
-    public void showNothingScheduledMessage() {
+    public void showNothingScheduledTodayTomorrowMessage() {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextGreen("You have nothing on for today and tomorrow!"));
@@ -773,6 +773,14 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextRed("Start time must be before end time"));
+        printThickSeparator();
+        printBlankLine();
+    }
+
+    public void showNothingScheduledTodayMessage() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println("You have nothing on for today!");
         printThickSeparator();
         printBlankLine();
     }

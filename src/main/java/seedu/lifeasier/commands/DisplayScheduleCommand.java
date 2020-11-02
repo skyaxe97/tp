@@ -26,18 +26,24 @@ public class DisplayScheduleCommand extends Command {
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         LocalDate currDate = LocalDate.now();
+
         if (isDisplayWeek) {
+            ui.printBlankLine();
+            ui.printThickSeparator();
             scheduleUi.showHome(tasks);
+            ui.printThickSeparator();
+            ui.printBlankLine();
+
         } else {
             int taskCountForToday = scheduleUi.getTaskCountForToday(tasks, currDate);
-
             if (taskCountForToday > 0) {
                 System.out.println("Here is your schedule for today:");
                 scheduleUi.displayDaySchedule(currDate, tasks);
+                ui.printThickSeparator();
+                ui.printBlankLine();
             } else {
-                System.out.println(NO_TASKS_TODAY_MESSAGE);
+                ui.showNothingScheduledTodayMessage();
             }
         }
-        ui.printThickSeparator();
     }
 }
