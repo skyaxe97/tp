@@ -363,8 +363,10 @@ public class Ui {
     }
 
     public void showParseIncorrectDateTimeMessage() {
-        System.out.println(colourTextRed("I'm sorry! Please ensure your dates are in the format dd-mm-yy,"));
-        System.out.println(colourTextRed("and your times are in the format hh:mm!"));
+        System.out.println(colourTextRed("I'm sorry! Something's wrong with your date or time!"));
+        System.out.println(colourTextRed("Please ensure your dates are in the format dd-mm-yy," +
+                "and your times are in the format hh:mm!"));
+        System.out.println(colourTextRed("Also ensure your dates and times are valid numbers!"));
         printSeparator();
     }
 
