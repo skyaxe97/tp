@@ -72,7 +72,6 @@ public class AddNotesCommand extends Command {
         notes.add(new Note(noteTitle,noteDescription));
         logger.log(Level.INFO, "Note is added");
         ui.showNoteAddedMessage();
-        ui.printThickSeparator();
 
         storage.saveNote();
     }

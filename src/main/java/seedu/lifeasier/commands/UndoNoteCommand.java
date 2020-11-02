@@ -41,6 +41,5 @@ public class UndoNoteCommand extends Command {
         } else {
             ui.showInvalidUndoActionError();
         }
-        ui.printThickSeparator();
     }
 }

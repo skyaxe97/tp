@@ -41,6 +41,5 @@ public class UndoTaskCommand extends Command {
         } else {
             ui.showInvalidUndoActionError();
         }
-        ui.printThickSeparator();
     }
 }

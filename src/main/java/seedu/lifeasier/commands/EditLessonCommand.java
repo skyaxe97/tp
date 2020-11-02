@@ -97,6 +97,5 @@ public class EditLessonCommand extends Command {
         default:
             throw new IndexOutOfBoundsException();
         }
-        ui.printThickSeparator();
     }
 }
