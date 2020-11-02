@@ -89,7 +89,6 @@ public class EditNotesCommand extends Command {
         noteHistory.pushOldCopy(oldCopyOfNote);
         logger.log(Level.INFO, "Push old copy of Note into noteHistory");
 
-        ui.printThickSeparator();
     }
 
     @Override

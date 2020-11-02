@@ -167,7 +167,9 @@ public class Ui {
     public void showAddConfirmationMessage(Task task) {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextGreen("Done! I've added \"" + task + "\" to your calendar"));
+        System.out.println(colourTextGreen("Done! I've added"
+                + "\"" + task + "\" "
+                + "to your schedule!"));
         printThickSeparator();
         printBlankLine();
     }
@@ -261,18 +263,13 @@ public class Ui {
     }
 
     public void showEditableParametersMessage(String type) {
-        printBlankLine();
-        printThickSeparator();
         switch (type) {
-
         case (PARAM_LESSON):
             System.out.println("1. Module Code\n2. Time");
             break;
-
         case (PARAM_DEADLINE):
             System.out.println("1. Deadline Name\n2. Time");
             break;
-
         case (PARAM_EVENT):
             System.out.println("1. Event Name\n2. Time");
             break;
@@ -445,7 +442,7 @@ public class Ui {
     public void showEmptyDescriptionError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("Empty description! =O\n"));
+        System.out.println(colourTextRed("Empty description! =O"));
         printThickSeparator();
         printBlankLine();
     }
@@ -644,25 +641,17 @@ public class Ui {
     }
 
     public void showMultipleNoteMatchesMessage(NoteList notes, String title) {
-        printBlankLine();
-        printThickSeparator();
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
                 System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
             }
         }
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showAllNotesMessage(NoteList notes) {
-        printBlankLine();
-        printThickSeparator();
         for (int i = 0; i < notes.size(); i++) {
             System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
         }
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showEnterUndoTypePrompt() {
@@ -692,16 +681,12 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextGreen("This task has been reverted back to its previous version!"));
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showUndoTaskDeleteMessage() {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextGreen("This deleted task has been successfully restored!"));
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showOldTaskMessage(TaskHistory taskHistory) {
@@ -716,21 +701,15 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextGreen("This note has been reverted back to its previous version!"));
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showUndoNoteDeleteMessage() {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextGreen("This deleted note has been successfully restored!"));
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showOldNoteMessage(NoteHistory noteHistory) {
-        printBlankLine();
-        printThickSeparator();
         System.out.println(noteHistory.getLastNote());
         printThickSeparator();
         printBlankLine();
@@ -783,6 +762,12 @@ public class Ui {
         System.out.println("You have nothing on for today!");
         printThickSeparator();
         printBlankLine();
+    }
+
+    public void showMatchingTasksPrompt(String type) {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("Here are all your matching" + type +"s:"));
     }
     
 }
