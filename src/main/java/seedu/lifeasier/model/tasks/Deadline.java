@@ -85,6 +85,6 @@ public class Deadline extends Task {
         return (this.description.equals(description)
                 && existingBy == newBy
                 && existingDay == newDay
-                && (this.recurrences > 0 || recurrences > 0 || this.by.equals(by)));
+                && ((this.recurrences > 0 && recurrences > 0) || this.by.equals(by)));
     }
 }

@@ -90,6 +90,6 @@ public class Event extends Task {
                 && existingStartTime == newStartTime
                 && existingEndTime == newEndTime
                 && existingDay == newDay
-                && (this.recurrences > 0 || recurrences > 0 || this.start.equals(start)));
+                && ((this.recurrences > 0 && recurrences > 0) || this.start.equals(start)));
     }
 }
