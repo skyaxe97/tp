@@ -94,14 +94,17 @@ public class TaskStorage {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.showSaveDataMissingError();
+            ui.showReadErrorHandlerMessage();
             logger.log(Level.WARNING, "Missing data from save file");
 
         } catch (NumberFormatException e) {
             ui.showUndeterminableRecurrenceError();
+            ui.showReadErrorHandlerMessage();
             logger.log(Level.WARNING, "Unable to read recurrence field");
 
         } catch (StorageException e) {
             ui.showUndeterminableTaskError();
+            ui.showReadErrorHandlerMessage();
             logger.log(Level.SEVERE, "Read task type failed");
 
         }

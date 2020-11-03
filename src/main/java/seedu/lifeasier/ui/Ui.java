@@ -614,4 +614,11 @@ public class Ui {
                 + "read by the program"));
         printSeparator();
     }
+
+    public void showReadErrorHandlerMessage() {
+        System.out.println(colourTextRed("LifEasier will continue to run, but only with data loaded up to "
+                + "the point where the reading error occurred"));
+        System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
+                + "recommended to undo those changes"));
+    }
 }

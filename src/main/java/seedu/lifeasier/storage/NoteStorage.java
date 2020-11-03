@@ -81,6 +81,7 @@ public class NoteStorage {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             ui.showSaveDataMissingError();
+            ui.showReadErrorHandlerMessage();
             logger.log(Level.SEVERE, "Missing data from save file");
         }
 
