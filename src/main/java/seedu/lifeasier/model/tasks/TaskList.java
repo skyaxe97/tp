@@ -99,7 +99,14 @@ public class TaskList {
      * @param by deadline of task.
      * @param recurrences number of times to repeat.
      */
-    public Task addDeadline(String description, LocalDateTime by, int recurrences) {
+    public Task addDeadline(String description, LocalDateTime by, int recurrences) throws TaskDuplicateException {
+
+        for (Task task : taskList) {
+            if (task instanceof Deadline && (((Deadline) task).isDuplicate(description, by, recurrences))) {
+                throw new TaskDuplicateException();
+            }
+        }
+
         Deadline deadline = new Deadline(description, by, recurrences);
         addTask(deadline);
         return deadline;

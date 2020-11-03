@@ -1,6 +1,7 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.model.notes.NoteHistory;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.model.tasks.Task;
 import seedu.lifeasier.model.tasks.TaskHistory;
@@ -33,13 +34,21 @@ public class AddDeadlineCommand extends Command {
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
-        logger.log(Level.INFO, "Adding deadline to taskList...");
-        Task task = tasks.addDeadline(description, by, recurrences);
 
-        logger.log(Level.INFO, "Saving updated taskList to storage...");
-        tasks.updateTasks(LocalDate.now());
-        storage.saveTasks();
+        try {
+            logger.log(Level.INFO, "Adding deadline to taskList...");
+            Task task = tasks.addDeadline(description, by, recurrences);
 
-        ui.showAddConfirmationMessage(task);
+            logger.log(Level.INFO, "Saving updated taskList to storage...");
+            tasks.updateTasks(LocalDate.now());
+            storage.saveTasks();
+
+            ui.showAddConfirmationMessage(task);
+
+        } catch (TaskDuplicateException e) {
+            logger.log(Level.INFO, "Task is a duplicate! Showing error...");
+            ui.showDuplicateTaskError(Ui.PARAM_DEADLINE);
+        }
+
     }
 }
