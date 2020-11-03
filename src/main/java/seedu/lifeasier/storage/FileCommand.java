@@ -74,4 +74,26 @@ public class FileCommand {
         return taskDateTime;
     }
 
+    /**
+     * Counts the number of save delimiters found in the read save file line.
+     *
+     * @param string String with which to count the number of save delimiters.
+     * @param baseDelimiterCount Base value to compare with.
+     * @return true when the count in given string matches baseDelimiterCount.
+     */
+    public boolean checkForDelimiterCount(String string, int baseDelimiterCount) {
+        boolean isStillContainingDelimiter = true;
+        int delimiterCount = 0;
+
+        while (isStillContainingDelimiter) {
+            isStillContainingDelimiter = string.contains("=-=");
+            if (isStillContainingDelimiter) {
+                delimiterCount++;
+                string = string.replaceFirst("=-=", "");
+            }
+        }
+
+        return delimiterCount == baseDelimiterCount;
+    }
+
 }
