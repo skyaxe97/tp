@@ -175,7 +175,7 @@ public class Ui {
     }
 
     /**
-     * Reads user command and checks if save delimiter has been added to prevent errors.
+     * Prompts continually for user command and checks if save delimiter has been added to prevent errors.
      *
      * @return User command without save delimiters.
      */
@@ -192,6 +192,7 @@ public class Ui {
                 isCommandWithoutDelimiter = true;
             } catch (SaveDelimiterException e) {
                 System.out.println(colourTextRed("Inputs cannot contain the character sequence: =-="));
+                System.out.println(colourTextCyan("Please re-enter your input:"));
             }
         } while (!isCommandWithoutDelimiter);
 
