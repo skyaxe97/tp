@@ -618,7 +618,13 @@ public class Ui {
     public void showReadErrorHandlerMessage() {
         System.out.println(colourTextRed("LifEasier will continue to run, but only with data loaded up to "
                 + "the point where the reading error occurred"));
+        System.out.println(colourTextRed("This is done to protect your stored data\n"));
         System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
                 + "recommended to undo those changes"));
+    }
+
+    public void showSaveDelimiterError() {
+        System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
+                + " in the save file"));
     }
 }

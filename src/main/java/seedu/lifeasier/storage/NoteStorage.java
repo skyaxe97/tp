@@ -2,6 +2,7 @@ package seedu.lifeasier.storage;
 
 import seedu.lifeasier.model.notes.Note;
 import seedu.lifeasier.model.notes.NoteList;
+import seedu.lifeasier.ui.SaveDelimiterException;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
@@ -68,6 +69,10 @@ public class NoteStorage {
             while (fileScanner.hasNext()) {
                 String noteInformation = fileScanner.nextLine();
 
+                if (!fileCommand.checkForDelimiterCount(noteInformation, 1)) {
+                    throw new SaveDelimiterException();
+                }
+
                 String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
                 String noteTitle = noteComponents[0];
                 String noteDescription = noteComponents[1];
@@ -83,6 +88,9 @@ public class NoteStorage {
             ui.showSaveDataMissingError();
             ui.showReadErrorHandlerMessage();
             logger.log(Level.SEVERE, "Missing data from save file");
+        } catch (SaveDelimiterException e) {
+            ui.showSaveDelimiterError();
+            ui.showReadErrorHandlerMessage();
         }
 
         logger.log(Level.INFO, "Notes rebuilt");

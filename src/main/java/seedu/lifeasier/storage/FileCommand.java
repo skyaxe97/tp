@@ -21,6 +21,7 @@ public class FileCommand {
     public static final String DEFAULT_DATETIME = "31-12-99 00:00";
     public static final String TIME_DELIMITER = "T";
     public static final String WHITE_SPACE = " ";
+    public static final String SAVE_DELIMITER = "=-=";
 
     private static Logger logger = Logger.getLogger(FileCommand.class.getName());
 
@@ -86,10 +87,10 @@ public class FileCommand {
         int delimiterCount = 0;
 
         while (isStillContainingDelimiter) {
-            isStillContainingDelimiter = string.contains("=-=");
+            isStillContainingDelimiter = string.contains(SAVE_DELIMITER);
             if (isStillContainingDelimiter) {
                 delimiterCount++;
-                string = string.replaceFirst("=-=", "");
+                string = string.replaceFirst(SAVE_DELIMITER, BLANK_STRING);
             }
         }
 
