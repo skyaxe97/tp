@@ -1,7 +1,9 @@
 package seedu.lifeasier.model.tasks;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
@@ -72,5 +74,22 @@ public class Event extends Task {
             start = start.plusDays(7);
             end = end.plusDays(7);
         }
+    }
+
+    public boolean isDuplicate(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+
+        LocalTime existingStartTime = this.start.toLocalTime();
+        LocalTime existingEndTime = this.end.toLocalTime();
+        DayOfWeek existingDay = this.start.getDayOfWeek();
+
+        LocalTime newStartTime = start.toLocalTime();
+        LocalTime newEndTime = end.toLocalTime();
+        DayOfWeek newDay = start.getDayOfWeek();
+
+        return (this.description.equals(description)
+                && existingStartTime == newStartTime
+                && existingEndTime == newEndTime
+                && existingDay == newDay
+                && (this.recurrences > 0 || recurrences > 0 || this.start.equals(start)));
     }
 }

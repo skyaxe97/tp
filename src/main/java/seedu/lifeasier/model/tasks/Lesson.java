@@ -76,7 +76,7 @@ public class Lesson extends Task {
         }
     }
 
-    public boolean isDuplicate(String moduleCode, LocalDateTime start, LocalDateTime end) {
+    public boolean isDuplicate(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
 
         LocalTime existingStartTime = this.start.toLocalTime();
         LocalTime existingEndTime = this.end.toLocalTime();
@@ -86,7 +86,10 @@ public class Lesson extends Task {
         LocalTime newEndTime = end.toLocalTime();
         DayOfWeek newDay = start.getDayOfWeek();
 
-        return (this.description.equals(moduleCode) && existingStartTime == newStartTime
-                && existingEndTime == newEndTime && existingDay == newDay);
+        return (this.description.equals(moduleCode)
+                && existingStartTime == newStartTime
+                && existingEndTime == newEndTime
+                && existingDay == newDay
+                && (this.recurrences > 0 || recurrences > 0 || this.start.equals(start)));
     }
 }

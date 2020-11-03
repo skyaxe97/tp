@@ -56,7 +56,15 @@ public class TaskList {
      * @param end end date/time of event.
      * @param recurrences number of times to repeat.
      */
-    public Task addEvent(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+    public Task addEvent(String description, LocalDateTime start, LocalDateTime end, int recurrences)
+            throws TaskDuplicateException {
+
+        for (Task task : taskList) {
+            if (task instanceof Event && (((Event) task).isDuplicate(description, start, end, recurrences))) {
+                throw new TaskDuplicateException();
+            }
+        }
+
         Event event = new Event(description, start, end, recurrences);
         addTask(event);
         return event;
@@ -74,10 +82,8 @@ public class TaskList {
             throws TaskDuplicateException {
 
         for (Task task : taskList) {
-            if (task instanceof Lesson) {
-                if (((Lesson) task).isDuplicate(moduleCode, start, end)) {
-                    throw new TaskDuplicateException();
-                }
+            if (task instanceof Lesson && (((Lesson) task).isDuplicate(moduleCode, start, end, recurrences))) {
+                throw new TaskDuplicateException();
             }
         }
 

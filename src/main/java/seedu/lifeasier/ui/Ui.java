@@ -584,6 +584,6 @@ public class Ui {
     }
 
     public void showDuplicateTaskError(String type) {
-        System.out.println("This " + type + " already exists in your schedule!");
+        System.out.println("This " + type + " or something very similar already exists in your schedule!");
     }
 }
