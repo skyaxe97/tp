@@ -92,11 +92,12 @@ class TaskStorageTest {
                     + System.lineSeparator());
             fileWriter.write("deadline=-=Go Home=-=16-10-20 23:59=-=0"
                     + System.lineSeparator());
-            fileWriter.write("event=-=Another Concert=-=16-10-20 22:00=-=16-10-20 23:59=-=0"
+            fileWriter.write("event=-=Another Concert 16-10-20 22:00=-=16-10-20 23:59=-=0" //Corrupted save
                     + System.lineSeparator());
-            fileWriter.write("lesson=-==-=20-10-20 09:00=-=20-10-20 12:00=-=0"
+            fileWriter.write("lesson=-==-=20-10-20 09:00=-=20-10-20 12:00=-=0" //Corrupted save
                     + System.lineSeparator());
-            fileWriter.write("lesson=-=CS2101=-=20-10-20 09:00=-=20-10-20 12:00=-=0"
+            //Still creates with default date time
+            fileWriter.write("lesson=-=CS2101=-=200-10-20 09:00=-=20-10-20 12:00=-=0"
                     + System.lineSeparator());
             fileWriter.close();
 
