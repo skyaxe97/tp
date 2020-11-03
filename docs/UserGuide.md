@@ -83,7 +83,8 @@ The following section expands on the features available for you to use in LifEas
 
 * Words in `UPPER_CASE` are parameters to be supplied by the user.
 * Items in square brackets are optional e.g `[TITLE]`
-* Command parameters have to follow the order stated. E.g if the command states `addEvent NAME /time START /to END`,  `addEvent NAME /to END /time START` will **NOT** be accepted.
+* **Some** commands can be filled in **partially** and still work. These commands will be stated in the detailed command information below.
+* Command parameters **must** follow the **order stated**, including partial commands. E.g if the command states `addEvent NAME /time START /to END`,  `addEvent NAME /to END /time START` will **NOT** be accepted.
 * However, parameters can be missing, and LifEasier will prompt you for the missing parameters.
 * `DATE` parameters have the format of **DD-MM-YY**.
 * `TIME` parameters follow a 24-hour clock, and have the format of **HH:mm**.
@@ -147,6 +148,8 @@ Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 * Adds a `Lesson` coded `MODULE`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
+* This command accepts **partial commands**. E.g `addLesson /code CS2113 /to 18:00` is a valid command.
+* The program will prompt for the remaining missing parameters when a partial command is input.
 
 ###### Examples:
 
@@ -168,6 +171,8 @@ Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 * Adds an `Event` called `NAME`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
+* This command accepts **partial commands**. E.g `addEvent Concert /date 05-11-20` is a valid command.
+* The program will prompt for the remaining missing parameters when a partial command is input.
 
 ###### Examples:
 
@@ -189,8 +194,9 @@ Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 
 * Adds a `Deadline` called `NAME`, that has to be completed by `DATETIME`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
-* `DATETIME` has the format of **DD-MM-YY HH:MM**, where the time is in 24-hour clock format. 
-*E.g 7:30pm should be input as 19:30.* 
+* `DATETIME` has the format of **DD-MM-YY HH:MM**, where the time is in 24-hour clock format. _E.g 7:30pm should be input as 19:30._ 
+* This command accepts **partial commands**. E.g `addDeadline Return books` is a valid command.
+* The program will prompt for the remaining missing parameters when a partial command is input.
 
 ###### Examples:
 
@@ -676,6 +682,10 @@ By default, **LifEasier** creates a save folder named “LifEasierSaves” in th
 **LifEasier** data is saved automatically to the hard disk when a new `event`, `deadline`, `lesson` or `note` is **added**, 
 **deleted** or **edited**. Data is stored in text files, in plaintext. This allows you to edit your data directly through 
 the save files if necessary.
+
+In the event of **corrupted data** arising from either system errors or incorrect formats from you while editing the save file,
+**LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. If you execute
+an **add, delete or edit** action, all corrupted data that has not been corrected will be **removed** from the save file. 
 
 If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
 where you can access your archived files.
