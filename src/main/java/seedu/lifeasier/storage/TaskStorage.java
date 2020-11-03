@@ -121,7 +121,7 @@ public class TaskStorage {
      * @param taskComponents String array of read save data after separator has been removed.
      * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
-    private void checkForMissingDataInSave(String[] taskComponents, String taskInformation)
+    protected void checkForMissingDataInSave(String[] taskComponents, String taskInformation)
             throws ArrayIndexOutOfBoundsException, StorageException, SaveDelimiterException {
         for (String information : taskComponents) {
             if (information.equals(BLANK_STRING)) {

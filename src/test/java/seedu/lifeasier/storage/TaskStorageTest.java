@@ -6,6 +6,7 @@ import seedu.lifeasier.model.tasks.Event;
 import seedu.lifeasier.model.tasks.Lesson;
 import seedu.lifeasier.model.tasks.Task;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.ui.SaveDelimiterException;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -224,6 +225,26 @@ class TaskStorageTest {
         Deadline testDeadline = new Deadline("Return Books", startTime, 0);
         String convertedString = taskStorage.convertDeadlineToString(testDeadline, "deadline", 0);
         assertEquals(EXPECTED_DEADLINE, convertedString);
+    }
+
+    @Test
+    void checkForMissingDataInSave_missingData_exceptionThrown() {
+        String[] taskComponents = {"lesson", "", "15-11-20 12:00", "15-11-20 16:00", "20"};
+        String taskString = "lesson=-=CS2113T=-=CS2111=-=15-11-20 12:00=-=15-11-20 16:00=-=20";
+
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            taskStorage.checkForMissingDataInSave(taskComponents, taskString);
+        });
+    }
+
+    @Test
+    void checkForMissingDataInSave_extraDelimiter_exceptionThrown() {
+        String[] taskComponents = {"lesson", "CS2113T", "15-11-20 12:00", "15-11-20 16:00", "20"};
+        String taskString = "lesson=-=CS2113T=-=CS2111=-=15-11-20 12:00=-=15-11-20 16:00=-=20";
+
+        assertThrows(SaveDelimiterException.class, () -> {
+            taskStorage.checkForMissingDataInSave(taskComponents, taskString);
+        });
     }
 
 }

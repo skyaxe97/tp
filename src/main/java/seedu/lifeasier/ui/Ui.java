@@ -361,7 +361,7 @@ public class Ui {
     }
 
     public void showInvalidCastError() {
-        System.out.println(colourTextRed("Something went wrong, mismatching task types..."));
+        System.out.println(colourTextRed("Something went wrong, mismatching task types"));
     }
 
     public void showSaveDataMissingError() {
@@ -370,11 +370,15 @@ public class Ui {
     }
 
     public void showLocalDateTimeParseError() {
-        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task..."));
+        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
+        System.out.println(colourTextCyan("The task will continue to be added with a default date to "
+                + "preserve your data"));
+        System.out.println("You can edit the date and times directly from the save file");
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     public void showUndeterminableTaskError() {
-        System.out.println(colourTextRed("Something went wrong while determining the tasks..."));
+        System.out.println(colourTextRed("Something went wrong while determining the tasks"));
     }
 
     public void showParseUnknownCommandMessage() {
