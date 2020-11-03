@@ -15,6 +15,9 @@ Reading your save data. New saves will be created if no saves are found.
 Hello! What can I do for you today?
  -Type 'help' for a list the list of available commands
 ===============================================================================================================
+
+
+===============================================================================================================
 These are the commands that are available:
 IMPORTANT INFORMATION:
  * Words in UPPER_CASE are the parameters to be supplied by the user
@@ -26,29 +29,37 @@ IMPORTANT INFORMATION:
  * All dates are in the DD-MM-YY and times in the HH:MM format
 
 COMMANDS
-*****************************************************************************************************
-help -------------------------------------------------------------------- Displays available commands
-addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- [P]Adds a lesson
-addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ [P]Adds an event
-addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- [P]Adds a deadline
-editLesson MODULE_CODE ------------------------------------------------------------ [P]Edits a lesson
-editEvent EVENT_NAME -------------------------------------------------------------- [P]Edits an event
-editDeadline DEADLINE_NAME ------------------------------------------------------ [P]Edits a deadline
-deleteTask /type TYPE /name NAME ----------------------------------------------------- Deletes a task
-addNotes TITLE ------------------------------------------------------------------- [P]Adds a new note
-showNotes TITLE -------------------------------------------------------------- [P]Shows selected note
-archive ----------------------------------------------------------------- Archives all existing notes
-editNotes TITLE ------------------------------------------------------------ [P]Edits a selected note
-deleteNotes TITLE -------------------------------------------------------- [P]Deletes a selected note
-undo TYPE ------------------------------------------------ Undoes the last edit/deleted task or notes
-display [WEEK] --------------------------------------------- Displays either weekly or daily schedule
-freeTime -------------------------------------------- Tells you your longest block of free time today
-sleepTime ------------------------------------------------- Tells you how much time you have to sleep
-exit ------------------------------------------------------------------- Closes the LifEasier program
-*****************************************************************************************************
+******************************************************************************************************
+help --------------------------------------------------------------------- Displays available commands
+addLesson /code MODULE_CODE /date DATE /time START /to END /repeats TIMES ----------- [P]Adds a lesson
+addEvent EVENT_NAME /date DATE /time START /to END /repeats TIMES ------------------- [P]Adds an event
+addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES ----------------------------- [P]Adds a deadline
+editLesson MODULE_CODE ------------------------------------------------------------- [P]Edits a lesson
+editEvent EVENT_NAME --------------------------------------------------------------- [P]Edits an event
+editDeadline DEADLINE_NAME ------------------------------------------------------- [P]Edits a deadline
+deleteTask /type TYPE /name NAME ------------------------------------------------------ Deletes a task
+addNotes TITLE -------------------------------------------------------------------- [P]Adds a new note
+showNotes TITLE --------------------------------------------------------------- [P]Shows selected note
+archive ------------------------------------------------------------------ Archives all existing notes
+editNotes TITLE ------------------------------------------------------------- [P]Edits a selected note
+deleteNotes TITLE --------------------------------------------------------- [P]Deletes a selected note
+undo TYPE ------------------------------------------------- Undoes the last edit/deleted task or notes
+display [WEEK] ---------------------------------------------- Displays either weekly or daily schedule
+freeTime --------------------------------------------- Tells you your longest block of free time today
+sleepTime -------------------------------------------------- Tells you how much time you have to sleep
+exit -------------------------------------------------------------------- Closes the LifEasier program
+******************************************************************************************************
 For more detailed information, please visit the online user guide at:
 https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide
 ===============================================================================================================
+
+
+===============================================================================================================
 I'm sorry! I don't understand that command!
 ===============================================================================================================
+
+
+===============================================================================================================
 Goodbye, hope to see you again soon!
+===============================================================================================================
+
