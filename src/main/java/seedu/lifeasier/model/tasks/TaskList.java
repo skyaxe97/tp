@@ -65,6 +65,8 @@ public class TaskList {
             }
         }
 
+        assert start.isBefore(end) : "Start not before end!";
+
         Event event = new Event(description, start, end, recurrences);
         addTask(event);
         return event;
@@ -86,6 +88,8 @@ public class TaskList {
                 throw new TaskDuplicateException();
             }
         }
+
+        assert start.isBefore(end) : "Start not before end!";
 
         Lesson lesson = new Lesson(moduleCode, start, end, recurrences);
         addTask(lesson);
