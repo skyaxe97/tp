@@ -616,11 +616,12 @@ public class Ui {
     }
 
     public void showReadErrorHandlerMessage() {
-        System.out.println(colourTextRed("LifEasier will continue to run, but only with data loaded up to "
-                + "the point where the reading error occurred"));
+        System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
+                + "read. The rest of your data will continue to be loaded"));
         System.out.println(colourTextRed("This is done to protect your stored data\n"));
         System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
                 + "recommended to undo those changes"));
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 
     public void showSaveDelimiterError() {

@@ -66,6 +66,7 @@ public class FileCommand {
 
         } catch (DateTimeParseException e) {
             ui.showLocalDateTimeParseError();
+            ui.showReadErrorHandlerMessage();
             logger.log(Level.WARNING, "Error encountered parsing LocalDateTime from save file");
             //Set as default time
             taskDateTime = LocalDateTime.parse(DEFAULT_DATETIME, DATE_TIME_FORMATTER);

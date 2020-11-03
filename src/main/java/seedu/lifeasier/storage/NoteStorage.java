@@ -88,9 +88,12 @@ public class NoteStorage {
             ui.showSaveDataMissingError();
             ui.showReadErrorHandlerMessage();
             logger.log(Level.SEVERE, "Missing data from save file");
+
         } catch (SaveDelimiterException e) {
             ui.showSaveDelimiterError();
             ui.showReadErrorHandlerMessage();
+            logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
+
         }
 
         logger.log(Level.INFO, "Notes rebuilt");

@@ -5,6 +5,7 @@ import seedu.lifeasier.model.tasks.Event;
 import seedu.lifeasier.model.tasks.Lesson;
 import seedu.lifeasier.model.tasks.Task;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.ui.SaveDelimiterException;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
@@ -68,12 +69,12 @@ public class TaskStorage {
 
         ArrayList<Task> taskList = tasks.getTaskList();
 
-        try {
-            while (fileScanner.hasNext()) {
+        while (fileScanner.hasNext()) {
+            try {
                 String taskInformation = fileScanner.nextLine();
 
                 String[] taskComponents = taskInformation.split(SAVE_DELIMITER);
-                checkForMissingDataInSave(taskComponents);
+                checkForMissingDataInSave(taskComponents, taskInformation);
                 String taskType = taskComponents[0];
                 String taskDescription = taskComponents[1];
                 switch (taskType) {
@@ -90,37 +91,61 @@ public class TaskStorage {
                     throw new StorageException();
                 }
                 logger.log(Level.INFO, "Rebuilt task: " + taskType);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                ui.showSaveDataMissingError();
+                ui.showReadErrorHandlerMessage();
+                logger.log(Level.WARNING, "Missing data from save file");
+
+            } catch (NumberFormatException e) {
+                ui.showUndeterminableRecurrenceError();
+                ui.showReadErrorHandlerMessage();
+                logger.log(Level.WARNING, "Unable to read recurrence field");
+
+            } catch (StorageException e) {
+                ui.showUndeterminableTaskError();
+                ui.showReadErrorHandlerMessage();
+                logger.log(Level.SEVERE, "Read task type failed");
+
+            } catch (SaveDelimiterException e) {
+                ui.showSaveDelimiterError();
+                ui.showReadErrorHandlerMessage();
+                logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
 
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            ui.showSaveDataMissingError();
-            ui.showReadErrorHandlerMessage();
-            logger.log(Level.WARNING, "Missing data from save file");
-
-        } catch (NumberFormatException e) {
-            ui.showUndeterminableRecurrenceError();
-            ui.showReadErrorHandlerMessage();
-            logger.log(Level.WARNING, "Unable to read recurrence field");
-
-        } catch (StorageException e) {
-            ui.showUndeterminableTaskError();
-            ui.showReadErrorHandlerMessage();
-            logger.log(Level.SEVERE, "Read task type failed");
-
         }
     }
 
     /**
-     * Checks for missing information in each line of saved data read.
+     * Checks for missing information in each line of saved data read, as well as the number of delimiters.
      *
      * @param taskComponents String array of read save data after separator has been removed.
      * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
-    private void checkForMissingDataInSave(String[] taskComponents) throws ArrayIndexOutOfBoundsException {
+    private void checkForMissingDataInSave(String[] taskComponents, String taskInformation)
+            throws ArrayIndexOutOfBoundsException, StorageException, SaveDelimiterException {
         for (String information : taskComponents) {
             if (information.equals(BLANK_STRING)) {
                 throw new ArrayIndexOutOfBoundsException();
             }
+        }
+
+        boolean isValidSaveDelimiter = false;
+        String taskType = taskComponents[0];
+        switch (taskType) {
+        case "deadline":
+            isValidSaveDelimiter = fileCommand.checkForDelimiterCount(taskInformation, 3);
+            break;
+        case "event":
+            //Fallthrough to lesson
+        case "lesson":
+            isValidSaveDelimiter = fileCommand.checkForDelimiterCount(taskInformation, 4);
+            break;
+        default:
+            throw new StorageException();
+        }
+
+        if (!isValidSaveDelimiter) {
+            throw new SaveDelimiterException();
         }
     }
 
@@ -134,6 +159,7 @@ public class TaskStorage {
      */
     protected void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
+
         LocalDateTime lessonStartTime = fileCommand.convertToLocalDateTime(taskComponents[2]);
         LocalDateTime lessonEndTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
         int recurrence = Integer.parseInt(taskComponents[4]);
