@@ -37,7 +37,12 @@ This User Guide serves as an all-in-one document for users to set up and use **L
 
 In order to get the best experience when using this User Guide, please refer to the legend below in Table 1-1.
 
-<insert table 1-1>
+_Table 1-1: A summary of the special symbols and fonts used in this User Guide_
+
+Item | Meaning
+-----|--------
+![Notes](images/UserGuide/post-it.png) | Sections with this icon contain pointers you should take note of. You'll see these mostly in the Features section.
+`code snippets` | If you see words like this between blocks of normal text, they are probably related to more technical terms. If you see entire sections that appear in this font, they are usually examples of how to use LifEasier. You'll also see the latter mostly in the Features section.
 
 ## 2.0 Quick Start
 
@@ -78,7 +83,7 @@ _Figure 2-1: LifEasier’s welcome screen_
 ## 3.0 User Features
 The following section expands on the features available for you to use in LifEasier. The explanation for each feature includes the format to be followed, at least one example, and some further explanation and notes if necessary.
 
-##### Notes on General Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on General Command Format:
 
 * Words in `UPPER_CASE` are parameters to be supplied by the user.
 * Items in square brackets are optional e.g `[TITLE]`
@@ -135,8 +140,7 @@ _Figure 3.1-1: An example of using the help command_
 Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your schedule.
 Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 
-##### Notes on addLesson Command Format:
-
+##### ![Notes](images/UserGuide/post-it.png) Notes on addLesson Command Format:
 * Adds a `Lesson` coded `MODULE`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
@@ -156,7 +160,7 @@ your calendar
 Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
 Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 
-##### Notes on addEvent Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command Format:
 
 * Adds an `Event` called `NAME`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
@@ -178,7 +182,7 @@ your calendar
 Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to your schedule.
 Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 
-##### Notes on addEvent Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command Format:
 
 * Adds a `Deadline` called `NAME`, that has to be completed by `DATETIME`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
@@ -201,7 +205,7 @@ your calendar
 Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos in the lessons you have already added.
 Format: `editLesson [CODE]`
 
-##### Notes on editLesson Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on editLesson Command Format:
 
 * If `CODE` is provided, all lessons that contain the `CODE` will be printed.
 * The system will prompt you to choose a lesson to be edited.
@@ -232,7 +236,7 @@ Your edit has been saved.
 Edits an event in your schedule. Use this command to fix mistakes like typos in the events you have already added.
 Format: `editEvent [NAME]`
 
-##### Notes on editEvent Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on editEvent Command Format:
 
 * If `NAME` is provided, all events that contain the `NAME` will be printed. Else, all events
 will be printed.
@@ -264,7 +268,7 @@ Your edit has been saved.
 Edits a `Deadline` in your schedule. Use this command to fix mistakes like typos in the deadlines you have already added.
 Format: `editDeadline [NAME]`
 
-##### Notes on editDeadline Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on editDeadline Command Format:
 
 * If `NAME` is provided, all deadlines that contain the `NAME` will be printed. Else, all deadlines
 will be printed.
@@ -296,13 +300,13 @@ Your edit has been saved.
 Deletes a `Task` from your schedule. Use this command to delete any lessons you no 
 longer need to take note of.
 
-##### Notes on deleteTask command:
+##### ![Notes](images/UserGuide/post-it.png) Notes on deleteTask command:
 
 * Tasks refer to lessons, deadlines and events.
 
 Format: `deleteTask /type TYPE /name NAME`
 
-##### Notes on deleteTask Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on deleteTask Command Format:
 
 * If `NAME` is provided, all tasks that match the type and contain the `NAME` will be printed. 
 Else, all `Task` that match the type will be printed.
@@ -325,13 +329,13 @@ The task you selected has been deleted.
 
 Undoes the most recent edits or deletions made on tasks or notes.
 
-##### Notes on undo Command:
+##### ![Notes](images/UserGuide/post-it.png) Notes on undo Command:
 
 Tasks refer to lessons, deadlines and events.
 
 Format: `undo TYPE`
 
-##### Notes on undo Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on undo Command Format:
 
 * The `TYPE` can either be `task` or `note`.
 * If not specified, the system will prompt you to enter `task` or `note`.
@@ -357,7 +361,7 @@ Figure 3.9-1: An example of using the undo command
 Displays your current schedule. Use this command to view what your schedule is like for today or for the whole week.
 Format: `display [WEEK]`
 
-##### Notes on display Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on display Command Format:
 
 * If `WEEK` is specified, the schedule for the week will be shown. If not, the schedule for the day will be shown instead.
 * The `display week` command displays the schedule of the upcoming week, in 1 hour intervals. 
@@ -420,7 +424,7 @@ Here are your upcoming deadlines this week:
 Displays your longest block of free time for that day based on the schedule.
 Use this command to find out when is a good time to schedule something.
 
-##### Notes on freeTime Command:
+##### ![Notes](images/UserGuide/post-it.png) Notes on freeTime Command:
 
 - The system only searches for free time between 7:00 and 24:00. This is to promote a healthy sleep cycle.
 Format: `freeTime`
@@ -444,7 +448,7 @@ _Figure 3.11-1: An example of using the freeTime command._
 Displays how much time you have available to sleep based on your schedule for that day and the day after.
 Use this command to find out if you can have a good rest after a long day.
 
-##### Notes on sleepTime Command:
+##### ![Notes](images/UserGuide/post-it.png) Notes on sleepTime Command:
 
 * The system recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
 * The system will also count the hour before your first activity in the day as busy,
@@ -472,7 +476,7 @@ _Figure 3.12-1: An example of using sleepTime command_
 Adds and stores a note. Use this command to take notes from your classes or events.
 Format: addNotes [TITLE]
 
-##### Notes on addNotes Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on addNotes Command Format:
 
 - Adds and stores a note tagged with  TITLE.
 - If TITLE is not provided, LifEasier will prompt you for a notes title.
@@ -498,7 +502,7 @@ _Figure 3.13-1: An example of using the addNotes command_
 Displays a note/list of notes. Use this command to view the notes you have taken before.
 Format: showNotes [TITLE] 
 
-##### Notes on showNotes Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on showNotes Command Format:
 
 * If TITLE is specified, the specific note is displayed. If not, a numbered list of all notes 
 will be displayed.
@@ -527,7 +531,7 @@ _Figure 3.14-1: An example of using the showNotes command_
 Deletes a note from the list. Use this command to remove the notes you no longer need.
 Format: deleteNotes [TITLE] 
 
-##### Notes on deleteNotes Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on deleteNotes Command Format:
 
 * If TITLE is specified, the specific note is displayed and confirmation of delete will be prompted. 
 If no TITLE is inputed, a numbered list of all notes will be displayed.
@@ -565,7 +569,7 @@ _Figure 3.15-1: An example of using the deleteNotes command_
 Edits a note from the list. Use this command to make changes to notes you have taken before.
 Format: editNotes [TITLE] 
 
-##### Notes on deleteNotes Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on deleteNotes Command Format:
 
 * If TITLE is specified, the specific note is displayed and confirmation of edit will be prompted. 
 If no TITLE is inputed, a numbered list of all notes will be displayed.
@@ -612,7 +616,7 @@ longer be displayed anywhere.
 
 Format: `archive`
 
-##### Notes on archive Command Format:
+##### ![Notes](images/UserGuide/post-it.png) Notes on archive Command Format:
 
 * All current notes existing in **LifEasier** will be archived into the “Archives” folder found inside the 
 “LifEasierSaves” save folder.
