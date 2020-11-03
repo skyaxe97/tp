@@ -369,14 +369,6 @@ public class Ui {
                 + "- Data missing/corrupted"));
     }
 
-    public void showLocalDateTimeParseError() {
-        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
-        System.out.println(colourTextCyan("The task will continue to be added with a default date to "
-                + "preserve your data"));
-        System.out.println("You can edit the date and times directly from the save file");
-        System.out.println("---------------------------------------------------------------------------------------");
-    }
-
     public void showUndeterminableTaskError() {
         System.out.println(colourTextRed("Something went wrong while determining the tasks"));
     }
@@ -631,5 +623,13 @@ public class Ui {
     public void showSaveDelimiterError() {
         System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
                 + " in the save file"));
+    }
+
+    public void showLocalDateTimeParseError() {
+        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
+        System.out.println(colourTextCyan("The task will continue to be added with a default date to "
+                + "preserve your data"));
+        System.out.println(colourTextCyan("You can edit the date and times directly from the save file"));
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 }

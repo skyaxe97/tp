@@ -65,8 +65,8 @@ public class NoteStorage {
     protected void createNoteList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding notes from save");
 
-        try {
-            while (fileScanner.hasNext()) {
+        while (fileScanner.hasNext()) {
+            try {
                 String noteInformation = fileScanner.nextLine();
 
                 if (!fileCommand.checkForDelimiterCount(noteInformation, 1)) {
@@ -83,17 +83,17 @@ public class NoteStorage {
 
                 notes.add(new Note(noteTitle, noteDescription));
                 logger.log(Level.INFO, "New Note added: " + noteTitle);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                ui.showSaveDataMissingError();
+                ui.showReadErrorHandlerMessage();
+                logger.log(Level.SEVERE, "Missing data from save file");
+
+            } catch (SaveDelimiterException e) {
+                ui.showSaveDelimiterError();
+                ui.showReadErrorHandlerMessage();
+                logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
+
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            ui.showSaveDataMissingError();
-            ui.showReadErrorHandlerMessage();
-            logger.log(Level.SEVERE, "Missing data from save file");
-
-        } catch (SaveDelimiterException e) {
-            ui.showSaveDelimiterError();
-            ui.showReadErrorHandlerMessage();
-            logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
-
         }
 
         logger.log(Level.INFO, "Notes rebuilt");
