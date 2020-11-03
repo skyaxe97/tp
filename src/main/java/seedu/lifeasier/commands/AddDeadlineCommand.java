@@ -38,12 +38,10 @@ public class AddDeadlineCommand extends Command {
         try {
             logger.log(Level.INFO, "Adding deadline to taskList...");
             Task task = tasks.addDeadline(description, by, recurrences);
-
-            logger.log(Level.INFO, "Saving updated taskList to storage...");
-            tasks.updateTasks(LocalDate.now());
-            storage.saveTasks();
-
             ui.showAddConfirmationMessage(task);
+            tasks.updateTasks(LocalDate.now());
+            logger.log(Level.INFO, "Saving updated taskList to storage...");
+            storage.saveTasks();
 
         } catch (TaskDuplicateException e) {
             logger.log(Level.INFO, "Task is a duplicate! Showing error...");

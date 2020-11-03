@@ -17,7 +17,7 @@ class TaskListTest {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static final LocalDateTime SAMPLE1 = LocalDateTime.parse("12-12-20 12:00", DATE_TIME_FORMATTER);
-    private static final LocalDateTime SAMPLE2 = LocalDateTime.parse("12-12-20 12:00", DATE_TIME_FORMATTER);
+    private static final LocalDateTime SAMPLE2 = LocalDateTime.parse("12-12-20 13:00", DATE_TIME_FORMATTER);
 
     @Test
     void name() {
@@ -65,7 +65,7 @@ class TaskListTest {
     }
 
     @Test
-    void updateTasks_outdatedTasks_deleted() {
+    void updateTasks_outdatedTasks_deleted() throws TaskDuplicateException {
         taskList = new TaskList();
 
         String moduleCode = "cg1111";
@@ -90,7 +90,7 @@ class TaskListTest {
     }
 
     @Test
-    void getTasksFromOneDay_sameDayTasks_returned() {
+    void getTasksFromOneDay_sameDayTasks_returned() throws TaskDuplicateException {
         taskList = new TaskList();
 
         String moduleCode = "cg1111";
@@ -123,7 +123,7 @@ class TaskListTest {
 
 
     @Test
-    void addEvent() {
+    void addEvent() throws TaskDuplicateException {
         taskList = new TaskList();
         taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
         Task event = new Event("Event", SAMPLE1, SAMPLE2);
@@ -131,7 +131,7 @@ class TaskListTest {
     }
 
     @Test
-    void addLesson() {
+    void addLesson() throws TaskDuplicateException {
         taskList = new TaskList();
         taskList.addLesson("Lesson", SAMPLE1, SAMPLE2, 0);
         Task lesson = new Lesson("Lesson", SAMPLE1, SAMPLE2);
@@ -139,7 +139,7 @@ class TaskListTest {
     }
 
     @Test
-    void addDeadline() {
+    void addDeadline() throws TaskDuplicateException {
         taskList = new TaskList();
         taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
         Task event = new Event("Event", SAMPLE1, SAMPLE2);

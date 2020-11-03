@@ -40,10 +40,11 @@ public class AddLessonCommand extends Command {
         try {
             logger.log(Level.INFO, "Adding lesson to taskList...");
             Task task = tasks.addLesson(moduleCode, start, end, recurrences);
-            logger.log(Level.INFO, "Saving updated taskList to storage...");
             tasks.updateTasks(LocalDate.now());
-            storage.saveTasks();
             ui.showAddConfirmationMessage(task);
+            logger.log(Level.INFO, "Saving updated taskList to storage...");
+            storage.saveTasks();
+
 
         } catch (TaskDuplicateException e) {
             logger.log(Level.INFO, "Task is a duplicate! Showing error...");

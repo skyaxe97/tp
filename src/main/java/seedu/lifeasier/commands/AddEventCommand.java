@@ -40,11 +40,11 @@ public class AddEventCommand extends Command {
         try {
             logger.log(Level.INFO, "Adding event to taskList...");
             Task task = tasks.addEvent(description, start, end, recurrences);
-
-            logger.log(Level.INFO, "Saving updated taskList to storage...");
             tasks.updateTasks(LocalDate.now());
-            storage.saveTasks();
             ui.showAddConfirmationMessage(task);
+            logger.log(Level.INFO, "Saving updated taskList to storage...");
+            storage.saveTasks();
+
 
         } catch (TaskDuplicateException e) {
             logger.log(Level.INFO, "Task is a duplicate! Showing error...");

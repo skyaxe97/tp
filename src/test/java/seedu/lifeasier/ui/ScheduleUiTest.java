@@ -1,6 +1,7 @@
 package seedu.lifeasier.ui;
 
 import org.junit.jupiter.api.Test;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskList;
 
 import java.time.LocalDate;
@@ -24,7 +25,7 @@ class ScheduleUiTest {
     }
 
     @Test
-    void getTaskCountForToday_TaskListWithFiveItems_Five() {
+    void getTaskCountForToday_TaskListWithFiveItems_Five() throws TaskDuplicateException {
         for (int i = 0; i < 5; i++) {
             NONEMPTY_TASK_LIST.addDeadline("test" + i, SAMPLE_DATETIME, 0);
         }
