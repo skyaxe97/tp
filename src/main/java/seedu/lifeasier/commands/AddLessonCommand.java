@@ -46,6 +46,7 @@ public class AddLessonCommand extends Command {
             ui.showAddConfirmationMessage(task);
 
         } catch (TaskDuplicateException e) {
+            logger.log(Level.INFO, "Task is a duplicate! Showing error...");
             ui.showDuplicateTaskError(Ui.PARAM_LESSON);
         }
 
