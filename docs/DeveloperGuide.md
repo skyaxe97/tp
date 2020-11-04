@@ -71,14 +71,14 @@ Click `New...` and find the directory of the JDK.
 
 ### 2.3 Verifying Setup
 
-1. Run the `seedu.LifEasier.Main` and try a few commands.
+1. Run `seedu.LifEasier.Main` and try a few commands.
 
 1. Run the tests to ensure they all pass. This can be done by executing the command `gradlew build` in _IntelliJ’s_ terminal.
 
 
 ## 3.0 Design
 
-The following sections will go into detail on the design and architecture of **LifEasier**.
+The following section provides more details on the design and architecture of **LifEasier**.
 
 ### 3.1 Architecture
 
@@ -143,9 +143,9 @@ The `Command` component consists of an abstract `Command` class and the many dif
 #### 3.2.5 Model Component
 
 The `Model` component contains all the user's notes and tasks in memory. It is comprised of the `TaskList`, `NoteList`, `TaskHistory` and `NoteHistory` classes.
-The `TaskList` class handles additions, edits and deletions to the user's tasks, while the `TaskHistory` class allows users to undo their most recent task edits.
-Similarly, the `NoteList` class handles additions, edits and deletions to the user's notes, while the `NoteHistory` class allows users to undo their most recent notes edits.
-All classes in the `Model` component interact heavilt with the `Command` component as most commands make use of the user's tasks and notes.
+The `TaskList` class handles additions, edits and deletions to the user's tasks, while the `TaskHistory` class allows users to undo their most recent task edits and deletions.
+Similarly, the `NoteList` class handles additions, edits and deletions to the user's notes, while the `NoteHistory` class allows users to undo their most recent notes edits and deletions.
+All classes in the `Model` component interact heavily with the `Command` component as most commands make use of the user's tasks and notes.
  
 #### 3.2.6 Storage Component
 
@@ -155,7 +155,7 @@ The `Storage` component handles saving of the users’ notes and tasks to persis
 
 ## 4.0 Implementation
 
-The following section will go into further details on how the different features of **LifEasier** were implemented.
+The following section will go into further details on how the different features of **LifEasier** are implemented.
 
 ### 4.1 Adding Lessons, Events, Deadlines (Fairuz)
 
@@ -476,7 +476,7 @@ The `freeTime` command displays to the user their longest block of free time for
  next day’s schedule. Both commands are implemented similarly. They both find the longest uninterrupted block
  of free time within a certain time period by checking if individual hour-long time blocks in this time period
  are free. The commands then use the start and end time values found to calculate a duration, and pass all
- three values to the Ui to display to the user. Figure 4.9-1 shows the sequence diagram for the `freeTimeCommand`,
+ three values to the `Ui` to display to the user. Figure 4.9-1 shows the sequence diagram for the `freeTimeCommand`,
  and Figure 4.9-2 shows the sequence diagram for the `sleepTimeCommand`.
 
 ![Figure 4.9-1](images/DeveloperGuide/Figure%204.9-1.png)  
@@ -488,11 +488,11 @@ _Figure 4.9-2: Sequence diagram for sleepTimeCommand execution_
 
 ##### Design Considerations
 
-1. Because of the way that the `TaskList` stores `Tasks` in an unsorted way, the  `freeTime` and `sleepTime` commands
+1. Due to the fact that `Tasks` in the `TaskList` are unsorted, the  `freeTime` and `sleepTime` commands
  must iterate through the entire list every time to check if a particular time slot has nothing scheduled.
  This corresponds to a time complexity of O(N). This was chosen as the way to implement this function as the
  size of `TaskList` is relatively small. As such, the repeated iteration would not result in 
- significant impacts on the timing performance.
+ significant impacts on LifEasier's speed performance.
  
 1. The functions also only provide an accuracy resolution which is rounded to the hour. Similar to the `displaySchedule`
  command, this was an intentional design choice to not overload the user with too many unnecessary details. 
@@ -521,8 +521,8 @@ commands, which can result in error in the program. As such, checks are to be do
 
 ##### Implementation
 
-Every time **LifEasier** starts up, it automatically updates the dates of recurring tasks, and deletes tasks that are 
-in the past and no longer set to repeat. **LifEasier** performs this step after loading the tasks and notes from the
+Every time  a new task is added and when **LifEasier** starts up, it automatically updates the dates of recurring tasks, and deletes tasks that are 
+in the past and no longer set to repeat. On startup, **LifEasier** performs this step after loading the tasks and notes from the
 save files into NoteList and TaskList. It does so by iterating through the list, and checking the `start` variable
  of each task. If the date of `start` is before the current date, the `recurrences` variable is checked. If 
  `recurrences = 0`, the task is deleted. Else, the task's date is moved forward by 1 week and `recurrences` is 
@@ -531,19 +531,18 @@ decremented by 1 until the date of `start` is on or after the current date, or `
 
 ##### Design Considerations
 
-1. **LifEasier** only updates tasks on startup, instead of after every command. This was done intentionally to ensure
+1. **LifEasier** only updates tasks on startup, and when new tasks are added. This was done intentionally to ensure
 that each command does not take too much time to run. However, if a user keeps **LifEasier** open over the course of a
-few days, they might need to restart it to ensure that their tasks are updated.
-
+few days without adding any new tasks to their schedule, they might need to restart it to ensure that their tasks are updated.
 
 ## 5.0 Product Scope
 
-### 5.1 Target user profile
+### 5.1 Target User Profile
 
 NUS Computer Engineering students who struggle with keeping track of classes and deadlines, and managing their time to 
 have a social life with their busy schedule.
  
-### 5.2 Value proposition
+### 5.2 Value Proposition
 
 **LifEasier** is a timetabling application with added abilities to add their own reminders and social events designed to
  help students keep track of everything that they need to do. The application could help them take down and organise 
@@ -672,6 +671,6 @@ Following the above path for manual testing will bring you through all the featu
 
 ## Appendix C: Effort
 
-On average, the development team met up twice a week to merge finished work, bug test, and do minor bug fixes before continuing to discuss design moving forward, new features to be implemented and handing out new issues. 
+On average, the development team met up twice a week to merge finished work, bug test, and do minor bug fixes. Afterwards, the group would continue on to discuss the design moving forward, new features to be implemented and handing out new issues. 
 
-Overall, the average individual effort was higher than that of the individual project. This is because we underestimated the difficulty of working in a team, and the amount of time needed to create the User Guide and Developer Guide. 
+Overall, the average individual effort was higher than that of the individual project. This is because we underestimated the difficulty of working in a team, and the amount of time needed for the increased amount of testing and documentation to be done.
