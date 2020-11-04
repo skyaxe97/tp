@@ -632,4 +632,9 @@ public class Ui {
         System.out.println(colourTextCyan("You can edit the date and times directly from the save file"));
         System.out.println("---------------------------------------------------------------------------------------");
     }
+
+    public void showInvalidModuleCodeMessage() {
+        System.out.println(colourTextRed("The entered module code has an invalid format"));
+        System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
+    }
 }

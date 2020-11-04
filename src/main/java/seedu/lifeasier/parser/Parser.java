@@ -110,7 +110,6 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
-
     Command parseAddLessonCommand(Ui ui, String input) {
 
         logger.log(Level.INFO, "Parsing addLesson command...");
@@ -169,6 +168,9 @@ public class Parser {
         String tempRecurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
         String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
+        if (!checkIfValidModuleCode(moduleCode)) {
+            moduleCode = getValidModuleCode();
+        }
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
@@ -892,7 +894,7 @@ public class Parser {
      * @param moduleCode The module code to be checked.
      * @return true if the module code is determined to be valid.
      */
-    protected boolean isValidModuleCode(String moduleCode) {
+    protected boolean checkIfValidModuleCode(String moduleCode) {
         logger.log(Level.INFO, "Starting module code verification for: " + moduleCode);
         moduleCode = moduleCode.trim();
         char[] moduleCodeElements = moduleCode.toCharArray();
@@ -981,6 +983,25 @@ public class Parser {
             }
         }
         return letterCount;
+    }
+
+    /**
+     * Repeatedly prompts for valid module code until a valid one is input.
+     *
+     * @return Valid module code.
+     */
+    private String getValidModuleCode() {
+        Ui ui = new Ui();
+        String moduleCode = "";
+        boolean isModuleCodeValid = false;
+
+        while (!isModuleCodeValid) {
+            ui.showInvalidModuleCodeMessage();
+            moduleCode = ui.readCommand();
+            isModuleCodeValid = checkIfValidModuleCode(moduleCode);
+        }
+
+        return moduleCode;
     }
 
     /**

@@ -112,32 +112,34 @@ class ParserTest {
     }
 
     @Test
-    void isValidModuleCode_validModuleCodes_true() {
+    void checkIfValidModuleCode_validModuleCodes_true() {
         Parser parser = new Parser();
         Assertions.assertAll(
-            () -> assertTrue(parser.isValidModuleCode("CS1010")),
-            () -> assertTrue(parser.isValidModuleCode("CS2113T")),
-            () -> assertTrue(parser.isValidModuleCode("GET1023")),
-            () -> assertTrue(parser.isValidModuleCode("ACC1000X"))
+            () -> assertTrue(parser.checkIfValidModuleCode("CS1010")),
+            () -> assertTrue(parser.checkIfValidModuleCode("CS2113T")),
+            () -> assertTrue(parser.checkIfValidModuleCode("GET1023")),
+            () -> assertTrue(parser.checkIfValidModuleCode("ACC1000X"))
         );
     }
 
     @Test
-    void isValidModuleCode_invalidModuleCodes_false() {
+    void checkIfValidModuleCode_invalidModuleCodes_false() {
         Parser parser = new Parser();
         Assertions.assertAll(
-            () -> assertFalse(parser.isValidModuleCode("")),
-            () -> assertFalse(parser.isValidModuleCode("addLesson /code CS1231")),
-            () -> assertFalse(parser.isValidModuleCode("         ")),
-            () -> assertFalse(parser.isValidModuleCode("G1000")),
-            () -> assertFalse(parser.isValidModuleCode("G1000S")),
-            () -> assertFalse(parser.isValidModuleCode("GERT1000")),
-            () -> assertFalse(parser.isValidModuleCode("GES00000")),
-            () -> assertFalse(parser.isValidModuleCode("GERT1000X")),
-            () -> assertFalse(parser.isValidModuleCode("C9S1000X")),
-            () -> assertFalse(parser.isValidModuleCode("RE10TX")),
-            () -> assertFalse(parser.isValidModuleCode("CS9S000E")),
-            () -> assertFalse(parser.isValidModuleCode("CS2101XD"))
+            () -> assertFalse(parser.checkIfValidModuleCode("")),
+            () -> assertFalse(parser.checkIfValidModuleCode("addLesson /code CS1231")),
+            () -> assertFalse(parser.checkIfValidModuleCode("         ")),
+            () -> assertFalse(parser.checkIfValidModuleCode("G1000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("G1000S")),
+            () -> assertFalse(parser.checkIfValidModuleCode("GERT1000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("#GE1000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("GES00000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("GERT1000X")),
+            () -> assertFalse(parser.checkIfValidModuleCode("C9S1000X")),
+            () -> assertFalse(parser.checkIfValidModuleCode("RE10TX")),
+            () -> assertFalse(parser.checkIfValidModuleCode("CS9S000E")),
+            () -> assertFalse(parser.checkIfValidModuleCode("CS2101XD")),
+            () -> assertFalse(parser.checkIfValidModuleCode("CS2101#"))
         );
     }
 
