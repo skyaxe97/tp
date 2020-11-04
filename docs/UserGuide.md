@@ -133,6 +133,11 @@ _Figure 3.1-1: An example of using the help command_
 ### 3.2 Adding a Lesson: `addLesson`
 
 Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your schedule.
+
+##### Notes on addLesson command:
+
+* System will not warn you if there are any clashes in timing with other Tasks. 
+
 Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 
 ##### Notes on addLesson Command Format:
@@ -154,6 +159,11 @@ your calendar
 
 ### 3.3 Adding an Event: `addEvent`
 Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
+
+##### Notes on addEvent command:
+
+* System will not warn you if there are any clashes in timing with other Tasks.
+
 Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 
 ##### Notes on addEvent Command Format:
@@ -176,6 +186,11 @@ your calendar
 ### 3.4 Adding a Deadline: `addDeadline`
 
 Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to your schedule.
+
+##### Notes on addDeadline command:
+
+* System will not warn you if there are any clashes in timing with other Tasks.
+
 Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 
 ##### Notes on addEvent Command Format:
