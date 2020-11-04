@@ -16,7 +16,9 @@ import seedu.lifeasier.ui.Ui;
 
 import java.time.format.DateTimeParseException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParserTest {
 
@@ -133,6 +135,7 @@ class ParserTest {
             () -> assertFalse(parser.isValidModuleCode("GES00000")),
             () -> assertFalse(parser.isValidModuleCode("GERT1000X")),
             () -> assertFalse(parser.isValidModuleCode("C9S1000X")),
+            () -> assertFalse(parser.isValidModuleCode("RE10TX")),
             () -> assertFalse(parser.isValidModuleCode("CS9S000E")),
             () -> assertFalse(parser.isValidModuleCode("CS2101XD"))
         );
