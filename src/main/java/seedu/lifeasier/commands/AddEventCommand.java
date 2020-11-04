@@ -1,11 +1,12 @@
 package seedu.lifeasier.commands;
 
 import seedu.lifeasier.model.notes.NoteHistory;
-import seedu.lifeasier.model.tasks.TaskDuplicateException;
-import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
+import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.parser.Parser;
@@ -49,6 +50,10 @@ public class AddEventCommand extends Command {
         } catch (TaskDuplicateException e) {
             logger.log(Level.INFO, "Task is a duplicate! Showing error...");
             ui.showDuplicateTaskError(Ui.PARAM_EVENT);
+
+        } catch (TaskPastException e) {
+            logger.log(Level.INFO, "Task is in the past! Showing error...");
+            ui.showPastTaskError(Ui.PARAM_EVENT);
         }
     }
 }

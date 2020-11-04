@@ -8,6 +8,7 @@ import seedu.lifeasier.model.tasks.Task;
 import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
@@ -116,7 +117,7 @@ class SleepTimeCommandTest {
     }
 
     @Test
-    void executeSleepTimeCommand_busyDay_6HoursSleep() throws TaskDuplicateException {
+    void executeSleepTimeCommand_busyDay_6HoursSleep() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();

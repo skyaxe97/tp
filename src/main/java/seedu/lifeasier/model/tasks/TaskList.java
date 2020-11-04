@@ -57,7 +57,12 @@ public class TaskList {
      * @param recurrences number of times to repeat.
      */
     public Task addEvent(String description, LocalDateTime start, LocalDateTime end, int recurrences)
-            throws TaskDuplicateException {
+            throws TaskDuplicateException, TaskPastException {
+
+        LocalDate today = LocalDate.now();
+        if (start.toLocalDate().isBefore(today)) {
+            throw new TaskPastException();
+        }
 
         for (Task task : taskList) {
             if (task instanceof Event && (((Event) task).isDuplicate(description, start, end, recurrences))) {
@@ -81,7 +86,12 @@ public class TaskList {
      * @param recurrences number of times to repeat.
      */
     public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences)
-            throws TaskDuplicateException {
+            throws TaskDuplicateException, TaskPastException {
+
+        LocalDate today = LocalDate.now();
+        if (start.toLocalDate().isBefore(today)) {
+            throw new TaskPastException();
+        }
 
         for (Task task : taskList) {
             if (task instanceof Lesson && (((Lesson) task).isDuplicate(moduleCode, start, end, recurrences))) {
@@ -103,7 +113,13 @@ public class TaskList {
      * @param by deadline of task.
      * @param recurrences number of times to repeat.
      */
-    public Task addDeadline(String description, LocalDateTime by, int recurrences) throws TaskDuplicateException {
+    public Task addDeadline(String description, LocalDateTime by, int recurrences)
+            throws TaskDuplicateException, TaskPastException {
+
+        LocalDate today = LocalDate.now();
+        if (by.toLocalDate().isBefore(today)) {
+            throw new TaskPastException();
+        }
 
         for (Task task : taskList) {
             if (task instanceof Deadline && (((Deadline) task).isDuplicate(description, by, recurrences))) {

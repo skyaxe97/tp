@@ -586,4 +586,8 @@ public class Ui {
     public void showDuplicateTaskError(String type) {
         System.out.println("This " + type + " or something very similar already exists in your schedule!");
     }
+
+    public void showPastTaskError(String type) {
+        System.out.println("The timing of this " + type + " is already in the past!");
+    }
 }

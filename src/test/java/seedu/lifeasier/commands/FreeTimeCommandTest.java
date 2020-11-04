@@ -8,6 +8,7 @@ import seedu.lifeasier.model.tasks.Task;
 import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
@@ -86,7 +87,7 @@ class FreeTimeCommandTest {
     }
 
     @Test
-    void executeFreeTimeCommand_freeDay_6HoursFree() throws TaskDuplicateException {
+    void executeFreeTimeCommand_freeDay_6HoursFree() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();
@@ -123,7 +124,7 @@ class FreeTimeCommandTest {
     }
 
     @Test
-    void executeFreeTimeCommand_busyDay_0HoursFree() throws TaskDuplicateException {
+    void executeFreeTimeCommand_busyDay_0HoursFree() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();
