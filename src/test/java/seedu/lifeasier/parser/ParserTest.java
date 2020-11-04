@@ -1,5 +1,6 @@
 package seedu.lifeasier.parser;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import seedu.lifeasier.commands.AddDeadlineCommand;
@@ -15,8 +16,7 @@ import seedu.lifeasier.ui.Ui;
 
 import java.time.format.DateTimeParseException;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ParserTest {
 
@@ -107,6 +107,34 @@ class ParserTest {
         Command command = parser.parseCommand(
                 "addDeadline my deadline /by 10-10-20 10:00 /repeats 0", ui);
         assertTrue(command instanceof AddDeadlineCommand);
+    }
+
+    @Test
+    void isValidModuleCode_validModuleCodes_true() {
+        Parser parser = new Parser();
+        Assertions.assertAll(
+            () -> assertTrue(parser.isValidModuleCode("CS1010")),
+            () -> assertTrue(parser.isValidModuleCode("CS2113T")),
+            () -> assertTrue(parser.isValidModuleCode("GET1023")),
+            () -> assertTrue(parser.isValidModuleCode("ACC1000X"))
+        );
+    }
+
+    @Test
+    void isValidModuleCode_invalidModuleCodes_false() {
+        Parser parser = new Parser();
+        Assertions.assertAll(
+            () -> assertFalse(parser.isValidModuleCode("")),
+            () -> assertFalse(parser.isValidModuleCode("         ")),
+            () -> assertFalse(parser.isValidModuleCode("G1000")),
+            () -> assertFalse(parser.isValidModuleCode("G1000S")),
+            () -> assertFalse(parser.isValidModuleCode("GERT1000")),
+            () -> assertFalse(parser.isValidModuleCode("GES00000")),
+            () -> assertFalse(parser.isValidModuleCode("GERT1000X")),
+            () -> assertFalse(parser.isValidModuleCode("C9S1000X")),
+            () -> assertFalse(parser.isValidModuleCode("CS9S000E")),
+            () -> assertFalse(parser.isValidModuleCode("CS2101XD"))
+        );
     }
 
 }
