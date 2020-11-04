@@ -125,6 +125,7 @@ class ParserTest {
         Parser parser = new Parser();
         Assertions.assertAll(
             () -> assertFalse(parser.isValidModuleCode("")),
+            () -> assertFalse(parser.isValidModuleCode("addLesson /code CS1231")),
             () -> assertFalse(parser.isValidModuleCode("         ")),
             () -> assertFalse(parser.isValidModuleCode("G1000")),
             () -> assertFalse(parser.isValidModuleCode("G1000S")),
