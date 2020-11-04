@@ -67,6 +67,7 @@ public class Parser {
 
     public static final int INDEX_START = 0;
     public static final int INDEX_END = 1;
+    public static final int MAXIMUM_CODE_LENGTH = 8;
 
     private boolean isParametersEmpty = true;
     private boolean isModuleCodeEmpty = true;
@@ -881,6 +882,81 @@ public class Parser {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if the input module code is in a valid format.
+     *
+     * @param moduleCode The module code to be checked.
+     * @return true if the module code is determined to be valid.
+     */
+    private boolean isValidModuleCode(String moduleCode) {
+        moduleCode = moduleCode.trim();
+        char[] moduleCodeElements = moduleCode.toCharArray();
+
+        //Check if input for module code is within valid length of 8
+        if (moduleCodeElements.length > MAXIMUM_CODE_LENGTH) {
+            return false;
+        }
+
+        int letterCount = getLetterCount(moduleCodeElements);
+        //Check if module code prefix falls out of valid range of having 2-3 consecutive letters
+        if (letterCount < 2 || letterCount > 3) {
+            return false;
+        }
+
+        int numberCount = getNumberCount(moduleCodeElements, letterCount);
+        //Check if there are 4 consecutive numbers in sequence
+        if (numberCount != 4) {
+            return false;
+        }
+
+        //Determining for valid postfix
+        int totalCharacterCount = letterCount + numberCount;
+        boolean isFinalLength = totalCharacterCount == moduleCodeElements.length;
+        if (isFinalLength) {
+            return true;
+        } else {
+            int lastIndex = moduleCodeElements.length - 1;
+            return Character.isLetter(moduleCodeElements[lastIndex]);
+        }
+    }
+
+    /**
+     * Counts the number of consecutive numbers for the moodule code.
+     *
+     * @param moduleCodeElements Array of characters from module code.
+     * @param letterCount Starting index from the number of prefix characters.
+     * @return The number of consecutive numbers.
+     */
+    private int getNumberCount(char[] moduleCodeElements, int letterCount) {
+        int numberCount = 0;
+        for (int i = letterCount; i < moduleCodeElements.length; i++) {
+            if (Character.isDigit(moduleCodeElements[i])) {
+                numberCount++;
+            } else {
+                break;
+            }
+        }
+        return numberCount;
+    }
+
+    /**
+     * Counts the number of consecutive letters for the module code prefix within the first 4 elements of array.
+     *
+     * @param moduleCodeElements Array of characters from module code.
+     * @return The number of consecutive letters.
+     */
+    private int getLetterCount(char[] moduleCodeElements) {
+        int letterCount = 0;
+        for (int i = 0; i < 4; i++) {
+            if (Character.isLetter(moduleCodeElements[i])) {
+                letterCount++;
+            } else {
+                break;
+            }
+        }
+        return letterCount;
     }
 
     /**
