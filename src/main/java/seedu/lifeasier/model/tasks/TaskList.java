@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +23,8 @@ public class TaskList {
 
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
-    private int indexOfLastMatch;
+    private int displayIndexOfLastMatch = 0;
+    HashMap <Integer,Integer> map;
 
     public TaskList() {
         taskList = new ArrayList<>();
@@ -48,6 +50,9 @@ public class TaskList {
         taskList.add(task);
     }
 
+    public int getActualIndex (int i) {
+        return map.get(i);
+    }
     /**
      * Add new event to taskList.
      *
@@ -103,26 +108,30 @@ public class TaskList {
         ui.showEditConfirmationMessage();
     }
 
-    public void editLessonTime(int index, Ui ui, LocalDateTime[] times) {
-        getTask(index).setStart(times[INDEX_START]);
-        getTask(index).setEnd(times[INDEX_END]);
+    public void editLessonTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = map.get(displayIndex);
+        getTask(actualIndex).setStart(times[INDEX_START]);
+        getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void editEventTime(int index, Ui ui, LocalDateTime[] times) {
-        getTask(index).setStart(times[INDEX_START]);
-        getTask(index).setEnd(times[INDEX_END]);
+    public void editEventTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = map.get(displayIndex);
+        getTask(actualIndex).setStart(times[INDEX_START]);
+        getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void editDeadlineTime(int index, Ui ui, LocalDateTime[] times) {
-        getTask(index).setStart(times[0]);
+    public void editDeadlineTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = map.get(displayIndex);
+        getTask(actualIndex).setStart(times[0]);
         ui.showEditConfirmationMessage();
     }
 
-    public void deleteTask(int index, Ui ui) {
+    public void deleteTask(int displayIndex, Ui ui) {
         try {
-            taskList.remove(index);
+            int actualIndex = map.get(displayIndex);
+            taskList.remove(actualIndex);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
             ui.showInvalidNumberMessage();
@@ -135,13 +144,18 @@ public class TaskList {
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
         logger.log(Level.INFO, "Start of printing all matching " + type);
-        indexOfLastMatch = 0;
+        map = new HashMap<>();
+        displayIndexOfLastMatch = 0;
+        int firstDisplayIndex = 0;
         boolean noMatches = true;
         for (int i = 0; i < getTaskCount(); i++) {
             if (checkMatchingTasks(i, type, description)) {
+                firstDisplayIndex++;
                 String task = getTask(i).toString();
-                ui.printMatchingTask(i + 1, task);
-                indexOfLastMatch = i;
+                ui.printMatchingTask(firstDisplayIndex, task);
+                displayIndexOfLastMatch = firstDisplayIndex;
+
+                map.put(firstDisplayIndex, i);
                 noMatches = false;
             }
         }
@@ -158,7 +172,7 @@ public class TaskList {
     }
 
     public void checkForIndexOutOfBounds(int userInput) {
-        if (userInput > indexOfLastMatch || userInput < 0) {
+        if (userInput > displayIndexOfLastMatch || userInput <= 0) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
             throw new IndexOutOfBoundsException();
         }
