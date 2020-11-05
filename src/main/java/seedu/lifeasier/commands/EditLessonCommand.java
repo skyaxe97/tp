@@ -29,7 +29,7 @@ public class EditLessonCommand extends Command {
     public void editLessonModuleCode(TaskList tasks, int index, Ui ui, Parser parser) {
         String moduleCode = ui.readCommand();
         if (!parser.checkIfValidModuleCode(moduleCode)) {
-            moduleCode = parser.getValidModuleCode();
+            moduleCode = parser.getValidModuleCode(ui);
         }
         tasks.editModuleCode(index, ui, moduleCode);
     }

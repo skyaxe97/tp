@@ -86,13 +86,13 @@ public class FileCommand {
         boolean isStillContainingDelimiter = true;
         int delimiterCount = 0;
 
-        while (isStillContainingDelimiter) {
+        do {
             isStillContainingDelimiter = string.contains(SAVE_DELIMITER);
             if (isStillContainingDelimiter) {
                 delimiterCount++;
                 string = string.replaceFirst(SAVE_DELIMITER, BLANK_STRING);
             }
-        }
+        } while (isStillContainingDelimiter);
 
         return delimiterCount == baseDelimiterCount;
     }

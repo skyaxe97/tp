@@ -69,7 +69,7 @@ public class Parser {
     public static final int INDEX_END = 1;
     public static final int MAXIMUM_CODE_LENGTH = 8;
     public static final int MINIMUM_CODE_LENGTH = 6;
-    public static final int MAXIMUM_POSTFIX_CHARACTER = 1;
+    public static final int MAXIMUM_SUFFIX_CHARACTER = 1;
 
     private boolean isParametersEmpty = true;
     private boolean isModuleCodeEmpty = true;
@@ -765,7 +765,7 @@ public class Parser {
         ui.showAddModuleCodeMessage();
         String moduleCode = checkIfEmpty(ui, ui.readCommand());
         if (!checkIfValidModuleCode(moduleCode)) {
-            moduleCode = getValidModuleCode();
+            moduleCode = getValidModuleCode(ui);
         }
         String[] temp = input.split("/date");
         input = temp[0] + "/code" + moduleCode + " /date" + temp[1];
@@ -871,7 +871,7 @@ public class Parser {
         //Check for valid module code
         if (param.equals("/code")) {
             if (!checkIfValidModuleCode(input)) {
-                input = getValidModuleCode();
+                input = getValidModuleCode(ui);
             }
         }
         return input;
@@ -911,22 +911,20 @@ public class Parser {
             return false;
         }
 
-        int letterCount = getLetterCount(moduleCodeElements);
-        //Check if module code prefix falls out of valid range of having 2-3 consecutive letters
-        if (letterCount < 2 || letterCount > 3) {
+        int consecutiveLetterCount = getConsecutiveLetterCount(moduleCodeElements);
+        if (consecutiveLetterCount < 2 || consecutiveLetterCount > 3) {
             logger.log(Level.INFO, "Invalid prefix length");
             return false;
         }
 
-        int numberCount = getNumberCount(moduleCodeElements, letterCount);
-        //Check if there are 4 consecutive numbers in sequence
-        if (numberCount != 4) {
+        int consecutiveNumberCount = getConsecutiveNumberCount(moduleCodeElements, consecutiveLetterCount);
+        if (consecutiveNumberCount != 4) {
             logger.log(Level.INFO, "Invalid numeric code length");
             return false;
         }
 
         //Checking for existence of postfix
-        int totalCharacterCount = letterCount + numberCount;
+        int totalCharacterCount = consecutiveLetterCount + consecutiveNumberCount;
         boolean isFinalLength = totalCharacterCount == moduleCodeElements.length;
         if (isFinalLength) {
             logger.log(Level.INFO, "Check done - Valid module code");
@@ -935,7 +933,7 @@ public class Parser {
 
         //Possible postfix, check for valid postfix
         int numberOfPostfixCharacters = moduleCodeElements.length - totalCharacterCount;
-        if (numberOfPostfixCharacters > MAXIMUM_POSTFIX_CHARACTER) {
+        if (numberOfPostfixCharacters > MAXIMUM_SUFFIX_CHARACTER) {
             logger.log(Level.INFO, "Invalid postfix length");
             return false;
         }
@@ -958,7 +956,7 @@ public class Parser {
      * @param letterCount Starting index from the number of prefix characters.
      * @return The number of consecutive numbers.
      */
-    protected int getNumberCount(char[] moduleCodeElements, int letterCount) {
+    protected int getConsecutiveNumberCount(char[] moduleCodeElements, int letterCount) {
         assert letterCount != 0 : "LetterCount should not be 0 at this state";
         logger.log(Level.INFO, "Start numeric code count");
         int numberCount = 0;
@@ -978,7 +976,7 @@ public class Parser {
      * @param moduleCodeElements Array of characters from module code.
      * @return The number of consecutive letters.
      */
-    protected int getLetterCount(char[] moduleCodeElements) {
+    protected int getConsecutiveLetterCount(char[] moduleCodeElements) {
         logger.log(Level.INFO, "Start prefix letter count");
         int letterCount = 0;
         for (int i = 0; i < 4; i++) {
@@ -996,8 +994,7 @@ public class Parser {
      *
      * @return Valid module code.
      */
-    public String getValidModuleCode() {
-        Ui ui = new Ui();
+    public String getValidModuleCode(Ui ui) {
         String moduleCode = "";
         boolean isModuleCodeValid = false;
 

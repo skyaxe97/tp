@@ -180,7 +180,7 @@ public class Ui {
      * @return User command without save delimiters.
      */
     public String readCommand() {
-        boolean isCommandWithoutDelimiter = false;
+        boolean isCommandWithDelimiter = true;
         String userInput = "";
         do {
             userInput = conversation.nextLine();
@@ -189,12 +189,12 @@ public class Ui {
                 if (userInput.contains("=-=")) {
                     throw new SaveDelimiterException();
                 }
-                isCommandWithoutDelimiter = true;
+                isCommandWithDelimiter = false;
             } catch (SaveDelimiterException e) {
                 System.out.println(colourTextRed("Inputs cannot contain the character sequence: =-="));
                 System.out.println(colourTextCyan("Please re-enter your input:"));
             }
-        } while (!isCommandWithoutDelimiter);
+        } while (isCommandWithDelimiter);
 
         return userInput;
     }
@@ -635,7 +635,7 @@ public class Ui {
 
     public void showInvalidModuleCodeMessage() {
         System.out.println(colourTextRed("The entered module code has an invalid format, please re-enter a "
-                + "valid module code"));
+                + "valid module code:"));
         System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
     }
 }
