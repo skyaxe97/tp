@@ -24,7 +24,7 @@ public class TaskList {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
     private int displayIndexOfLastMatch = 0;
-    HashMap <Integer,Integer> map;
+    HashMap<Integer,Integer> map;
 
     public TaskList() {
         taskList = new ArrayList<>();
@@ -50,9 +50,10 @@ public class TaskList {
         taskList.add(task);
     }
 
-    public int getActualIndex (int i) {
+    public int getActualIndex(int i) {
         return map.get(i);
     }
+
     /**
      * Add new event to taskList.
      *

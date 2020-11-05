@@ -66,9 +66,6 @@ public class EditDeadlineCommand extends Command {
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatMessage();
-        } catch (ParserException e) {
-            logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesMessage(Ui.PARAM_DEADLINE);
@@ -76,7 +73,7 @@ public class EditDeadlineCommand extends Command {
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 
-    private void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userDeadlineChoice) throws ParserException {
+    private void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userDeadlineChoice){
         ui.showSelectParameterToEdit();
         ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
 

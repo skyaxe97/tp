@@ -65,9 +65,6 @@ public class EditLessonCommand extends Command {
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatMessage();
-        } catch (ParserException e) {
-            logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input lesson name does not match any of the existing deadline names.");
             ui.showNoMatchesMessage(Ui.PARAM_LESSON);
@@ -75,7 +72,7 @@ public class EditLessonCommand extends Command {
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
 
-    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userLessonChoice) throws ParserException {
+    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userLessonChoice) {
         ui.showSelectParameterToEdit();
         ui.showEditableParametersMessage(Ui.PARAM_LESSON);
 

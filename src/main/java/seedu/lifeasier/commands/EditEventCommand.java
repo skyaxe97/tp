@@ -66,9 +66,6 @@ public class EditEventCommand extends Command {
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatMessage();
-        } catch (ParserException e) {
-            logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input event name does not match any of the existing event names.");
             ui.showNoMatchesMessage(Ui.PARAM_EVENT);
@@ -76,7 +73,7 @@ public class EditEventCommand extends Command {
         logger.log(Level.INFO, "End of EditEventCommand");
     }
 
-    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userEventChoice) throws ParserException {
+    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userEventChoice) {
         ui.showSelectParameterToEdit();
         ui.showEditableParametersMessage(Ui.PARAM_EVENT);
 
