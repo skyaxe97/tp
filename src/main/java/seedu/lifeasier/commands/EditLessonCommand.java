@@ -11,10 +11,12 @@ import seedu.lifeasier.model.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.parser.Parser;
 
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditLessonCommand extends Command {
+    private static final int LESSON_NUM_OF_TIME_ARGS = 2;
     private static Logger logger = Logger.getLogger(EditLessonCommand.class.getName());
     private String code;
 
@@ -30,12 +32,9 @@ public class EditLessonCommand extends Command {
         tasks.editTaskDescription(index, ui);
     }
 
-    public void editLessonTime(TaskList tasks, int index, Ui ui) throws ParserException {
-        tasks.editLessonTime(index, ui);
-    }
-
-    private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
-        tasks.checkForIndexOutOfBounds(userInput);
+    public void editLessonTime(TaskList tasks, int index, Ui ui, Parser parser) throws ParserException {
+        LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, LESSON_NUM_OF_TIME_ARGS);
+        tasks.editLessonTime(index, ui, times);
     }
 
     @Override
@@ -49,13 +48,12 @@ public class EditLessonCommand extends Command {
             ui.showSelectTaskToEdit(Ui.PARAM_LESSON);
 
             logger.log(Level.INFO, "Reading user input for choice of lesson to edit...");
-            int userLessonChoice = ui.readSingleIntInput() - 1;
-            checkForIndexOutOfBounds(tasks, userLessonChoice);
+            int userLessonChoice = parser.parseUserInputForEditTaskChoice(ui, tasks);
 
             logger.log(Level.INFO, "Temporarily hold value of this Event");
             Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);
 
-            selectParameterToEdit(ui, tasks, userLessonChoice);
+            selectParameterToEdit(parser, ui, tasks, userLessonChoice);
 
             taskHistory.pushOldCopy(oldCopyOfLesson);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
@@ -71,16 +69,18 @@ public class EditLessonCommand extends Command {
             logger.log(Level.SEVERE, "Input is not in the correct format");
             ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
-            logger.log(Level.SEVERE, "Input deadline name does not match any of the existing deadline names.");
-            ui.showNoMatchesMessage("deadline");
+            logger.log(Level.SEVERE, "Input lesson name does not match any of the existing deadline names.");
+            ui.showNoMatchesMessage(Ui.PARAM_LESSON);
         }
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
 
-    public void selectParameterToEdit(Ui ui, TaskList tasks, int userLessonChoice) throws ParserException {
+    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userLessonChoice) throws ParserException {
         ui.showSelectParameterToEdit();
         ui.showEditableParametersMessage(Ui.PARAM_LESSON);
-        int userParamChoice = Integer.parseInt(ui.readCommand());
+
+        logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
+        int userParamChoice = parser.parseValidUserInputForParameterEdit(ui);
 
         switch (userParamChoice) {
 
@@ -91,7 +91,7 @@ public class EditLessonCommand extends Command {
 
         case (2):
             ui.showInputFormat(Ui.PARAM_LESSON);
-            editLessonTime(tasks, userLessonChoice, ui);
+            editLessonTime(tasks, userLessonChoice, ui, parser);
             break;
 
         default:
