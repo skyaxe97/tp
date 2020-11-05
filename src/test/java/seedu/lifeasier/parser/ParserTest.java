@@ -33,7 +33,7 @@ class ParserTest {
         Parser parser = new Parser();
         Ui ui = new Ui();
         Command command = parser.parseCommand(
-                "addLesson /code cg1111 /date 10-10-20 /time 10:00 /to 20:00 /repeats 0", ui);
+                "addLesson /code cg1111 /date 10-10-20 /from 10:00 /to 20:00 /repeats 0", ui);
         assertTrue(command instanceof AddLessonCommand);
     }
 
@@ -69,7 +69,7 @@ class ParserTest {
         Parser parser = new Parser();
         Ui ui = new Ui();
         Command command = parser.parseCommand(
-                "addLesson /code cg1111 /date 10-13-20 /time 24:60 /to 26:76 /repeats 0", ui);
+                "addLesson /code cg1111 /date 10-13-20 /from 24:60 /to 26:76 /repeats 0", ui);
         assertTrue(command instanceof InvalidCommand);
     }
 
@@ -96,7 +96,7 @@ class ParserTest {
         Parser parser = new Parser();
         Ui ui = new Ui();
         Command command = parser.parseCommand(
-                "addEvent my event /date 10-10-20 /time 10:00 /to 20:00 /repeats 1", ui);
+                "addEvent my event /date 10-10-20 /from 10:00 /to 20:00 /repeats 1", ui);
         assertTrue(command instanceof AddEventCommand);
     }
 

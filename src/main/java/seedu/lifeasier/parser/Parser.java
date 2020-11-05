@@ -54,7 +54,7 @@ public class Parser {
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
-    public static final String PARAM_TIME = "/time";
+    public static final String PARAM_TIME = "/from";
     public static final String PARAM_TO = "/to";
     public static final String PARAM_BY = "/by";
     public static final String PARAM_TYPE = "/type";
@@ -167,7 +167,7 @@ public class Parser {
 
         String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
         String date = fillIfEmptyParam(ui, tempDate, "/date");
-        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
+        String startTime = fillIfEmptyParam(ui, tempStartTime, "/from");
         String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
         String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
@@ -247,7 +247,7 @@ public class Parser {
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
         String date = fillIfEmptyParam(ui, tempDate, "/date");
-        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
+        String startTime = fillIfEmptyParam(ui, tempStartTime, "/from");
         String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
         String recurrencesString =  fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
@@ -779,8 +779,8 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Date to string.");
         ui.showAddDateMessage();
         String date = checkIfEmpty(ui, ui.readCommand());
-        String[] temp1 = input.split("/time");
-        input = temp1[0] + "/date " + date + " /time" + temp1[1];
+        String[] temp1 = input.split("/from");
+        input = temp1[0] + "/date " + date + " /from" + temp1[1];
         logger.log(Level.INFO, "End of adding Date to string.");
 
         return input;
@@ -799,7 +799,7 @@ public class Parser {
         ui.showAddStartTimeMessage();
         String startTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp2 = input.split("/to");
-        input = temp2[0] + "/time " + startTime + " /to" + temp2[1];
+        input = temp2[0] + "/from " + startTime + " /to" + temp2[1];
         logger.log(Level.INFO, "End of adding Start Time to string.");
 
         return input;

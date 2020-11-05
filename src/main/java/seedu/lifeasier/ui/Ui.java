@@ -61,9 +61,9 @@ public class Ui {
             + ANSI_CYAN + "COMMANDS\n" + ANSI_RESET
             + "*****************************************************************************************************\n"
             + "help -------------------------------------------------------------------- Displays available commands\n"
-            + "addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- "
+            + "addLesson /code MODULE_CODE /date DATE /from START /to END /repeats ---------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a lesson\n"
-            + "addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ "
+            + "addEvent EVENT_NAME /date DATE /from START /to END /repeats ------------------------ "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds an event\n"
             + "addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a deadline\n"
@@ -94,8 +94,8 @@ public class Ui {
 
     //Input format messages
     public static final String NEW_DEADLINE_TIME_INPUT_FORMAT = "/by DATETIME";
-    public static final String NEW_EVENT_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
-    public static final String NEW_LESSON_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
+    public static final String NEW_EVENT_TIME_INPUT_FORMAT = "/date DATE /from START /to END";
+    public static final String NEW_LESSON_TIME_INPUT_FORMAT = "/date DATE /from START /to END";
 
     private Scanner conversation;
 

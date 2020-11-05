@@ -82,7 +82,7 @@ The following section expands on the features available for you to use in LifEas
 
 * Words in `UPPER_CASE` are parameters to be supplied by the user.
 * Items in square brackets are optional e.g `[TITLE]`
-* Command parameters have to follow the order stated. E.g if the command states `addEvent NAME /time START /to END`,  `addEvent NAME /to END /time START` will **NOT** be accepted.
+* Command parameters have to follow the order stated. E.g if the command states `addEvent NAME /from START /to END`,  `addEvent NAME /to END /from START` will **NOT** be accepted.
 * However, parameters can be missing, and LifEasier will prompt you for the missing parameters.
 * `DATE` parameters have the format of **DD-MM-YY**.
 * `TIME` parameters follow a 24-hour clock, and have the format of **HH:mm**.
@@ -106,8 +106,8 @@ Notes about the command format:
 COMMANDS
 *************************************************************************
 help ---------------------------------------- Displays available commands
-addLesson /code MODULE_CODE /date DATE /time START /to END -- Adds lesson
-addEvent EVENT_NAME /date DATE /time START /to END -------- Adds an event
+addLesson /code MODULE_CODE /date DATE /from START /to END -- Adds lesson
+addEvent EVENT_NAME /date DATE /from START /to END -------- Adds an event
 addDeadline DEADLINE_NAME /by DATETIME ------------------ Adds a deadline
 editLesson MODULE_CODE ----------------------------------- Edits a lesson
 editEvent EVENT_NAME ------------------------------------- Edits an event
@@ -133,7 +133,7 @@ _Figure 3.1-1: An example of using the help command_
 ### 3.2 Adding a Lesson: `addLesson`
 
 Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your schedule.
-Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
+Format: `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES`
 
 ##### Notes on addLesson Command Format:
 
@@ -145,7 +145,7 @@ Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 
 An example of how to use the addLesson command is shown in Figure 3.2-1.
 ```
-addLesson /code CS2101 /date 22-10-20 /time 14:00 /to 16:00 /repeats 30
+addLesson /code CS2101 /date 22-10-20 /from 14:00 /to 16:00 /repeats 30
 Done! I've added "Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), repeats weekly 30 times" to 
 your calendar
 =========================================================================
@@ -154,7 +154,7 @@ your calendar
 
 ### 3.3 Adding an Event: `addEvent`
 Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
-Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
+Format: `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 
 ##### Notes on addEvent Command Format:
 
@@ -166,7 +166,7 @@ Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 
 An example of how to use the addEvent command is shown in Figure 3.3-1.
 ```
-addEvent Concert /date 13-07-19 /time 17:00 /to 21:00 /repeats 0
+addEvent Concert /date 13-07-19 /from 17:00 /to 21:00 /repeats 0
 Done! I've added "Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), repeats weekly 0 times" to 
 your calendar
 =========================================================================
@@ -207,7 +207,7 @@ Format: `editLesson [CODE]`
 * The system will prompt you to choose a lesson to be edited.
 * The system will prompt you to choose to edit the `CODE` or the `START/END` time. 
 * If you choose to edit time, System will prompt to input new `TIME` in the format of 
-“`/date DATE /time START /to END`”
+“`/date DATE /from START /to END`”
 
 ###### Examples:
 
@@ -221,8 +221,8 @@ Please select the parameter you want to edit.
 1. Module Code
 2. Time
 2
-Please input your new time in this format: /date DATE /time START /to END
-/date 22-10-20 /time 14:00 /to 15:45
+Please input your new time in this format: /date DATE /from START /to END
+/date 22-10-20 /from 14:00 /to 15:45
 Your edit has been saved.
 ```
 *Figure 3.5-1: An example of using the editLesson command*
@@ -239,7 +239,7 @@ will be printed.
 * The system will prompt you to choose an `Event` to be edited.
 * The system will prompt you to choose to edit the `NAME` or the `START/END` time. 
 * If you choose to edit time, System will prompt to input new `TIME` in the format of 
-“`/date DATE /time START /to END`”
+“`/date DATE /from START /to END`”
 
 ###### Examples:
 
@@ -691,8 +691,8 @@ for reference.
 
 Action | Format | Example
 --------|-----------------|----------------------------------------------------------------------------------
-addLesson| `addLesson /code MODULE_CODE /date DATE /time START /to END /repeats TIMES` | `addLesson /code cg1111 /date 04-10-20 /time 09:00 /to 12:00 /repeats 10`
-addEvent| `addEvent EVENT_NAME /date DATE /time START /to END /repeats TIMES` | `addEvent HappyTime /date 04-10-20 /time 09:00 /to 12:00 /repeats 0`
+addLesson| `addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES` | `addLesson /code cg1111 /date 04-10-20 /from 09:00 /to 12:00 /repeats 10`
+addEvent| `addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES` | `addEvent HappyTime /date 04-10-20 /from 09:00 /to 12:00 /repeats 0`
 addDeadline| `addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES` | `addDeadline CryTime /by 04-10-20 09:00 /repeats 0`
 editLesson| `editLesson [CODE]` | `editLesson CS2101`
 editEvent| `editEvent [NAME]` | `editEvent BlackPink Concert`
