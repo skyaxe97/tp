@@ -352,7 +352,7 @@ public class Ui {
     }
 
     public void showInvalidInputToEditTime() {
-        System.out.println(colourTextRed("Your input is invalid. Please input in this format: /date dd-mm-yy /time hh:mm /to hh:mm"));
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: /date dd-mm-yy /from hh:mm /to hh:mm"));
     }
 
     public void showUndeterminableTaskError() {
