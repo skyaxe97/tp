@@ -90,7 +90,15 @@ public class TaskList {
     }
 
     public void editTaskDescription(int index, Ui ui) {
-        String newDescription = ui.readCommand();
+        String newDescription;
+        while (true) {
+            newDescription = ui.readCommand();
+            if (newDescription.equals("")) {
+                ui.showEmptyNewDescriptionMessage();
+                continue;
+            }
+            break;
+        }
         getTask(index).setDescription(newDescription);
         ui.showEditConfirmationMessage();
     }

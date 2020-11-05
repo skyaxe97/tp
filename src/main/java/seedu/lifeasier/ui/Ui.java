@@ -586,6 +586,10 @@ public class Ui {
         printSeparator();
     }
 
+    public void showEmptyNewDescriptionMessage() {
+        System.out.println(colourTextRed("Your new description cannot be empty. Please try again!"));
+    }
+
     public void showInvalidRecurrencesError() {
         System.out.println(colourTextRed("Recurrences must be a positive integer!"));
         printSeparator();
