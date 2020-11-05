@@ -174,6 +174,7 @@ public class Parser {
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
+            resetBoolean();
             return new InvalidCommand();
         }
         int recurrences = checkIfValidNumber(ui, recurrencesString);
@@ -255,6 +256,7 @@ public class Parser {
 
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
+            resetBoolean();
             return new InvalidCommand();
         }
         int recurrences = checkIfValidNumber(ui, recurrencesString);
