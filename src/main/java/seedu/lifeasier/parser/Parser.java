@@ -870,6 +870,14 @@ public class Parser {
         return Integer.parseInt(input);
     }
 
+    public int checkIfValidInput(Ui ui, String input) {
+        while (!isNumeric(input)) {
+            ui.showInvalidNumberMessage();
+            input = ui.readCommand();
+        }
+        return Integer.parseInt(input);
+    }
+
     private boolean isNumeric(String input) {
         try {
             int number = Integer.parseInt(input);
@@ -902,7 +910,7 @@ public class Parser {
     public int parseUserInputForEditTaskChoice(Ui ui, TaskList tasks) {
         while (true) {
             try {
-                int newIndex = checkIfValidNumber(ui, ui.readCommand()) - 1;
+                int newIndex = checkIfValidInput(ui, ui.readCommand());
                 tasks.checkForIndexOutOfBounds(newIndex);
                 return newIndex;
             } catch (IndexOutOfBoundsException e) {

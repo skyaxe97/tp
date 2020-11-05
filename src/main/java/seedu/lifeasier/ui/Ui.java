@@ -320,7 +320,7 @@ public class Ui {
     }
 
     public void showInvalidNumberMessage() {
-        System.out.println(colourTextRed("The number you inputted is invalid!"));
+        System.out.println(colourTextRed("The number you inputted is invalid! Please try again."));
         printSeparator();
     }
 
