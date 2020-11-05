@@ -634,7 +634,8 @@ public class Ui {
     }
 
     public void showInvalidModuleCodeMessage() {
-        System.out.println(colourTextRed("The entered module code has an invalid format"));
+        System.out.println(colourTextRed("The entered module code has an invalid format, please re-enter a "
+                + "valid module code"));
         System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
     }
 }
