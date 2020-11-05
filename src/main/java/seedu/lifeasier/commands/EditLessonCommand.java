@@ -32,7 +32,7 @@ public class EditLessonCommand extends Command {
         tasks.editTaskDescription(index, ui);
     }
 
-    public void editLessonTime(TaskList tasks, int index, Ui ui, Parser parser) throws ParserException {
+    public void editLessonTime(TaskList tasks, int index, Ui ui, Parser parser) {
         LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, LESSON_NUM_OF_TIME_ARGS);
         tasks.editLessonTime(index, ui, times);
     }

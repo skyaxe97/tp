@@ -33,7 +33,7 @@ public class EditEventCommand extends Command {
         tasks.editTaskDescription(index, ui);
     }
 
-    public void editEventTime(TaskList tasks, int index, Ui ui, Parser parser) throws ParserException {
+    public void editEventTime(TaskList tasks, int index, Ui ui, Parser parser) {
         LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, EVENT_NUM_OF_TIME_ARGS);
         tasks.editEventTime(index, ui, times);
     }

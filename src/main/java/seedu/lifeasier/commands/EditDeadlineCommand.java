@@ -33,7 +33,7 @@ public class EditDeadlineCommand extends Command {
         tasks.editTaskDescription(index, ui);
     }
 
-    private void editDeadlineTime(TaskList tasks, int index, Ui ui, Parser parser) throws ParserException {
+    private void editDeadlineTime(TaskList tasks, int index, Ui ui, Parser parser) {
         LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, DEADLINE_NUM_OF_TIME_ARGS);
         tasks.editDeadlineTime(index, ui, times);
     }
