@@ -37,19 +37,6 @@ public class DeleteTaskCommand extends Command {
         tasks.printMatchingTasks(type, name, ui);
     }
 
-    private int readUserInput(Ui ui, Parser parser, TaskList tasks) {
-        while (true) {
-            try {
-                int newIndex = parser.checkIfValidNumber(ui, ui.readCommand()) - 1;
-                tasks.checkForIndexOutOfBounds(newIndex);
-                return newIndex;
-            } catch (IndexOutOfBoundsException e) {
-                ui.showIndexOutOfBoundsMessage();
-                continue;
-            }
-        }
-    }
-
     /**
      * Deletes the specified Task from the TaskList.
      *
@@ -84,10 +71,10 @@ public class DeleteTaskCommand extends Command {
             ui.showSelectTaskToDelete(type);
 
             logger.log(Level.INFO, "Reading user input for choice of task to delete...");
-            int userIndex = readUserInput(ui, parser, tasks);
+            int userIndex = parser.parseUserInputForEditTaskChoice(ui, tasks);
 
             logger.log(Level.INFO, "Temporarily hold value of this Task");
-            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, userIndex);
+            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, tasks.getActualIndex(userIndex));
 
             logger.log(Level.INFO, "Deleting task from taskList...");
             deleteTask(tasks, ui, userIndex);
