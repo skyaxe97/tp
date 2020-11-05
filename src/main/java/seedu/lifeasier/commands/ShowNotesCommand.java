@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class ShowNotesCommand extends Command {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     private String title;
+    private int arraySize = 10000;
 
     public ShowNotesCommand(String title) {
         this.title = title;
@@ -24,7 +25,7 @@ public class ShowNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-
+        int[] matchArr = new int [arraySize];
         int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
         int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
 
@@ -43,11 +44,11 @@ public class ShowNotesCommand extends Command {
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            ui.printMultipleNoteMatches(notes, title);
+            matchArr = ui.printMultipleNoteMatches(notes, title, matchArr);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand());
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber, matchArr);
             System.out.println(notes.get(noteNumber - 1).toString());
         }
 
@@ -71,7 +72,7 @@ public class ShowNotesCommand extends Command {
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
 
-                NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
+                NoteCommandFunctions.checkForIndexBeyondSize(notes, noteNumber);
                 System.out.println(notes.get(noteNumber - 1).toString());
 
             }

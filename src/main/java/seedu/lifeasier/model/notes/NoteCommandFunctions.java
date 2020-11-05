@@ -8,10 +8,19 @@ public class NoteCommandFunctions {
         }
     }
 
-    public static void checkForIndexOutOfBounds(NoteList notes, int noteNumber) throws IndexOutOfBoundsException {
+    public static void checkForIndexBeyondSize(NoteList notes, int noteNumber) throws IndexOutOfBoundsException {
         if (noteNumber - 1 > notes.size()) {
             throw new IndexOutOfBoundsException();
         }
+    }
+
+    public static void checkForIndexOutOfBounds(NoteList notes, int noteNumber, int[] arr) {
+        for (int i = 0; i< arr.length; i++) {
+            if (noteNumber == arr[i]) {
+                return;
+            }
+        }
+        throw new IndexOutOfBoundsException();
     }
 
     public static int checkNumberOfNoteMatches(NoteList notes, String title) {
