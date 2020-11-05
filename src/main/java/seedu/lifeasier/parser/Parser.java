@@ -878,6 +878,64 @@ public class Parser {
         return true;
     }
 
+    private void checkValidIndexOfParameter(int userInput) {
+        if (userInput != 1 && userInput != 2) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    public int parseValidUserInputForParameterEdit(Ui ui) {
+        int userParamChoice;
+        while (true) {
+            try {
+                userParamChoice = Integer.parseInt(ui.readCommand());
+                checkValidIndexOfParameter(userParamChoice);
+                break;
+            } catch (IndexOutOfBoundsException e) {
+                ui.showIndexOutOfBoundsMessage();
+            }
+        }
+        return userParamChoice;
+    }
+
+    public int parseUserInputForEditTaskChoice(Ui ui, TaskList tasks) {
+        while (true) {
+            try {
+                int newIndex = checkIfValidNumber(ui, ui.readCommand()) - 1;
+                tasks.checkForIndexOutOfBounds(newIndex);
+                return newIndex;
+            } catch (IndexOutOfBoundsException e) {
+                ui.showIndexOutOfBoundsMessage();
+                continue;
+            }
+        }
+    }
+
+    public LocalDateTime[] parseUserInputForEditDateTime(Ui ui, int numOfTimeArgs) {
+        LocalDateTime[] times;
+        while (true) {
+            try {
+                times = parseNewTimeInput(ui, ui.readCommand(), numOfTimeArgs);
+            } catch (DateTimeParseException e) {
+                logger.log(Level.SEVERE, "Time input is not in the correct format");
+                if (numOfTimeArgs == 1) {
+                    ui.showInvalidInputToEditDeadlineTime();
+                } else {
+                    ui.showInvalidInputToEditTime();
+                }
+                continue;
+            } catch (ParserException e) {
+                if (numOfTimeArgs == 1) {
+                    ui.showInvalidInputToEditDeadlineTime();
+                } else {
+                    ui.showInvalidInputToEditTime();
+                }
+                continue;
+            }
+            return times;
+        }
+    }
+
     /**
      * Parses the user's input into a Command object that can later be executed.
      *
