@@ -73,7 +73,7 @@ public class EditDeadlineCommand extends Command {
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 
-    private void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userDeadlineChoice){
+    private void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userDeadlineChoice) {
         ui.showSelectParameterToEdit();
         ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
 
