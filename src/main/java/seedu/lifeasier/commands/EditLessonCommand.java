@@ -26,8 +26,12 @@ public class EditLessonCommand extends Command {
         tasks.printMatchingTasks(Ui.PARAM_LESSON, code, ui);
     }
 
-    public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
-        tasks.editTaskDescription(index, ui);
+    public void editLessonModuleCode(TaskList tasks, int index, Ui ui, Parser parser) {
+        String moduleCode = ui.readCommand();
+        if (!parser.checkIfValidModuleCode(moduleCode)) {
+            moduleCode = parser.getValidModuleCode();
+        }
+        tasks.editModuleCode(index, ui, moduleCode);
     }
 
     public void editLessonTime(TaskList tasks, int index, Ui ui) throws ParserException {
@@ -55,7 +59,7 @@ public class EditLessonCommand extends Command {
             logger.log(Level.INFO, "Temporarily hold value of this Event");
             Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);
 
-            selectParameterToEdit(ui, tasks, userLessonChoice);
+            selectParameterToEdit(ui, tasks, parser, userLessonChoice);
 
             taskHistory.pushOldCopy(oldCopyOfLesson);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
@@ -77,7 +81,8 @@ public class EditLessonCommand extends Command {
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
 
-    public void selectParameterToEdit(Ui ui, TaskList tasks, int userLessonChoice) throws ParserException {
+    public void selectParameterToEdit(Ui ui, TaskList tasks, Parser parser, int userLessonChoice)
+            throws ParserException {
         ui.showSelectParameterToEdit();
         ui.showEditableParametersMessage(Ui.PARAM_LESSON);
         int userParamChoice = Integer.parseInt(ui.readCommand());
@@ -86,7 +91,7 @@ public class EditLessonCommand extends Command {
 
         case (1):
             ui.showInputMessage(Ui.PARAM_LESSON);
-            editLessonModuleCode(tasks, userLessonChoice, ui);
+            editLessonModuleCode(tasks, userLessonChoice, ui, parser);
             break;
 
         case (2):

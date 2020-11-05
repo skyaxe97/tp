@@ -168,9 +168,6 @@ public class Parser {
         String tempRecurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
         String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
-        if (!checkIfValidModuleCode(moduleCode)) {
-            moduleCode = getValidModuleCode();
-        }
         String date = fillIfEmptyParam(ui, tempDate, "/date");
         String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
         String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
@@ -767,6 +764,9 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Module Code to string.");
         ui.showAddModuleCodeMessage();
         String moduleCode = checkIfEmpty(ui, ui.readCommand());
+        if (!checkIfValidModuleCode(moduleCode)) {
+            moduleCode = getValidModuleCode();
+        }
         String[] temp = input.split("/date");
         input = temp[0] + "/code" + moduleCode + " /date" + temp[1];
         logger.log(Level.INFO, "End of adding Module Code to string.");
@@ -868,6 +868,12 @@ public class Parser {
             ui.printEmptyParam(param);
             input = checkIfEmpty(ui, ui.readCommand());
         }
+        //Check for valid module code
+        if (param.equals("/code")) {
+            if (!checkIfValidModuleCode(input)) {
+                input = getValidModuleCode();
+            }
+        }
         return input;
     }
 
@@ -894,7 +900,7 @@ public class Parser {
      * @param moduleCode The module code to be checked.
      * @return true if the module code is determined to be valid.
      */
-    protected boolean checkIfValidModuleCode(String moduleCode) {
+    public boolean checkIfValidModuleCode(String moduleCode) {
         logger.log(Level.INFO, "Starting module code verification for: " + moduleCode);
         moduleCode = moduleCode.trim();
         char[] moduleCodeElements = moduleCode.toCharArray();
@@ -990,7 +996,7 @@ public class Parser {
      *
      * @return Valid module code.
      */
-    private String getValidModuleCode() {
+    public String getValidModuleCode() {
         Ui ui = new Ui();
         String moduleCode = "";
         boolean isModuleCodeValid = false;
