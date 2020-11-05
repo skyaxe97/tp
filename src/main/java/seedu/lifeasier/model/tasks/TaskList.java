@@ -95,39 +95,19 @@ public class TaskList {
         ui.showEditConfirmationMessage();
     }
 
-    public void editLessonTime(int index, Ui ui) throws ParserException {
-        Parser parser = new Parser();
-        LocalDateTime[] times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
+    public void editLessonTime(int index, Ui ui, LocalDateTime[] times) {
         getTask(index).setStart(times[INDEX_START]);
         getTask(index).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void editEventTime(int index, Ui ui) throws ParserException {
-        LocalDateTime[] times;
-        Parser parser = new Parser();
-        times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
+    public void editEventTime(int index, Ui ui, LocalDateTime[] times) {
         getTask(index).setStart(times[INDEX_START]);
         getTask(index).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void editDeadlineTime(int index, Ui ui) throws ParserException {
-        LocalDateTime[] times;
-        Parser parser = new Parser();
-        times = parser.parseNewTimeInput(ui, ui.readCommand(), 1);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
+    public void editDeadlineTime(int index, Ui ui, LocalDateTime[] times) {
         getTask(index).setStart(times[0]);
         ui.showEditConfirmationMessage();
     }
