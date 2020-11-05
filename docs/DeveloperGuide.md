@@ -417,13 +417,32 @@ _Figure 4.7-4: Sequence diagram for saving of user note data_
 ##### Implementation - Note Archiving
 
 The `archive` command immediately moves all currently loaded notes into a newly generated text file in the `Archives` directory found within the 
-_LifEasierSaves_ directory. If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
+_LifEasierSaves_ directory. The main code snippet which drives the `archive` command is shown in figure 4.7-5. 
+If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
 current date in the **DD-MM-YY** format, and the time the archive command was run in the **HH:MM** format, separated by a **T**. The current save 
-file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` is 
-cleared. Archived notes will **not** be read by the program anymore and any changes can be made to the created archive save file.
+file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` as well as `noteHistory` are  
+cleared. All errors are handled in `handleDataArchiving()`.
+
+````java
+    public void archiveData() {
+        File archiveDirectory = new File(ARCHIVE_PATH);
+
+        ui.showArchiveStartMessage();
+        logger.log(Level.INFO, "Start archiving process");
+        //Create archive directory if non existent
+        if (!directoryExists(archiveDirectory)) {
+            createNewDirectory(archiveDirectory);
+        }
+
+        fileArchive.handleDataArchiving(ARCHIVE_PATH);
+        fileCommand.clearSaveFile(filePathNotes);
+        noteHistory.clearNoteHistory();
+    }
+````
+_Figure 4.7-5: Code snippet for main driver of archive command_
 
 The `archive` command checks for the size of the current `noteList` before execution, and as such, when an empty `noteList` is detected, 
-the archiving process will not be started.
+the archiving process will not be started. Archived notes will **not** be read by the program anymore and any changes can be made to the created archive save file.
 
 ##### Design Considerations
 
@@ -625,7 +644,11 @@ edited in future to change the configurations if necessary.
 
 ## 11.0 Glossary
 
-* *glossary item* - Definition
+The following section will give the definition of some commonly used words in **LifEasier**.
+
+* _glossary item_ - Definition
+* _taskList_ - An array list of `Task` objects used by **LifEasier** to temporarily store lessons, events and deadlines while the program is running.
+* _noteList_ - An array list of `Note` objects used by **LifEasier** to temporarily store current notes while the program is running.
 
 ## Appendix A: Project Requirements
 
