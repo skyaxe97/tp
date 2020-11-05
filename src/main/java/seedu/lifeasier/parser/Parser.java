@@ -406,49 +406,44 @@ public class Parser {
 
         logger.log(Level.INFO, "Parsing newTimeInput from user...");
         LocalDateTime[] times = new LocalDateTime[2];
-        try {
-            switch (numOfTimeArgs) {
 
-            case (1):
-                int firstIndexOfByCommand = input.indexOf(PARAM_BY);
-                int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
+        switch (numOfTimeArgs) {
 
-                if (firstIndexOfByCommand == -1) {
-                    logger.log(Level.SEVERE, "Input missing BY keyword");
-                    throw new ParserException();
-                }
+        case (1):
+            int firstIndexOfByCommand = input.indexOf(PARAM_BY);
+            int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
-                String byInput = input.substring(lastIndexOfByCommand).trim();
-                LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-                times[INDEX_START] = by;
-                return times;
-
-            case (2):
-                int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
-                int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
-                int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
-                int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
-                int firstIndexOfToCommand = input.indexOf(PARAM_TO);
-                int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
-
-                checkValidTimeKeywords(firstIndexOfDateCommand, firstIndexOfTimeCommand, firstIndexOfToCommand);
-
-                String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-                String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-                String endTime =  checkForMidnightEndTime(input.substring(lastIndexOfToCommand).trim());
-                LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
-                LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
-                times[INDEX_START] = start;
-                times[INDEX_END] = end;
-                return times;
-
-            default:
-                break;
+            if (firstIndexOfByCommand == -1) {
+                logger.log(Level.SEVERE, "Input missing BY keyword");
+                throw new ParserException();
             }
 
-        } catch (DateTimeParseException e) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            ui.showLocalDateTimeParseError();
+            String byInput = input.substring(lastIndexOfByCommand).trim();
+            LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
+            times[INDEX_START] = by;
+            return times;
+
+        case (2):
+            int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
+            int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
+            int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
+            int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
+            int firstIndexOfToCommand = input.indexOf(PARAM_TO);
+            int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+
+            checkValidTimeKeywords(firstIndexOfDateCommand, firstIndexOfTimeCommand, firstIndexOfToCommand);
+
+            String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+            String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+            String endTime = checkForMidnightEndTime(input.substring(lastIndexOfToCommand).trim());
+            LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+            LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+            times[INDEX_START] = start;
+            times[INDEX_END] = end;
+            return times;
+
+        default:
+            break;
         }
         return times;
     }
