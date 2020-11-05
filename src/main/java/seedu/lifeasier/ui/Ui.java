@@ -347,6 +347,14 @@ public class Ui {
         System.out.println(colourTextRed("Encountered a problem reading the date and time of the task..."));
     }
 
+    public void showInvalidInputToEditDeadlineTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: /by dd-mm-yy hh:mm"));
+    }
+
+    public void showInvalidInputToEditTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: /date dd-mm-yy /time hh:mm /to hh:mm"));
+    }
+
     public void showUndeterminableTaskError() {
         System.out.println(colourTextRed("Something went wrong while determining the tasks..."));
     }
