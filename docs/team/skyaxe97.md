@@ -55,14 +55,16 @@ These can be found in
 ### Contributions to Team-Based Tasks
 
 Overall, I contributed to prompt reporting of issues/bugs faced during development and managed some issues on the issue 
-tracker, some examples being [#42](https://github.com/AY2021S1-CS2113T-W13-4/tp/issues/42) and [#65](https://github.com/AY2021S1-CS2113T-W13-4/tp/issues/65).
+tracker, some examples being [#42](https://github.com/AY2021S1-CS2113T-W13-4/tp/issues/42) 
+and [#65](https://github.com/AY2021S1-CS2113T-W13-4/tp/issues/65). 
 
 
 ### Review / Mentoring Contributions
 
-Over the course of development, I helped review some of the pull requests of other team members.
+Over the course of development, I helped review some of the pull requests of other team members, 
+and also helped to suggest any changes to improve their features.
 
 ### Contributions Beyond the Project Team
 
-Throughout the project, I kept updated on the forum to ensure that I knew of the issues other groups were facing, and how these might apply to our project.
-I also took peer review exercises seriously in order to give sincere and meaningful feedback to other teams
+I actively participated in peer review exercises and worked to give constructive and relevant 
+advice/feedback to other groups.
