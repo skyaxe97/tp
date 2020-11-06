@@ -36,10 +36,10 @@ public class LifEasier {
         parser = new Parser();
         tasks = new TaskList();
         notes = new NoteList();
-        storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks);
         scheduleUi = new ScheduleUi();
         noteHistory = new NoteHistory();
         taskHistory = new TaskHistory();
+        storage = new FileStorage(fileNameTasks, fileNameNotes, ui, notes, tasks, noteHistory);
 
         AnsiConsole.systemInstall();
     }

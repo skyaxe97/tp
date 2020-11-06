@@ -402,29 +402,55 @@ _Figure 4.7-2: Sequence diagram for save data reading on startup_
 
 By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
 The names of the tasks and notes save files are passed in as arguments from the main method in the `LifEasier` class, where the first 
-argument dictates the resulting name of the tasks save file, while the second determines the name of the notes save file. Save directory 
-names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
+argument dictates the resulting name of the tasks save file, while the second determines the name of the notes save file, as seen from the 
+code snippet in figure 4.7-3. Save directory names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
+
+````java
+public static void main(String[] args) {
+    new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(false);
+}
+````
+_Figure 4.7-3: Code snippet for where save file names are set_
 
 Whenever a new task or note is added, edited or deleted, the `saveTask()` or `saveNote()` methods in the `FileStorage` class is called depending 
-on whether the changed item was a task or a note, to begin the data saving process. Figure 4.7-3 shows the sequence diagram taken by the program 
+on whether the changed item was a task or a note, to begin the data saving process. Figure 4.7-4 shows the sequence diagram taken by the program 
 to save the user’s notes data. The saving process for tasks and notes are implemented in similar ways, with the saving process for tasks 
 requiring a few more additional steps to correctly convert the tasks’ `LocalDateTime` information into formatted Strings to allow for more 
 readable save files. The format in which the `LocalDateTime` objects are converted to can be found in the `DateTimeFormatter` object in the 
 `FileCommand` class.
 
 ![Save sequence diagram](images/DeveloperGuide/StorageSaveSequenceDiagram.png)
-_Figure 4.7-3: Sequence diagram for saving of user note data_
+_Figure 4.7-4: Sequence diagram for saving of user note data_
 
 ##### Implementation - Note Archiving
 
 The `archive` command immediately moves all currently loaded notes into a newly generated text file in the `Archives` directory found within the 
-_LifEasierSaves_ directory. If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
+_LifEasierSaves_ directory. The main code snippet which drives the `archive` command is shown in figure 4.7-5. 
+If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
 current date in the **DD-MM-YY** format, and the time the archive command was run in the **HH:MM** format, separated by a **T**. The current save 
-file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` is 
-cleared. Archived notes will not be read by the program anymore and any changes can be made to the created archive save file.
+file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` as well as `noteHistory` are  
+cleared. All errors are handled in `handleDataArchiving()`.
+
+````java
+    public void archiveData() {
+        File archiveDirectory = new File(ARCHIVE_PATH);
+
+        ui.showArchiveStartMessage();
+        logger.log(Level.INFO, "Start archiving process");
+        //Create archive directory if non existent
+        if (!directoryExists(archiveDirectory)) {
+            createNewDirectory(archiveDirectory);
+        }
+
+        fileArchive.handleDataArchiving(ARCHIVE_PATH);
+        fileCommand.clearSaveFile(filePathNotes);
+        noteHistory.clearNoteHistory();
+    }
+````
+_Figure 4.7-5: Code snippet for main driver of archive command_
 
 The `archive` command checks for the size of the current `noteList` before execution, and as such, when an empty `noteList` is detected, 
-the archiving process will not be started.
+the archiving process will not be started. Archived notes will **not** be read by the program anymore and any changes can be made to the created archive save file.
 
 ##### Design Considerations
 
@@ -436,9 +462,9 @@ granted to users that their data is constantly saved without needing their manua
 Saves were also designed to be stored in simple plain text and easily accessible to users to allow experienced users to modify 
 the save files directly and easily, if required. 
 
-In the event of corrupted or missing data, the `storage` component defends and protects the app from potential issues that might arise from 
-reading in this data by throwing exceptions to stop any further data reading. Any data read up to that point is untouched, and the app will 
-continue to run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
+In the event of **corrupted or missing data**, the `storage` component defends and protects the app from potential issues that might arise from 
+reading in this data by throwing exceptions to stop prevent the current data from being read. Any data read up to that point is **untouched**, and the app will 
+continue to read in the remaining data and run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
 
 ### 4.8 Displaying Schedule (Johannine)
 
@@ -631,14 +657,21 @@ edited in future to change the configurations if necessary.
 
 ## 11.0 Glossary
 
-* *glossary item* - Definition
+The following section will give the definition of some commonly used words in **LifEasier**.
+
+* _glossary item_ - Definition
+* _taskList_ - An array list of `Task` objects used by **LifEasier** to temporarily store lessons, events and deadlines while the program is running.
+* _noteList_ - An array list of `Note` objects used by **LifEasier** to temporarily store current notes while the program is running.
 
 ## Appendix A: Guidelines on Manual Testing
 
-Refer to the **LIfEasier User Guide** for the setting up/quick start guide and to view more detailed information of all usable commands. After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
+Refer to the **LIfEasier User Guide** [here](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide), for the setting up/quick start guide and to view more detailed information of all usable commands. 
+After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
 
-The following are some sample commands to add new tasks and notes into **LifEasier**.
+The following are some sample commands to add new tasks and notes into **LifEasier**. Please note that some commands are _partial commands_, where incomplete command 
+parameters are allowed. Please refer to the user guide linked above for more information on which commands support _partial commands_.
 * `addLesson /code CS2113T /date 28-10-20 /time 14:00 /to 16:00 /repeats 10`
+* `addLesson /code CS2101`
 * `addEvent CS2101 Presentation /date 30-10-20 /time 09:00 /to 12:00 /repeats 5`
 * `addDeadline Buy some Bread /by  31-01-20 22:00 /repeats 0`
 * `addNotes`
@@ -658,6 +691,11 @@ All tasks and notes are editable. Use the following sample commands to test the 
 * `editDeadline Buy some Bread`
 * `editNotes`
 * `editNotes Cats`
+
+**LifEasier** sports an undo function, which allows you to undo edits and deletions made to tasks and notes.
+At any point, feel free to try out the undo command after an edit or delete has been made. Use the following sample commands to test the undo feature.
+* `undo task`
+* `undo note`
 
 Once again, use the `display` and `showNotes` commands to view the updated tasks and notes contents.
 

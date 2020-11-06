@@ -9,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FileCommandTest {
 
@@ -61,4 +63,19 @@ class FileCommandTest {
         }
     }
 
+    @Test
+    void checkForDelimiterCount_stringWithDelimiters_true() {
+        String testString = "lesson=-=CS1231=-=05-11-20 12:00=-=05-11-20 16:00=-=25";
+
+        boolean isCorrectNumber = fileCommand.checkForDelimiterCount(testString, 4);
+        assertTrue(isCorrectNumber);
+    }
+
+    @Test
+    void checkForDelimiterCount_stringWithDelimiters_false() {
+        String testString = "lesson=-=CS1231=-=05=-=11-20 12:00=-=05-11-20 16:00=-=25";
+
+        boolean isCorrectNumber = fileCommand.checkForDelimiterCount(testString, 4);
+        assertFalse(isCorrectNumber);
+    }
 }
