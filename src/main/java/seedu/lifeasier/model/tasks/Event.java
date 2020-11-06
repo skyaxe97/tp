@@ -76,6 +76,15 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Returns true if a similar or duplicate Event already exists in the schedule.
+     *
+     * @param description Description of Event to be checked.
+     * @param start Start DateTime of Event to be checked.
+     * @param end End DateTime of Event to be checked.
+     * @param recurrences Recurrences of Event to be checked.
+     * @return True if a similar or duplicate Event already exists in the schedule.
+     */
     public boolean isDuplicate(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
 
         LocalTime existingStartTime = this.start.toLocalTime();

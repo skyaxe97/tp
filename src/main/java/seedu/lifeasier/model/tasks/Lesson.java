@@ -76,6 +76,15 @@ public class Lesson extends Task {
         }
     }
 
+    /**
+     * Returns true if a similar or duplicate Lesson already exists in the schedule.
+     *
+     * @param moduleCode Module code of Lesson to be checked.
+     * @param start Start DateTime of Lesson to be checked.
+     * @param end End DateTime of Lesson to be checked.
+     * @param recurrences Recurrences of Lesson to be checked.
+     * @return True if a similar or duplicate Lesson already exists in the schedule.
+     */
     public boolean isDuplicate(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
 
         LocalTime existingStartTime = this.start.toLocalTime();

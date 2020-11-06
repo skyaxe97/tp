@@ -74,6 +74,14 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Returns true if a similar or duplicate Deadline already exists in the schedule.
+     *
+     * @param description Description of Deadline to be checked.
+     * @param by By DateTime of Deadline to be checked.
+     * @param recurrences Recurrences of Deadline to be checked.
+     * @return True if a similar or duplicate Deadline already exists in the schedule.
+     */
     public boolean isDuplicate(String description, LocalDateTime by, int recurrences) {
 
         LocalTime existingBy = this.by.toLocalTime();
