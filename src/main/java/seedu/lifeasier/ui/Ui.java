@@ -188,7 +188,7 @@ public class Ui {
         System.out.println(colourTextCyan(LOGO));
     }
 
-    public void showHelpMessage() {
+    public void showHelpMenu() {
         printBlankLine();
         printThickSeparator();
         System.out.println(HELP_MESSAGE);
