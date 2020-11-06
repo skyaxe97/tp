@@ -1,5 +1,6 @@
 package seedu.lifeasier.parser;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import seedu.lifeasier.commands.AddDeadlineCommand;
@@ -15,6 +16,7 @@ import seedu.lifeasier.ui.Ui;
 
 import java.time.format.DateTimeParseException;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -107,6 +109,38 @@ class ParserTest {
         Command command = parser.parseCommand(
                 "addDeadline my deadline /by 10-10-20 10:00 /repeats 0", ui);
         assertTrue(command instanceof AddDeadlineCommand);
+    }
+
+    @Test
+    void checkIfValidModuleCode_validModuleCodes_true() {
+        Parser parser = new Parser();
+        Assertions.assertAll(
+            () -> assertTrue(parser.checkIfValidModuleCode("CS1010")),
+            () -> assertTrue(parser.checkIfValidModuleCode("CS2113T")),
+            () -> assertTrue(parser.checkIfValidModuleCode("GET1023")),
+            () -> assertTrue(parser.checkIfValidModuleCode("ACC1000X"))
+        );
+    }
+
+    @Test
+    void checkIfValidModuleCode_invalidModuleCodes_false() {
+        Parser parser = new Parser();
+        Assertions.assertAll(
+            () -> assertFalse(parser.checkIfValidModuleCode("")),
+            () -> assertFalse(parser.checkIfValidModuleCode("addLesson /code CS1231")),
+            () -> assertFalse(parser.checkIfValidModuleCode("         ")),
+            () -> assertFalse(parser.checkIfValidModuleCode("G1000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("G1000S")),
+            () -> assertFalse(parser.checkIfValidModuleCode("GERT1000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("#GE1000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("GES00000")),
+            () -> assertFalse(parser.checkIfValidModuleCode("GERT1000X")),
+            () -> assertFalse(parser.checkIfValidModuleCode("C9S1000X")),
+            () -> assertFalse(parser.checkIfValidModuleCode("RE10TX")),
+            () -> assertFalse(parser.checkIfValidModuleCode("CS9S000E")),
+            () -> assertFalse(parser.checkIfValidModuleCode("CS2101XD")),
+            () -> assertFalse(parser.checkIfValidModuleCode("CS2101#"))
+        );
     }
 
 }

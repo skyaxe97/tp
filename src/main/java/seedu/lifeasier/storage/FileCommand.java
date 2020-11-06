@@ -21,6 +21,7 @@ public class FileCommand {
     public static final String DEFAULT_DATETIME = "31-12-99 00:00";
     public static final String TIME_DELIMITER = "T";
     public static final String WHITE_SPACE = " ";
+    public static final String SAVE_DELIMITER = "=-=";
 
     private static Logger logger = Logger.getLogger(FileCommand.class.getName());
 
@@ -72,6 +73,28 @@ public class FileCommand {
         assert taskDateTime != null : "taskDateTime must never be null";
 
         return taskDateTime;
+    }
+
+    /**
+     * Counts the number of save delimiters found in the read save file line.
+     *
+     * @param string String with which to count the number of save delimiters.
+     * @param baseDelimiterCount Base value to compare with.
+     * @return true when the count in given string matches baseDelimiterCount.
+     */
+    public boolean checkForDelimiterCount(String string, int baseDelimiterCount) {
+        boolean isStillContainingDelimiter = true;
+        int delimiterCount = 0;
+
+        do {
+            isStillContainingDelimiter = string.contains(SAVE_DELIMITER);
+            if (isStillContainingDelimiter) {
+                delimiterCount++;
+                string = string.replaceFirst(SAVE_DELIMITER, BLANK_STRING);
+            }
+        } while (isStillContainingDelimiter);
+
+        return delimiterCount == baseDelimiterCount;
     }
 
 }

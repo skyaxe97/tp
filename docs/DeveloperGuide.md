@@ -34,9 +34,8 @@
 * [9.0 Testing / Logging](#90-testing--logging)
 * [10.0 Dev Ops](#100-dev-ops)
 * [11.0 Glossary](#110-glossary)
-* [Appendix A: Project Requirements](#appendix-a-project-requirements)
-* [Appendix B: Guidelines on Manual Testing](#appendix-b-guidelines-on-manual-testing)
-* [Appendix C: Effort](#appendix-c-effort)
+* [Appendix A: Guidelines on Manual Testing](#appendix-a-guidelines-on-manual-testing)
+* [Appendix B: Effort](#appendix-b-effort)
 
 ## 1.0 Introduction
 
@@ -338,16 +337,16 @@ To implement the `undo` feature, the concept of a stack was used to hold all the
 (or `Notes`) before they are changed.
 
 At every instance where a particular `Task` (or `Note`) is edited or deleted, using commands such as `editDeadline`, 
-`deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is made as the changes are being made. Every `Task` or 
+`deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is created as the changes are being made. Every `Task` or 
 `Note` object has an `editNumber` attributed to it, which is assigned a positive value if it has been edited, and a 
 negative value if it has been deleted.
 
-The copy made is temporarily stored as a new `Task` (or `Note`) object until the edit or deletion is successful. The 
-copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `NoteHistory`), 
+The copy made is stored as a new `Task` (or `Note`) object temporarily. Once the edit or deletion is successful, the 
+copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `noteHistory`), 
 which holds all the previous copies of the object.
 
 Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
-works in a similar manner for that of `Note` objects.
+works in a similar manner for `Note` objects.
 
 ![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
 _Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
@@ -362,13 +361,22 @@ The corresponding confirmation message to be displayed is determined by whether 
 ![Figure 4.6-2](images/DeveloperGuide/Figure 4.6-2.png)
 _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
+A new `taskHistory` (or `noteHistory`) is created at every startup of the application. Therefore, the history of any 
+edits and deletions are only available for the current session. Once the program is closed, all information is discarded.
+
 ##### Design Considerations
 
 To allow for multiple undos on the same `Task` (or `Note`) object, the `editNumber` of `Tasks` (or `Notes`) that have 
-been edited before must be checked. If it is anything but the default assigned _value(-999999)_, then its existing 
+been edited before must be checked. If it is anything but the _default assigned value(-999999)_, then its existing 
 `editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the 
 application to always find the same instance of the `Task` (or `Note`) inside the `TaskList` (or `NoteList`) when 
 restoring previous versions.
+
+However, multiple undos are only allowed until a particular object is deleted. Because of how each `Task` (or `Note`) only 
+has one `editNumber` attributed to it, once it is assigned a deleteID (a negative number), it has to overwrite its 
+previous (positive) editID. Therefore, if an object is deleted, all other previously stored copies of it in the `taskHistory` 
+(or `noteHistory`) are discarded. For example, if a particular object goes through _edit1-edit2-delete1-edit3_, the 
+user will only be able to undo _edit3_ and _delete1_. The copies related to _edit1_ and _edit2_ are removed from history.
 
 ### 4.7 Storing and Archiving Notes (Danzel)
 
@@ -394,29 +402,55 @@ _Figure 4.7-2: Sequence diagram for save data reading on startup_
 
 By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
 The names of the tasks and notes save files are passed in as arguments from the main method in the `LifEasier` class, where the first 
-argument dictates the resulting name of the tasks save file, while the second determines the name of the notes save file. Save directory 
-names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
+argument dictates the resulting name of the tasks save file, while the second determines the name of the notes save file, as seen from the 
+code snippet in figure 4.7-3. Save directory names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
+
+````java
+public static void main(String[] args) {
+    new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(false);
+}
+````
+_Figure 4.7-3: Code snippet for where save file names are set_
 
 Whenever a new task or note is added, edited or deleted, the `saveTask()` or `saveNote()` methods in the `FileStorage` class is called depending 
-on whether the changed item was a task or a note, to begin the data saving process. Figure 4.7-3 shows the sequence diagram taken by the program 
+on whether the changed item was a task or a note, to begin the data saving process. Figure 4.7-4 shows the sequence diagram taken by the program 
 to save the user’s notes data. The saving process for tasks and notes are implemented in similar ways, with the saving process for tasks 
 requiring a few more additional steps to correctly convert the tasks’ `LocalDateTime` information into formatted Strings to allow for more 
 readable save files. The format in which the `LocalDateTime` objects are converted to can be found in the `DateTimeFormatter` object in the 
 `FileCommand` class.
 
 ![Save sequence diagram](images/DeveloperGuide/StorageSaveSequenceDiagram.png)
-_Figure 4.7-3: Sequence diagram for saving of user note data_
+_Figure 4.7-4: Sequence diagram for saving of user note data_
 
 ##### Implementation - Note Archiving
 
 The `archive` command immediately moves all currently loaded notes into a newly generated text file in the `Archives` directory found within the 
-_LifEasierSaves_ directory. If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
+_LifEasierSaves_ directory. The main code snippet which drives the `archive` command is shown in figure 4.7-5. 
+If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
 current date in the **DD-MM-YY** format, and the time the archive command was run in the **HH:MM** format, separated by a **T**. The current save 
-file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` is 
-cleared. Archived notes will not be read by the program anymore and any changes can be made to the created archive save file.
+file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` as well as `noteHistory` are  
+cleared. All errors are handled in `handleDataArchiving()`.
+
+````java
+    public void archiveData() {
+        File archiveDirectory = new File(ARCHIVE_PATH);
+
+        ui.showArchiveStartMessage();
+        logger.log(Level.INFO, "Start archiving process");
+        //Create archive directory if non existent
+        if (!directoryExists(archiveDirectory)) {
+            createNewDirectory(archiveDirectory);
+        }
+
+        fileArchive.handleDataArchiving(ARCHIVE_PATH);
+        fileCommand.clearSaveFile(filePathNotes);
+        noteHistory.clearNoteHistory();
+    }
+````
+_Figure 4.7-5: Code snippet for main driver of archive command_
 
 The `archive` command checks for the size of the current `noteList` before execution, and as such, when an empty `noteList` is detected, 
-the archiving process will not be started.
+the archiving process will not be started. Archived notes will **not** be read by the program anymore and any changes can be made to the created archive save file.
 
 ##### Design Considerations
 
@@ -428,9 +462,9 @@ granted to users that their data is constantly saved without needing their manua
 Saves were also designed to be stored in simple plain text and easily accessible to users to allow experienced users to modify 
 the save files directly and easily, if required. 
 
-In the event of corrupted or missing data, the `storage` component defends and protects the app from potential issues that might arise from 
-reading in this data by throwing exceptions to stop any further data reading. Any data read up to that point is untouched, and the app will 
-continue to run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
+In the event of **corrupted or missing data**, the `storage` component defends and protects the app from potential issues that might arise from 
+reading in this data by throwing exceptions to stop prevent the current data from being read. Any data read up to that point is **untouched**, and the app will 
+continue to read in the remaining data and run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
 
 ### 4.8 Displaying Schedule (Johannine)
 
@@ -465,7 +499,7 @@ entire `TaskList` every time it is called, in order to arrange the `Tasks` accor
 
 Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the 
 timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not 
-overloaded with too much details.
+overloaded with too many details.
 
 ### 4.9 Displaying Free Time and Sleep Time (Daniel)
 
@@ -538,10 +572,15 @@ few days, they might need to restart it to ensure that their tasks are updated.
 
 ## 5.0 Product Scope
 
+This section highlights the scope of **LifEasier**, particularly the features that characterise it and who it is made for.
+
 ### 5.1 Target user profile
 
-NUS Computer Engineering students who struggle with keeping track of classes and deadlines, and managing their time to 
-have a social life with their busy schedule.
+NUS Computer Engineering students who:
+* struggle with keeping track of classes and deadlines
+* frequently juggle their time between school and personal interests
+* face difficulty keeping track of their school notes
+* are comfortable using the command line interface
  
 ### 5.2 Value proposition
 
@@ -618,17 +657,28 @@ edited in future to change the configurations if necessary.
 
 ## 11.0 Glossary
 
-* *glossary item* - Definition
+The following section will give the definition of some commonly used words in **LifEasier**.
 
-## Appendix A: Project Requirements
+* _glossary item_ - Definition
+* _taskList_ - An array list of `Task` objects used by **LifEasier** to temporarily store lessons, events and deadlines while the program is running.
+* _noteList_ - An array list of `Note` objects used by **LifEasier** to temporarily store current notes while the program is running.
 
-## Appendix B: Guidelines on Manual Testing
+## Appendix A: Guidelines on Manual Testing
 
-Refer to the **LIfEasier User Guide** for the setting up/quick start guide and to view more detailed information of all usable commands. After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
+Refer to the **LIfEasier User Guide** [here](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide), for the setting up/quick start guide and to view more detailed information of all usable commands. 
+After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
 
+<<<<<<< HEAD
 The following are some sample commands to add new tasks and notes into **LifEasier**.
 * `addLesson /code CS2113T /date 28-10-20 /from 14:00 /to 16:00 /repeats 10`
 * `addEvent CS2101 Presentation /date 30-10-20 /from 09:00 /to 12:00 /repeats 5`
+=======
+The following are some sample commands to add new tasks and notes into **LifEasier**. Please note that some commands are _partial commands_, where incomplete command 
+parameters are allowed. Please refer to the user guide linked above for more information on which commands support _partial commands_.
+* `addLesson /code CS2113T /date 28-10-20 /time 14:00 /to 16:00 /repeats 10`
+* `addLesson /code CS2101`
+* `addEvent CS2101 Presentation /date 30-10-20 /time 09:00 /to 12:00 /repeats 5`
+>>>>>>> 94783cf6dae219a7128371ffd4f158eb448d9da1
 * `addDeadline Buy some Bread /by  31-01-20 22:00 /repeats 0`
 * `addNotes`
 * `addNotes Cats are the best!`
@@ -647,6 +697,11 @@ All tasks and notes are editable. Use the following sample commands to test the 
 * `editDeadline Buy some Bread`
 * `editNotes`
 * `editNotes Cats`
+
+**LifEasier** sports an undo function, which allows you to undo edits and deletions made to tasks and notes.
+At any point, feel free to try out the undo command after an edit or delete has been made. Use the following sample commands to test the undo feature.
+* `undo task`
+* `undo note`
 
 Once again, use the `display` and `showNotes` commands to view the updated tasks and notes contents.
 
@@ -667,11 +722,14 @@ To show free time and sleep time, use the following commands.
 * `freeTime`
 * `sleepTime`
 
-Following the above path for manual testing will bring you through all the features implemented in the current version of **LifEasier**. Please feel free to try out other combinations of inputs to fully test the program.
+Following the above path for manual testing will bring you through all the features implemented in the current version 
+of **LifEasier**. Please feel free to try out other combinations of inputs to fully test the program.
 
 
-## Appendix C: Effort
+## Appendix B: Effort
 
-On average, the development team met up twice a week to merge finished work, bug test, and do minor bug fixes before continuing to discuss design moving forward, new features to be implemented and handing out new issues. 
+On average, the development team met up twice a week to merge finished work, bug test, and do minor bug fixes before 
+continuing to discuss design moving forward, new features to be implemented and handing out new issues. 
 
-Overall, the average individual effort was higher than that of the individual project. This is because we underestimated the difficulty of working in a team, and the amount of time needed to create the User Guide and Developer Guide. 
+Overall, the average individual effort was higher than that of the individual project. This is because we underestimated 
+the difficulty of working in a team, and the amount of time needed to create the User Guide and Developer Guide. 
