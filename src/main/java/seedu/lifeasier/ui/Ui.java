@@ -637,7 +637,8 @@ public class Ui {
         System.out.println(colourTextRed("The entered module code has an invalid format, please re-enter a "
                 + "valid module code:"));
         System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
-
+    }
+        
     public void showEnterDisplayKeywordMessage() {
         System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
         printSeparator();
