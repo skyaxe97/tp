@@ -28,7 +28,7 @@ public class DeleteNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, String title, NoteHistory noteHistory) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-        int[] matchArr = new int [arraySize];
+        int[] noteMatches = new int [arraySize];
         int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
         int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
 
@@ -50,11 +50,11 @@ public class DeleteNotesCommand extends Command {
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            matchArr = ui.printMultipleNoteMatches(notes, title, matchArr);
+            noteMatches = ui.printMultipleNoteMatches(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand());
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber, matchArr);
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber, noteMatches);
             System.out.println(notes.get(noteNumber - 1).toString());
 
             ui.showConfirmDeleteMessage();
