@@ -999,7 +999,7 @@ public class Parser {
         boolean isModuleCodeValid = false;
 
         while (!isModuleCodeValid) {
-            ui.showInvalidModuleCodeMessage();
+            ui.showInvalidModuleCodePrompt();
             moduleCode = ui.readCommand();
             isModuleCodeValid = checkIfValidModuleCode(moduleCode);
         }

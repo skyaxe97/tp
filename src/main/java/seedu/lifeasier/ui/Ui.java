@@ -611,7 +611,7 @@ public class Ui {
         printSeparator();
     }
 
-    public void showReadErrorHandlerMessage() {
+    public void showReadErrorHandlerError() {
         System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
                 + "read. The rest of your data will continue to be loaded"));
         System.out.println(colourTextRed("This is done to protect your stored data\n"));
@@ -633,7 +633,7 @@ public class Ui {
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
-    public void showInvalidModuleCodeMessage() {
+    public void showInvalidModuleCodePrompt() {
         System.out.println(colourTextRed("The entered module code has an invalid format, please re-enter a "
                 + "valid module code:"));
         System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));

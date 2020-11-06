@@ -85,12 +85,12 @@ public class NoteStorage {
                 logger.log(Level.INFO, "New Note added: " + noteTitle);
             } catch (ArrayIndexOutOfBoundsException e) {
                 ui.showSaveDataMissingError();
-                ui.showReadErrorHandlerMessage();
+                ui.showReadErrorHandlerError();
                 logger.log(Level.SEVERE, "Missing data from save file");
 
             } catch (SaveDelimiterException e) {
                 ui.showSaveDelimiterError();
-                ui.showReadErrorHandlerMessage();
+                ui.showReadErrorHandlerError();
                 logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
 
             }

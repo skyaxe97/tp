@@ -93,22 +93,22 @@ public class TaskStorage {
                 logger.log(Level.INFO, "Rebuilt task: " + taskType);
             } catch (ArrayIndexOutOfBoundsException e) {
                 ui.showSaveDataMissingError();
-                ui.showReadErrorHandlerMessage();
+                ui.showReadErrorHandlerError();
                 logger.log(Level.WARNING, "Missing data from save file");
 
             } catch (NumberFormatException e) {
                 ui.showUndeterminableRecurrenceError();
-                ui.showReadErrorHandlerMessage();
+                ui.showReadErrorHandlerError();
                 logger.log(Level.WARNING, "Unable to read recurrence field");
 
             } catch (StorageException e) {
                 ui.showUndeterminableTaskError();
-                ui.showReadErrorHandlerMessage();
+                ui.showReadErrorHandlerError();
                 logger.log(Level.SEVERE, "Read task type failed");
 
             } catch (SaveDelimiterException e) {
                 ui.showSaveDelimiterError();
-                ui.showReadErrorHandlerMessage();
+                ui.showReadErrorHandlerError();
                 logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
 
             }
