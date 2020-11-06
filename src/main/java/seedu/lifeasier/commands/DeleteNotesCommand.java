@@ -53,13 +53,13 @@ public class DeleteNotesCommand extends Command {
             noteMatches = ui.printMultipleNoteMatches(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
-            noteNumber = Integer.parseInt(ui.readCommand());
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber, noteMatches);
-            System.out.println(notes.get(noteNumber - 1).toString());
+            noteNumber = Integer.parseInt(ui.readCommand()) - 1;
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
+            System.out.println(notes.get(noteNumber).toString());
 
             ui.showConfirmDeleteMessage();
             input = checkConfirmationMessage(ui, ui.readCommand());
-            checkIfDelete(ui, notes, noteNumber - 1, input, noteHistory);
+            checkIfDelete(ui, notes, noteNumber, input, noteHistory);
         }
 
     }

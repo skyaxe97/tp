@@ -52,13 +52,13 @@ public class EditNotesCommand extends Command {
             noteMatches = ui.printMultipleNoteMatches(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
-            noteNumber = Integer.parseInt(ui.readCommand());
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber, noteMatches);
+            noteNumber = Integer.parseInt(ui.readCommand()) - 1;
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
 
-            System.out.println(notes.get(noteNumber - 1).toString());
+            System.out.println(notes.get(noteNumber).toString());
             ui.showEditWhichPartMessage();
 
-            changeTitleOrDescription(ui, parser, notes, noteNumber - 1, ui.readCommand(), noteHistory);
+            changeTitleOrDescription(ui, parser, notes, noteNumber, ui.readCommand(), noteHistory);
         }
 
     }

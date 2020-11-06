@@ -47,9 +47,9 @@ public class ShowNotesCommand extends Command {
             noteMatches = ui.printMultipleNoteMatches(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
-            noteNumber = Integer.parseInt(ui.readCommand());
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber, noteMatches);
-            System.out.println(notes.get(noteNumber - 1).toString());
+            noteNumber = Integer.parseInt(ui.readCommand()) - 1;
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
+            System.out.println(notes.get(noteNumber).toString());
         }
 
     }
