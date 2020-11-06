@@ -1,5 +1,7 @@
 package seedu.lifeasier.model.tasks;
 
+import seedu.lifeasier.ui.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +12,7 @@ public class Event extends Task {
 
     protected LocalDateTime start;
     protected LocalDateTime end;
-    private String type = "event";
+    private String type = Ui.PARAM_EVENT;
 
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);

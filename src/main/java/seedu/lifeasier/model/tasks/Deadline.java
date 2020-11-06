@@ -1,5 +1,7 @@
 package seedu.lifeasier.model.tasks;
 
+import seedu.lifeasier.ui.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +11,7 @@ public class Deadline extends Task {
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
 
     protected LocalDateTime by;
-    private String type = "deadline";
+    private String type = Ui.PARAM_DEADLINE;
 
     public Deadline(String description, LocalDateTime by) {
         super(description);
