@@ -10,13 +10,10 @@ import seedu.lifeasier.model.tasks.Task;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.parser.Parser;
-import seedu.lifeasier.storage.FileCommand;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 
@@ -30,7 +27,6 @@ class UndoTaskCommandTest {
 
     private final TaskList testTaskList = new TaskList();
     private final TaskHistory testTaskHistory = new TaskHistory();
-    private final FileCommand fileCommand = new FileCommand();
 
     public static final String TEST_FILEPATH = "testSave.txt";
 
@@ -93,55 +89,37 @@ class UndoTaskCommandTest {
 
     @Test
     void executeAndGetLastTask_TaskHistoryWithThreeTasks_LastTaskIsEvent() {
-        File testSave = new File(TEST_FILEPATH);
-        try {
-            if (!testSave.exists()) {
-                if (testSave.createNewFile()) {
-                    System.out.println("New save created for testing");
-                }
-            }
-            fileCommand.clearSaveFile(TEST_FILEPATH);
+        setUpStreams();
+        setUpTaskList();
 
-            setUpStreams();
-            setUpTaskList();
+        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 0);
+        Task copyTestEvent = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 1);
+        Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 2);
 
-            Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 0);
-            Task copyTestEvent = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 1);
-            Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 2);
+        testTaskHistory.pushOldCopy(copyTestDeadline);
+        testTaskHistory.pushOldCopy(copyTestEvent);
+        testTaskHistory.pushOldCopy(copyTestLesson);
 
-            testTaskHistory.pushOldCopy(copyTestDeadline);
-            testTaskHistory.pushOldCopy(copyTestEvent);
-            testTaskHistory.pushOldCopy(copyTestLesson);
+        Ui ui = new Ui();
+        NoteList notes = new NoteList();
+        NoteHistory noteHistory = new NoteHistory();
+        FileStorage storage = new FileStorage(TEST_FILEPATH,
+                TEST_FILEPATH, ui, notes, testTaskList);
+        Parser parser = new Parser();
 
-            Ui ui = new Ui();
-            NoteList notes = new NoteList();
-            NoteHistory noteHistory = new NoteHistory();
-            FileStorage storage = new FileStorage(TEST_FILEPATH,
-                    TEST_FILEPATH, ui, notes, testTaskList);
-            Parser parser = new Parser();
+        UndoTaskCommand command = new UndoTaskCommand();
 
-            UndoTaskCommand command = new UndoTaskCommand();
+        assertEquals(3, testTaskHistory.getChangeCount());
+        assertEquals(copyTestLesson, testTaskHistory.getLastTask());
 
-            assertEquals(3, testTaskHistory.getChangeCount());
-            assertEquals(copyTestLesson, testTaskHistory.getLastTask());
+        command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
 
-            command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-            assertEquals(ui.colourTextGreen("This task has been reverted back to its previous version!")
-                            + System.lineSeparator() + testLessonToEdit.toString()
-                            + System.lineSeparator()
-                            + "========================================================================================"
-                            + "=======================" + System.lineSeparator(),
-                    outContent.toString());
+        assertEquals(2, testTaskHistory.getChangeCount());
+        assertEquals(copyTestEvent, testTaskHistory.getLastTask());
 
-            assertEquals(2, testTaskHistory.getChangeCount());
-            assertEquals(copyTestEvent, testTaskHistory.getLastTask());
-
-            resetTaskHistory();
-            resetTaskList();
-            restoreStreams();
-        } catch (IOException e) {
-            System.out.println("Testing error - Unable to read/write to file");
-        }
+        resetTaskHistory();
+        resetTaskList();
+        restoreStreams();
     }
 
 }
