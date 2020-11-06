@@ -11,10 +11,13 @@ import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.model.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditEventCommand extends Command {
+    private static final int EVENT_NUM_OF_TIME_ARGS = 2;
     private static Logger logger = Logger.getLogger(EditEventCommand.class.getName());
     private String eventName;
 
@@ -30,12 +33,9 @@ public class EditEventCommand extends Command {
         tasks.editTaskDescription(index, ui);
     }
 
-    public void editEventTime(TaskList tasks, int index, Ui ui) throws ParserException {
-        tasks.editEventTime(index, ui);
-    }
-
-    private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
-        tasks.checkForIndexOutOfBounds(userInput);
+    public void editEventTime(TaskList tasks, int index, Ui ui, Parser parser) {
+        LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, EVENT_NUM_OF_TIME_ARGS);
+        tasks.editEventTime(index, ui, times);
     }
 
     @Override
@@ -49,13 +49,12 @@ public class EditEventCommand extends Command {
             ui.showSelectTaskToEditPrompt(Ui.PARAM_EVENT);
 
             logger.log(Level.INFO, "Reading user input for choice of event to edit...");
-            int userEventChoice = ui.readSingleIntInput() - 1;
-            checkForIndexOutOfBounds(tasks, userEventChoice);
+            int userEventChoice = parser.parseUserInputForEditTaskChoice(ui, tasks);
 
             logger.log(Level.INFO, "Temporarily hold value of this Event");
             Task oldCopyOfEvent = taskHistory.getCurrCopyOfTaskToEdit(tasks, userEventChoice);
 
-            selectParameterToEdit(ui, tasks, userEventChoice);
+            selectParameterToEdit(parser, ui, tasks, userEventChoice);
 
             taskHistory.pushOldCopy(oldCopyOfEvent);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
@@ -67,9 +66,6 @@ public class EditEventCommand extends Command {
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatError();
-        } catch (ParserException e) {
-            logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidInputMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input event name does not match any of the existing event names.");
             ui.showNoMatchesError(Ui.PARAM_EVENT);
@@ -77,11 +73,12 @@ public class EditEventCommand extends Command {
         logger.log(Level.INFO, "End of EditEventCommand");
     }
 
-    public void selectParameterToEdit(Ui ui, TaskList tasks, int userEventChoice) throws ParserException {
+    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userEventChoice) {
         ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_EVENT);
-        int userParamChoice = Integer.parseInt(ui.readCommand());
+
         logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
+        int userParamChoice = parser.parseValidUserInputForParameterEdit(ui);
 
         switch (userParamChoice) {
 
@@ -92,7 +89,7 @@ public class EditEventCommand extends Command {
 
         case (2):
             ui.showInputFormatPrompt(Ui.PARAM_EVENT);
-            editEventTime(tasks, userEventChoice, ui);
+            editEventTime(tasks, userEventChoice, ui, parser);
             break;
 
         default:

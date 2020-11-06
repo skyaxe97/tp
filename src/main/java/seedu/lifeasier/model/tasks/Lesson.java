@@ -1,16 +1,19 @@
 package seedu.lifeasier.model.tasks;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Lesson extends Task {
 
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
+    private static final String PARAM_LESSON = "lesson";
 
     protected LocalDateTime start;
     protected LocalDateTime end;
-    private String type = "lesson";
+    private String type = PARAM_LESSON;
 
     public Lesson(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
@@ -72,5 +75,31 @@ public class Lesson extends Task {
             start = start.plusDays(7);
             end = end.plusDays(7);
         }
+    }
+
+    /**
+     * Returns true if a similar or duplicate Lesson already exists in the schedule.
+     *
+     * @param moduleCode Module code of Lesson to be checked.
+     * @param start Start DateTime of Lesson to be checked.
+     * @param end End DateTime of Lesson to be checked.
+     * @param recurrences Recurrences of Lesson to be checked.
+     * @return True if a similar or duplicate Lesson already exists in the schedule.
+     */
+    public boolean isDuplicate(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
+
+        LocalTime existingStartTime = this.start.toLocalTime();
+        LocalTime existingEndTime = this.end.toLocalTime();
+        DayOfWeek existingDay = this.start.getDayOfWeek();
+
+        LocalTime newStartTime = start.toLocalTime();
+        LocalTime newEndTime = end.toLocalTime();
+        DayOfWeek newDay = start.getDayOfWeek();
+
+        return (this.description.equals(moduleCode)
+                && existingStartTime == newStartTime
+                && existingEndTime == newEndTime
+                && existingDay == newDay
+                && ((this.recurrences > 0 && recurrences > 0) || this.start.equals(start)));
     }
 }

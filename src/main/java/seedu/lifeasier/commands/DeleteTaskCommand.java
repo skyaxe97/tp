@@ -83,10 +83,10 @@ public class DeleteTaskCommand extends Command {
             ui.showSelectTaskToDeletePrompt(type);
 
             logger.log(Level.INFO, "Reading user input for choice of task to delete...");
-            int userIndex = readUserInput(ui, parser, tasks);
+            int userIndex = parser.parseUserInputForEditTaskChoice(ui, tasks);
 
             logger.log(Level.INFO, "Temporarily hold value of this Task");
-            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, userIndex);
+            Task oldCopyOfTask = taskHistory.getCurrCopyOfTaskToDelete(tasks, tasks.getActualIndex(userIndex));
 
             logger.log(Level.INFO, "Deleting task from taskList...");
             deleteTask(tasks, ui, userIndex);

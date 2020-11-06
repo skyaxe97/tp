@@ -1,5 +1,6 @@
 package seedu.lifeasier.storage;
 
+import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
@@ -26,9 +27,11 @@ public class FileStorage {
     private TaskStorage taskStorage;
     private FileArchive fileArchive;
     private FileCommand fileCommand;
+    private NoteHistory noteHistory;
     private NoteList notes;
 
-    public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes, TaskList tasks) {
+    public FileStorage(String fileNameTasks, String fileNameNotes, Ui ui, NoteList notes, TaskList tasks,
+            NoteHistory noteHistory) {
         this.filePathTasks = DIRECTORY_PATH + fileNameTasks;
         this.filePathNotes = DIRECTORY_PATH + fileNameNotes;
         this.ui = ui;
@@ -37,6 +40,7 @@ public class FileStorage {
         this.taskStorage = new TaskStorage(tasks, filePathTasks);
         this.fileArchive = new FileArchive(notes, ui);
         this.fileCommand = new FileCommand();
+        this.noteHistory = noteHistory;
     }
 
     /**
@@ -55,6 +59,7 @@ public class FileStorage {
         fileArchive.handleDataArchiving(ARCHIVE_PATH);
         //Clear notes save file
         fileCommand.clearSaveFile(filePathNotes);
+        noteHistory.clearNoteHistory();
     }
 
     /**
