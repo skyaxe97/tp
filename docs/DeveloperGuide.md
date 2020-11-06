@@ -338,16 +338,16 @@ To implement the `undo` feature, the concept of a stack was used to hold all the
 (or `Notes`) before they are changed.
 
 At every instance where a particular `Task` (or `Note`) is edited or deleted, using commands such as `editDeadline`, 
-`deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is made as the changes are being made. Every `Task` or 
+`deleteTask` or `editNote`, a copy of the `Task` (or `Note`) is created as the changes are being made. Every `Task` or 
 `Note` object has an `editNumber` attributed to it, which is assigned a positive value if it has been edited, and a 
 negative value if it has been deleted.
 
-The copy made is temporarily stored as a new `Task` (or `Note`) object until the edit or deletion is successful. The 
-copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `NoteHistory`), 
+The copy made is stored as a new `Task` (or `Note`) object temporarily. Once the edit or deletion is successful, the 
+copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `noteHistory`), 
 which holds all the previous copies of the object.
 
 Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
-works in a similar manner for that of `Note` objects.
+works in a similar manner for `Note` objects.
 
 ![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
 _Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
@@ -362,13 +362,22 @@ The corresponding confirmation message to be displayed is determined by whether 
 ![Figure 4.6-2](images/DeveloperGuide/Figure 4.6-2.png)
 _Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
+A new `taskHistory` (or `noteHistory`) is created at every startup of the application. Therefore, the history of any 
+edits and deletions are only available for the current session. Once the program is closed, all information is discarded.
+
 ##### Design Considerations
 
 To allow for multiple undos on the same `Task` (or `Note`) object, the `editNumber` of `Tasks` (or `Notes`) that have 
-been edited before must be checked. If it is anything but the default assigned _value(-999999)_, then its existing 
+been edited before must be checked. If it is anything but the _default assigned value(-999999)_, then its existing 
 `editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the 
 application to always find the same instance of the `Task` (or `Note`) inside the `TaskList` (or `NoteList`) when 
 restoring previous versions.
+
+However, multiple undos are only allowed until a particular object is deleted. Because of how each `Task` (or `Note`) only 
+has one `editNumber` attributed to it, once it is assigned a deleteID (a negative number), it has to overwrite its 
+previous (positive) editID. Therefore, if an object is deleted, all other previously stored copies of it in the `taskHistory` 
+(or `noteHistory`) are discarded. For example, if a particular object goes through _edit1-edit2-delete1-edit3_, the 
+user will only be able to undo _edit3_ and _delete1_. The copies related to _edit1_ and _edit2_ are removed from history.
 
 ### 4.7 Storing and Archiving Notes (Danzel)
 
@@ -465,7 +474,7 @@ entire `TaskList` every time it is called, in order to arrange the `Tasks` accor
 
 Because of the way the timetable time slots increment on an hourly basis, functions were implemented to ensure the 
 timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not 
-overloaded with too much details.
+overloaded with too many details.
 
 ### 4.9 Displaying Free Time and Sleep Time (Daniel)
 
@@ -538,10 +547,15 @@ few days, they might need to restart it to ensure that their tasks are updated.
 
 ## 5.0 Product Scope
 
+This section highlights the scope of **LifEasier**, particularly the features that characterise it and who it is made for.
+
 ### 5.1 Target user profile
 
-NUS Computer Engineering students who struggle with keeping track of classes and deadlines, and managing their time to 
-have a social life with their busy schedule.
+NUS Computer Engineering students who:
+* struggle with keeping track of classes and deadlines
+* frequently juggle their time between school and personal interests
+* face difficulty keeping track of their school notes
+* are comfortable using the command line interface
  
 ### 5.2 Value proposition
 
@@ -667,11 +681,14 @@ To show free time and sleep time, use the following commands.
 * `freeTime`
 * `sleepTime`
 
-Following the above path for manual testing will bring you through all the features implemented in the current version of **LifEasier**. Please feel free to try out other combinations of inputs to fully test the program.
+Following the above path for manual testing will bring you through all the features implemented in the current version 
+of **LifEasier**. Please feel free to try out other combinations of inputs to fully test the program.
 
 
 ## Appendix C: Effort
 
-On average, the development team met up twice a week to merge finished work, bug test, and do minor bug fixes before continuing to discuss design moving forward, new features to be implemented and handing out new issues. 
+On average, the development team met up twice a week to merge finished work, bug test, and do minor bug fixes before 
+continuing to discuss design moving forward, new features to be implemented and handing out new issues. 
 
-Overall, the average individual effort was higher than that of the individual project. This is because we underestimated the difficulty of working in a team, and the amount of time needed to create the User Guide and Developer Guide. 
+Overall, the average individual effort was higher than that of the individual project. This is because we underestimated 
+the difficulty of working in a team, and the amount of time needed to create the User Guide and Developer Guide. 
