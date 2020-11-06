@@ -24,7 +24,7 @@ public class TaskList {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
     private int displayIndexOfLastMatch = 0;
-    HashMap<Integer,Integer> map;
+    HashMap<Integer,Integer> taskMap;
 
     public TaskList() {
         taskList = new ArrayList<>();
@@ -51,7 +51,7 @@ public class TaskList {
     }
 
     public int getActualIndex(int i) {
-        return map.get(i);
+        return taskMap.get(i);
     }
 
     /**
@@ -110,28 +110,28 @@ public class TaskList {
     }
 
     public void editLessonTime(int displayIndex, Ui ui, LocalDateTime[] times) {
-        int actualIndex = map.get(displayIndex);
+        int actualIndex = taskMap.get(displayIndex);
         getTask(actualIndex).setStart(times[INDEX_START]);
         getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
     public void editEventTime(int displayIndex, Ui ui, LocalDateTime[] times) {
-        int actualIndex = map.get(displayIndex);
+        int actualIndex = taskMap.get(displayIndex);
         getTask(actualIndex).setStart(times[INDEX_START]);
         getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
     public void editDeadlineTime(int displayIndex, Ui ui, LocalDateTime[] times) {
-        int actualIndex = map.get(displayIndex);
+        int actualIndex = taskMap.get(displayIndex);
         getTask(actualIndex).setStart(times[0]);
         ui.showEditConfirmationMessage();
     }
 
     public void deleteTask(int displayIndex, Ui ui) {
         try {
-            int actualIndex = map.get(displayIndex);
+            int actualIndex = taskMap.get(displayIndex);
             taskList.remove(actualIndex);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
@@ -145,7 +145,7 @@ public class TaskList {
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
         logger.log(Level.INFO, "Start of printing all matching " + type);
-        map = new HashMap<>();
+        taskMap = new HashMap<>();
         displayIndexOfLastMatch = 0;
         int firstDisplayIndex = 0;
         boolean noMatches = true;
@@ -156,7 +156,7 @@ public class TaskList {
                 ui.printMatchingTask(firstDisplayIndex, task);
                 displayIndexOfLastMatch = firstDisplayIndex;
 
-                map.put(firstDisplayIndex, i);
+                taskMap.put(firstDisplayIndex, i);
                 noMatches = false;
             }
         }
