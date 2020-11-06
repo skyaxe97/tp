@@ -34,6 +34,17 @@ public class AddLessonCommand extends Command {
         this.recurrences = recurrences;
     }
 
+    /**
+     * Adds a Lesson to the schedule if the Lesson is not in the past and if it does not already exist in the schedule.
+     *
+     * @param ui Ui object to display messages to the user.
+     * @param notes NoteList containing user's notes.
+     * @param tasks TaskList containing user's tasks.
+     * @param storage Storage object to save tasks and notes to memory.
+     * @param parser Parser object to parse user's inputs.
+     * @param noteHistory NoteHistory object to store history of edited and deleted notes.
+     * @param taskHistory TaskHistory object to store history of edited and deleted tasks.
+     */
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
                         NoteHistory noteHistory, TaskHistory taskHistory) {
