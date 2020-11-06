@@ -36,7 +36,7 @@ public class DisplayScheduleCommand extends Command {
             displayScheduleFor(currDate.plus(1, ChronoUnit.DAYS), tasks, ui);
             break;
         default:
-            ui.showInvalidDisplayKeyword();
+            ui.showInvalidDisplayKeywordError();
         }
         ui.printSeparator();
     }

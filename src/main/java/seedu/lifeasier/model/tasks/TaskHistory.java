@@ -57,6 +57,14 @@ public class TaskHistory {
 
     public void popLastTask() {
         int indexOfLastTask = changeCount - 1;
+
+        int editNumOfLastTask = taskHistory.get(indexOfLastTask).getEditNumber();
+        if (editNumOfLastTask > 0) {
+            editCount--;
+        } else {
+            deleteCount++;
+        }
+
         taskHistory.remove(indexOfLastTask);
         decrementChangeCount();
     }

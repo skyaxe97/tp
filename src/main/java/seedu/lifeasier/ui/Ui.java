@@ -588,8 +588,8 @@ public class Ui {
         printSeparator();
     }
 
-    public void showInvalidDisplayKeyword() {
-        System.out.println("Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!");
+    public void showInvalidDisplayKeywordError() {
+        System.out.println(colourTextRed("Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!"));
         printSeparator();
     }
 
