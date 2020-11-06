@@ -1,7 +1,5 @@
 package seedu.lifeasier.model.tasks;
 
-import seedu.lifeasier.ui.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,10 +7,11 @@ import java.time.format.DateTimeFormatter;
 public class Lesson extends Task {
 
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
+    private static final String PARAM_LESSON = "lesson";
 
     protected LocalDateTime start;
     protected LocalDateTime end;
-    private String type = Ui.PARAM_LESSON;
+    private String type = PARAM_LESSON;
 
     public Lesson(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
