@@ -34,9 +34,8 @@
 * [9.0 Testing / Logging](#90-testing--logging)
 * [10.0 Dev Ops](#100-dev-ops)
 * [11.0 Glossary](#110-glossary)
-* [Appendix A: Project Requirements](#appendix-a-project-requirements)
-* [Appendix B: Guidelines on Manual Testing](#appendix-b-guidelines-on-manual-testing)
-* [Appendix C: Effort](#appendix-c-effort)
+* [Appendix A: Guidelines on Manual Testing](#appendix-a-guidelines-on-manual-testing)
+* [Appendix B: Effort](#appendix-b-effort)
 
 ## 1.0 Introduction
 
@@ -634,9 +633,7 @@ edited in future to change the configurations if necessary.
 
 * *glossary item* - Definition
 
-## Appendix A: Project Requirements
-
-## Appendix B: Guidelines on Manual Testing
+## Appendix A: Guidelines on Manual Testing
 
 Refer to the **LIfEasier User Guide** for the setting up/quick start guide and to view more detailed information of all usable commands. After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
 
@@ -685,7 +682,7 @@ Following the above path for manual testing will bring you through all the featu
 of **LifEasier**. Please feel free to try out other combinations of inputs to fully test the program.
 
 
-## Appendix C: Effort
+## Appendix B: Effort
 
 On average, the development team met up twice a week to merge finished work, bug test, and do minor bug fixes before 
 continuing to discuss design moving forward, new features to be implemented and handing out new issues. 
