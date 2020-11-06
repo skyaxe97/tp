@@ -3,12 +3,14 @@ package seedu.lifeasier.commands;
 import org.junit.jupiter.api.Test;
 import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
-import seedu.lifeasier.parser.Parser;
-import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.model.tasks.Event;
 import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
+import seedu.lifeasier.parser.Parser;
+import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
@@ -85,7 +87,7 @@ class FreeTimeCommandTest {
     }
 
     @Test
-    void executeFreeTimeCommand_freeDay_6HoursFree() {
+    void executeFreeTimeCommand_freeDay_6HoursFree() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();
@@ -122,7 +124,7 @@ class FreeTimeCommandTest {
     }
 
     @Test
-    void executeFreeTimeCommand_busyDay_0HoursFree() {
+    void executeFreeTimeCommand_busyDay_0HoursFree() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();
@@ -141,7 +143,6 @@ class FreeTimeCommandTest {
         LocalDateTime end1 = today.atTime(13, 30);
         LocalDateTime start2 = today.atTime(14, 0);
         LocalDateTime end2 = today.atTime(23, 30);
-
 
         tasks.addEvent("first event", start1, end1, 0);
         tasks.addEvent("second event", start2, end2, 0);

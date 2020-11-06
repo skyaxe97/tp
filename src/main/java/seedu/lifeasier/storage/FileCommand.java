@@ -83,7 +83,7 @@ public class FileCommand {
      * @return true when the count in given string matches baseDelimiterCount.
      */
     public boolean checkForDelimiterCount(String string, int baseDelimiterCount) {
-        boolean isStillContainingDelimiter = true;
+        boolean isStillContainingDelimiter;
         int delimiterCount = 0;
 
         do {

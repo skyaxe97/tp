@@ -17,7 +17,7 @@ class TaskListTest {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static final LocalDateTime SAMPLE1 = LocalDateTime.parse("12-12-20 12:00", DATE_TIME_FORMATTER);
-    private static final LocalDateTime SAMPLE2 = LocalDateTime.parse("12-12-20 12:00", DATE_TIME_FORMATTER);
+    private static final LocalDateTime SAMPLE2 = LocalDateTime.parse("12-12-20 13:00", DATE_TIME_FORMATTER);
 
     @Test
     void name() {
@@ -49,17 +49,17 @@ class TaskListTest {
         taskList = new TaskList();
         String moduleCode = "cg1111";
 
-        LocalDateTime start = LocalDateTime.of(20, 10, 27, 12, 0);
-        LocalDateTime end = LocalDateTime.of(20, 10, 27, 13, 0);
+        LocalDateTime start = LocalDateTime.of(20, 11, 27, 12, 0);
+        LocalDateTime end = LocalDateTime.of(20, 11, 27, 13, 0);
         int recurrences = 11;
 
         Lesson lesson = new Lesson(moduleCode, start, end, recurrences);
 
         taskList.addTask(lesson);
 
-        taskList.updateTasks(LocalDate.of(20, 10, 29));
+        taskList.updateTasks(LocalDate.of(20, 11, 29));
 
-        LocalDate expected = LocalDate.of(20, 11, 3);
+        LocalDate expected = LocalDate.of(20, 12, 4);
 
         assertTrue(((lesson.isHappeningOn(expected)) && (lesson.getRecurrences() == 10)));
     }
@@ -69,22 +69,26 @@ class TaskListTest {
         taskList = new TaskList();
 
         String moduleCode = "cg1111";
-        LocalDateTime start1 = LocalDateTime.of(20, 10, 27, 12, 0);
-        LocalDateTime end1 = LocalDateTime.of(20, 10, 27, 13, 0);
+        LocalDateTime start1 = LocalDateTime.of(21, 11, 27, 12, 0);
+        LocalDateTime end1 = LocalDateTime.of(21, 11, 27, 13, 0);
         int recurrences = 0;
 
         String eventDescription = "my event";
-        LocalDateTime start2 = LocalDateTime.of(20, 10, 28, 22, 0);
-        LocalDateTime end2 = LocalDateTime.of(20, 10, 28, 23, 0);
+        LocalDateTime start2 = LocalDateTime.of(21, 11, 28, 22, 0);
+        LocalDateTime end2 = LocalDateTime.of(21, 11, 28, 23, 0);
 
         String deadlineDescription = "my deadline";
-        LocalDateTime by = LocalDateTime.of(20, 10, 28, 23, 59);
+        LocalDateTime by = LocalDateTime.of(21, 11, 28, 23, 59);
 
-        taskList.addLesson(moduleCode, start1, end1, recurrences);
-        taskList.addEvent(eventDescription, start2, end2, recurrences);
-        taskList.addDeadline(deadlineDescription, by, recurrences);
+        Lesson lesson = new Lesson(moduleCode, start1, end1, recurrences);
+        Event event = new Event(moduleCode, start2, end2, recurrences);
+        Deadline deadline = new Deadline(moduleCode, by, recurrences);
 
-        taskList.updateTasks(LocalDate.of(20, 10, 29));
+        taskList.addTask(lesson);
+        taskList.addTask(event);
+        taskList.addTask(deadline);
+
+        taskList.updateTasks(LocalDate.of(21, 11, 29));
 
         assertTrue(taskList.getTaskList().isEmpty());
     }
@@ -94,22 +98,26 @@ class TaskListTest {
         taskList = new TaskList();
 
         String moduleCode = "cg1111";
-        LocalDateTime start1 = LocalDateTime.of(20, 10, 27, 12, 0);
-        LocalDateTime end1 = LocalDateTime.of(20, 10, 27, 13, 0);
+        LocalDateTime start1 = LocalDateTime.of(20, 11, 27, 12, 0);
+        LocalDateTime end1 = LocalDateTime.of(20, 11, 27, 13, 0);
         int recurrences = 0;
 
         String eventDescription = "my event";
-        LocalDateTime start2 = LocalDateTime.of(20, 10, 27, 22, 0);
-        LocalDateTime end2 = LocalDateTime.of(20, 10, 27, 23, 0);
+        LocalDateTime start2 = LocalDateTime.of(20, 11, 27, 22, 0);
+        LocalDateTime end2 = LocalDateTime.of(20, 11, 27, 23, 0);
 
         String deadlineDescription = "my deadline";
-        LocalDateTime by = LocalDateTime.of(20, 10, 27, 23, 59);
+        LocalDateTime by = LocalDateTime.of(20, 11, 27, 23, 59);
 
-        taskList.addLesson(moduleCode, start1, end1, recurrences);
-        taskList.addEvent(eventDescription, start2, end2, recurrences);
-        taskList.addDeadline(deadlineDescription, by, recurrences);
+        Lesson lesson = new Lesson(moduleCode, start1, end1, recurrences);
+        Event event = new Event(moduleCode, start2, end2, recurrences);
+        Deadline deadline = new Deadline(moduleCode, by, recurrences);
 
-        ArrayList<Task> tasksFromOneDay = taskList.getTasksFromOneDay(LocalDate.of(20, 10, 27));
+        taskList.addTask(lesson);
+        taskList.addTask(event);
+        taskList.addTask(deadline);
+
+        ArrayList<Task> tasksFromOneDay = taskList.getTasksFromOneDay(LocalDate.of(20, 11, 27));
 
         assertEquals(3, tasksFromOneDay.size());
     }
@@ -123,7 +131,7 @@ class TaskListTest {
 
 
     @Test
-    void addEvent() {
+    void addEvent() throws TaskDuplicateException, TaskPastException {
         taskList = new TaskList();
         taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
         Task event = new Event("Event", SAMPLE1, SAMPLE2);
@@ -131,7 +139,7 @@ class TaskListTest {
     }
 
     @Test
-    void addLesson() {
+    void addLesson() throws TaskDuplicateException, TaskPastException {
         taskList = new TaskList();
         taskList.addLesson("Lesson", SAMPLE1, SAMPLE2, 0);
         Task lesson = new Lesson("Lesson", SAMPLE1, SAMPLE2);
@@ -139,7 +147,7 @@ class TaskListTest {
     }
 
     @Test
-    void addDeadline() {
+    void addDeadline() throws TaskDuplicateException, TaskPastException {
         taskList = new TaskList();
         taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
         Task event = new Event("Event", SAMPLE1, SAMPLE2);

@@ -15,8 +15,8 @@ public class NoteCommandFunctions {
     }
 
     public static void checkForIndexOutOfBounds(NoteList notes, int noteNumber, int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            if (noteNumber == arr[i]) {
+        for (int j : arr) {
+            if (noteNumber == j) {
                 return;
             }
         }

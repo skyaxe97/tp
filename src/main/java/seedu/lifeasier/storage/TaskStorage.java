@@ -129,7 +129,7 @@ public class TaskStorage {
             }
         }
 
-        boolean isValidSaveDelimiter = false;
+        boolean isValidSaveDelimiter;
         String taskType = taskComponents[0];
         switch (taskType) {
         case "deadline":

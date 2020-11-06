@@ -1,7 +1,9 @@
 package seedu.lifeasier.ui;
 
 import org.junit.jupiter.api.Test;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +14,7 @@ import static seedu.lifeasier.ui.ScheduleUi.getDayOfWeek;
 class ScheduleUiTest {
     public static final TaskList EMPTY_TASK_LIST = new TaskList();
     public static final TaskList NONEMPTY_TASK_LIST = new TaskList();
-    public static final LocalDateTime SAMPLE_DATETIME = LocalDateTime.parse("2020-10-15T09:00");
+    public static final LocalDateTime SAMPLE_DATETIME = LocalDateTime.parse("2020-12-17T09:00");
     public static final LocalDate SAMPLE_DATE = SAMPLE_DATETIME.toLocalDate();
 
     private static final ScheduleUi scheduleUiTest = new ScheduleUi();
@@ -24,7 +26,7 @@ class ScheduleUiTest {
     }
 
     @Test
-    void getTaskCountForToday_TaskListWithFiveItems_Five() {
+    void getTaskCountForToday_TaskListWithFiveItems_Five() throws TaskDuplicateException, TaskPastException {
         for (int i = 0; i < 5; i++) {
             NONEMPTY_TASK_LIST.addDeadline("test" + i, SAMPLE_DATETIME, 0);
         }

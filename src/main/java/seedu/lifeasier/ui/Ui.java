@@ -181,7 +181,7 @@ public class Ui {
      */
     public String readCommand() {
         boolean isCommandWithDelimiter = true;
-        String userInput = "";
+        String userInput;
         do {
             userInput = conversation.nextLine();
 
@@ -331,6 +331,7 @@ public class Ui {
 
     public void showArchiveEndMessage() {
         System.out.println(colourTextGreen("Archiving successful!"));
+        printSeparator();
     }
 
     public void showFileReadError() {
@@ -670,5 +671,13 @@ public class Ui {
         System.out.println(colourTextCyan("NOTE: The row corresponding to the current hour "
                 + "is coloured for easy reference!"));
         printSeparator();
+    }
+
+    public void showDuplicateTaskError(String type) {
+        System.out.println("This " + type + " or something very similar already exists in your schedule!");
+    }
+
+    public void showPastTaskError(String type) {
+        System.out.println("The timing of this " + type + " is already in the past!");
     }
 }

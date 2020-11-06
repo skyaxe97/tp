@@ -911,7 +911,7 @@ public class Parser {
     }
 
     public int checkIfValidNumber(Ui ui, String input) {
-        while (!isNumeric(input) || Integer.parseInt(input) < 0) {
+        while (isNotNumeric(input) || Integer.parseInt(input) < 0) {
             ui.showRecurrencesNumberFormatError();
             input = ui.readCommand();
         }
@@ -919,20 +919,20 @@ public class Parser {
     }
 
     public int checkIfValidInput(Ui ui, String input) {
-        while (!isNumeric(input)) {
+        while (isNotNumeric(input)) {
             ui.showInvalidNumberMessage();
             input = ui.readCommand();
         }
         return Integer.parseInt(input);
     }
 
-    private boolean isNumeric(String input) {
+    private boolean isNotNumeric(String input) {
         try {
             int number = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -1075,7 +1075,6 @@ public class Parser {
                 return newIndex;
             } catch (IndexOutOfBoundsException e) {
                 ui.showIndexOutOfBoundsMessage();
-                continue;
             }
         }
     }
