@@ -2,8 +2,6 @@ package seedu.lifeasier.model.tasks;
 
 
 import seedu.lifeasier.commands.ShowNotesCommand;
-import seedu.lifeasier.parser.Parser;
-import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDate;
@@ -143,7 +141,7 @@ public class TaskList {
         while (true) {
             newDescription = ui.readCommand();
             if (newDescription.equals("")) {
-                ui.showEmptyNewDescriptionMessage();
+                ui.showEmptyNewDescriptionPrompt();
                 continue;
             }
             break;

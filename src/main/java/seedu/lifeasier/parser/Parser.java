@@ -541,7 +541,7 @@ public class Parser {
         String userInput = "";
 
         while (!isValidField) {
-            ui.showEnterDisplayKeywordMessage();
+            ui.showEnterDisplayKeywordPrompt();
 
             userInput = ui.readCommand();
 
