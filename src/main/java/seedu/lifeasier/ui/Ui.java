@@ -230,10 +230,6 @@ public class Ui {
         return userInput;
     }
 
-    public int readSingleIntInput() {
-        return Integer.parseInt(readCommand());
-    }
-
     public void showSelectTaskToEditPrompt(String type) {
         printBlankLine();
         printThinSeparator();
@@ -603,14 +599,6 @@ public class Ui {
         printThickSeparator();
         System.out.println(colourTextCyan("Do you want to change the title or description? (Enter T/D)"));
     }
-
-    public void showNoteNotEditedMessage() {
-        printBlankLine();
-        printThickSeparator();
-        System.out.println(colourTextGreen("OK! Note not edited!"));
-        printThickSeparator();
-        printBlankLine();
-    }
     
     public void showInvalidTitleDescriptionConfirmationPrompt() {
         printBlankLine();
@@ -804,22 +792,16 @@ public class Ui {
         printBlankLine();
     }
 
-    public void showNothingScheduledTodayMessage() {
-        printBlankLine();
-        printThickSeparator();
-        System.out.println("You have nothing on for today!");
-        printThickSeparator();
-        printBlankLine();
-    }
-
     public void showMatchingTasksPrompt(String type) {
         printBlankLine();
         printThinSeparator();
         System.out.println(colourTextCyan("Here are all your matching " + type + "s:"));
     }
 
-    public void showEmptyNewDescriptionMessage() {
-        System.out.println(colourTextRed("Your new description cannot be empty. Please try again!"));
+    public void showEmptyNewDescriptionPrompt() {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("Your new description cannot be empty. Please try again!"));
     }
 
     public void showInvalidRecurrencesError() {
@@ -831,20 +813,28 @@ public class Ui {
         System.out.println(colourTextYellow("Note: All current notes have been archived and will no longer be "
                 + "read by the program"));
         printThickSeparator();
+        printBlankLine();
     }
 
     public void showReadErrorHandlerError() {
+        printBlankLine();
+        printThickSeparator();
         System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
                 + "read. The rest of your data will continue to be loaded"));
         System.out.println(colourTextRed("This is done to protect your stored data\n"));
         System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
                 + "recommended to undo those changes"));
-        System.out.println("---------------------------------------------------------------------------------------");
+        printThickSeparator();
+        printBlankLine();
     }
 
     public void showSaveDelimiterError() {
+        printBlankLine();
+        printThickSeparator();
         System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
                 + " in the save file"));
+        printThickSeparator();
+        printBlankLine();
     }
 
     public void showLocalDateTimeParseError() {
@@ -856,33 +846,49 @@ public class Ui {
     }
 
     public void showInvalidModuleCodePrompt() {
-        System.out.println(colourTextRed("The entered module code has an invalid format, please re-enter a "
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("The entered module code has an invalid format, please re-enter a "
                 + "valid module code:"));
-        System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
+        System.out.println(colourTextCyan("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
     }
 
-    public void showEnterDisplayKeywordMessage() {
-        System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
-        printThickSeparator();
+    public void showEnterDisplayKeywordPrompt() {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow:");
     }
 
     public void showInvalidDisplayKeywordError() {
-        System.out.println(colourTextRed("Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!"));
+        printBlankLine();
         printThickSeparator();
+        System.out.println(colourTextRed(
+                "Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!"));
+        printThickSeparator();
+        printBlankLine();
     }
 
     public void showCurrHourIndicationMessage() {
-        System.out.println(colourTextCyan("NOTE: The row corresponding to the current hour "
+        System.out.println(colourTextYellow("NOTE: The row corresponding to the current hour "
                 + "is coloured for easy reference!"));
-        printThickSeparator();
     }
 
     public void showDuplicateTaskError(String type) {
-        System.out.println("This " + type + " or something very similar already exists in your schedule!");
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed(
+                "This " + type + " or something very similar already exists in your schedule!"));
+        printThickSeparator();
+        printBlankLine();
+
     }
 
     public void showPastTaskError(String type) {
-        System.out.println("The timing of this " + type + " is already in the past!");
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("The timing of this " + type + " is already in the past!"));
+        printThickSeparator();
+        printBlankLine();
     }
 
     public void showCurrentTitlePrompt(String currentTitle) {
