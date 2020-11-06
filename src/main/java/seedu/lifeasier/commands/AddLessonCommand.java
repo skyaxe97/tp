@@ -35,7 +35,7 @@ public class AddLessonCommand extends Command {
     }
 
     /**
-     * Adds a Lesson to the schedule if the Lesson is not in the past and if it does not already exist in the schedule.
+     * Adds a Lesson to the schedule if the Lesson is not in the past and does not already exist in the schedule.
      *
      * @param ui Ui object to display messages to the user.
      * @param notes NoteList containing user's notes.

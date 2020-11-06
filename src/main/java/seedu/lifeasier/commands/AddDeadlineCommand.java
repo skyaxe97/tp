@@ -33,7 +33,7 @@ public class AddDeadlineCommand extends Command {
     }
 
     /**
-     * Adds a Deadline to the schedule if the Deadline is not in the past and if it does not already exist in the schedule.
+     * Adds a Deadline to the schedule if the Deadline is not in the past and does not already exist in the schedule.
      *
      * @param ui Ui object to display messages to the user.
      * @param notes NoteList containing user's notes.

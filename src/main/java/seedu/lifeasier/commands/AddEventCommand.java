@@ -34,9 +34,8 @@ public class AddEventCommand extends Command {
         this.recurrences = recurrences;
     }
 
-
     /**
-     * Adds an Event to the schedule if the Event is not in the past and if it does not already exist in the schedule.
+     * Adds an Event to the schedule if the Event is not in the past and does not already exist in the schedule.
      *
      * @param ui Ui object to display messages to the user.
      * @param notes NoteList containing user's notes.
@@ -57,7 +56,6 @@ public class AddEventCommand extends Command {
             ui.showAddConfirmationMessage(task);
             logger.log(Level.INFO, "Saving updated taskList to storage...");
             storage.saveTasks();
-
 
         } catch (TaskDuplicateException e) {
             logger.log(Level.INFO, "Task is a duplicate! Showing error...");
