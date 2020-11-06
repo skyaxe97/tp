@@ -484,15 +484,18 @@ public class Ui {
     public void showFreeTimeMessage(int startHour, int endHour, int duration) {
         printBlankLine();
         printThickSeparator();
-        if (duration > 0) {
-            System.out.println(colourTextGreen("You have " + duration + " hours of free time between "
-                    + startHour + ":00 and " + endHour + ":00!"));
-            System.out.println(colourTextGreen("You can try scheduling something in this time!"));
+        System.out.println(colourTextGreen("You have " + duration + " hours of free time between "
+                + startHour + ":00 and " + endHour + ":00!"));
+        System.out.println(colourTextGreen("You can try scheduling something in this time!"));
+        printThickSeparator();
+        printBlankLine();
+    }
 
-        } else {
-            System.out.println(colourTextRed("Unfortunately you have no free time today!"));
-            System.out.println(colourTextRed("You might want to relax a little!"));
-        }
+    public void showNoFreeTimeError() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("Unfortunately you have no free time today!"));
+        System.out.println(colourTextRed("You might want to relax a little!"));
         printThickSeparator();
         printBlankLine();
     }
