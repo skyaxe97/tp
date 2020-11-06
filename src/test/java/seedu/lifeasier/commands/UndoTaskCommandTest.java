@@ -100,6 +100,7 @@ class UndoTaskCommandTest {
                     System.out.println("New save created for testing");
                 }
             }
+            fileCommand.clearSaveFile(TEST_FILEPATH);
 
             setUpStreams();
             setUpTaskList();

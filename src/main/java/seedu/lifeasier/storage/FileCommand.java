@@ -35,7 +35,7 @@ public class FileCommand {
      *
      * @param filePath File path to which file to clear information.
      */
-    protected void clearSaveFile(String filePath) {
+    public void clearSaveFile(String filePath) {
         logger.log(Level.INFO, "Clearing save file");
 
         try {
