@@ -52,8 +52,9 @@ This section describes the process of setting up **LifEasier** for use.
 On successful launch, you will be greeted with a welcome screen as shown below in Figure 2-1.
 
 ```
-=========================================================================
-=========================================================================
+Reading your save data. New saves will be created if no saves are found.
+===============================================================================================================
+===============================================================================================================
 
   _      _  __ ______          _
  | |    (_)/ _|  ____|        (_)
@@ -63,9 +64,9 @@ On successful launch, you will be greeted with a welcome screen as shown below i
  |______|_|_| |______\__,_|___/_|\___|_|
 
 
-=========================================================================
-=========================================================================
-Hello [NAME], what can I do for you today?
+===============================================================================================================
+===============================================================================================================
+Hello! What can I do for you today?
  -Type 'help' for a list the list of available commands
 ```
 
@@ -82,7 +83,8 @@ The following section expands on the features available for you to use in LifEas
 
 * Words in `UPPER_CASE` are parameters to be supplied by the user.
 * Items in square brackets are optional e.g `[TITLE]`
-* Command parameters have to follow the order stated. E.g if the command states `addEvent NAME /time START /to END`,  `addEvent NAME /to END /time START` will **NOT** be accepted.
+* **Some** commands can be filled in **partially** and still work. These commands will be stated in the detailed command information below.
+* Command parameters **must** follow the **order stated**, including partial commands. E.g if the command states `addEvent NAME /time START /to END`,  `addEvent NAME /to END /time START` will **NOT** be accepted.
 * However, parameters can be missing, and LifEasier will prompt you for the missing parameters.
 * `DATE` parameters have the format of **DD-MM-YY**.
 * `TIME` parameters follow a 24-hour clock, and have the format of **HH:mm**.
@@ -97,35 +99,41 @@ An example of how to use the help command is shown below in Figure 3.1-1.
 
 ````
 help
-=========================================================================
+===============================================================================================================
 These are the commands that are available:
-Notes about the command format:
+IMPORTANT INFORMATION:
  * Words in UPPER_CASE are the parameters to be supplied by the user
+ * Commands are CASE SENSITIVE
+ * Command parameters have to be input in the order as stated
  * Items in square brackets are optional, e.g [DATE]
+ * Commands with the [P] can take partial commands
+   e.g addLesson and addLesson /code CS2113 /to 18:00 are valid commands
+ * All dates are in the DD-MM-YY and times in the HH:MM format
 
 COMMANDS
-*************************************************************************
-help ---------------------------------------- Displays available commands
-addLesson /code MODULE_CODE /date DATE /time START /to END -- Adds lesson
-addEvent EVENT_NAME /date DATE /time START /to END -------- Adds an event
-addDeadline DEADLINE_NAME /by DATETIME ------------------ Adds a deadline
-editLesson MODULE_CODE ----------------------------------- Edits a lesson
-editEvent EVENT_NAME ------------------------------------- Edits an event
-editDeadline DEADLINE_NAME ----------------------------- Edits a deadline
-deleteTask /type TYPE /name NAME ------------------------- Deletes a task
-addNotes TITLE ------------------------------------------ Adds a new note
-showNotes TITLE ------------------------------------- Shows selected note
-archive ------------------------------------- Archives all existing notes
-editNotes TITLE ----------------------------------- Edits a selected note
-deleteNotes TITLE ------------------------------- Deletes a selected note
-display WEEK/DAY --------------- Displays either weekly or daily schedule
-freeTime ------------------------ Tells you when you have free time today
-sleepTime --------------------- Tells you how much time you have to sleep
-exit --------------------------------------- Closes the LifEasier program
-*************************************************************************
+*****************************************************************************************************
+help -------------------------------------------------------------------- Displays available commands
+addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- [P]Adds a lesson
+addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ [P]Adds an event
+addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- [P]Adds a deadline
+editLesson MODULE_CODE ------------------------------------------------------------ [P]Edits a lesson
+editEvent EVENT_NAME -------------------------------------------------------------- [P]Edits an event
+editDeadline DEADLINE_NAME ------------------------------------------------------ [P]Edits a deadline
+deleteTask /type TYPE /name NAME ----------------------------------------------------- Deletes a task
+addNotes TITLE ------------------------------------------------------------------- [P]Adds a new note
+showNotes TITLE -------------------------------------------------------------- [P]Shows selected note
+archive ----------------------------------------------------------------- Archives all existing notes
+editNotes TITLE ------------------------------------------------------------ [P]Edits a selected note
+deleteNotes TITLE -------------------------------------------------------- [P]Deletes a selected note
+undo TYPE ------------------------------------------------ Undoes the last edit/deleted task or notes
+display [WEEK] --------------------------------------------- Displays either weekly or daily schedule
+freeTime -------------------------------------------- Tells you your longest block of free time today
+sleepTime ------------------------------------------------- Tells you how much time you have to sleep
+exit ------------------------------------------------------------------- Closes the LifEasier program
+*****************************************************************************************************
 For more detailed information, please visit the online user guide at:
-
-=========================================================================
+https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide
+===============================================================================================================
 ````
 
 _Figure 3.1-1: An example of using the help command_
@@ -145,6 +153,8 @@ Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 * Adds a `Lesson` coded `MODULE`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
+* This command accepts **partial commands**. E.g `addLesson /code CS2113 /to 18:00` is a valid command.
+* The program will prompt for the remaining missing parameters when a partial command is input.
 
 ###### Examples:
 
@@ -171,6 +181,8 @@ Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 * Adds an `Event` called `NAME`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
+* This command accepts **partial commands**. E.g `addEvent Concert /date 05-11-20` is a valid command.
+* The program will prompt for the remaining missing parameters when a partial command is input.
 
 ###### Examples:
 
@@ -197,8 +209,9 @@ Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 
 * Adds a `Deadline` called `NAME`, that has to be completed by `DATETIME`, and repeats weekly for `TIMES`.
 * The system will prompt you for parameters if they are not provided. 
-* `DATETIME` has the format of **DD-MM-YY HH:MM**, where the time is in 24-hour clock format. 
-*E.g 7:30pm should be input as 19:30.* 
+* `DATETIME` has the format of **DD-MM-YY HH:MM**, where the time is in 24-hour clock format. _E.g 7:30pm should be input as 19:30._ 
+* This command accepts **partial commands**. E.g `addDeadline Return books` is a valid command.
+* The program will prompt for the remaining missing parameters when a partial command is input.
 
 ###### Examples:
 
@@ -625,10 +638,11 @@ Format: `archive`
 
 ##### Notes on archive Command Format:
 
-* All current notes existing in **LifEasier** will be archived into the “Archives” folder found inside the 
+* **All** current notes existing in **LifEasier** will be archived into the “Archives” folder found inside the 
 “LifEasierSaves” save folder.
 * Archive files are automatically named in the format of **DD-MM-YY HH:MM.txt** format.
-* Upon archiving, all saved notes will be removed and placed in the archive instead.
+* Upon archiving, all saved notes will be **removed** and placed in the archive instead - Using the `showNotes` command 
+immediately after `archive` will result in **no notes** being shown.
 * There is no way to undo this action, so use the `archive` command with care.
 
 ###### Example:
@@ -637,13 +651,19 @@ An example of how to use the archive command is shown in Figure 3.17-1.
 
 ````
 archive
-=========================================================================
+===============================================================================================================
 Starting archiving...
 Archiving successful!
-=========================================================================
+Note: All current notes have been archived and will no longer be read by the program
+===============================================================================================================
 ````
 
 _Figure 3.17-1: An example of using the archive command_
+
+##### Future implementation of `archive`: Archiving individual notes _(Coming in v2.2)_
+
+The current implementation of `archive` only allows for archiving of **all** notes currently present in the program. In a 
+future implementation, the ability for you to specifically choose which notes to be archived will be added.
 
 ### 3.18 Exiting: `exit`
 
@@ -670,9 +690,16 @@ background without any input from you necessary.
 ### 4.1 Storing Data
 
 By default, **LifEasier** creates a save folder named “LifEasierSaves” in the same folder `LifEasier.jar` is run. 
-**LifEasier** data is saved automatically to the hard disk when a new event, deadline, lesson or notes is added, 
-deleted or edited. Data is stored in text files, in plaintext. This allows you to edit your data directly through 
+**LifEasier** data is saved automatically to the hard disk when a new `event`, `deadline`, `lesson` or `note` is **added**, 
+**deleted** or **edited**. Data is stored in text files, in plaintext. This allows you to edit your data directly through 
 the save files if necessary.
+
+In the event of **corrupted data** arising from either system errors or incorrect formats from you while editing the save file,
+**LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. If you execute
+an **add, delete or edit** action, all corrupted data that has not been corrected will be **removed** from the save file. 
+
+If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
+where you can access your archived files.
 
 ### 4.2 Recurring Tasks and Auto Deletion
 

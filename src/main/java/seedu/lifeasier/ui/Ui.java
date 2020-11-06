@@ -5,7 +5,6 @@ import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.Task;
 
-
 import java.util.Scanner;
 
 /**
@@ -137,6 +136,16 @@ public class Ui {
         return ANSI_CYAN + string + ANSI_RESET;
     }
 
+    /**
+     * Colours input string to a yellow colour.
+     *
+     * @param string String to be coloured
+     * @return Yellow coloured string.
+     */
+    public String colourTextYellow(String string) {
+        return ANSI_YELLOW + string + ANSI_RESET;
+    }
+
     public void showLogo() {
         printSeparator();
         printSeparator();
@@ -166,10 +175,28 @@ public class Ui {
     }
 
     /**
-     * Returns read user command.
+     * Prompts continually for user command and checks if save delimiter has been added to prevent errors.
+     *
+     * @return User command without save delimiters.
      */
     public String readCommand() {
-        return conversation.nextLine();
+        boolean isCommandWithDelimiter = true;
+        String userInput = "";
+        do {
+            userInput = conversation.nextLine();
+
+            try {
+                if (userInput.contains("=-=")) {
+                    throw new SaveDelimiterException();
+                }
+                isCommandWithDelimiter = false;
+            } catch (SaveDelimiterException e) {
+                System.out.println(colourTextRed("Inputs cannot contain the character sequence: =-="));
+                System.out.println(colourTextCyan("Please re-enter your input:"));
+            }
+        } while (isCommandWithDelimiter);
+
+        return userInput;
     }
 
     public int readSingleIntInput() {
@@ -304,7 +331,6 @@ public class Ui {
 
     public void showArchiveEndMessage() {
         System.out.println(colourTextGreen("Archiving successful!"));
-        printSeparator();
     }
 
     public void showFileReadError() {
@@ -335,7 +361,7 @@ public class Ui {
     }
 
     public void showInvalidCastError() {
-        System.out.println(colourTextRed("Something went wrong, mismatching task types..."));
+        System.out.println(colourTextRed("Something went wrong, mismatching task types"));
     }
 
     public void showSaveDataMissingError() {
@@ -343,12 +369,8 @@ public class Ui {
                 + "- Data missing/corrupted"));
     }
 
-    public void showLocalDateTimeParseError() {
-        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task..."));
-    }
-
     public void showUndeterminableTaskError() {
-        System.out.println(colourTextRed("Something went wrong while determining the tasks..."));
+        System.out.println(colourTextRed("Something went wrong while determining the tasks"));
     }
 
     public void showParseUnknownCommandMessage() {
@@ -583,6 +605,40 @@ public class Ui {
         printSeparator();
     }
 
+    public void showArchiveEndInformationMessage() {
+        System.out.println(colourTextYellow("Note: All current notes have been archived and will no longer be "
+                + "read by the program"));
+        printSeparator();
+    }
+
+    public void showReadErrorHandlerError() {
+        System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
+                + "read. The rest of your data will continue to be loaded"));
+        System.out.println(colourTextRed("This is done to protect your stored data\n"));
+        System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
+                + "recommended to undo those changes"));
+        System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    public void showSaveDelimiterError() {
+        System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
+                + " in the save file"));
+    }
+
+    public void showLocalDateTimeParseError() {
+        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
+        System.out.println(colourTextCyan("The task will continue to be added with a default date to "
+                + "preserve your data"));
+        System.out.println(colourTextCyan("You can edit the date and times directly from the save file"));
+        System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    public void showInvalidModuleCodePrompt() {
+        System.out.println(colourTextRed("The entered module code has an invalid format, please re-enter a "
+                + "valid module code:"));
+        System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
+    }
+        
     public void showEnterDisplayKeywordMessage() {
         System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
         printSeparator();
