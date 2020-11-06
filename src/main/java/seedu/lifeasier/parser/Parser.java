@@ -511,11 +511,12 @@ public class Parser {
     /**
      * Parses the display command that the user inputs.
      *
+     *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return DisplayScheduleCommand with the parameters input by the user.
      */
-    private Command parseDisplayScheduleCommand(String input) throws ParserException {
-        Ui ui = new Ui();
+    private Command parseDisplayScheduleCommand(Ui ui, String input) throws ParserException {
         logger.log(Level.INFO, "Parsing display command...");
 
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
@@ -546,7 +547,7 @@ public class Parser {
             if (isValidDisplayParam(userInput)) {
                 isValidField = true;
             } else {
-                ui.showInvalidDisplayKeyword();
+                ui.showInvalidDisplayKeywordError();
             }
         }
         return userInput;
@@ -1077,7 +1078,7 @@ public class Parser {
                 return parseEditNotesCommand(input);
 
             case (PARAM_DISPLAY):
-                return parseDisplayScheduleCommand(input);
+                return parseDisplayScheduleCommand(ui, input);
 
             case (PARAM_HELP):
                 return new HelpCommand();

@@ -355,7 +355,11 @@ Undoes the most recent edits or deletions made on tasks or notes.
 
 ##### Notes on undo Command:
 
-Tasks refer to lessons, deadlines and events.
+* Tasks refer to lessons, deadlines and events.
+* Multiple undos are allowed until a particular object is deleted. For example, if a particular object goes through 
+_edit1-edit2-delete1-edit3_, you will only be able to undo _edit3_ and _delete1_.
+* The history of any edits and deletions are only available for the current session. Once the program is closed, all 
+history is discarded and you will not be able to undo those changes the next time you run the application.
 
 Format: `undo TYPE`
 
