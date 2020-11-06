@@ -405,8 +405,8 @@ public class Ui {
         printSeparator();
     }
 
-    public void showNothingScheduledMessage() {
-        System.out.println(colourTextGreen("You have nothing on for today and tomorrow!"));
+    public void showNothingScheduledMessage(String dayKeyword) {
+        System.out.println(colourTextGreen(String.format("You have nothing on for %s!", dayKeyword)));
     }
 
     public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
@@ -516,8 +516,8 @@ public class Ui {
 
     public void showEnterUndoTypeMessage() {
         printSeparator();
-        System.out.println(colourTextCyan("To undo a change in tasks, please enter:") + "task");
-        System.out.println(colourTextCyan("To undo a change in notes, please enter:") + "note");
+        System.out.println(colourTextCyan("To undo a change in tasks, please enter: ") + "task");
+        System.out.println(colourTextCyan("To undo a change in notes, please enter: ") + "note");
     }
 
     public void showInvalidUndoType() {
@@ -580,6 +580,22 @@ public class Ui {
 
     public void showInvalidRecurrencesError() {
         System.out.println(colourTextRed("Recurrences must be a positive integer!"));
+        printSeparator();
+    }
+
+    public void showEnterDisplayKeywordMessage() {
+        System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
+        printSeparator();
+    }
+
+    public void showInvalidDisplayKeyword() {
+        System.out.println("Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!");
+        printSeparator();
+    }
+
+    public void showCurrHourIndicationMessage() {
+        System.out.println(colourTextCyan("NOTE: The row corresponding to the current hour "
+                + "is coloured for easy reference!"));
         printSeparator();
     }
 }

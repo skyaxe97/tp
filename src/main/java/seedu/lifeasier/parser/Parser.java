@@ -309,12 +309,12 @@ public class Parser {
         int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String tempByInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
-        String tempRecurencesString = input.substring(lastIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-        String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
         int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
@@ -512,14 +512,46 @@ public class Parser {
      * @param input String containing the user's input.
      * @return DisplayScheduleCommand with the parameters input by the user.
      */
-    private Command parseDisplayScheduleCommand(String input) {
-
+    private Command parseDisplayScheduleCommand(String input) throws ParserException {
+        Ui ui = new Ui();
         logger.log(Level.INFO, "Parsing display command...");
 
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
-        String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
+        String displayKeyword = input.substring(lastIndexOfDisplayScheduleCommand).trim();
 
-        return new DisplayScheduleCommand(toDisplay);
+        if (displayKeyword.isEmpty()) {
+            logger.log(Level.WARNING, "Missing parameter, proceed to prompt");
+            displayKeyword = handleMissingDisplayParam(ui);
+        }
+
+        if (isValidDisplayParam(displayKeyword)) {
+            return new DisplayScheduleCommand(displayKeyword);
+        } else {
+            logger.log(Level.SEVERE, "Error determining undo command type");
+            throw new ParserException();
+        }
+    }
+
+    private String handleMissingDisplayParam(Ui ui) {
+        boolean isValidField = false;
+        String userInput = "";
+
+        while (!isValidField) {
+            ui.showEnterDisplayKeywordMessage();
+
+            userInput = ui.readCommand();
+
+            if (isValidDisplayParam(userInput)) {
+                isValidField = true;
+            } else {
+                ui.showInvalidDisplayKeyword();
+            }
+        }
+        return userInput;
+    }
+
+    private boolean isValidDisplayParam(String userInput) {
+        return userInput.equals("week") || userInput.equals("today") || userInput.equals("tomorrow");
     }
 
     /**
