@@ -7,9 +7,10 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
 
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
+    private static final String PARAM_DEADLINE = "deadline";
 
     protected LocalDateTime by;
-    private String type = "deadline";
+    private String type = PARAM_DEADLINE;
 
     public Deadline(String description, LocalDateTime by) {
         super(description);

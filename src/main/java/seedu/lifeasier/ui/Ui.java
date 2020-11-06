@@ -60,9 +60,9 @@ public class Ui {
             + ANSI_CYAN + "COMMANDS\n" + ANSI_RESET
             + "*****************************************************************************************************\n"
             + "help -------------------------------------------------------------------- Displays available commands\n"
-            + "addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- "
+            + "addLesson /code MODULE_CODE /date DATE /from START /to END /repeats ---------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a lesson\n"
-            + "addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ "
+            + "addEvent EVENT_NAME /date DATE /from START /to END /repeats ------------------------ "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds an event\n"
             + "addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a deadline\n"
@@ -93,8 +93,8 @@ public class Ui {
 
     //Input format messages
     public static final String NEW_DEADLINE_TIME_INPUT_FORMAT = "/by DATETIME";
-    public static final String NEW_EVENT_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
-    public static final String NEW_LESSON_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
+    public static final String NEW_EVENT_TIME_INPUT_FORMAT = "/date DATE /from START /to END";
+    public static final String NEW_LESSON_TIME_INPUT_FORMAT = "/date DATE /from START /to END";
 
     private Scanner conversation;
 
@@ -346,7 +346,7 @@ public class Ui {
     }
 
     public void showInvalidNumberMessage() {
-        System.out.println(colourTextRed("The number you inputted is invalid!"));
+        System.out.println(colourTextRed("The number you inputted is invalid! Please try again."));
         printSeparator();
     }
 
@@ -367,6 +367,15 @@ public class Ui {
     public void showSaveDataMissingError() {
         System.out.println(colourTextRed("Encountered an error while reading from the save file "
                 + "- Data missing/corrupted"));
+    }
+
+    public void showInvalidInputToEditDeadlineTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: /by dd-mm-yy hh:mm"));
+    }
+
+    public void showInvalidInputToEditTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: "
+                + "/date dd-mm-yy /from hh:mm /to hh:mm"));
     }
 
     public void showUndeterminableTaskError() {
@@ -499,35 +508,39 @@ public class Ui {
     }
 
     public void showAddDateMessage() {
-        System.out.println(colourTextCyan("Please input the date:"));
+        System.out.println(colourTextCyan("What is the date? (Enter in the format: DD-MM-YY)"));
     }
 
     public void showAddStartTimeMessage() {
-        System.out.println(colourTextCyan("Please input the start time:"));
+        System.out.println(colourTextCyan("What is the start time? (Enter in the format: HH:MM)"));
     }
 
     public void showAddEndTimeMessage() {
-        System.out.println(colourTextCyan("Please input the end time:"));
+        System.out.println(colourTextCyan("What is the end time? (Enter in the format: HH:MM)"));
     }
 
     public void showAddDescriptionMessage() {
-        System.out.println(colourTextCyan("Please input the description:"));
+        System.out.println(colourTextCyan("Please enter the description here:"));
     }
 
     public void showAddDateTimeMessage() {
-        System.out.println(colourTextCyan("Please input the Date Time:"));
+        System.out.println(colourTextCyan("What is the date and time? (Enter in the format: DD-MM-YY HH:MM"));
     }
 
     public void showAddRecurrencesMessage() {
-        System.out.println(colourTextCyan("Please input the number of times to repeat:"));
+        System.out.println(colourTextCyan("How many times do you want this to be repeated?"));
     }
 
-    public void printMultipleNoteMatches(NoteList notes, String title) {
+    public int[] printMultipleNoteMatches(NoteList notes, String title, int[] arr) {
+        int j = 0;
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
                 System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
+                arr[j] = i + 1;
+                j++;
             }
         }
+        return arr;
     }
 
     public void printAllNotes(NoteList notes) {
@@ -600,6 +613,10 @@ public class Ui {
         printSeparator();
     }
 
+    public void showEmptyNewDescriptionMessage() {
+        System.out.println(colourTextRed("Your new description cannot be empty. Please try again!"));
+    }
+
     public void showInvalidRecurrencesError() {
         System.out.println(colourTextRed("Recurrences must be a positive integer!"));
         printSeparator();
@@ -638,7 +655,7 @@ public class Ui {
                 + "valid module code:"));
         System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
     }
-        
+
     public void showEnterDisplayKeywordMessage() {
         System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
         printSeparator();
