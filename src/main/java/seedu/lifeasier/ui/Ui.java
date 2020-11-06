@@ -346,7 +346,7 @@ public class Ui {
     }
 
     public void showInvalidNumberMessage() {
-        System.out.println(colourTextRed("The number you inputted is invalid!"));
+        System.out.println(colourTextRed("The number you inputted is invalid! Please try again."));
         printSeparator();
     }
 
@@ -367,6 +367,15 @@ public class Ui {
     public void showSaveDataMissingError() {
         System.out.println(colourTextRed("Encountered an error while reading from the save file "
                 + "- Data missing/corrupted"));
+    }
+
+    public void showInvalidInputToEditDeadlineTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: /by dd-mm-yy hh:mm"));
+    }
+
+    public void showInvalidInputToEditTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: "
+                + "/date dd-mm-yy /from hh:mm /to hh:mm"));
     }
 
     public void showUndeterminableTaskError() {
@@ -604,6 +613,10 @@ public class Ui {
         printSeparator();
     }
 
+    public void showEmptyNewDescriptionMessage() {
+        System.out.println(colourTextRed("Your new description cannot be empty. Please try again!"));
+    }
+
     public void showInvalidRecurrencesError() {
         System.out.println(colourTextRed("Recurrences must be a positive integer!"));
         printSeparator();
@@ -642,7 +655,7 @@ public class Ui {
                 + "valid module code:"));
         System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
     }
-        
+
     public void showEnterDisplayKeywordMessage() {
         System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
         printSeparator();

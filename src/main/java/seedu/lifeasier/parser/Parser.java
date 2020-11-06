@@ -21,6 +21,7 @@ import seedu.lifeasier.commands.ShowNotesCommand;
 import seedu.lifeasier.commands.SleepTimeCommand;
 import seedu.lifeasier.commands.UndoNoteCommand;
 import seedu.lifeasier.commands.UndoTaskCommand;
+import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDateTime;
@@ -412,49 +413,44 @@ public class Parser {
 
         logger.log(Level.INFO, "Parsing newTimeInput from user...");
         LocalDateTime[] times = new LocalDateTime[2];
-        try {
-            switch (numOfTimeArgs) {
 
-            case (1):
-                int firstIndexOfByCommand = input.indexOf(PARAM_BY);
-                int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
+        switch (numOfTimeArgs) {
 
-                if (firstIndexOfByCommand == -1) {
-                    logger.log(Level.SEVERE, "Input missing BY keyword");
-                    throw new ParserException();
-                }
+        case (1):
+            int firstIndexOfByCommand = input.indexOf(PARAM_BY);
+            int lastIndexOfByCommand = firstIndexOfByCommand + PARAM_BY.length();
 
-                String byInput = input.substring(lastIndexOfByCommand).trim();
-                LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-                times[INDEX_START] = by;
-                return times;
-
-            case (2):
-                int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
-                int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
-                int firstIndexOfTimeCommand = input.indexOf(PARAM_FROM);
-                int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_FROM.length();
-                int firstIndexOfToCommand = input.indexOf(PARAM_TO);
-                int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
-
-                checkValidTimeKeywords(firstIndexOfDateCommand, firstIndexOfTimeCommand, firstIndexOfToCommand);
-
-                String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
-                String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
-                String endTime =  checkForMidnightEndTime(input.substring(lastIndexOfToCommand).trim());
-                LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
-                LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
-                times[INDEX_START] = start;
-                times[INDEX_END] = end;
-                return times;
-
-            default:
-                break;
+            if (firstIndexOfByCommand == -1) {
+                logger.log(Level.SEVERE, "Input missing BY keyword");
+                throw new ParserException();
             }
 
-        } catch (DateTimeParseException e) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            ui.showLocalDateTimeParseError();
+            String byInput = input.substring(lastIndexOfByCommand).trim();
+            LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
+            times[INDEX_START] = by;
+            return times;
+
+        case (2):
+            int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
+            int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
+            int firstIndexOfTimeCommand = input.indexOf(PARAM_FROM);
+            int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_FROM.length();
+            int firstIndexOfToCommand = input.indexOf(PARAM_TO);
+            int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
+
+            checkValidTimeKeywords(firstIndexOfDateCommand, firstIndexOfTimeCommand, firstIndexOfToCommand);
+
+            String date = input.substring(lastIndexOfDateCommand, firstIndexOfTimeCommand).trim();
+            String startTime = input.substring(lastIndexOfTimeCommand, firstIndexOfToCommand).trim();
+            String endTime = checkForMidnightEndTime(input.substring(lastIndexOfToCommand).trim());
+            LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
+            LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
+            times[INDEX_START] = start;
+            times[INDEX_END] = end;
+            return times;
+
+        default:
+            break;
         }
         return times;
     }
@@ -514,7 +510,6 @@ public class Parser {
 
     /**
      * Parses the display command that the user inputs.
-     *
      *
      * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
@@ -923,6 +918,14 @@ public class Parser {
         return Integer.parseInt(input);
     }
 
+    public int checkIfValidInput(Ui ui, String input) {
+        while (!isNumeric(input)) {
+            ui.showInvalidNumberMessage();
+            input = ui.readCommand();
+        }
+        return Integer.parseInt(input);
+    }
+
     private boolean isNumeric(String input) {
         try {
             int number = Integer.parseInt(input);
@@ -1042,6 +1045,64 @@ public class Parser {
             isModuleCodeValid = checkIfValidModuleCode(moduleCode);
         }
         return moduleCode;
+    }
+
+    private void checkValidIndexOfParameter(int userInput) {
+        if (userInput != 1 && userInput != 2) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    public int parseValidUserInputForParameterEdit(Ui ui) {
+        int userParamChoice;
+        while (true) {
+            try {
+                userParamChoice = Integer.parseInt(ui.readCommand());
+                checkValidIndexOfParameter(userParamChoice);
+                break;
+            } catch (IndexOutOfBoundsException e) {
+                ui.showIndexOutOfBoundsMessage();
+            }
+        }
+        return userParamChoice;
+    }
+
+    public int parseUserInputForEditTaskChoice(Ui ui, TaskList tasks) {
+        while (true) {
+            try {
+                int newIndex = checkIfValidInput(ui, ui.readCommand());
+                tasks.checkForIndexOutOfBounds(newIndex);
+                return newIndex;
+            } catch (IndexOutOfBoundsException e) {
+                ui.showIndexOutOfBoundsMessage();
+                continue;
+            }
+        }
+    }
+
+    public LocalDateTime[] parseUserInputForEditDateTime(Ui ui, int numOfTimeArgs) {
+        LocalDateTime[] times;
+        while (true) {
+            try {
+                times = parseNewTimeInput(ui, ui.readCommand(), numOfTimeArgs);
+            } catch (DateTimeParseException e) {
+                logger.log(Level.SEVERE, "Time input is not in the correct format");
+                if (numOfTimeArgs == 1) {
+                    ui.showInvalidInputToEditDeadlineTime();
+                } else {
+                    ui.showInvalidInputToEditTime();
+                }
+                continue;
+            } catch (ParserException e) {
+                if (numOfTimeArgs == 1) {
+                    ui.showInvalidInputToEditDeadlineTime();
+                } else {
+                    ui.showInvalidInputToEditTime();
+                }
+                continue;
+            }
+            return times;
+        }
     }
 
     /**
