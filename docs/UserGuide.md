@@ -141,6 +141,11 @@ _Figure 3.1-1: An example of using the help command_
 ### 3.2 Adding a Lesson: `addLesson`
 
 Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your schedule.
+
+##### Notes on addLesson command:
+
+* System will not warn you if there are any clashes in timing with other Tasks. 
+
 Format: `addLesson /code MODULE /date DATE /time START /to END /repeats TIMES`
 
 ##### Notes on addLesson Command Format:
@@ -164,6 +169,11 @@ your calendar
 
 ### 3.3 Adding an Event: `addEvent`
 Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
+
+##### Notes on addEvent command:
+
+* System will not warn you if there are any clashes in timing with other Tasks.
+
 Format: `addEvent NAME /date DATE /time START /to END /repeats TIMES`
 
 ##### Notes on addEvent Command Format:
@@ -188,6 +198,11 @@ your calendar
 ### 3.4 Adding a Deadline: `addDeadline`
 
 Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to your schedule.
+
+##### Notes on addDeadline command:
+
+* System will not warn you if there are any clashes in timing with other Tasks.
+
 Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 
 ##### Notes on addEvent Command Format:
@@ -367,18 +382,20 @@ Figure 3.9-1: An example of using the undo command
 
 ### 3.10 Displaying Schedule: `display`
 
-Displays your current schedule. Use this command to view what your schedule is like for today or for the whole week.
-Format: `display [WEEK]`
+Displays your current schedule. Use this command to view what your schedule is like for today, tomorrow or for the 
+whole week.
+Format: `display KEYWORD`
 
 ##### Notes on display Command Format:
 
-* If `WEEK` is specified, the schedule for the week will be shown. If not, the schedule for the day will be shown instead.
+* The `KEYWORD` can either be `today`, `tomorrow` or `week`.
+* If not specified, the system will prompt you to enter `today`, `tomorrow` or `week`.
 * The `display week` command displays the schedule of the upcoming week, in 1 hour intervals. 
 * The entire row with all tasks that fall in the current hour will be coloured in cyan for your ease of reference. 
 
 ###### Examples:
 
-`display` displays the schedule for today. An example of how to use the display command is shown below in Figure 3.9-1.
+`display today` displays the schedule for today. An example of how to use the display command is shown below in Figure 3.10-1.
 
 ```
 display
@@ -388,7 +405,7 @@ Here is your schedule for today:
 
 *Figure 3.10-1: An example of using the display command to view your daily schedule*
 
-`display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.9-2.
+`display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.10-2.
 
 ```
 display week
@@ -397,33 +414,27 @@ display week
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 |08:00-09:00|                 |                 |                 |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|09:00-10:00|                 | CG1111          |                 |                 |                 |                 |                 |
+|09:00-10:00|                 |                 |                 |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 |10:00-11:00|                 | CG1111          |                 |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 |11:00-12:00|                 | CG1111          |                 |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|12:00-13:00|                 |                 |                 |                 |                 |                 |                 |
+|12:00-13:00|                 |                 | ST2334          |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|13:00-14:00| CS2113T         |                 |                 |                 |                 |                 |                 |
+|13:00-14:00| CS2113T         |                 | ST2334          |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 |14:00-15:00|                 | CS2101          |                 |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|15:00-16:00|                 | CS2101          |                 |                 |                 |                 |                 |
+|15:00-16:00|                 | CS2101          | CS2113T         |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|16:00-17:00|                 |                 |                 |                 |                 |                 |                 |
+|16:00-17:00|                 |                 | CS2113T         |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 |17:00-18:00|                 |                 |                 |                 |                 |                 |                 |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|18:00-19:00|                 |                 |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|19:00-20:00|                 |                 |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|20:00-21:00|                 |                 |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|21:00-22:00|                 |                 |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 Here are your upcoming deadlines this week:
+1. Deadline: ABC Project by (3 Nov 2020, 14:00), repeats weekly 0 times
+2. Deadline: weekly XYZ quiz by (5 Nov 2020, 13:00), repeats weekly 3 times
 ```
 
 *Figure 3.10-2: An example of using the display week command to view your weekly schedule*
