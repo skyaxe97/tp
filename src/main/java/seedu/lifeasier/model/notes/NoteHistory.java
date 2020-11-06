@@ -24,6 +24,16 @@ public class NoteHistory {
         this.noteHistory = new ArrayList<>();
     }
 
+    /**
+     * Resets all noteHistory after archive command is called.
+     */
+    public void clearNoteHistory() {
+        noteHistory.clear();
+        changeCount = 0;
+        editCount = 0;
+        deleteCount = 0;
+    }
+
     public Note getLastNote() {
         return noteHistory.get(changeCount - 1);
     }
