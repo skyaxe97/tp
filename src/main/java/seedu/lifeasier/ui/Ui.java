@@ -5,7 +5,6 @@ import seedu.lifeasier.model.notes.NoteList;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.Task;
 
-
 import java.util.Scanner;
 
 /**
@@ -66,9 +65,9 @@ public class Ui {
             + "*********\n"
             + "help ------------------------------------------------------------------------------ "
             + "Displays available commands\n"
-            + "addLesson /code MODULE_CODE /date DATE /time START /to END /repeats TIMES -------------------- "
+            + "addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES -------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a lesson\n"
-            + "addEvent EVENT_NAME /date DATE /time START /to END /repeats TIMES ---------------------------- "
+            + "addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ---------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds an event\n"
             + "addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES -------------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a deadline\n"
@@ -92,7 +91,7 @@ public class Ui {
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Deletes a selected note\n"
             + "undo TYPE ----------------------------------------------------------"
             + " Undoes the last edit/deleted task or notes\n"
-            + "display [WEEK] -------------------------------------------------------"
+            + "display KEYWORD ------------------------------------------------------"
             + " Displays either weekly or daily schedule\n"
             + "freeTime ------------------------------------------------------"
             + " Tells you your longest block of free time today\n"
@@ -107,8 +106,8 @@ public class Ui {
 
     //Input format messages
     public static final String NEW_DEADLINE_TIME_INPUT_FORMAT = "/by DATETIME";
-    public static final String NEW_EVENT_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
-    public static final String NEW_LESSON_TIME_INPUT_FORMAT = "/date DATE /time START /to END";
+    public static final String NEW_EVENT_TIME_INPUT_FORMAT = "/date DATE /from START /to END";
+    public static final String NEW_LESSON_TIME_INPUT_FORMAT = "/date DATE /from START /to END";
 
     private Scanner conversation;
 
@@ -158,6 +157,16 @@ public class Ui {
         return ANSI_CYAN + string + ANSI_RESET;
     }
 
+    /**
+     * Colours input string to a yellow colour.
+     *
+     * @param string String to be coloured
+     * @return Yellow coloured string.
+     */
+    public String colourTextYellow(String string) {
+        return ANSI_YELLOW + string + ANSI_RESET;
+    }
+
     public void showLogo() {
         printThickSeparator();
         printThickSeparator();
@@ -197,10 +206,28 @@ public class Ui {
     }
 
     /**
-     * Returns read user command.
+     * Prompts continually for user command and checks if save delimiter has been added to prevent errors.
+     *
+     * @return User command without save delimiters.
      */
     public String readCommand() {
-        return conversation.nextLine();
+        boolean isCommandWithDelimiter = true;
+        String userInput;
+        do {
+            userInput = conversation.nextLine();
+
+            try {
+                if (userInput.contains("=-=")) {
+                    throw new SaveDelimiterException();
+                }
+                isCommandWithDelimiter = false;
+            } catch (SaveDelimiterException e) {
+                System.out.println(colourTextRed("Inputs cannot contain the character sequence: =-="));
+                System.out.println(colourTextCyan("Please re-enter your input:"));
+            }
+        } while (isCommandWithDelimiter);
+
+        return userInput;
     }
 
     public int readSingleIntInput() {
@@ -274,12 +301,15 @@ public class Ui {
 
     public void showEditableParametersMessage(String type) {
         switch (type) {
+
         case (PARAM_LESSON):
             System.out.println("1. Module Code\n2. Time");
             break;
+
         case (PARAM_DEADLINE):
             System.out.println("1. Deadline Name\n2. Time");
             break;
+
         case (PARAM_EVENT):
             System.out.println("1. Event Name\n2. Time");
             break;
@@ -381,7 +411,7 @@ public class Ui {
     public void showInvalidNumberError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("The number you inputted is invalid!"));
+        System.out.println(colourTextRed("The number you inputted is invalid! Please try again."));
         printThickSeparator();
         printBlankLine();
     }
@@ -403,7 +433,7 @@ public class Ui {
     }
 
     public void showInvalidCastError() {
-        System.out.println(colourTextRed("Something went wrong, mismatching task types..."));
+        System.out.println(colourTextRed("Something went wrong, mismatching task types"));
     }
 
     public void showSaveDataMissingError() {
@@ -411,8 +441,17 @@ public class Ui {
                 + "- Data missing/corrupted"));
     }
 
-    public void showUndeterminableTaskError() {
-        System.out.println(colourTextRed("Something went wrong while determining the tasks..."));
+    public void showInvalidInputToEditDeadlineTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: /by dd-mm-yy hh:mm"));
+    }
+
+    public void showInvalidInputToEditTime() {
+        System.out.println(colourTextRed("Your input is invalid. Please input in this format: "
+                + "/date dd-mm-yy /from hh:mm /to hh:mm"));
+    }
+
+    public void showIndeterminableTaskError() {
+        System.out.println(colourTextRed("Something went wrong while determining the tasks"));
     }
 
     public void showParseUnknownCommandError() {
@@ -500,10 +539,10 @@ public class Ui {
         printBlankLine();
     }
 
-    public void showNothingScheduledTodayTomorrowMessage() {
+    public void showNothingScheduledMessage(String dayKeyword) {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextGreen("You have nothing on for today and tomorrow!"));
+        System.out.println(colourTextGreen(String.format("You have nothing on for %s!", dayKeyword)));
     }
 
     public void showAvailableSleepTimeMessage(int earliestSleepTime, int latestWakeTime) {
@@ -614,45 +653,49 @@ public class Ui {
     public void showAddDatePrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Please input the date:"));
+        System.out.println(colourTextCyan("What is the date? (Enter in the format: DD-MM-YY)"));
     }
 
     public void showAddStartTimePrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Please input the start time:"));
+        System.out.println(colourTextCyan("What is the start time? (Enter in the format: HH:MM)"));
     }
 
     public void showAddEndTimePrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Please input the end time:"));
+        System.out.println(colourTextCyan("What is the end time? (Enter in the format: HH:MM)"));
     }
 
     public void showAddDescriptionPrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Please input the description:"));
+        System.out.println(colourTextCyan("Please enter the description here:"));
     }
 
     public void showAddDateTimePrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Please input the Date Time:"));
+        System.out.println(colourTextCyan("What is the date and time? (Enter in the format: DD-MM-YY HH:MM"));
     }
 
     public void showAddRecurrencesPrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("Please input the number of times to repeat:"));
+        System.out.println(colourTextCyan("How many times do you want this to be repeated?"));
     }
 
-    public void showMultipleNoteMatchesMessage(NoteList notes, String title) {
+    public int[] showMultipleNoteMatchesMessage(NoteList notes, String title, int[] arr) {
+        int j = 0;
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
-                System.out.println(i + 1 + ". " + notes.get(i).getTitle());
+                System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
+                arr[j] = i + 1;
+                j++;
             }
         }
+        return arr;
     }
 
     public void showAllNotesMessage(NoteList notes) {
@@ -775,6 +818,73 @@ public class Ui {
         System.out.println(colourTextCyan("Here are all your matching " + type + "s:"));
     }
 
+    public void showEmptyNewDescriptionMessage() {
+        System.out.println(colourTextRed("Your new description cannot be empty. Please try again!"));
+    }
+
+    public void showInvalidRecurrencesError() {
+        System.out.println(colourTextRed("Recurrences must be a positive integer!"));
+        printThickSeparator();
+    }
+
+    public void showArchiveEndInformationMessage() {
+        System.out.println(colourTextYellow("Note: All current notes have been archived and will no longer be "
+                + "read by the program"));
+        printThickSeparator();
+    }
+
+    public void showReadErrorHandlerError() {
+        System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
+                + "read. The rest of your data will continue to be loaded"));
+        System.out.println(colourTextRed("This is done to protect your stored data\n"));
+        System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
+                + "recommended to undo those changes"));
+        System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    public void showSaveDelimiterError() {
+        System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
+                + " in the save file"));
+    }
+
+    public void showLocalDateTimeParseError() {
+        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
+        System.out.println(colourTextCyan("The task will continue to be added with a default date to "
+                + "preserve your data"));
+        System.out.println(colourTextCyan("You can edit the date and times directly from the save file"));
+        System.out.println("---------------------------------------------------------------------------------------");
+    }
+
+    public void showInvalidModuleCodePrompt() {
+        System.out.println(colourTextRed("The entered module code has an invalid format, please re-enter a "
+                + "valid module code:"));
+        System.out.println(colourTextGreen("Examples of valid formats: CS1010 / CS2113T / GER1000 / CSS1000X"));
+    }
+
+    public void showEnterDisplayKeywordMessage() {
+        System.out.println(colourTextCyan("To see your schedule, please enter: ") + "week/today/tomorrow");
+        printThickSeparator();
+    }
+
+    public void showInvalidDisplayKeywordError() {
+        System.out.println(colourTextRed("Invalid display parameter! Try 'week', 'today' or 'tomorrow' instead!"));
+        printThickSeparator();
+    }
+
+    public void showCurrHourIndicationMessage() {
+        System.out.println(colourTextCyan("NOTE: The row corresponding to the current hour "
+                + "is coloured for easy reference!"));
+        printThickSeparator();
+    }
+
+    public void showDuplicateTaskError(String type) {
+        System.out.println("This " + type + " or something very similar already exists in your schedule!");
+    }
+
+    public void showPastTaskError(String type) {
+        System.out.println("The timing of this " + type + " is already in the past!");
+    }
+
     public void showCurrentTitlePrompt(String currentTitle) {
         printBlankLine();
         printThinSeparator();
@@ -805,10 +915,10 @@ public class Ui {
         printBlankLine();
     }
 
-    public void showDayScheduleMessage() {
+    public void showDayScheduleMessage(String displayKeyword) {
         printBlankLine();
         printThickSeparator();
-        System.out.println("Here is your schedule for today:");
+        System.out.println("Here is your schedule for " + displayKeyword + ":");
     }
 
     public void showNotesMessage(String note) {

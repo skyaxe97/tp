@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 public class EditNotesCommand extends Command {
     private static Logger logger = Logger.getLogger(EditNotesCommand.class.getName());
     private String title;
+    private int arraySize = 10000;
 
     public EditNotesCommand(String title) {
         this.title = title;
@@ -26,7 +27,7 @@ public class EditNotesCommand extends Command {
     private void findTitle(Ui ui, NoteList notes, Parser parser,
                            String title, NoteHistory noteHistory) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-
+        int[] noteMatches = new int [arraySize];
         int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
         int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
 
@@ -48,11 +49,11 @@ public class EditNotesCommand extends Command {
             ui.showMultipleMatchesFoundPrompt();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            ui.showMultipleNoteMatchesMessage(notes, title);
+            noteMatches = ui.showMultipleNoteMatchesMessage(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
 
             System.out.println(notes.get(noteNumber).toString());
             ui.showEditWhichPartMessage();
@@ -109,7 +110,7 @@ public class EditNotesCommand extends Command {
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
-                NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
+                NoteCommandFunctions.checkForIndexBeyondSize(notes, noteNumber);
 
                 ui.showNotesPrompt(notes.get(noteNumber - 1).toString());
                 ui.showEditWhichPartMessage();

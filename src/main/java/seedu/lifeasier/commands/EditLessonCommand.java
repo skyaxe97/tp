@@ -11,10 +11,12 @@ import seedu.lifeasier.model.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 import seedu.lifeasier.parser.Parser;
 
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditLessonCommand extends Command {
+    private static final int LESSON_NUM_OF_TIME_ARGS = 2;
     private static Logger logger = Logger.getLogger(EditLessonCommand.class.getName());
     private String code;
 
@@ -26,16 +28,17 @@ public class EditLessonCommand extends Command {
         tasks.printMatchingTasks(Ui.PARAM_LESSON, code, ui);
     }
 
-    public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
-        tasks.editTaskDescription(index, ui);
+    public void editLessonModuleCode(TaskList tasks, int index, Ui ui, Parser parser) {
+        String moduleCode = ui.readCommand();
+        if (!parser.checkIfValidModuleCode(moduleCode)) {
+            moduleCode = parser.getValidModuleCode(ui);
+        }
+        tasks.editModuleCode(index, ui, moduleCode);
     }
 
-    public void editLessonTime(TaskList tasks, int index, Ui ui) throws ParserException {
-        tasks.editLessonTime(index, ui);
-    }
-
-    private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
-        tasks.checkForIndexOutOfBounds(userInput);
+    public void editLessonTime(TaskList tasks, int index, Ui ui, Parser parser) {
+        LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, LESSON_NUM_OF_TIME_ARGS);
+        tasks.editLessonTime(index, ui, times);
     }
 
     @Override
@@ -49,13 +52,12 @@ public class EditLessonCommand extends Command {
             ui.showSelectTaskToEditPrompt(Ui.PARAM_LESSON);
 
             logger.log(Level.INFO, "Reading user input for choice of lesson to edit...");
-            int userLessonChoice = ui.readSingleIntInput() - 1;
-            checkForIndexOutOfBounds(tasks, userLessonChoice);
+            int userLessonChoice = parser.parseUserInputForEditTaskChoice(ui, tasks);
 
             logger.log(Level.INFO, "Temporarily hold value of this Event");
             Task oldCopyOfLesson = taskHistory.getCurrCopyOfTaskToEdit(tasks, userLessonChoice);
 
-            selectParameterToEdit(ui, tasks, userLessonChoice);
+            selectParameterToEdit(parser, ui, tasks, userLessonChoice);
 
             taskHistory.pushOldCopy(oldCopyOfLesson);
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
@@ -67,31 +69,30 @@ public class EditLessonCommand extends Command {
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatError();
-        } catch (ParserException e) {
-            logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidCommandFormatMessage();
         } catch (TaskNotFoundException e) {
-            logger.log(Level.SEVERE, "Input deadline name does not match any of the existing deadline names.");
+            logger.log(Level.SEVERE, "Input lesson name does not match any of the existing deadline names.");
             ui.showNoMatchesError(Ui.PARAM_LESSON);
         }
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
 
-    public void selectParameterToEdit(Ui ui, TaskList tasks, int userLessonChoice) throws ParserException {
+    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userLessonChoice) {
         ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_LESSON);
-        int userParamChoice = Integer.parseInt(ui.readCommand());
+
+        logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
+        int userParamChoice = parser.parseValidUserInputForParameterEdit(ui);
 
         switch (userParamChoice) {
 
         case (1):
             ui.showInputPrompt(Ui.PARAM_LESSON);
-            editLessonModuleCode(tasks, userLessonChoice, ui);
+            editLessonModuleCode(tasks, userLessonChoice, ui, parser);
             break;
 
         case (2):
             ui.showInputFormatPrompt(Ui.PARAM_LESSON);
-            editLessonTime(tasks, userLessonChoice, ui);
+            editLessonTime(tasks, userLessonChoice, ui, parser);
             break;
 
         default:

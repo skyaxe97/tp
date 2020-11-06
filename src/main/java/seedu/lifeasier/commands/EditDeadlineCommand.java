@@ -11,10 +11,13 @@ import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskNotFoundException;
 import seedu.lifeasier.ui.Ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditDeadlineCommand extends Command {
+    private static final int DEADLINE_NUM_OF_TIME_ARGS = 1;
     private static Logger logger = Logger.getLogger(EditDeadlineCommand.class.getName());
     private String deadlineName;
 
@@ -22,20 +25,17 @@ public class EditDeadlineCommand extends Command {
         this.deadlineName = deadlineName;
     }
 
-    public void printMatchingDeadlines(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
+    public void printMatchingDeadlines(TaskList tasks, Ui ui, String code) throws TaskNotFoundException {
         tasks.printMatchingTasks(Ui.PARAM_DEADLINE, code, ui);
     }
 
-    public void editDeadlineName(TaskList tasks, int index, Ui ui) {
+    private void editDeadlineName(TaskList tasks, int index, Ui ui) {
         tasks.editTaskDescription(index, ui);
     }
 
-    public void editDeadlineTime(TaskList tasks, int index, Ui ui) throws ParserException {
-        tasks.editDeadlineTime(index, ui);
-    }
-
-    private void checkForIndexOutOfBounds(TaskList tasks, int userInput) {
-        tasks.checkForIndexOutOfBounds(userInput);
+    private void editDeadlineTime(TaskList tasks, int index, Ui ui, Parser parser) {
+        LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, DEADLINE_NUM_OF_TIME_ARGS);
+        tasks.editDeadlineTime(index, ui, times);
     }
 
     @Override
@@ -48,13 +48,13 @@ public class EditDeadlineCommand extends Command {
             printMatchingDeadlines(tasks, ui, deadlineName);
             ui.showSelectTaskToEditPrompt(Ui.PARAM_DEADLINE);
 
-            int userDeadlineChoice = Integer.parseInt(ui.readCommand()) - 1;
-            checkForIndexOutOfBounds(tasks, userDeadlineChoice);
+            logger.log(Level.INFO, "Reading user input for choice of task to delete...");
+            int userDeadlineChoice = parser.parseUserInputForEditTaskChoice(ui, tasks);
 
             logger.log(Level.INFO, "Temporarily hold value of this Deadline");
             Task oldCopyOfDeadline = taskHistory.getCurrCopyOfTaskToEdit(tasks, userDeadlineChoice);
 
-            selectParameterToEdit(ui, tasks, userDeadlineChoice);
+            selectParameterToEdit(parser, ui, tasks, userDeadlineChoice);
 
             taskHistory.pushOldCopy(oldCopyOfDeadline);
             logger.log(Level.INFO, "Push old copy of Deadline into taskHistory");
@@ -62,13 +62,10 @@ public class EditDeadlineCommand extends Command {
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberError();
+            ui.showIndexOutOfBoundsMessage();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatError();
-        } catch (ParserException e) {
-            logger.log(Level.SEVERE, "Input is not in the correct format");
-            ui.showInvalidCommandFormatMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesError(Ui.PARAM_DEADLINE);
@@ -76,10 +73,12 @@ public class EditDeadlineCommand extends Command {
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 
-    public void selectParameterToEdit(Ui ui, TaskList tasks, int userDeadlineChoice) throws ParserException {
+    private void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userDeadlineChoice) {
         ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
-        int userParamChoice = Integer.parseInt(ui.readCommand());
+
+        logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
+        int userParamChoice = parser.parseValidUserInputForParameterEdit(ui);
 
         switch (userParamChoice) {
 
@@ -90,7 +89,7 @@ public class EditDeadlineCommand extends Command {
 
         case (2):
             ui.showInputFormatPrompt(Ui.PARAM_DEADLINE);
-            editDeadlineTime(tasks, userDeadlineChoice, ui);
+            editDeadlineTime(tasks, userDeadlineChoice, ui, parser);
             break;
 
         default:

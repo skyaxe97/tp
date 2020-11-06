@@ -3,12 +3,14 @@ package seedu.lifeasier.commands;
 import org.junit.jupiter.api.Test;
 import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
-import seedu.lifeasier.parser.Parser;
-import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.model.tasks.Event;
 import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
+import seedu.lifeasier.parser.Parser;
+import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
@@ -115,7 +117,7 @@ class SleepTimeCommandTest {
     }
 
     @Test
-    void executeSleepTimeCommand_busyDay_6HoursSleep() {
+    void executeSleepTimeCommand_busyDay_6HoursSleep() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();
@@ -123,7 +125,7 @@ class SleepTimeCommandTest {
         NoteHistory noteHistory = new NoteHistory();
         TaskHistory taskHistory = new TaskHistory();
         FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
         Parser parser = new Parser();
 
         SleepTimeCommand command = new SleepTimeCommand();
@@ -135,7 +137,6 @@ class SleepTimeCommandTest {
         LocalDateTime end1 = today.atTime(23, 0);
         LocalDateTime start2 = tomorrow.atTime(6, 0);
         LocalDateTime end2 = tomorrow.atTime(12, 0);
-
 
         tasks.addEvent("first event", start1, end1, 0);
         tasks.addEvent("second event", start2, end2, 0);
@@ -164,7 +165,7 @@ class SleepTimeCommandTest {
         NoteHistory noteHistory = new NoteHistory();
         TaskHistory taskHistory = new TaskHistory();
         FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
         Parser parser = new Parser();
 
         SleepTimeCommand command = new SleepTimeCommand();

@@ -31,8 +31,8 @@ IMPORTANT INFORMATION:
 COMMANDS
 ***************************************************************************************************************
 help ------------------------------------------------------------------------------ Displays available commands
-addLesson /code MODULE_CODE /date DATE /time START /to END /repeats TIMES -------------------- [P]Adds a lesson
-addEvent EVENT_NAME /date DATE /time START /to END /repeats TIMES ---------------------------- [P]Adds an event
+addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES -------------------- [P]Adds a lesson
+addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ---------------------------- [P]Adds an event
 addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES -------------------------------------- [P]Adds a deadline
 editLesson MODULE_CODE ---------------------------------------------------------------------- [P]Edits a lesson
 editEvent EVENT_NAME ------------------------------------------------------------------------ [P]Edits an event
@@ -44,7 +44,7 @@ archive ------------------------------------------------------------------------
 editNotes TITLE ---------------------------------------------------------------------- [P]Edits a selected note
 deleteNotes TITLE ------------------------------------------------------------------ [P]Deletes a selected note
 undo TYPE ---------------------------------------------------------- Undoes the last edit/deleted task or notes
-display [WEEK] ------------------------------------------------------- Displays either weekly or daily schedule
+display KEYWORD ------------------------------------------------------ Displays either weekly or daily schedule
 freeTime ------------------------------------------------------ Tells you your longest block of free time today
 sleepTime ----------------------------------------------------------- Tells you how much time you have to sleep
 exit ----------------------------------------------------------------------------- Closes the LifEasier program
