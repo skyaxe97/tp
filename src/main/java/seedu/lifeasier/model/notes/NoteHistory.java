@@ -57,8 +57,22 @@ public class NoteHistory {
 
     public void popLastNote() {
         int indexOfLastNote = changeCount - 1;
+
+        int editNumOfLastNote = noteHistory.get(indexOfLastNote).getEditNumber();
+        if (!containsSameEditNumber(editNumOfLastNote)) {
+            if (editNumOfLastNote > 0) {
+                editCount--;
+            } else {
+                deleteCount++;
+            }
+        }
+
         noteHistory.remove(indexOfLastNote);
         decrementChangeCount();
+    }
+
+    public boolean containsSameEditNumber(int editNumOfLastTask) {
+        return noteHistory.stream().anyMatch(t -> t.getEditNumber() == editNumOfLastTask);
     }
 
     /**
@@ -75,12 +89,12 @@ public class NoteHistory {
         int editID;
 
         if (noteEditNumber == DEFAULT_EDIT_NUMBER) {
-            editID = getEditCount() + 1;
+            editCount++;
+            editID = getEditCount();
             note.setEditNumber(editID);
         } else {
             editID = noteEditNumber;
         }
-        editCount++;
 
         return new Note(note, editID);
     }

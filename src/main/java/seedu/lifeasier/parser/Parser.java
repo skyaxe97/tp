@@ -510,7 +510,7 @@ public class Parser {
      * Parses the display command that the user inputs.
      *
      *
-     * @param ui
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return DisplayScheduleCommand with the parameters input by the user.
      */
