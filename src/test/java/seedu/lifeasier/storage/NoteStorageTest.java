@@ -116,7 +116,7 @@ class NoteStorageTest {
             Scanner fileReader = new Scanner(testFile);
             noteStorage.createNoteList(fileReader);
 
-            assertEquals(2, notes.getNotes().size());
+            assertEquals(3, notes.getNotes().size());
         } catch (IOException e) {
             System.out.println("Testing error - Could not write to save file");
         }

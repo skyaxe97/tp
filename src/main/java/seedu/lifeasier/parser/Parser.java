@@ -55,7 +55,7 @@ public class Parser {
 
     public static final String PARAM_CODE = "/code";
     public static final String PARAM_DATE = "/date";
-    public static final String PARAM_TIME = "/time";
+    public static final String PARAM_FROM = "/from";
     public static final String PARAM_TO = "/to";
     public static final String PARAM_BY = "/by";
     public static final String PARAM_TYPE = "/type";
@@ -65,9 +65,14 @@ public class Parser {
     public static final String PARAM_LESSON = "lesson";
     public static final String PARAM_EVENT = "event";
     public static final String PARAM_DEADLINE = "deadline";
+    public static final String PARAM_NOTE = "note";
+    public static final String PARAM_TASK = "task";
 
     public static final int INDEX_START = 0;
     public static final int INDEX_END = 1;
+    public static final int MAXIMUM_CODE_LENGTH = 8;
+    public static final int MINIMUM_CODE_LENGTH = 6;
+    public static final int MAXIMUM_SUFFIX_CHARACTER = 1;
 
     private boolean isParametersEmpty = true;
     private boolean isModuleCodeEmpty = true;
@@ -108,7 +113,6 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
-
     Command parseAddLessonCommand(Ui ui, String input) {
 
         logger.log(Level.INFO, "Parsing addLesson command...");
@@ -153,8 +157,8 @@ public class Parser {
         int lastIndexOfCodeCommand = input.indexOf(PARAM_CODE) + PARAM_CODE.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
         int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
-        int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
-        int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
+        int firstIndexOfTimeCommand = input.indexOf(PARAM_FROM);
+        int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_FROM.length();
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
         int firstIndexOfRepeatsCommand = input.indexOf(PARAM_REPEATS);
@@ -166,15 +170,16 @@ public class Parser {
         String tempEndTime =  input.substring(lastIndexOfToCommand, firstIndexOfRepeatsCommand).trim();
         String tempRecurrencesString =  input.substring(lastIndexOfRepeatsCommand).trim();
 
-        String moduleCode = fillIfEmptyParam(ui, tempModuleCode, "/code");
-        String date = fillIfEmptyParam(ui, tempDate, "/date");
-        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
-        String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
-        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
+        String moduleCode = fillIfEmptyParam(ui, tempModuleCode, PARAM_CODE);
+        String date = fillIfEmptyParam(ui, tempDate, PARAM_DATE);
+        String startTime = fillIfEmptyParam(ui, tempStartTime, PARAM_FROM);
+        String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, PARAM_TO));
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, PARAM_REPEATS);
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
+            resetBoolean();
             return new InvalidCommand();
         }
         int recurrences = checkIfValidNumber(ui, recurrencesString);
@@ -234,8 +239,8 @@ public class Parser {
         int lastIndexOfAddEventCommand = input.indexOf(PARAM_ADD_EVENT) + PARAM_ADD_EVENT.length();
         int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
         int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
-        int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
-        int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
+        int firstIndexOfTimeCommand = input.indexOf(PARAM_FROM);
+        int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_FROM.length();
         int firstIndexOfToCommand = input.indexOf(PARAM_TO);
         int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
         int firstIndexOfRepeatsCommand = input.indexOf(PARAM_REPEATS);
@@ -247,15 +252,16 @@ public class Parser {
         String tempRecurrencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddEventCommand, firstIndexOfDateCommand).trim();
-        String date = fillIfEmptyParam(ui, tempDate, "/date");
-        String startTime = fillIfEmptyParam(ui, tempStartTime, "/time");
-        String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, "/to"));
-        String recurrencesString =  fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
+        String date = fillIfEmptyParam(ui, tempDate, PARAM_DATE);
+        String startTime = fillIfEmptyParam(ui, tempStartTime, PARAM_FROM);
+        String endTime =  checkForMidnightEndTime(fillIfEmptyParam(ui, tempEndTime, PARAM_TO));
+        String recurrencesString =  fillIfEmptyParam(ui, tempRecurrencesString, PARAM_REPEATS);
         LocalDateTime start = LocalDateTime.parse(date + " " + startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
 
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
+            resetBoolean();
             return new InvalidCommand();
         }
         int recurrences = checkIfValidNumber(ui, recurrencesString);
@@ -310,12 +316,12 @@ public class Parser {
         int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String tempByInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
-        String tempRecurencesString = input.substring(lastIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
-        String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
+        String byInput = fillIfEmptyParam(ui, tempByInput, PARAM_BY);
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-        String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, PARAM_REPEATS);
         int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
@@ -427,8 +433,8 @@ public class Parser {
         case (2):
             int firstIndexOfDateCommand = input.indexOf(PARAM_DATE);
             int lastIndexOfDateCommand = firstIndexOfDateCommand + PARAM_DATE.length();
-            int firstIndexOfTimeCommand = input.indexOf(PARAM_TIME);
-            int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_TIME.length();
+            int firstIndexOfTimeCommand = input.indexOf(PARAM_FROM);
+            int lastIndexOfTimeCommand = firstIndexOfTimeCommand + PARAM_FROM.length();
             int firstIndexOfToCommand = input.indexOf(PARAM_TO);
             int lastIndexOfToCommand = firstIndexOfToCommand + PARAM_TO.length();
 
@@ -505,17 +511,49 @@ public class Parser {
     /**
      * Parses the display command that the user inputs.
      *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return DisplayScheduleCommand with the parameters input by the user.
      */
-    private Command parseDisplayScheduleCommand(String input) {
-
+    private Command parseDisplayScheduleCommand(Ui ui, String input) throws ParserException {
         logger.log(Level.INFO, "Parsing display command...");
 
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
-        String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
+        String displayKeyword = input.substring(lastIndexOfDisplayScheduleCommand).trim();
 
-        return new DisplayScheduleCommand(toDisplay);
+        if (displayKeyword.isEmpty()) {
+            logger.log(Level.WARNING, "Missing parameter, proceed to prompt");
+            displayKeyword = handleMissingDisplayParam(ui);
+        }
+
+        if (isValidDisplayParam(displayKeyword)) {
+            return new DisplayScheduleCommand(displayKeyword);
+        } else {
+            logger.log(Level.SEVERE, "Error determining undo command type");
+            throw new ParserException();
+        }
+    }
+
+    private String handleMissingDisplayParam(Ui ui) {
+        boolean isValidField = false;
+        String userInput = "";
+
+        while (!isValidField) {
+            ui.showEnterDisplayKeywordMessage();
+
+            userInput = ui.readCommand();
+
+            if (isValidDisplayParam(userInput)) {
+                isValidField = true;
+            } else {
+                ui.showInvalidDisplayKeywordError();
+            }
+        }
+        return userInput;
+    }
+
+    private boolean isValidDisplayParam(String userInput) {
+        return userInput.equals("week") || userInput.equals("today") || userInput.equals("tomorrow");
     }
 
     /**
@@ -539,9 +577,9 @@ public class Parser {
         }
 
         switch (undoType) {
-        case "task":
+        case PARAM_TASK:
             return new UndoTaskCommand();
-        case "note":
+        case PARAM_NOTE:
             return new UndoNoteCommand();
         default:
             logger.log(Level.SEVERE, "Error determining undo command type");
@@ -558,7 +596,7 @@ public class Parser {
 
             userInput = ui.readCommand();
 
-            if (userInput.equals("task") || userInput.equals("note")) {
+            if (userInput.equals(PARAM_TASK) || userInput.equals(PARAM_NOTE)) {
                 isValidField = true;
             } else {
                 ui.showInvalidUndoType();
@@ -640,7 +678,7 @@ public class Parser {
             return MissingParam.RECURRENCES;
         } else if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
-        } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
+        } else if (!input.contains(PARAM_FROM) && isStartTimeEmpty) {
             return MissingParam.START_TIME;
         } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
             return MissingParam.DATE;
@@ -665,7 +703,7 @@ public class Parser {
             return MissingParam.RECURRENCES;
         } else if (!input.contains(PARAM_TO) && isEndTimeEmpty) {
             return MissingParam.END_TIME;
-        } else if (!input.contains(PARAM_TIME) && isStartTimeEmpty) {
+        } else if (!input.contains(PARAM_FROM) && isStartTimeEmpty) {
             return MissingParam.START_TIME;
         } else if (!input.contains(PARAM_DATE) && isDateEmpty) {
             return MissingParam.DATE;
@@ -724,8 +762,8 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Event description to string.");
         ui.showAddDescriptionMessage();
         String description = checkIfEmpty(ui, ui.readCommand());
-        String[] temp = input.split("/date");
-        input = temp[0] + description + " /date" + temp[1];
+        String[] temp = input.split(PARAM_DATE);
+        input = temp[0] + description + " " + PARAM_DATE + temp[1];
         logger.log(Level.INFO, "End of adding Event description to string.");
         return input;
     }
@@ -741,8 +779,8 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Deadline description to string.");
         ui.showAddDescriptionMessage();
         String description = checkIfEmpty(ui, ui.readCommand());
-        String[] temp = input.split("/by");
-        input = temp[0] + description + " /by" + temp[1];
+        String[] temp = input.split(PARAM_BY);
+        input = temp[0] + description + " " + PARAM_BY + temp[1];
         logger.log(Level.INFO, "End of adding Deadline description to string.");
         return input;
     }
@@ -758,8 +796,12 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Module Code to string.");
         ui.showAddModuleCodeMessage();
         String moduleCode = checkIfEmpty(ui, ui.readCommand());
-        String[] temp = input.split("/date");
-        input = temp[0] + "/code" + moduleCode + " /date" + temp[1];
+        if (!checkIfValidModuleCode(moduleCode)) {
+            moduleCode = getValidModuleCode(ui);
+        }
+        String[] temp = input.split(PARAM_DATE);
+        input = temp[0] + PARAM_CODE + moduleCode + " " + PARAM_DATE + temp[1];
+
         logger.log(Level.INFO, "End of adding Module Code to string.");
         return input;
     }
@@ -775,8 +817,8 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Date to string.");
         ui.showAddDateMessage();
         String date = checkIfEmpty(ui, ui.readCommand());
-        String[] temp1 = input.split("/time");
-        input = temp1[0] + "/date " + date + " /time" + temp1[1];
+        String[] temp1 = input.split(PARAM_FROM);
+        input = temp1[0] + PARAM_DATE + " " + date + " "  + PARAM_FROM + temp1[1];
         logger.log(Level.INFO, "End of adding Date to string.");
 
         return input;
@@ -794,8 +836,8 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Start Time to string.");
         ui.showAddStartTimeMessage();
         String startTime = checkIfEmpty(ui, ui.readCommand());
-        String[] temp2 = input.split("/to");
-        input = temp2[0] + "/time " + startTime + " /to" + temp2[1];
+        String[] temp2 = input.split(PARAM_TO);
+        input = temp2[0] + PARAM_FROM + " " + startTime + " " + PARAM_TO + temp2[1];
         logger.log(Level.INFO, "End of adding Start Time to string.");
 
         return input;
@@ -813,7 +855,7 @@ public class Parser {
         ui.showAddEndTimeMessage();
         String endTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp3 = input.split(PARAM_REPEATS);
-        input = temp3[0] + " /to " + endTime + "/repeats" + temp3[1];
+        input = temp3[0] + " " + PARAM_TO + " " + endTime + PARAM_REPEATS + temp3[1];
         logger.log(Level.INFO, "End of adding End Time to string.");
 
         return input;
@@ -830,7 +872,7 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding recurrences to string.)");
         ui.showAddRecurrencesMessage();
         String recurrences = checkIfEmpty(ui, ui.readCommand());
-        input = input + " /repeats " + recurrences;
+        input = input + " " + PARAM_REPEATS + " " + recurrences;
         logger.log(Level.INFO, "End of adding recurrences to string.)");
 
         return input;
@@ -848,7 +890,7 @@ public class Parser {
         ui.showAddDateTimeMessage();
         String byDateTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp4 = input.split(PARAM_REPEATS);
-        input = temp4[0] + " /by " + byDateTime + " /repeats" + temp4[1];
+        input = temp4[0] + " " + PARAM_BY + " " + byDateTime + " " + PARAM_REPEATS + temp4[1];
         logger.log(Level.INFO, "End of adding By Time to string.");
 
         return input;
@@ -858,6 +900,12 @@ public class Parser {
         if (input.length() == 0) {
             ui.printEmptyParam(param);
             input = checkIfEmpty(ui, ui.readCommand());
+        }
+        //Check for valid module code
+        if (param.equals(PARAM_CODE)) {
+            if (!checkIfValidModuleCode(input)) {
+                input = getValidModuleCode(ui);
+            }
         }
         return input;
     }
@@ -885,6 +933,118 @@ public class Parser {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if the input module code is in a valid format.
+     *
+     * @param moduleCode The module code to be checked.
+     * @return true if the module code is determined to be valid.
+     */
+    public boolean checkIfValidModuleCode(String moduleCode) {
+        logger.log(Level.INFO, "Starting module code verification for: " + moduleCode);
+        moduleCode = moduleCode.trim();
+        char[] moduleCodeElements = moduleCode.toCharArray();
+
+        //Check if input for module code is within valid length of 8
+        if (moduleCodeElements.length > MAXIMUM_CODE_LENGTH || moduleCodeElements.length < MINIMUM_CODE_LENGTH) {
+            logger.log(Level.INFO, "Invalid module code length");
+            return false;
+        }
+
+        int consecutiveLetterCount = getConsecutiveLetterCount(moduleCodeElements);
+        if (consecutiveLetterCount < 2 || consecutiveLetterCount > 3) {
+            logger.log(Level.INFO, "Invalid prefix length");
+            return false;
+        }
+
+        int consecutiveNumberCount = getConsecutiveNumberCount(moduleCodeElements, consecutiveLetterCount);
+        if (consecutiveNumberCount != 4) {
+            logger.log(Level.INFO, "Invalid numeric code length");
+            return false;
+        }
+
+        //Checking for existence of postfix
+        int totalCharacterCount = consecutiveLetterCount + consecutiveNumberCount;
+        boolean isFinalLength = totalCharacterCount == moduleCodeElements.length;
+        if (isFinalLength) {
+            logger.log(Level.INFO, "Check done - Valid module code");
+            return true;
+        }
+
+        //Possible postfix, check for valid postfix
+        int numberOfPostfixCharacters = moduleCodeElements.length - totalCharacterCount;
+        if (numberOfPostfixCharacters > MAXIMUM_SUFFIX_CHARACTER) {
+            logger.log(Level.INFO, "Invalid postfix length");
+            return false;
+        }
+
+        logger.log(Level.INFO, "Checking for module postfix letter");
+        int lastIndex = moduleCodeElements.length - 1;
+        if (Character.isLetter(moduleCodeElements[lastIndex])) {
+            logger.log(Level.INFO, "Check done - Valid module code");
+            return true;
+        } else {
+            logger.log(Level.INFO, "Invalid module code postfix");
+            return false;
+        }
+    }
+
+    /**
+     * Counts the number of consecutive numbers for the module code.
+     *
+     * @param moduleCodeElements Array of characters from module code.
+     * @param letterCount Starting index from the number of prefix characters.
+     * @return The number of consecutive numbers.
+     */
+    protected int getConsecutiveNumberCount(char[] moduleCodeElements, int letterCount) {
+        assert letterCount != 0 : "LetterCount should not be 0 at this state";
+        logger.log(Level.INFO, "Start numeric code count");
+        int numberCount = 0;
+        for (int i = letterCount; i < moduleCodeElements.length; i++) {
+            if (Character.isDigit(moduleCodeElements[i])) {
+                numberCount++;
+            } else {
+                break;
+            }
+        }
+        return numberCount;
+    }
+
+    /**
+     * Counts the number of consecutive letters for the module code prefix within the first 4 elements of array.
+     *
+     * @param moduleCodeElements Array of characters from module code.
+     * @return The number of consecutive letters.
+     */
+    protected int getConsecutiveLetterCount(char[] moduleCodeElements) {
+        logger.log(Level.INFO, "Start prefix letter count");
+        int letterCount = 0;
+        for (int i = 0; i < 4; i++) {
+            if (Character.isLetter(moduleCodeElements[i])) {
+                letterCount++;
+            } else {
+                break;
+            }
+        }
+        return letterCount;
+    }
+
+    /**
+     * Repeatedly prompts for valid module code until a valid one is input.
+     *
+     * @return Valid module code.
+     */
+    public String getValidModuleCode(Ui ui) {
+        String moduleCode = "";
+        boolean isModuleCodeValid = false;
+
+        while (!isModuleCodeValid) {
+            ui.showInvalidModuleCodePrompt();
+            moduleCode = ui.readCommand();
+            isModuleCodeValid = checkIfValidModuleCode(moduleCode);
+        }
+        return moduleCode;
     }
 
     private void checkValidIndexOfParameter(int userInput) {
@@ -984,7 +1144,7 @@ public class Parser {
                 return parseEditNotesCommand(input);
 
             case (PARAM_DISPLAY):
-                return parseDisplayScheduleCommand(input);
+                return parseDisplayScheduleCommand(ui, input);
 
             case (PARAM_HELP):
                 return new HelpCommand();

@@ -109,6 +109,12 @@ public class TaskList {
         ui.showEditConfirmationMessage();
     }
 
+    public void editModuleCode(int index, Ui ui, String moduleCode) {
+        int actualIndex = taskMap.get(index);
+        getTask(actualIndex).setDescription(moduleCode);
+        ui.showEditConfirmationMessage();
+    }
+
     public void editLessonTime(int displayIndex, Ui ui, LocalDateTime[] times) {
         int actualIndex = taskMap.get(displayIndex);
         getTask(actualIndex).setStart(times[INDEX_START]);

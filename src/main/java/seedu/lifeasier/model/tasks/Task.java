@@ -100,4 +100,8 @@ public abstract class Task {
     public boolean isHappeningBefore(LocalDate date) {
         return getStart().toLocalDate().isBefore(date);
     }
+
+    public boolean happensAfter(LocalDateTime now) {
+        return getStart().isAfter(now);
+    }
 }

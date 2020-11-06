@@ -28,8 +28,12 @@ public class EditLessonCommand extends Command {
         tasks.printMatchingTasks(Ui.PARAM_LESSON, code, ui);
     }
 
-    public void editLessonModuleCode(TaskList tasks, int index, Ui ui) {
-        tasks.editTaskDescription(index, ui);
+    public void editLessonModuleCode(TaskList tasks, int index, Ui ui, Parser parser) {
+        String moduleCode = ui.readCommand();
+        if (!parser.checkIfValidModuleCode(moduleCode)) {
+            moduleCode = parser.getValidModuleCode(ui);
+        }
+        tasks.editModuleCode(index, ui, moduleCode);
     }
 
     public void editLessonTime(TaskList tasks, int index, Ui ui, Parser parser) {
@@ -83,7 +87,7 @@ public class EditLessonCommand extends Command {
 
         case (1):
             ui.showInputMessage(Ui.PARAM_LESSON);
-            editLessonModuleCode(tasks, userLessonChoice, ui);
+            editLessonModuleCode(tasks, userLessonChoice, ui, parser);
             break;
 
         case (2):
