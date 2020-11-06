@@ -57,8 +57,8 @@ public class TaskHistory {
 
     public void popLastTask() {
         int indexOfLastTask = changeCount - 1;
-        int editNumOfLastTask = taskHistory.get(indexOfLastTask).getEditNumber();
 
+        int editNumOfLastTask = taskHistory.get(indexOfLastTask).getEditNumber();
         if (!containsSameEditNumber(editNumOfLastTask)) {
             if (editNumOfLastTask > 0) {
                 editCount--;
@@ -67,7 +67,7 @@ public class TaskHistory {
             }
         }
 
-        taskHistory.remove(indexOfLastTask);
+        taskHistory.remove(editNumOfLastTask);
         decrementChangeCount();
     }
 
@@ -89,12 +89,12 @@ public class TaskHistory {
         int editID;
 
         if (taskEditNumber == DEFAULT_EDIT_NUMBER) {
-            editID = getEditCount() + 1;
+            editCount++;
+            editID = getEditCount();
             task.setEditNumber(editID);
         } else {
             editID = taskEditNumber;
         }
-        editCount++;
 
         return copyTask(task, editID);
     }
