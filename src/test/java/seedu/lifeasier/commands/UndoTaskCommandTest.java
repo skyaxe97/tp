@@ -108,7 +108,7 @@ class UndoTaskCommandTest {
         assertEquals(copyTestLesson, testTaskHistory.getLastTask());
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(ui.colourTextGreen("This deleted task has been successfully restored!")
+        assertEquals(ui.colourTextGreen("This task has been reverted back to its previous version!")
                         + System.lineSeparator() + testLessonToEdit.toString()
                         + System.lineSeparator()
                         + "========================================================================================"

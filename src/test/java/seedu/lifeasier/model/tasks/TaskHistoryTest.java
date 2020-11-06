@@ -52,6 +52,8 @@ class TaskHistoryTest {
 
         assertEquals(1, testEditNumber);
         assertEquals(copyTestDeadline, lastTask);
+
+        resetTaskHistory();
     }
 
     @Test
@@ -62,9 +64,9 @@ class TaskHistoryTest {
         Task copyTestEvent = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
         Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 2);
 
-        int testEditNumber1 = copyTestDeadline.getEditNumber();
-        int testEditNumber2 = copyTestEvent.getEditNumber();
-        int testEditNumber3 = copyTestLesson.getEditNumber();
+        final int testEditNumber1 = copyTestDeadline.getEditNumber();
+        final int testEditNumber2 = copyTestEvent.getEditNumber();
+        final int testEditNumber3 = copyTestLesson.getEditNumber();
 
         testTaskHistory.pushOldCopy(copyTestDeadline);
         testTaskHistory.pushOldCopy(copyTestEvent);
@@ -73,11 +75,13 @@ class TaskHistoryTest {
         Task lastTask = testTaskHistory.getLastTask();
 
         Assertions.assertAll(
-                () -> assertEquals(copyTestLesson, lastTask),
-                () -> assertEquals(1, testEditNumber1),
-                () -> assertEquals(2, testEditNumber2),
-                () -> assertEquals(3, testEditNumber3)
+            () -> assertEquals(copyTestLesson, lastTask),
+            () -> assertEquals(1, testEditNumber1),
+            () -> assertEquals(2, testEditNumber2),
+            () -> assertEquals(3, testEditNumber3)
         );
+
+        resetTaskHistory();
     }
 
     @Test
@@ -88,9 +92,9 @@ class TaskHistoryTest {
         Task copyTestEvent = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 1);
         Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 2);
 
-        int testEditNumber1 = copyTestDeadline.getEditNumber();
-        int testEditNumber2 = copyTestEvent.getEditNumber();
-        int testEditNumber3 = copyTestLesson.getEditNumber();
+        final int testEditNumber1 = copyTestDeadline.getEditNumber();
+        final int testEditNumber2 = copyTestEvent.getEditNumber();
+        final int testEditNumber3 = copyTestLesson.getEditNumber();
 
         testTaskHistory.pushOldCopy(copyTestDeadline);
         testTaskHistory.pushOldCopy(copyTestEvent);
@@ -99,11 +103,13 @@ class TaskHistoryTest {
         Task lastTask = testTaskHistory.getLastTask();
 
         Assertions.assertAll(
-                () -> assertEquals(copyTestLesson, lastTask),
-                () -> assertEquals(-1, testEditNumber1),
-                () -> assertEquals(-2, testEditNumber2),
-                () -> assertEquals(-3, testEditNumber3)
+            () -> assertEquals(copyTestLesson, lastTask),
+            () -> assertEquals(-1, testEditNumber1),
+            () -> assertEquals(-2, testEditNumber2),
+            () -> assertEquals(-3, testEditNumber3)
         );
+
+        resetTaskHistory();
     }
 
     @Test
@@ -122,9 +128,11 @@ class TaskHistoryTest {
         Task lastTask = testTaskHistory.getLastTask();
 
         Assertions.assertAll(
-                () -> assertEquals(copyTestDeadline2, lastTask),
-                () -> assertEquals(1, testEditNumber1),
-                () -> assertEquals(1, testEditNumber1again)
+            () -> assertEquals(copyTestDeadline2, lastTask),
+            () -> assertEquals(1, testEditNumber1),
+            () -> assertEquals(1, testEditNumber1again)
         );
+
+        resetTaskHistory();
     }
 }

@@ -57,8 +57,22 @@ public class TaskHistory {
 
     public void popLastTask() {
         int indexOfLastTask = changeCount - 1;
+        int editNumOfLastTask = taskHistory.get(indexOfLastTask).getEditNumber();
+
+        if (!containsSameEditNumber(editNumOfLastTask)) {
+            if (editNumOfLastTask > 0) {
+                editCount--;
+            } else {
+                deleteCount++;
+            }
+        }
+
         taskHistory.remove(indexOfLastTask);
         decrementChangeCount();
+    }
+
+    public boolean containsSameEditNumber(int editNumOfLastTask) {
+        return taskHistory.stream().anyMatch(t -> t.getEditNumber() == editNumOfLastTask);
     }
 
     /**
