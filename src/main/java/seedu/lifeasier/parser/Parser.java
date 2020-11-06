@@ -869,7 +869,7 @@ public class Parser {
             input = checkIfEmpty(ui, ui.readCommand());
         }
         //Check for valid module code
-        if (param.equals("/code")) {
+        if (param.equals(PARAM_CODE)) {
             if (!checkIfValidModuleCode(input)) {
                 input = getValidModuleCode(ui);
             }
@@ -1003,7 +1003,6 @@ public class Parser {
             moduleCode = ui.readCommand();
             isModuleCodeValid = checkIfValidModuleCode(moduleCode);
         }
-
         return moduleCode;
     }
 
