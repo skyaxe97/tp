@@ -533,7 +533,7 @@ Format: showNotes [TITLE]
 will be displayed.
 * TITLE can be a partial title. If there is one match, that note will be shown.
 * If multiple notes with the same TITLE are found, all note titles containing the input will be 
-displayed in a list. 
+displayed in a list for selection. 
 
 ###### Example:
 
@@ -562,7 +562,7 @@ Format: deleteNotes [TITLE]
 If no TITLE is inputed, a numbered list of all notes will be displayed.
 * TITLE can be a partial title. If there is one match, that note will be shown.
 * If multiple notes with the same TITLE are found, all note titles containing the input will be 
-displayed in a list.
+displayed in a list for selection.
 * Entering “Y” would delete the note from the list. Entering “N” would exit the command without deletion. 
 
 ###### Example:
@@ -600,9 +600,7 @@ Format: editNotes [TITLE]
 If no TITLE is inputed, a numbered list of all notes will be displayed.
 * TITLE can be a partial title. If there is one match, that note will be shown.
 * If multiple notes with the same TITLE are found, all note titles containing the input will be 
-displayed in a list.
-* Entering “Y” would further prompt for a change in title or description. Entering “N” would 
-exit the command without any edits.
+displayed in a list for selection.
 * Entering “T” would show the current title and prompt for a new title. Entering “D” would 
 show the current description and prompt for a new description.
 * The word limit of title or description follows the maximum length of String allowed in Java.

@@ -20,6 +20,7 @@ public class DeleteNotesCommand extends Command {
     private static Logger logger = Logger.getLogger(DeleteNotesCommand.class.getName());
     private String title;
     private boolean isEmpty = true;
+    private int arraySize = 10000;
 
     public DeleteNotesCommand(String title) {
         this.title = title;
@@ -27,7 +28,7 @@ public class DeleteNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, String title, NoteHistory noteHistory) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-
+        int[] noteMatches = new int [arraySize];
         int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
         int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
 
@@ -49,12 +50,12 @@ public class DeleteNotesCommand extends Command {
             ui.showMultipleMatchesFoundMessage();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            ui.printMultipleNoteMatches(notes, title);
+            noteMatches = ui.printMultipleNoteMatches(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
-            noteNumber = Integer.parseInt(ui.readCommand());
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
-            System.out.println(notes.get(noteNumber - 1).toString());
+            noteNumber = Integer.parseInt(ui.readCommand()) - 1;
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
+            System.out.println(notes.get(noteNumber).toString());
 
             ui.showConfirmDeleteMessage();
             input = checkConfirmationMessage(ui, ui.readCommand());
@@ -103,7 +104,7 @@ public class DeleteNotesCommand extends Command {
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
-                NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
+                NoteCommandFunctions.checkForIndexBeyondSize(notes, noteNumber);
                 System.out.println(notes.get(noteNumber - 1).toString());
 
                 ui.showConfirmDeleteMessage();
