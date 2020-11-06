@@ -69,8 +69,7 @@ class UndoTaskCommandTest {
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         NoteHistory noteHistory = new NoteHistory();
-        FileStorage storage = new FileStorage(TEST_FILEPATH,
-                TEST_FILEPATH, ui, notes, testTaskList);
+        FileStorage storage = new FileStorage(TEST_FILEPATH, TEST_FILEPATH, ui, notes, testTaskList, noteHistory);
         Parser parser = new Parser();
 
         UndoTaskCommand command = new UndoTaskCommand();
@@ -103,8 +102,7 @@ class UndoTaskCommandTest {
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         NoteHistory noteHistory = new NoteHistory();
-        FileStorage storage = new FileStorage(TEST_FILEPATH,
-                TEST_FILEPATH, ui, notes, testTaskList);
+        FileStorage storage = new FileStorage(TEST_FILEPATH, TEST_FILEPATH, ui, notes, testTaskList, noteHistory);
         Parser parser = new Parser();
 
         UndoTaskCommand command = new UndoTaskCommand();

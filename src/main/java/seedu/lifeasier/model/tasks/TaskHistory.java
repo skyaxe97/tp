@@ -67,7 +67,7 @@ public class TaskHistory {
             }
         }
 
-        taskHistory.remove(editNumOfLastTask);
+        taskHistory.remove(indexOfLastTask);
         decrementChangeCount();
     }
 
