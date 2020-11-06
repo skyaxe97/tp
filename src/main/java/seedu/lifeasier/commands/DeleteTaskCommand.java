@@ -100,7 +100,7 @@ public class DeleteTaskCommand extends Command {
 
         } catch (ParserException e) {
             logger.log(Level.SEVERE, "User input is invalid");
-            ui.showInvalidInputMessage();
+            ui.showInvalidCommandFormatMessage();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input " + type + " name does not match any of the existing "
                     + type + " names.");
@@ -109,7 +109,6 @@ public class DeleteTaskCommand extends Command {
             logger.log(Level.SEVERE, "User input is out of bounds");
             ui.showIndexOutOfBoundsMessage();
         }
-        ui.printThickSeparator();
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }
 }

@@ -103,7 +103,7 @@ public class TaskStorage {
                 logger.log(Level.WARNING, "Unable to read recurrence field");
 
             } catch (StorageException e) {
-                ui.showUndeterminableTaskError();
+                ui.showIndeterminableTaskError();
                 logger.log(Level.SEVERE, "Read task type failed");
 
             } catch (SaveDelimiterException e) {
@@ -244,7 +244,7 @@ public class TaskStorage {
             ui.showInvalidCastError();
             logger.log(Level.SEVERE, "Wrong class type passed, unable to cast");
         } catch (StorageException e) {
-            ui.showUndeterminableTaskError();
+            ui.showIndeterminableTaskError();
             logger.log(Level.SEVERE, "Read task type failed");
         }
     }

@@ -37,7 +37,7 @@ public class ShowNotesCommand extends Command {
             throw new TitleNotFoundException();
         case 1:
             logger.log(Level.INFO, "One match found");
-            System.out.println(notes.get(noteNumber).toString());
+            ui.showNotesMessage(notes.get(noteNumber).toString());
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
@@ -49,7 +49,7 @@ public class ShowNotesCommand extends Command {
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
             NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
-            System.out.println(notes.get(noteNumber).toString());
+            ui.showNotesMessage(notes.get(noteNumber).toString());
         }
 
     }
@@ -59,10 +59,11 @@ public class ShowNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
-            ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
+
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
+
             } else {
                 ui.showSelectWhichNoteToViewPrompt();
 
@@ -73,20 +74,22 @@ public class ShowNotesCommand extends Command {
                 int noteNumber = Integer.parseInt(ui.readCommand());
 
                 NoteCommandFunctions.checkForIndexBeyondSize(notes, noteNumber);
-                System.out.println(notes.get(noteNumber - 1).toString());
-
+                ui.showNotesMessage(notes.get(noteNumber - 1).toString());
             }
-            ui.printThickSeparator();
             logger.log(Level.INFO, "End of ShowNotesCommand");
+
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
             ui.showInvalidNumberError();
+
         } catch (TitleNotFoundException e) {
             logger.log(Level.SEVERE, "Input title does not match any of the note titles");
             ui.showNoTitleFoundError();
+
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatError();
+
         } catch (EmptyNoteListException e) {
             logger.log(Level.SEVERE, "Note List is empty");
             ui.showEmptyNoteListMessage();

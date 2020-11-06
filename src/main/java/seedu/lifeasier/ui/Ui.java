@@ -39,7 +39,7 @@ public class Ui {
             + "\n";
 
     //Error messages
-    public static final String ERROR_INVALID_INPUT = "Oh no, I do not understand this command! Type 'help' for "
+    public static final String ERROR_INVALID_COMMAND = "Oh no, I do not understand this command! Type 'help' for "
             + "a list of available commands";
 
     //General UI messages
@@ -61,36 +61,46 @@ public class Ui {
             + ANSI_CYAN + "HH:MM" + ANSI_RESET + " format\n"
             + "\n"
             + ANSI_CYAN + "COMMANDS\n" + ANSI_RESET
-            + "******************************************************************************************************\n"
-            + "help --------------------------------------------------------------------- Displays available commands\n"
-            + "addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES ----------- "
+            + "******************************************************************************************************"
+            + "*********\n"
+            + "help ------------------------------------------------------------------------------ "
+            + "Displays available commands\n"
+            + "addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES -------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a lesson\n"
-            + "addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ------------------- "
+            + "addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ---------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds an event\n"
-            + "addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES ----------------------------- "
+            + "addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES -------------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a deadline\n"
-            + "editLesson MODULE_CODE ------------------------------------------------------------- "
+            + "editLesson MODULE_CODE ---------------------------------------------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits a lesson\n"
-            + "editEvent EVENT_NAME --------------------------------------------------------------- "
+            + "editEvent EVENT_NAME ------------------------------------------------------------------------ "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits an event\n"
-            + "editDeadline DEADLINE_NAME ------------------------------------------------------- "
+            + "editDeadline DEADLINE_NAME ---------------------------------------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits a deadline\n"
-            + "deleteTask /type TYPE /name NAME ------------------------------------------------------ Deletes a task\n"
-            + "addNotes TITLE -------------------------------------------------------------------- "
+            + "deleteTask /type TYPE /name NAME --------------------------------------------------------------- "
+            + "Deletes a task\n"
+            + "addNotes TITLE ----------------------------------------------------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Adds a new note\n"
-            + "showNotes TITLE --------------------------------------------------------------- "
+            + "showNotes TITLE ------------------------------------------------------------------------ "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Shows selected note\n"
-            + "archive ------------------------------------------------------------------ Archives all existing notes\n"
-            + "editNotes TITLE ------------------------------------------------------------- "
+            + "archive ---------------------------------------------------------------------------"
+            + " Archives all existing notes\n"
+            + "editNotes TITLE ---------------------------------------------------------------------- "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits a selected note\n"
-            + "deleteNotes TITLE --------------------------------------------------------- "
+            + "deleteNotes TITLE ------------------------------------------------------------------ "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Deletes a selected note\n"
-            + "undo TYPE ------------------------------------------------- Undoes the last edit/deleted task or notes\n"
-            + "display [WEEK] ---------------------------------------------- Displays either weekly or daily schedule\n"
-            + "freeTime --------------------------------------------- Tells you your longest block of free time today\n"
-            + "sleepTime -------------------------------------------------- Tells you how much time you have to sleep\n"
-            + "exit -------------------------------------------------------------------- Closes the LifEasier program\n"
-            + "******************************************************************************************************\n"
+            + "undo TYPE ----------------------------------------------------------"
+            + " Undoes the last edit/deleted task or notes\n"
+            + "display KEYWORD ------------------------------------------------------"
+            + " Displays either weekly or daily schedule\n"
+            + "freeTime ------------------------------------------------------"
+            + " Tells you your longest block of free time today\n"
+            + "sleepTime -----------------------------------------------------------"
+            + " Tells you how much time you have to sleep\n"
+            + "exit -----------------------------------------------------------------------------"
+            + " Closes the LifEasier program\n"
+            + "******************************************************************************************************"
+            + "*********\n\n"
             + ANSI_GREEN + "For more detailed information, please visit the online user guide at:\n" + ANSI_RESET
             + "https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide";
 
@@ -187,7 +197,7 @@ public class Ui {
         System.out.println(colourTextCyan(LOGO));
     }
 
-    public void showHelpMessage() {
+    public void showHelpMenu() {
         printBlankLine();
         printThickSeparator();
         System.out.println(HELP_MESSAGE);
@@ -325,10 +335,10 @@ public class Ui {
         printBlankLine();
     }
 
-    public void showInvalidInputMessage() {
+    public void showInvalidCommandFormatMessage() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed(ERROR_INVALID_INPUT));
+        System.out.println(colourTextRed("The format of the command is incorrect! Please double check!"));
         printThickSeparator();
         printBlankLine();
     }
@@ -363,8 +373,6 @@ public class Ui {
     }
 
     public void showNoDataToArchiveMessage() {
-        printBlankLine();
-        printThickSeparator();
         System.out.println(colourTextRed("You do not have any data available for archiving."));
         printThickSeparator();
         printBlankLine();
@@ -442,14 +450,14 @@ public class Ui {
                 + "/date dd-mm-yy /from hh:mm /to hh:mm"));
     }
 
-    public void showUndeterminableTaskError() {
+    public void showIndeterminableTaskError() {
         System.out.println(colourTextRed("Something went wrong while determining the tasks"));
     }
 
     public void showParseUnknownCommandError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("I'm sorry! I don't understand that command!"));
+        System.out.println(colourTextRed(ERROR_INVALID_COMMAND));
         printThickSeparator();
         printBlankLine();
     }
@@ -515,15 +523,18 @@ public class Ui {
     public void showFreeTimeMessage(int startHour, int endHour, int duration) {
         printBlankLine();
         printThickSeparator();
-        if (duration > 0) {
-            System.out.println(colourTextGreen("You have " + duration + " hours of free time between "
-                    + startHour + ":00 and " + endHour + ":00!"));
-            System.out.println(colourTextGreen("You can try scheduling something in this time!"));
+        System.out.println(colourTextGreen("You have " + duration + " hours of free time between "
+                + startHour + ":00 and " + endHour + ":00!"));
+        System.out.println(colourTextGreen("You can try scheduling something in this time!"));
+        printThickSeparator();
+        printBlankLine();
+    }
 
-        } else {
-            System.out.println(colourTextRed("Unfortunately you have no free time today!"));
-            System.out.println(colourTextRed("You might want to relax a little!"));
-        }
+    public void showNoFreeTimeError() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("Unfortunately you have no free time today!"));
+        System.out.println(colourTextRed("You might want to relax a little!"));
         printThickSeparator();
         printBlankLine();
     }
@@ -689,7 +700,7 @@ public class Ui {
 
     public void showAllNotesMessage(NoteList notes) {
         for (int i = 0; i < notes.size(); i++) {
-            System.out.println((i + 1) + ". " + notes.get(i).getTitle() + "\n");
+            System.out.println((i + 1) + ". " + notes.get(i).getTitle());
         }
     }
 
@@ -729,8 +740,6 @@ public class Ui {
     }
 
     public void showOldTaskMessage(TaskHistory taskHistory) {
-        printBlankLine();
-        printThickSeparator();
         System.out.println(taskHistory.getLastTask().toString());
         printThickSeparator();
         printBlankLine();
@@ -905,4 +914,26 @@ public class Ui {
         printThickSeparator();
         printBlankLine();
     }
+
+    public void showDayScheduleMessage(String displayKeyword) {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println("Here is your schedule for " + displayKeyword + ":");
+    }
+
+    public void showNotesMessage(String note) {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextGreen("Here is your note:"));
+        System.out.println(note);
+        printThickSeparator();
+        printBlankLine();
+    }
+
+    public void showNotesPrompt(String note) {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(note);
+    }
+
 }

@@ -51,8 +51,16 @@ public class FreeTimeCommand extends Command {
         int endHour = longestFreeTime[PARAM_END];
         int duration = endHour - startHour;
 
-        logger.log(Level.INFO, "Showing free time message...");
-        ui.showFreeTimeMessage(startHour, endHour, duration);
+
+
+        if (duration > 0) {
+            logger.log(Level.INFO, "Showing free time message...");
+            ui.showFreeTimeMessage(startHour, endHour, duration);
+        } else {
+            logger.log(Level.INFO, "Showing no free time error...");
+            ui.showNoFreeTimeError();
+        }
+
 
     }
 

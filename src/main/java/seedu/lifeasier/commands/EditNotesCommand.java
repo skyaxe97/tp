@@ -99,7 +99,6 @@ public class EditNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditNotesCommand");
-            ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, parser, title, noteHistory);
@@ -113,7 +112,7 @@ public class EditNotesCommand extends Command {
                 int noteNumber = Integer.parseInt(ui.readCommand());
                 NoteCommandFunctions.checkForIndexBeyondSize(notes, noteNumber);
 
-                System.out.println(notes.get(noteNumber - 1).toString());
+                ui.showNotesPrompt(notes.get(noteNumber - 1).toString());
                 ui.showEditWhichPartMessage();
                 changeTitleOrDescription(ui, parser, notes, noteNumber - 1, ui.readCommand(), noteHistory);
 

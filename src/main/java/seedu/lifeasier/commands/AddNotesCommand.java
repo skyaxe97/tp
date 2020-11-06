@@ -55,7 +55,6 @@ public class AddNotesCommand extends Command {
         logger.log(Level.INFO, "Start of AddNotesCommand");
         String noteDescription = null;
         logger.log(Level.INFO, "Start for assigning noteTitle");
-        ui.printThickSeparator();
         final String noteTitle = isValidTitle(ui, title);
         logger.log(Level.INFO, "End for assigning noteTitle");
 
