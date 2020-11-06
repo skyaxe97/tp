@@ -56,7 +56,7 @@ public class SleepTimeCommand extends Command {
         logger.log(Level.INFO, "Showing sleep time message...");
 
         if (earliestSleepTime == HOUR_EARLIEST && latestWakeTime == HOUR_LATEST) {
-            ui.showNothingScheduledMessage();
+            ui.showNothingScheduledMessage("today and tomorrow");
         } else {
             ui.showAvailableSleepTimeMessage(earliestSleepTime, latestWakeTime);
         }

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +23,8 @@ public class TaskList {
 
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
-    private int indexOfLastMatch;
+    private int displayIndexOfLastMatch = 0;
+    HashMap<Integer,Integer> taskMap;
 
     public TaskList() {
         taskList = new ArrayList<>();
@@ -46,6 +48,10 @@ public class TaskList {
 
     public void addTask(Task task) {
         taskList.add(task);
+    }
+
+    public int getActualIndex(int i) {
+        return taskMap.get(i);
     }
 
     /**
@@ -133,51 +139,49 @@ public class TaskList {
     }
 
     public void editTaskDescription(int index, Ui ui) {
-        String newDescription = ui.readCommand();
+        String newDescription;
+        while (true) {
+            newDescription = ui.readCommand();
+            if (newDescription.equals("")) {
+                ui.showEmptyNewDescriptionMessage();
+                continue;
+            }
+            break;
+        }
         getTask(index).setDescription(newDescription);
         ui.showEditConfirmationMessage();
     }
 
-    public void editLessonTime(int index, Ui ui) throws ParserException {
-        Parser parser = new Parser();
-        LocalDateTime[] times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
-        getTask(index).setStart(times[INDEX_START]);
-        getTask(index).setEnd(times[INDEX_END]);
+    public void editModuleCode(int index, Ui ui, String moduleCode) {
+        int actualIndex = taskMap.get(index);
+        getTask(actualIndex).setDescription(moduleCode);
         ui.showEditConfirmationMessage();
     }
 
-    public void editEventTime(int index, Ui ui) throws ParserException {
-        LocalDateTime[] times;
-        Parser parser = new Parser();
-        times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
-        getTask(index).setStart(times[INDEX_START]);
-        getTask(index).setEnd(times[INDEX_END]);
+    public void editLessonTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = taskMap.get(displayIndex);
+        getTask(actualIndex).setStart(times[INDEX_START]);
+        getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void editDeadlineTime(int index, Ui ui) throws ParserException {
-        LocalDateTime[] times;
-        Parser parser = new Parser();
-        times = parser.parseNewTimeInput(ui, ui.readCommand(), 1);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
-        getTask(index).setStart(times[0]);
+    public void editEventTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = taskMap.get(displayIndex);
+        getTask(actualIndex).setStart(times[INDEX_START]);
+        getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void deleteTask(int index, Ui ui) {
+    public void editDeadlineTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = taskMap.get(displayIndex);
+        getTask(actualIndex).setStart(times[0]);
+        ui.showEditConfirmationMessage();
+    }
+
+    public void deleteTask(int displayIndex, Ui ui) {
         try {
-            taskList.remove(index);
+            int actualIndex = taskMap.get(displayIndex);
+            taskList.remove(actualIndex);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
             ui.showInvalidNumberMessage();
@@ -190,13 +194,18 @@ public class TaskList {
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
         logger.log(Level.INFO, "Start of printing all matching " + type);
-        indexOfLastMatch = 0;
+        taskMap = new HashMap<>();
+        displayIndexOfLastMatch = 0;
+        int firstDisplayIndex = 0;
         boolean noMatches = true;
         for (int i = 0; i < getTaskCount(); i++) {
             if (checkMatchingTasks(i, type, description)) {
+                firstDisplayIndex++;
                 String task = getTask(i).toString();
-                ui.printMatchingTask(i + 1, task);
-                indexOfLastMatch = i;
+                ui.printMatchingTask(firstDisplayIndex, task);
+                displayIndexOfLastMatch = firstDisplayIndex;
+
+                taskMap.put(firstDisplayIndex, i);
                 noMatches = false;
             }
         }
@@ -213,7 +222,7 @@ public class TaskList {
     }
 
     public void checkForIndexOutOfBounds(int userInput) {
-        if (userInput > indexOfLastMatch || userInput < 0) {
+        if (userInput > displayIndexOfLastMatch || userInput <= 0) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
             throw new IndexOutOfBoundsException();
         }

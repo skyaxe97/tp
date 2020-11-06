@@ -92,10 +92,10 @@ class FreeTimeCommandTest {
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         TaskList tasks = new TaskList();
-        FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
-        Parser parser = new Parser();
         NoteHistory noteHistory = new NoteHistory();
+        FileStorage storage = new FileStorage("saveFileTasks.txt",
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
+        Parser parser = new Parser();
         TaskHistory taskHistory = new TaskHistory();
 
         FreeTimeCommand command = new FreeTimeCommand();
@@ -129,10 +129,10 @@ class FreeTimeCommandTest {
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         TaskList tasks = new TaskList();
-        FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
-        Parser parser = new Parser();
         NoteHistory noteHistory = new NoteHistory();
+        FileStorage storage = new FileStorage("saveFileTasks.txt",
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
+        Parser parser = new Parser();
         TaskHistory taskHistory = new TaskHistory();
 
         FreeTimeCommand command = new FreeTimeCommand();

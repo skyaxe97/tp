@@ -125,7 +125,7 @@ class SleepTimeCommandTest {
         NoteHistory noteHistory = new NoteHistory();
         TaskHistory taskHistory = new TaskHistory();
         FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
         Parser parser = new Parser();
 
         SleepTimeCommand command = new SleepTimeCommand();
@@ -163,7 +163,7 @@ class SleepTimeCommandTest {
         NoteHistory noteHistory = new NoteHistory();
         TaskHistory taskHistory = new TaskHistory();
         FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
         Parser parser = new Parser();
 
         SleepTimeCommand command = new SleepTimeCommand();
