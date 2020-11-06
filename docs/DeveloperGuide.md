@@ -542,7 +542,7 @@ the specified commands, an unknown command message would be returned.
 The type of command is determined by the parser through the first string of the input and passed through a switch 
 statement. If it matches with any of the cases, the corresponding `parse` command would be executed. Otherwise, it would 
 return an invalid command. The corresponding parsers would check whether all parameters are inputted before passing 
-them into their respective commands. This is done by checking the user input for any missing initials (/code, /time, etc.) 
+them into their respective commands. This is done by checking the user input for any missing initials (/code, /from, etc.) 
 and appending any of these missing parameters into a new string with all the parameters present. With the required 
 parameters filled, the corresponding parser would pass them to their command functions.	
 
@@ -668,11 +668,17 @@ The following section will give the definition of some commonly used words in **
 Refer to the **LIfEasier User Guide** [here](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide), for the setting up/quick start guide and to view more detailed information of all usable commands. 
 After launching the **LifEasier** app, the tester can run the `help` command to display the list of available commands.
 
+<<<<<<< HEAD
+The following are some sample commands to add new tasks and notes into **LifEasier**.
+* `addLesson /code CS2113T /date 28-10-20 /from 14:00 /to 16:00 /repeats 10`
+* `addEvent CS2101 Presentation /date 30-10-20 /from 09:00 /to 12:00 /repeats 5`
+=======
 The following are some sample commands to add new tasks and notes into **LifEasier**. Please note that some commands are _partial commands_, where incomplete command 
 parameters are allowed. Please refer to the user guide linked above for more information on which commands support _partial commands_.
 * `addLesson /code CS2113T /date 28-10-20 /time 14:00 /to 16:00 /repeats 10`
 * `addLesson /code CS2101`
 * `addEvent CS2101 Presentation /date 30-10-20 /time 09:00 /to 12:00 /repeats 5`
+>>>>>>> 94783cf6dae219a7128371ffd4f158eb448d9da1
 * `addDeadline Buy some Bread /by  31-01-20 22:00 /repeats 0`
 * `addNotes`
 * `addNotes Cats are the best!`

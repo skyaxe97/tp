@@ -28,8 +28,8 @@ IMPORTANT INFORMATION:
 COMMANDS
 *****************************************************************************************************
 help -------------------------------------------------------------------- Displays available commands
-addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- [P]Adds a lesson
-addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ [P]Adds an event
+addLesson /code MODULE_CODE /date DATE /from START /to END /repeats ---------------- [P]Adds a lesson
+addEvent EVENT_NAME /date DATE /from START /to END /repeats ------------------------ [P]Adds an event
 addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- [P]Adds a deadline
 editLesson MODULE_CODE ------------------------------------------------------------ [P]Edits a lesson
 editEvent EVENT_NAME -------------------------------------------------------------- [P]Edits an event

@@ -7,10 +7,11 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
 
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
+    private static final String PARAM_EVENT = "event";
 
     protected LocalDateTime start;
     protected LocalDateTime end;
-    private String type = "event";
+    private String type = PARAM_EVENT;
 
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
