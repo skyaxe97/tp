@@ -46,10 +46,10 @@ public class EditNotesCommand extends Command {
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
-            ui.showMultipleMatchesFoundMessage();
+            ui.showMultipleMatchesFoundPrompt();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            noteMatches = ui.printMultipleNoteMatches(notes, title, noteMatches);
+            noteMatches = ui.showMultipleNoteMatchesMessage(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
@@ -69,28 +69,29 @@ public class EditNotesCommand extends Command {
 
         input = parser.parseUserInputTOrD(input, ui);
         Note oldCopyOfNote = noteHistory.getCurrCopyOfNoteToEdit(notes, noteNumber);
+
         if (input.trim().equals("T")) {
             logger.log(Level.INFO, "T is inputted");
-            System.out.println("Current Title: " + notes.get(noteNumber).getTitle());
-            ui.showEditTitleMessage();
+            ui.showCurrentTitlePrompt(notes.get(noteNumber).getTitle());
+            ui.showEditTitlePrompt();
             input = parser.checkIfEmpty(ui, ui.readCommand());
             notes.get(noteNumber).setTitle(input);
             logger.log(Level.INFO, "Title is changed");
-            System.out.println("OK! Your title is now: " + notes.get(noteNumber).getTitle());
+            ui.showTitleChangedMessage(notes.get(noteNumber).getTitle());
+
         } else {
             logger.log(Level.INFO, "D is inputted");
-            System.out.println("Current description:\n" + notes.get(noteNumber).getDescription());
-            ui.showEditDescriptionMessage();
+            ui.showCurrentDescriptionPrompt(notes.get(noteNumber).getDescription());
+            ui.showEditDescriptionPrompt();
             input = parser.checkIfEmpty(ui, ui.readCommand());
             notes.get(noteNumber).setDescription(input);
             logger.log(Level.INFO, "Description is changed");
-            System.out.println("OK! Your description is now: " + notes.get(noteNumber).getDescription());
+            ui.showDescriptionChangedMessage(notes.get(noteNumber).getDescription());
         }
 
         noteHistory.pushOldCopy(oldCopyOfNote);
         logger.log(Level.INFO, "Push old copy of Note into noteHistory");
 
-        ui.printSeparator();
     }
 
     @Override
@@ -98,15 +99,15 @@ public class EditNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of EditNotesCommand");
-            ui.printSeparator();
+            ui.printThickSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, parser, title, noteHistory);
             } else {
-                ui.showSelectWhichNoteToEditMessage();
+                ui.showSelectWhichNoteToEditPrompt();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                ui.printAllNotes(notes);
+                ui.showAllNotesMessage(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
@@ -121,13 +122,13 @@ public class EditNotesCommand extends Command {
             logger.log(Level.INFO, "End of EditNotesCommand");
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (TitleNotFoundException e) {
             logger.log(Level.SEVERE, "Input title does not match any of the note titles");
-            ui.showNoTitleFoundMessage();
+            ui.showNoTitleFoundError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         } catch (EmptyNoteListException e) {
             ui.showEmptyNoteListMessage();
         }

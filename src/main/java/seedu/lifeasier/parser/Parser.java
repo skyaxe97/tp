@@ -113,6 +113,7 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
+
     Command parseAddLessonCommand(Ui ui, String input) {
 
         logger.log(Level.INFO, "Parsing addLesson command...");
@@ -592,14 +593,14 @@ public class Parser {
         String userInput = "";
 
         while (!isValidField) {
-            ui.showEnterUndoTypeMessage();
+            ui.showEnterUndoTypePrompt();
 
             userInput = ui.readCommand();
 
             if (userInput.equals(PARAM_TASK) || userInput.equals(PARAM_NOTE)) {
                 isValidField = true;
             } else {
-                ui.showInvalidUndoType();
+                ui.showInvalidUndoTypeError();
             }
         }
         return userInput;
@@ -615,7 +616,7 @@ public class Parser {
     public String parseUserInputTOrD(String input, Ui ui) {
         logger.log(Level.INFO, "Start check for T/D input");
         while (!input.trim().equals("T") && !input.trim().equals("D")) {
-            ui.showInvalidTitleDescriptionConfirmationMessage();
+            ui.showInvalidTitleDescriptionConfirmationPrompt();
             input = ui.readCommand();
         }
         logger.log(Level.INFO, "End check for T/D input");
@@ -632,7 +633,7 @@ public class Parser {
     public String checkIfEmpty(Ui ui, String string) {
         logger.log(Level.INFO, "Start check for empty string");
         while (string.trim().length() == 0) {     // empty string
-            ui.showEmptyDescriptionMessage();
+            ui.showEmptyDescriptionError();
             string = ui.readCommand();
         }
         logger.log(Level.INFO, "End check for empty string");
@@ -760,7 +761,7 @@ public class Parser {
      */
     private String addEventDescriptionParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding Event description to string.");
-        ui.showAddDescriptionMessage();
+        ui.showAddDescriptionPrompt();
         String description = checkIfEmpty(ui, ui.readCommand());
         String[] temp = input.split(PARAM_DATE);
         input = temp[0] + description + " " + PARAM_DATE + temp[1];
@@ -777,7 +778,7 @@ public class Parser {
      */
     private String addDeadlineDescriptionParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding Deadline description to string.");
-        ui.showAddDescriptionMessage();
+        ui.showAddDescriptionPrompt();
         String description = checkIfEmpty(ui, ui.readCommand());
         String[] temp = input.split(PARAM_BY);
         input = temp[0] + description + " " + PARAM_BY + temp[1];
@@ -794,7 +795,7 @@ public class Parser {
      */
     private String addModuleCodeParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding Module Code to string.");
-        ui.showAddModuleCodeMessage();
+        ui.showAddModuleCodePrompt();
         String moduleCode = checkIfEmpty(ui, ui.readCommand());
         if (!checkIfValidModuleCode(moduleCode)) {
             moduleCode = getValidModuleCode(ui);
@@ -815,7 +816,7 @@ public class Parser {
      */
     private String addDateParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding Date to string.");
-        ui.showAddDateMessage();
+        ui.showAddDatePrompt();
         String date = checkIfEmpty(ui, ui.readCommand());
         String[] temp1 = input.split(PARAM_FROM);
         input = temp1[0] + PARAM_DATE + " " + date + " "  + PARAM_FROM + temp1[1];
@@ -834,7 +835,7 @@ public class Parser {
      */
     private String addStartTimeParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding Start Time to string.");
-        ui.showAddStartTimeMessage();
+        ui.showAddStartTimePrompt();
         String startTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp2 = input.split(PARAM_TO);
         input = temp2[0] + PARAM_FROM + " " + startTime + " " + PARAM_TO + temp2[1];
@@ -852,7 +853,7 @@ public class Parser {
      */
     private String addEndTimeParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding End Time to string.");
-        ui.showAddEndTimeMessage();
+        ui.showAddEndTimePrompt();
         String endTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp3 = input.split(PARAM_REPEATS);
         input = temp3[0] + " " + PARAM_TO + " " + endTime + PARAM_REPEATS + temp3[1];
@@ -870,7 +871,7 @@ public class Parser {
      */
     private String addRecurrencesParam(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding recurrences to string.)");
-        ui.showAddRecurrencesMessage();
+        ui.showAddRecurrencesPrompt();
         String recurrences = checkIfEmpty(ui, ui.readCommand());
         input = input + " " + PARAM_REPEATS + " " + recurrences;
         logger.log(Level.INFO, "End of adding recurrences to string.)");
@@ -887,7 +888,7 @@ public class Parser {
      */
     private String addByDateTime(Ui ui, String input) {
         logger.log(Level.INFO, "Start of adding By Time to string.");
-        ui.showAddDateTimeMessage();
+        ui.showAddDateTimePrompt();
         String byDateTime = checkIfEmpty(ui, ui.readCommand());
         String[] temp4 = input.split(PARAM_REPEATS);
         input = temp4[0] + " " + PARAM_BY + " " + byDateTime + " " + PARAM_REPEATS + temp4[1];
@@ -898,7 +899,7 @@ public class Parser {
 
     private String fillIfEmptyParam(Ui ui, String input, String param) {
         if (input.length() == 0) {
-            ui.printEmptyParam(param);
+            ui.showEmptyParamPrompt(param);
             input = checkIfEmpty(ui, ui.readCommand());
         }
         //Check for valid module code
@@ -912,7 +913,7 @@ public class Parser {
 
     public int checkIfValidNumber(Ui ui, String input) {
         while (isNotNumeric(input) || Integer.parseInt(input) < 0) {
-            ui.showRecurrencesNumberFormatError();
+            ui.showRecurrencesNumberFormatPrompt();
             input = ui.readCommand();
         }
         return Integer.parseInt(input);
@@ -920,7 +921,7 @@ public class Parser {
 
     public int checkIfValidInput(Ui ui, String input) {
         while (isNotNumeric(input)) {
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
             input = ui.readCommand();
         }
         return Integer.parseInt(input);
@@ -1183,16 +1184,16 @@ public class Parser {
         } catch (IndexOutOfBoundsException e) {
             resetBoolean();
             logger.log(Level.SEVERE, "User input command is invalid");
-            ui.showParseIncorrectCommandFormatMessage();
+            ui.showParseIncorrectCommandFormatError();
 
         } catch (DateTimeParseException e) {
             resetBoolean();
             logger.log(Level.SEVERE, "Time input is invalid");
-            ui.showParseIncorrectDateTimeMessage();
+            ui.showParseIncorrectDateTimeError();
         } catch (NumberFormatException e) {
             resetBoolean();
             logger.log(Level.SEVERE, "/repeats input is an invalid number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         }
 
         return new InvalidCommand();

@@ -46,7 +46,7 @@ public class EditDeadlineCommand extends Command {
 
             logger.log(Level.INFO, "Printing all matching deadlines...");
             printMatchingDeadlines(tasks, ui, deadlineName);
-            ui.showSelectTaskToEdit(Ui.PARAM_DEADLINE);
+            ui.showSelectTaskToEditPrompt(Ui.PARAM_DEADLINE);
 
             logger.log(Level.INFO, "Reading user input for choice of task to delete...");
             int userDeadlineChoice = parser.parseUserInputForEditTaskChoice(ui, tasks);
@@ -65,16 +65,16 @@ public class EditDeadlineCommand extends Command {
             ui.showIndexOutOfBoundsMessage();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
-            ui.showNoMatchesMessage(Ui.PARAM_DEADLINE);
+            ui.showNoMatchesError(Ui.PARAM_DEADLINE);
         }
         logger.log(Level.INFO, "End of EditDeadlineCommand");
     }
 
     private void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userDeadlineChoice) {
-        ui.showSelectParameterToEdit();
+        ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_DEADLINE);
 
         logger.log(Level.INFO, "Reading user input for choice of parameter to edit...");
@@ -83,18 +83,19 @@ public class EditDeadlineCommand extends Command {
         switch (userParamChoice) {
 
         case (1):
-            ui.showInputMessage(Ui.PARAM_DEADLINE);
+            ui.showInputPrompt(Ui.PARAM_DEADLINE);
             editDeadlineName(tasks, userDeadlineChoice, ui);
             break;
 
         case (2):
-            ui.showInputFormat(Ui.PARAM_DEADLINE);
+            ui.showInputFormatPrompt(Ui.PARAM_DEADLINE);
             editDeadlineTime(tasks, userDeadlineChoice, ui, parser);
             break;
 
         default:
             throw new IndexOutOfBoundsException();
         }
-        ui.printSeparator();
+        ui.printThickSeparator();
     }
+
 }

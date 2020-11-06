@@ -184,15 +184,16 @@ public class TaskList {
             taskList.remove(actualIndex);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a valid number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         }
     }
 
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
+        ui.showMatchingTasksPrompt(type);
         logger.log(Level.INFO, "Start of printing all matching " + type);
         taskMap = new HashMap<>();
         displayIndexOfLastMatch = 0;

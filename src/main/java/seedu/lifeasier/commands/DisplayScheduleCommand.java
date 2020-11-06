@@ -27,7 +27,11 @@ public class DisplayScheduleCommand extends Command {
         LocalDate currDate = LocalDate.now();
         switch (displayKeyword) {
         case "week":
+            ui.printBlankLine();
+            ui.printThickSeparator();
             scheduleUi.showHome(tasks, ui);
+            ui.printThickSeparator();
+            ui.printBlankLine();
             break;
         case "today":
             displayScheduleFor(currDate, tasks, ui);
@@ -38,7 +42,6 @@ public class DisplayScheduleCommand extends Command {
         default:
             ui.showInvalidDisplayKeywordError();
         }
-        ui.printSeparator();
     }
 
     private void displayScheduleFor(LocalDate date, TaskList tasks, Ui ui) {
@@ -47,6 +50,8 @@ public class DisplayScheduleCommand extends Command {
         if (taskCountForThisDate > 0) {
             System.out.println("Here is your schedule for " + displayKeyword + ":");
             scheduleUi.displayDaySchedule(date, tasks);
+            ui.printThickSeparator();
+            ui.printBlankLine();
         } else {
             ui.showNothingScheduledMessage(displayKeyword);
         }

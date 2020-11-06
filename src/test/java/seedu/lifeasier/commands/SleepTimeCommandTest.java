@@ -143,12 +143,14 @@ class SleepTimeCommandTest {
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals((ui.colourTextGreen("You have nothing on from 23:00 today to 5:00 tomorrow!")
+        assertEquals(System.lineSeparator()
+                + "==================================================================================================="
+                + "============" + System.lineSeparator()
+                + (ui.colourTextGreen("You have nothing on from 23:00 today to 5:00 tomorrow!")
                 + System.lineSeparator() + ui.colourTextGreen("You can sleep for up to 6 hours!")
                 + System.lineSeparator()
                 + "==================================================================================================="
-                + "============"
-                + System.lineSeparator()),
+                + "============" + System.lineSeparator() + System.lineSeparator()),
                 outContent.toString());
 
         restoreStreams();
@@ -170,11 +172,14 @@ class SleepTimeCommandTest {
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals((ui.colourTextGreen("You have nothing on for today and tomorrow!") + System.lineSeparator()
+        assertEquals(System.lineSeparator()
+                + "==================================================================================================="
+                + "============" + System.lineSeparator()
+                + (ui.colourTextGreen("You have nothing on for today and tomorrow!") + System.lineSeparator()
                 +  ui.colourTextGreen("You can sleep for the recommended 8 hours or longer!")
                 + System.lineSeparator()
                 + "==================================================================================================="
-                + "============" + System.lineSeparator()),
+                + "============" + System.lineSeparator() + System.lineSeparator()),
                 outContent.toString());
 
         restoreStreams();

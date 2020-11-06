@@ -37,6 +37,18 @@ public class DeleteTaskCommand extends Command {
         tasks.printMatchingTasks(type, name, ui);
     }
 
+    private int readUserInput(Ui ui, Parser parser, TaskList tasks) {
+        while (true) {
+            try {
+                int newIndex = parser.checkIfValidNumber(ui, ui.readCommand()) - 1;
+                tasks.checkForIndexOutOfBounds(newIndex);
+                return newIndex;
+            } catch (IndexOutOfBoundsException e) {
+                ui.showIndexOutOfBoundsMessage();
+            }
+        }
+    }
+
     /**
      * Deletes the specified Task from the TaskList.
      *
@@ -68,7 +80,7 @@ public class DeleteTaskCommand extends Command {
 
             logger.log(Level.INFO, "Printing all matching tasks...");
             printMatchingTasks(tasks, ui, type, name);
-            ui.showSelectTaskToDelete(type);
+            ui.showSelectTaskToDeletePrompt(type);
 
             logger.log(Level.INFO, "Reading user input for choice of task to delete...");
             int userIndex = parser.parseUserInputForEditTaskChoice(ui, tasks);
@@ -92,12 +104,12 @@ public class DeleteTaskCommand extends Command {
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input " + type + " name does not match any of the existing "
                     + type + " names.");
-            ui.showNoMatchesMessage(type);
+            ui.showNoMatchesError(type);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "User input is out of bounds");
             ui.showIndexOutOfBoundsMessage();
         }
-        ui.printSeparator();
+        ui.printThickSeparator();
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }
 }

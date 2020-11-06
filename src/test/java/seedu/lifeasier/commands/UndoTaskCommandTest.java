@@ -77,10 +77,13 @@ class UndoTaskCommandTest {
         assertEquals(0, testTaskHistory.getChangeCount());
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(ui.colourTextGreen("Nothing to undo!")
+        assertEquals(System.lineSeparator()
+                + "========================================================================================"
+                + "=======================" + System.lineSeparator()
+                + ui.colourTextRed("Nothing to undo!")
                 + System.lineSeparator()
                 + "==================================================================================================="
-                + "============" + System.lineSeparator(),
+                + "============" + System.lineSeparator() + System.lineSeparator(),
                 outContent.toString());
 
         restoreStreams();
