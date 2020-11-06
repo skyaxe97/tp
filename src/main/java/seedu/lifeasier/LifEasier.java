@@ -83,7 +83,6 @@ public class LifEasier {
 
     public void showStartupSequence() {
         ui.showLogo();
-        //scheduleUi.showHome(tasks);
         ui.showGreetingMessage();
     }
 
