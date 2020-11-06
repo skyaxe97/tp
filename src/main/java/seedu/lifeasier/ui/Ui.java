@@ -499,27 +499,27 @@ public class Ui {
     }
 
     public void showAddDateMessage() {
-        System.out.println(colourTextCyan("Please input the date:"));
+        System.out.println(colourTextCyan("What is the date? (Enter in the format: DD-MM-YY)"));
     }
 
     public void showAddStartTimeMessage() {
-        System.out.println(colourTextCyan("Please input the start time:"));
+        System.out.println(colourTextCyan("What is the start time? (Enter in the format: HH:MM)"));
     }
 
     public void showAddEndTimeMessage() {
-        System.out.println(colourTextCyan("Please input the end time:"));
+        System.out.println(colourTextCyan("What is the end time? (Enter in the format: HH:MM)"));
     }
 
     public void showAddDescriptionMessage() {
-        System.out.println(colourTextCyan("Please input the description:"));
+        System.out.println(colourTextCyan("Please enter the description here:"));
     }
 
     public void showAddDateTimeMessage() {
-        System.out.println(colourTextCyan("Please input the Date Time:"));
+        System.out.println(colourTextCyan("What is the date and time? (Enter in the format: DD-MM-YY HH:MM"));
     }
 
     public void showAddRecurrencesMessage() {
-        System.out.println(colourTextCyan("Please input the number of times to repeat:"));
+        System.out.println(colourTextCyan("How many times do you want this to be repeated?"));
     }
 
     public void printMultipleNoteMatches(NoteList notes, String title) {
