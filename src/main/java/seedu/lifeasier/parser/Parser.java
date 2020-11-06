@@ -67,6 +67,9 @@ public class Parser {
 
     public static final int INDEX_START = 0;
     public static final int INDEX_END = 1;
+    public static final int MAXIMUM_CODE_LENGTH = 8;
+    public static final int MINIMUM_CODE_LENGTH = 6;
+    public static final int MAXIMUM_SUFFIX_CHARACTER = 1;
 
     private boolean isParametersEmpty = true;
     private boolean isModuleCodeEmpty = true;
@@ -107,7 +110,6 @@ public class Parser {
      * @param input String containing the user's input.
      * @return AddLessonCommand with the parameters input by the user.
      */
-
     Command parseAddLessonCommand(Ui ui, String input) {
 
         logger.log(Level.INFO, "Parsing addLesson command...");
@@ -174,6 +176,7 @@ public class Parser {
         LocalDateTime end = LocalDateTime.parse(date + " " + endTime, DATE_TIME_FORMATTER);
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
+            resetBoolean();
             return new InvalidCommand();
         }
         int recurrences = checkIfValidNumber(ui, recurrencesString);
@@ -255,6 +258,7 @@ public class Parser {
 
         if (start.compareTo(end) > 0) {
             ui.showInvalidTimeLogicMessage();
+            resetBoolean();
             return new InvalidCommand();
         }
         int recurrences = checkIfValidNumber(ui, recurrencesString);
@@ -309,12 +313,12 @@ public class Parser {
         int lastIndexOfRepeatsCommand = firstIndexOfRepeatsCommand + PARAM_REPEATS.length();
 
         String tempByInput = input.substring(lastIndexOfByCommand, firstIndexOfRepeatsCommand).trim();
-        String tempRecurencesString = input.substring(lastIndexOfRepeatsCommand).trim();
+        String tempRecurrencesString = input.substring(lastIndexOfRepeatsCommand).trim();
 
         String description = input.substring(lastIndexOfAddDeadlineCommand, firstIndexOfByCommand).trim();
         String byInput = fillIfEmptyParam(ui, tempByInput, "/by");
         LocalDateTime by = LocalDateTime.parse(byInput, DATE_TIME_FORMATTER);
-        String recurrencesString = fillIfEmptyParam(ui, tempRecurencesString, "/repeats");
+        String recurrencesString = fillIfEmptyParam(ui, tempRecurrencesString, "/repeats");
         int recurrences = checkIfValidNumber(ui, recurrencesString);
 
         resetBoolean();
@@ -509,17 +513,50 @@ public class Parser {
     /**
      * Parses the display command that the user inputs.
      *
+     *
+     * @param ui Input and output interaction with the user.
      * @param input String containing the user's input.
      * @return DisplayScheduleCommand with the parameters input by the user.
      */
-    private Command parseDisplayScheduleCommand(String input) {
-
+    private Command parseDisplayScheduleCommand(Ui ui, String input) throws ParserException {
         logger.log(Level.INFO, "Parsing display command...");
 
         int lastIndexOfDisplayScheduleCommand = input.indexOf(PARAM_DISPLAY) + PARAM_DISPLAY.length();
-        String toDisplay = input.substring(lastIndexOfDisplayScheduleCommand).trim();
+        String displayKeyword = input.substring(lastIndexOfDisplayScheduleCommand).trim();
 
-        return new DisplayScheduleCommand(toDisplay);
+        if (displayKeyword.isEmpty()) {
+            logger.log(Level.WARNING, "Missing parameter, proceed to prompt");
+            displayKeyword = handleMissingDisplayParam(ui);
+        }
+
+        if (isValidDisplayParam(displayKeyword)) {
+            return new DisplayScheduleCommand(displayKeyword);
+        } else {
+            logger.log(Level.SEVERE, "Error determining undo command type");
+            throw new ParserException();
+        }
+    }
+
+    private String handleMissingDisplayParam(Ui ui) {
+        boolean isValidField = false;
+        String userInput = "";
+
+        while (!isValidField) {
+            ui.showEnterDisplayKeywordMessage();
+
+            userInput = ui.readCommand();
+
+            if (isValidDisplayParam(userInput)) {
+                isValidField = true;
+            } else {
+                ui.showInvalidDisplayKeywordError();
+            }
+        }
+        return userInput;
+    }
+
+    private boolean isValidDisplayParam(String userInput) {
+        return userInput.equals("week") || userInput.equals("today") || userInput.equals("tomorrow");
     }
 
     /**
@@ -762,6 +799,9 @@ public class Parser {
         logger.log(Level.INFO, "Start of adding Module Code to string.");
         ui.showAddModuleCodeMessage();
         String moduleCode = checkIfEmpty(ui, ui.readCommand());
+        if (!checkIfValidModuleCode(moduleCode)) {
+            moduleCode = getValidModuleCode(ui);
+        }
         String[] temp = input.split("/date");
         input = temp[0] + "/code" + moduleCode + " /date" + temp[1];
         logger.log(Level.INFO, "End of adding Module Code to string.");
@@ -863,6 +903,12 @@ public class Parser {
             ui.printEmptyParam(param);
             input = checkIfEmpty(ui, ui.readCommand());
         }
+        //Check for valid module code
+        if (param.equals(PARAM_CODE)) {
+            if (!checkIfValidModuleCode(input)) {
+                input = getValidModuleCode(ui);
+            }
+        }
         return input;
     }
 
@@ -881,6 +927,118 @@ public class Parser {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if the input module code is in a valid format.
+     *
+     * @param moduleCode The module code to be checked.
+     * @return true if the module code is determined to be valid.
+     */
+    public boolean checkIfValidModuleCode(String moduleCode) {
+        logger.log(Level.INFO, "Starting module code verification for: " + moduleCode);
+        moduleCode = moduleCode.trim();
+        char[] moduleCodeElements = moduleCode.toCharArray();
+
+        //Check if input for module code is within valid length of 8
+        if (moduleCodeElements.length > MAXIMUM_CODE_LENGTH || moduleCodeElements.length < MINIMUM_CODE_LENGTH) {
+            logger.log(Level.INFO, "Invalid module code length");
+            return false;
+        }
+
+        int consecutiveLetterCount = getConsecutiveLetterCount(moduleCodeElements);
+        if (consecutiveLetterCount < 2 || consecutiveLetterCount > 3) {
+            logger.log(Level.INFO, "Invalid prefix length");
+            return false;
+        }
+
+        int consecutiveNumberCount = getConsecutiveNumberCount(moduleCodeElements, consecutiveLetterCount);
+        if (consecutiveNumberCount != 4) {
+            logger.log(Level.INFO, "Invalid numeric code length");
+            return false;
+        }
+
+        //Checking for existence of postfix
+        int totalCharacterCount = consecutiveLetterCount + consecutiveNumberCount;
+        boolean isFinalLength = totalCharacterCount == moduleCodeElements.length;
+        if (isFinalLength) {
+            logger.log(Level.INFO, "Check done - Valid module code");
+            return true;
+        }
+
+        //Possible postfix, check for valid postfix
+        int numberOfPostfixCharacters = moduleCodeElements.length - totalCharacterCount;
+        if (numberOfPostfixCharacters > MAXIMUM_SUFFIX_CHARACTER) {
+            logger.log(Level.INFO, "Invalid postfix length");
+            return false;
+        }
+
+        logger.log(Level.INFO, "Checking for module postfix letter");
+        int lastIndex = moduleCodeElements.length - 1;
+        if (Character.isLetter(moduleCodeElements[lastIndex])) {
+            logger.log(Level.INFO, "Check done - Valid module code");
+            return true;
+        } else {
+            logger.log(Level.INFO, "Invalid module code postfix");
+            return false;
+        }
+    }
+
+    /**
+     * Counts the number of consecutive numbers for the module code.
+     *
+     * @param moduleCodeElements Array of characters from module code.
+     * @param letterCount Starting index from the number of prefix characters.
+     * @return The number of consecutive numbers.
+     */
+    protected int getConsecutiveNumberCount(char[] moduleCodeElements, int letterCount) {
+        assert letterCount != 0 : "LetterCount should not be 0 at this state";
+        logger.log(Level.INFO, "Start numeric code count");
+        int numberCount = 0;
+        for (int i = letterCount; i < moduleCodeElements.length; i++) {
+            if (Character.isDigit(moduleCodeElements[i])) {
+                numberCount++;
+            } else {
+                break;
+            }
+        }
+        return numberCount;
+    }
+
+    /**
+     * Counts the number of consecutive letters for the module code prefix within the first 4 elements of array.
+     *
+     * @param moduleCodeElements Array of characters from module code.
+     * @return The number of consecutive letters.
+     */
+    protected int getConsecutiveLetterCount(char[] moduleCodeElements) {
+        logger.log(Level.INFO, "Start prefix letter count");
+        int letterCount = 0;
+        for (int i = 0; i < 4; i++) {
+            if (Character.isLetter(moduleCodeElements[i])) {
+                letterCount++;
+            } else {
+                break;
+            }
+        }
+        return letterCount;
+    }
+
+    /**
+     * Repeatedly prompts for valid module code until a valid one is input.
+     *
+     * @return Valid module code.
+     */
+    public String getValidModuleCode(Ui ui) {
+        String moduleCode = "";
+        boolean isModuleCodeValid = false;
+
+        while (!isModuleCodeValid) {
+            ui.showInvalidModuleCodePrompt();
+            moduleCode = ui.readCommand();
+            isModuleCodeValid = checkIfValidModuleCode(moduleCode);
+        }
+        return moduleCode;
     }
 
     /**
@@ -922,7 +1080,7 @@ public class Parser {
                 return parseEditNotesCommand(input);
 
             case (PARAM_DISPLAY):
-                return parseDisplayScheduleCommand(input);
+                return parseDisplayScheduleCommand(ui, input);
 
             case (PARAM_HELP):
                 return new HelpCommand();

@@ -95,6 +95,11 @@ public class TaskList {
         ui.showEditConfirmationMessage();
     }
 
+    public void editModuleCode(int index, Ui ui, String moduleCode) {
+        getTask(index).setDescription(moduleCode);
+        ui.showEditConfirmationMessage();
+    }
+
     public void editLessonTime(int index, Ui ui) throws ParserException {
         Parser parser = new Parser();
         LocalDateTime[] times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);

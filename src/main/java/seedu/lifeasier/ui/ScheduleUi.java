@@ -17,7 +17,8 @@ public class ScheduleUi {
     /**
      * Displays the home screen to the user.
      */
-    public void showHome(TaskList tasks) {
+    public void showHome(TaskList tasks, Ui ui) {
+        ui.showCurrHourIndicationMessage();
         timetable.showTimetable(tasks);
         System.out.println();
         displayUpcomingDeadlines(tasks);
@@ -30,7 +31,8 @@ public class ScheduleUi {
         int id = 1;
 
         for (Task task : tasks.getTaskList()) {
-            if (task instanceof Deadline && task.isHappeningBefore(dateAfterOneWeek)) {
+            if (task instanceof Deadline && task.happensAfter(LocalDateTime.now())
+                    && task.isHappeningBefore(dateAfterOneWeek)) {
                 System.out.println(id + ". " + task.toString());
                 id++;
             }
@@ -66,7 +68,7 @@ public class ScheduleUi {
         return timedItem.toLocalTime().toString();
     }
 
-    public int getTaskCountForToday(TaskList tasks, LocalDate date) {
+    public int getTaskCountForDay(TaskList tasks, LocalDate date) {
         int count = 0;
         for (Task task : tasks.getTaskList()) {
             if (task.getStart().toLocalDate().equals(date)) {

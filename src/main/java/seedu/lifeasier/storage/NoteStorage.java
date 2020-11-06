@@ -2,6 +2,7 @@ package seedu.lifeasier.storage;
 
 import seedu.lifeasier.model.notes.Note;
 import seedu.lifeasier.model.notes.NoteList;
+import seedu.lifeasier.ui.SaveDelimiterException;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.File;
@@ -64,9 +65,13 @@ public class NoteStorage {
     protected void createNoteList(Scanner fileScanner) {
         logger.log(Level.INFO, "Rebuilding notes from save");
 
-        try {
-            while (fileScanner.hasNext()) {
+        while (fileScanner.hasNext()) {
+            try {
                 String noteInformation = fileScanner.nextLine();
+
+                if (!fileCommand.checkForDelimiterCount(noteInformation, 1)) {
+                    throw new SaveDelimiterException();
+                }
 
                 String[] noteComponents = noteInformation.split(SAVE_DELIMITER);
                 String noteTitle = noteComponents[0];
@@ -78,10 +83,17 @@ public class NoteStorage {
 
                 notes.add(new Note(noteTitle, noteDescription));
                 logger.log(Level.INFO, "New Note added: " + noteTitle);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                ui.showSaveDataMissingError();
+                ui.showReadErrorHandlerError();
+                logger.log(Level.SEVERE, "Missing data from save file");
+
+            } catch (SaveDelimiterException e) {
+                ui.showSaveDelimiterError();
+                ui.showReadErrorHandlerError();
+                logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
+
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            ui.showSaveDataMissingError();
-            logger.log(Level.SEVERE, "Missing data from save file");
         }
 
         logger.log(Level.INFO, "Notes rebuilt");

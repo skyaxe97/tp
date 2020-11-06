@@ -19,7 +19,7 @@ class ScheduleUiTest {
 
     @Test
     void getTaskCountForToday_emptyTaskList_Zero() {
-        int taskCount = scheduleUiTest.getTaskCountForToday(ScheduleUiTest.EMPTY_TASK_LIST, SAMPLE_DATE);
+        int taskCount = scheduleUiTest.getTaskCountForDay(ScheduleUiTest.EMPTY_TASK_LIST, SAMPLE_DATE);
         assertEquals(0, taskCount);
     }
 
@@ -29,7 +29,7 @@ class ScheduleUiTest {
             NONEMPTY_TASK_LIST.addDeadline("test" + i, SAMPLE_DATETIME, 0);
         }
 
-        int taskCount = scheduleUiTest.getTaskCountForToday(ScheduleUiTest.NONEMPTY_TASK_LIST, SAMPLE_DATE);
+        int taskCount = scheduleUiTest.getTaskCountForDay(ScheduleUiTest.NONEMPTY_TASK_LIST, SAMPLE_DATE);
         assertEquals(5, taskCount);
     }
 
