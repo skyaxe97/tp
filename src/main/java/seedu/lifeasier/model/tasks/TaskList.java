@@ -136,7 +136,7 @@ public class TaskList {
         return deadline;
     }
 
-    public void editTaskDescription(int index, Ui ui) {
+    public void editTaskDescription(int displayIndex, Ui ui) {
         String newDescription;
         while (true) {
             newDescription = ui.readCommand();
@@ -146,12 +146,13 @@ public class TaskList {
             }
             break;
         }
-        getTask(index).setDescription(newDescription);
+        int actualIndex = taskMap.get(displayIndex);
+        getTask(actualIndex).setDescription(newDescription);
         ui.showEditConfirmationMessage();
     }
 
-    public void editModuleCode(int index, Ui ui, String moduleCode) {
-        int actualIndex = taskMap.get(index);
+    public void editModuleCode(int displayIndex, Ui ui, String moduleCode) {
+        int actualIndex = taskMap.get(displayIndex);
         getTask(actualIndex).setDescription(moduleCode);
         ui.showEditConfirmationMessage();
     }
@@ -182,7 +183,7 @@ public class TaskList {
             taskList.remove(actualIndex);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
-            ui.showInvalidNumberError();
+            ui.showIndexOutOfBoundsError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a valid number");
             ui.showNumberFormatError();
