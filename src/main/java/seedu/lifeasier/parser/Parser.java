@@ -1063,7 +1063,7 @@ public class Parser {
                 checkValidIndexOfParameter(userParamChoice);
                 break;
             } catch (IndexOutOfBoundsException e) {
-                ui.showIndexOutOfBoundsMessage();
+                ui.showIndexOutOfBoundsError();
             }
         }
         return userParamChoice;
@@ -1076,7 +1076,7 @@ public class Parser {
                 tasks.checkForIndexOutOfBounds(newIndex);
                 return newIndex;
             } catch (IndexOutOfBoundsException e) {
-                ui.showIndexOutOfBoundsMessage();
+                ui.showIndexOutOfBoundsError();
             }
         }
     }

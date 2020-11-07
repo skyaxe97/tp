@@ -62,7 +62,7 @@ public class EditDeadlineCommand extends Command {
 
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showIndexOutOfBoundsMessage();
+            ui.showIndexOutOfBoundsError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
             ui.showNumberFormatError();
