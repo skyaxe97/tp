@@ -76,4 +76,23 @@ public class NoteCommandFunctions {
         }
         return noteNumber;
     }
+
+    /**
+     * Stores matching title of notes in an array.
+     *
+     * @param notes The notes stored currently.
+     * @param title The title to be searched.
+     * @param arr The array to be stored in.
+     * @returns the array with matched note numbers.
+     */
+    public static int[] storeNoteMatches(NoteList notes, String title, int[] arr) {
+        int j = 0;
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getTitle().contains(title)) {
+                arr[j] = i + 1;
+                j++;
+            }
+        }
+        return arr;
+    }
 }

@@ -674,16 +674,12 @@ public class Ui {
         System.out.println(colourTextCyan("How many times do you want this to be repeated?"));
     }
 
-    public int[] showMultipleNoteMatchesMessage(NoteList notes, String title, int[] arr) {
-        int j = 0;
+    public void showMultipleNoteMatchesMessage(NoteList notes, String title) {
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
                 System.out.println(i + 1 + ". " + notes.get(i).getTitle() + "\n");
-                arr[j] = i + 1;
-                j++;
             }
         }
-        return arr;
     }
 
     public void showAllNotesMessage(NoteList notes) {

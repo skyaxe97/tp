@@ -1,24 +1,25 @@
 package test.java.seedu.lifeasier.commands;
 
 import org.junit.jupiter.api.Test;
-import seedu.lifeasier.commands.ShowNotesCommand;
+import seedu.lifeasier.commands.DeleteNotesCommand;
+import seedu.lifeasier.model.notes.Note;
 import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
-import seedu.lifeasier.model.notes.Note;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
+import javax.rmi.ssl.SslRMIClientSocketFactory;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-class ShowNotesCommandTest {
+class DeleteNotesCommandTest {
     private Ui ui = new Ui();
     private NoteList notes = new NoteList();
     private TaskList tasks = new TaskList();
@@ -36,6 +37,7 @@ class ShowNotesCommandTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final InputStream OriginalIn = System.in;
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
 
@@ -47,20 +49,21 @@ class ShowNotesCommandTest {
     public void restoreStreams() {
         System.setOut(originalOut);
         System.setErr(originalErr);
+        System.setIn(OriginalIn);
     }
 
     @Test
     void testEmptyList_searchTitle_emptyNoteList() {
         setUpStreams();
         Ui ui = new Ui();
-        ShowNotesCommand command = new ShowNotesCommand("cats");
+        DeleteNotesCommand command = new DeleteNotesCommand("cats");
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(System.lineSeparator()
                         + THICK_SEPARATOR + System.lineSeparator()
                         + ui.colourTextGreen("There's no Notes!") + System.lineSeparator()
                         + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(),
-                        outContent.toString());
+                outContent.toString());
         restoreStreams();
     }
 
@@ -71,7 +74,7 @@ class ShowNotesCommandTest {
         NoteList notes = new NoteList();
         Note note = new Note("cats", "i like cats");
         notes.add(note);
-        new ShowNotesCommand("dogs").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+        new DeleteNotesCommand("dogs").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(System.lineSeparator() +
                 THICK_SEPARATOR + System.lineSeparator()
@@ -82,26 +85,55 @@ class ShowNotesCommandTest {
 
 
     @Test
-    void testOneMatch_searchTitle_noteWithMatchingTitle() {
+    void testOneMatch_searchTitle_noteWithMatchingTitleDeleted() {
         setUpStreams();
-        Ui ui = new Ui();
         Note note = new Note("cats", "i like cats");
         Note note1 = new Note("dogs", "dogs are awesome");
         NoteList notes = new NoteList();
         notes.add(note);
         notes.add(note1);
-        new ShowNotesCommand("cats").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+        String input = "Y";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Ui ui = new Ui();
+        new DeleteNotesCommand("cats").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals(System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Here is your note:") + System.lineSeparator()
-                + note + System.lineSeparator()
+        assertEquals(note + System.lineSeparator() + System.lineSeparator()
+                + THIN_SEPARATOR + System.lineSeparator()
+                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
+                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
+                + ui.colourTextGreen("OK! Note deleted!") + System.lineSeparator()
                 + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
+
         restoreStreams();
     }
 
     @Test
-    void testMultipleMatch_searchTitle_allNotesWithMatchingTitle() {
+    void testOneMatch_searchTitle_noteWithMatchingTitleNotDeleted() {
+        setUpStreams();
+        Note note = new Note("cats", "i like cats");
+        Note note1 = new Note("dogs", "dogs are awesome");
+        NoteList notes = new NoteList();
+        notes.add(note);
+        notes.add(note1);
+        String input = "N";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Ui ui = new Ui();
+        new DeleteNotesCommand("cats").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+
+        assertEquals(note + System.lineSeparator() + System.lineSeparator()
+                + THIN_SEPARATOR + System.lineSeparator()
+                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
+                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
+                + ui.colourTextGreen("OK! Note not deleted!") + System.lineSeparator()
+                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
+
+        restoreStreams();
+    }
+
+    @Test
+    void testMultipleMatch_searchTitle_noteDeleted() {
         setUpStreams();
         int i = 1;
         Note note = new Note("cats", "i like cats");
@@ -109,8 +141,8 @@ class ShowNotesCommandTest {
         NoteList notes = new NoteList();
         notes.add(note);
         notes.add(note1);
-        ShowNotesCommand command = new ShowNotesCommand("cat");
-        String input = "1";
+        DeleteNotesCommand command = new DeleteNotesCommand("cat");
+        String input = "1\nY";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Ui ui = new Ui();
@@ -119,17 +151,18 @@ class ShowNotesCommandTest {
         assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
                 + ui.colourTextCyan("Multiple matches found! Please select the one you are looking for:")
                 + System.lineSeparator() + i++ + ". " + note.getTitle() + "\n"
-                + System.lineSeparator()+ i + ". " + note1.getTitle() + "\n"
-                + System.lineSeparator()
-                + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Here is your note:") + System.lineSeparator()
-                + note + System.lineSeparator()
+                + System.lineSeparator() + i + ". " + note1.getTitle() + "\n"
+                + System.lineSeparator() + note + System.lineSeparator()
+                + System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
+                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
+                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
+                + ui.colourTextGreen("OK! Note deleted!") + System.lineSeparator()
                 + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
         restoreStreams();
     }
 
     @Test
-    void testNoTitleInput_emptyTitle_allNotes() {
+    void testNoTitleInput_emptyTitle_noteDeleted() {
         setUpStreams();
         int i = 1;
         Note note = new Note("cats", "i like cats");
@@ -137,20 +170,22 @@ class ShowNotesCommandTest {
         NoteList notes = new NoteList();
         notes.add(note);
         notes.add(note1);
-        ShowNotesCommand command = new ShowNotesCommand("");
-        String input = "1";
+        DeleteNotesCommand command = new DeleteNotesCommand("");
+        String input = "1\nY";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Ui ui = new Ui();
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
         assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Please select the notes you want to view:")
+                + ui.colourTextCyan("Please select the notes you want to delete:")
                 + System.lineSeparator() + i++ + ". " + note.getTitle()
-                + System.lineSeparator() + i + ". " + note1.getTitle()
+                + System.lineSeparator() + i + ". " + note1.getTitle() + System.lineSeparator()
+                + System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator() + note + System.lineSeparator()
+                + System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
+                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
                 + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Here is your note:") + System.lineSeparator()
-                + note + System.lineSeparator()
+                + ui.colourTextGreen("OK! Note deleted!") + System.lineSeparator()
                 + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
         restoreStreams();
     }
