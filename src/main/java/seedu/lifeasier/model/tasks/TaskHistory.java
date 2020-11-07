@@ -83,7 +83,7 @@ public class TaskHistory {
      *
      */
     public Task getCurrCopyOfTaskToEdit(TaskList tasks, int userIndexChoice) {
-        Task task = tasks.getTask(userIndexChoice);
+        Task task = tasks.getTask(tasks.getActualIndex(userIndexChoice));
 
         int taskEditNumber = task.getEditNumber();
         int editID;

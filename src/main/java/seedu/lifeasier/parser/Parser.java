@@ -922,6 +922,7 @@ public class Parser {
 
     public int checkIfValidInput(Ui ui, String input) {
         while (isNotNumeric(input)) {
+            logger.log(Level.SEVERE, "User input is invalid");
             ui.showInvalidNumberError();
             input = ui.readCommand();
         }
@@ -1064,6 +1065,8 @@ public class Parser {
                 break;
             } catch (IndexOutOfBoundsException e) {
                 ui.showIndexOutOfBoundsError();
+            } catch (NumberFormatException e) {
+                ui.showInvalidNumberError();
             }
         }
         return userParamChoice;

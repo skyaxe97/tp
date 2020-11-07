@@ -24,11 +24,11 @@ public class EditLessonCommand extends Command {
         this.code = code;
     }
 
-    public void printLessonsMatchingCode(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
+    private void printLessonsMatchingCode(TaskList tasks,Ui ui, String code) throws TaskNotFoundException {
         tasks.printMatchingTasks(Ui.PARAM_LESSON, code, ui);
     }
 
-    public void editLessonModuleCode(TaskList tasks, int index, Ui ui, Parser parser) {
+    private void editLessonModuleCode(TaskList tasks, int index, Ui ui, Parser parser) {
         String moduleCode = ui.readCommand();
         if (!parser.checkIfValidModuleCode(moduleCode)) {
             moduleCode = parser.getValidModuleCode(ui);
@@ -36,7 +36,7 @@ public class EditLessonCommand extends Command {
         tasks.editModuleCode(index, ui, moduleCode);
     }
 
-    public void editLessonTime(TaskList tasks, int index, Ui ui, Parser parser) {
+    private void editLessonTime(TaskList tasks, int index, Ui ui, Parser parser) {
         LocalDateTime[] times = parser.parseUserInputForEditDateTime(ui, LESSON_NUM_OF_TIME_ARGS);
         tasks.editLessonTime(index, ui, times);
     }
@@ -63,12 +63,6 @@ public class EditLessonCommand extends Command {
             logger.log(Level.INFO, "Push old copy of Event into taskHistory");
             storage.saveTasks();
 
-        } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showIndexOutOfBoundsError();
-        } catch (NumberFormatException e) {
-            logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatError();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input lesson name does not match any of the existing deadline names.");
             ui.showNoMatchesError(Ui.PARAM_LESSON);
@@ -76,7 +70,7 @@ public class EditLessonCommand extends Command {
         logger.log(Level.INFO, "End of EditLessonCommand");
     }
 
-    public void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userLessonChoice) {
+    private void selectParameterToEdit(Parser parser, Ui ui, TaskList tasks, int userLessonChoice) {
         ui.showSelectParameterToEditPrompt();
         ui.showEditableParametersMessage(Ui.PARAM_LESSON);
 
@@ -96,7 +90,6 @@ public class EditLessonCommand extends Command {
             break;
 
         default:
-            throw new IndexOutOfBoundsException();
         }
     }
 }

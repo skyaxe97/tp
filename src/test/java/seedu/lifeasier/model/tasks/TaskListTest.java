@@ -1,6 +1,7 @@
 package seedu.lifeasier.model.tasks;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.ByteArrayInputStream;
@@ -40,10 +41,6 @@ class TaskListTest {
         System.setOut(originalOut);
         System.setErr(originalErr);
         System.setIn(originalIn);
-    }
-
-    @Test
-    void name() {
     }
 
     @Test
@@ -179,7 +176,7 @@ class TaskListTest {
 
     @Test
     void editTaskDescription_validInput_taskDescriptionEdited() throws TaskPastException, TaskDuplicateException,
-            TaskNotFoundException {
+        TaskNotFoundException {
         TaskList taskList = new TaskList();
 
         String newDescription = "newDescription";
@@ -197,20 +194,18 @@ class TaskListTest {
 
     @Test
     void editTaskDescription_emptyInput_promptForAnotherInput() throws TaskPastException, TaskDuplicateException,
-            TaskNotFoundException {
-        TaskList taskList = new TaskList();
+        TaskNotFoundException {
 
         String newDescription = "\nnewDescription";
         setUpStreams(newDescription);
         Ui ui = new Ui();
 
-
+        TaskList taskList = new TaskList();
         Task originalEvent = new Event("Event", SAMPLE1, SAMPLE2, 0);
-        Task copyOriginalEvent = new Event("Event", SAMPLE1, SAMPLE2, 0);
         taskList.addTask(originalEvent);
         taskList.printMatchingTasks("event", "", ui);
         taskList.editTaskDescription(1, ui);
-
+        Task copyOriginalEvent = new Event("Event", SAMPLE1, SAMPLE2, 0);
         assertEquals(System.lineSeparator()
                 + Ui.THIN_SEPARATOR + System.lineSeparator()
                 + ui.colourTextCyan("Here are all your matching events:") + System.lineSeparator()
@@ -222,14 +217,14 @@ class TaskListTest {
                 + ui.colourTextGreen("Your edit has been saved.") + System.lineSeparator()
                 + Ui.THICK_SEPARATOR + System.lineSeparator()
                 + System.lineSeparator(),
-                outContent.toString());
+            outContent.toString());
 
         restoreStreams();
     }
 
     @Test
     void editModuleCode_validInput_lessonModuleCodeEdited() throws TaskPastException, TaskDuplicateException,
-            TaskNotFoundException {
+        TaskNotFoundException {
         TaskList taskList = new TaskList();
 
         String newDescription = "CS2040C";
@@ -247,8 +242,8 @@ class TaskListTest {
 
     @Test
     void editLessonTime_validTimeInput_lessonTimeEdited() throws TaskNotFoundException, TaskPastException,
-            TaskDuplicateException {
-        TaskList taskList = new TaskList();
+        TaskDuplicateException {
+
 
         LocalDateTime[] newTimes = new LocalDateTime[2];
         newTimes[0] = SAMPLE1;
@@ -256,13 +251,14 @@ class TaskListTest {
 
         setUpStreams("");
         Ui ui = new Ui();
+        TaskList taskList = new TaskList();
         taskList.addLesson("CS1231", SAMPLE2, SAMPLE3, 0);
         taskList.printMatchingTasks("lesson", "", ui);
         taskList.editLessonTime(1, ui, newTimes);
 
         Assertions.assertAll(
-                () -> assertEquals(taskList.getTask(0).getStart(), SAMPLE1),
-                () -> assertEquals(taskList.getTask(0).getEnd(), SAMPLE2)
+            () -> assertEquals(taskList.getTask(0).getStart(), SAMPLE1),
+            () -> assertEquals(taskList.getTask(0).getEnd(), SAMPLE2)
         );
 
         restoreStreams();
@@ -271,8 +267,7 @@ class TaskListTest {
 
     @Test
     void editEventTime_validTimeInput_eventTimeEdited() throws TaskNotFoundException, TaskPastException,
-            TaskDuplicateException {
-        TaskList taskList = new TaskList();
+        TaskDuplicateException {
 
         LocalDateTime[] newTimes = new LocalDateTime[2];
         newTimes[0] = SAMPLE1;
@@ -280,13 +275,14 @@ class TaskListTest {
 
         setUpStreams("");
         Ui ui = new Ui();
+        TaskList taskList = new TaskList();
         taskList.addEvent("Concert", SAMPLE2, SAMPLE3, 0);
         taskList.printMatchingTasks("event", "", ui);
         taskList.editEventTime(1, ui, newTimes);
 
         Assertions.assertAll(
-                () -> assertEquals(taskList.getTask(0).getStart(), SAMPLE1),
-                () -> assertEquals(taskList.getTask(0).getEnd(), SAMPLE2)
+            () -> assertEquals(taskList.getTask(0).getStart(), SAMPLE1),
+            () -> assertEquals(taskList.getTask(0).getEnd(), SAMPLE2)
         );
 
         restoreStreams();
@@ -294,7 +290,7 @@ class TaskListTest {
 
     @Test
     void editDeadlineTime_validTimeInput_deadlineTimeEdited() throws TaskNotFoundException, TaskPastException,
-            TaskDuplicateException {
+        TaskDuplicateException {
         TaskList taskList = new TaskList();
 
         LocalDateTime[] newTimes = new LocalDateTime[2];
@@ -313,7 +309,7 @@ class TaskListTest {
 
     @Test
     void deleteTask_validIndex_taskDeleted() throws TaskPastException, TaskDuplicateException,
-            TaskNotFoundException {
+        TaskNotFoundException {
         TaskList taskList = new TaskList();
 
         setUpStreams("");
@@ -323,26 +319,14 @@ class TaskListTest {
         taskList.printMatchingTasks("deadline", "", ui);
         taskList.deleteTask(1, ui);
 
-        assert(taskList.getTaskList().isEmpty());
+        assert (taskList.getTaskList().isEmpty());
 
         restoreStreams();
-    }
-
-    @Test
-    void printMatchingTasks() {
     }
 
     @Test
     void checkForIndexOutOfBounds() {
         TaskList taskList = new TaskList();
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.checkForIndexOutOfBounds(-1));
-    }
-
-    @Test
-    void getTasksFromOneDay() {
-    }
-
-    @Test
-    void sort() {
     }
 }

@@ -3,44 +3,54 @@ package seedu.lifeasier.commands;
 import org.junit.jupiter.api.Test;
 import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
-import seedu.lifeasier.model.tasks.Deadline;
+import seedu.lifeasier.model.tasks.Event;
 import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AddDeadlineCommandTest {
+class EditEventCommandTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
+    private final InputStream originalIn = System.in;
 
     public static final String TEST_FILEPATH = "testSave.txt";
 
     private final LocalDateTime sampleTime1 = LocalDateTime.parse("2020-11-11T11:11");
-    private final LocalDateTime pastSampleTime1 = LocalDateTime.parse("2019-11-11T11:11");
+    private final LocalDateTime sampleTime2 = LocalDateTime.parse("2020-12-12T12:12");
+    private final LocalDateTime sampleTime3 = LocalDateTime.parse("2020-12-12T12:13");
+    private final LocalDateTime sampleTime4 = LocalDateTime.parse("2020-12-12T12:14");
 
-    public void setUpStreams() {
+    public void setUpStreams(String input) {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
     }
 
     public void restoreStreams() {
         System.setOut(originalOut);
         System.setErr(originalErr);
+        System.setIn(originalIn);
     }
 
     @Test
-    void execute_validDeadline_deadlineAddedToTaskList() {
-        setUpStreams();
+    void execute_validEventAndEditingName_eventNameEdited() throws TaskPastException, TaskDuplicateException {
+        setUpStreams("1\n" + "1\n" + "newEvent");
 
         Ui ui = new Ui();
         NoteList notes = new NoteList();
@@ -50,25 +60,19 @@ class AddDeadlineCommandTest {
         FileStorage storage = new FileStorage(TEST_FILEPATH, TEST_FILEPATH, ui, notes, testTaskList, noteHistory);
         Parser parser = new Parser();
 
-        AddDeadlineCommand command = new AddDeadlineCommand("testDeadline", sampleTime1, 1);
-        Task testDeadline = new Deadline("testDeadline", sampleTime1, 1);
+        EditEventCommand command = new EditEventCommand("");
+        testTaskList.addEvent("oldEvent", sampleTime1, sampleTime2, 1);
+        Task newEvent = new Event("newEvent", sampleTime1, sampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Done! I've added") + System.lineSeparator()
-                + ui.colourTextGreen("\"" + testDeadline + "\" ") + System.lineSeparator()
-                + ui.colourTextGreen("to your schedule!") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
+        assertEquals(newEvent.toString(), testTaskList.getTask(0).toString());
 
         restoreStreams();
     }
 
     @Test
-    void execute_dateTimeInThePast_deadlineNotAdded() {
-        setUpStreams();
+    void execute_validEventAndEditingTime_eventNameEdited() throws TaskPastException, TaskDuplicateException {
+        setUpStreams("1\n" + "2\n" + "/date 12-12-20 /from 12:12 /to 12:14");
 
         Ui ui = new Ui();
         NoteList notes = new NoteList();
@@ -78,22 +82,19 @@ class AddDeadlineCommandTest {
         FileStorage storage = new FileStorage(TEST_FILEPATH, TEST_FILEPATH, ui, notes, testTaskList, noteHistory);
         Parser parser = new Parser();
 
-        AddDeadlineCommand command = new AddDeadlineCommand("testDeadline", pastSampleTime1, 1);
+        EditEventCommand command = new EditEventCommand("");
+        testTaskList.addEvent("testEvent", sampleTime2, sampleTime3, 1);
+        Task newEvent = new Event("testEvent", sampleTime2, sampleTime4, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("The timing of this deadline is already in the past!") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
+        assertEquals(newEvent.toString(), testTaskList.getTask(0).toString());
 
         restoreStreams();
     }
 
     @Test
-    void execute_duplicateDeadline_deadlineNotAdded() {
-        setUpStreams();
+    void execute_taskNotFound_noAction() throws TaskPastException, TaskDuplicateException {
+        setUpStreams("");
 
         Ui ui = new Ui();
         NoteList notes = new NoteList();
@@ -103,22 +104,17 @@ class AddDeadlineCommandTest {
         FileStorage storage = new FileStorage(TEST_FILEPATH, TEST_FILEPATH, ui, notes, testTaskList, noteHistory);
         Parser parser = new Parser();
 
-        AddDeadlineCommand command = new AddDeadlineCommand("testDeadline", sampleTime1, 1);
-        Task testDeadline = new Deadline("testDeadline", sampleTime1, 1);
+        EditEventCommand command = new EditEventCommand("garbage");
+        testTaskList.addEvent("oldEvent", sampleTime1, sampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
         assertEquals(System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Done! I've added") + System.lineSeparator()
-                + ui.colourTextGreen("\"" + testDeadline + "\" ") + System.lineSeparator()
-                + ui.colourTextGreen("to your schedule!") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator()
+                + Ui.THIN_SEPARATOR + System.lineSeparator()
+                + ui.colourTextCyan("Here are all your matching events:") + System.lineSeparator()
                 + System.lineSeparator()
                 + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("This deadline or something very similar already exists in your schedule!")
-                + System.lineSeparator()
+                + ui.colourTextRed("Sorry! There is no event matching your query. Please "
+                + "re-enter your command.") + System.lineSeparator()
                 + Ui.THICK_SEPARATOR + System.lineSeparator()
                 + System.lineSeparator(),
             outContent.toString());
