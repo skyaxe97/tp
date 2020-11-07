@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class ShowNotesCommand extends Command {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     private String title;
+    private int arraySize = 10000;
 
     public ShowNotesCommand(String title) {
         this.title = title;
@@ -24,7 +25,7 @@ public class ShowNotesCommand extends Command {
 
     private void findTitle(Ui ui, NoteList notes, String title) throws TitleNotFoundException {
         logger.log(Level.INFO, "Start for finding title in note list");
-
+        int[] noteMatches = new int [arraySize];
         int matchNumber = NoteCommandFunctions.checkNumberOfNoteMatches(notes, title);
         int noteNumber = NoteCommandFunctions.findNoteNumber(notes, title);
 
@@ -36,19 +37,19 @@ public class ShowNotesCommand extends Command {
             throw new TitleNotFoundException();
         case 1:
             logger.log(Level.INFO, "One match found");
-            System.out.println(notes.get(noteNumber).toString());
+            ui.showNotesMessage(notes.get(noteNumber).toString());
             break;
         default:
             logger.log(Level.INFO, "Multiple matches found");
-            ui.showMultipleMatchesFoundMessage();
+            ui.showMultipleMatchesFoundPrompt();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            ui.printMultipleNoteMatches(notes, title);
+            noteMatches = ui.showMultipleNoteMatchesMessage(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
-            noteNumber = Integer.parseInt(ui.readCommand());
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
-            System.out.println(notes.get(noteNumber - 1).toString());
+            noteNumber = Integer.parseInt(ui.readCommand()) - 1;
+            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
+            ui.showNotesMessage(notes.get(noteNumber).toString());
         }
 
     }
@@ -58,34 +59,37 @@ public class ShowNotesCommand extends Command {
                         NoteHistory noteHistory, TaskHistory taskHistory) {
         try {
             logger.log(Level.INFO, "Start of ShowNotesCommand");
-            ui.printSeparator();
             NoteCommandFunctions.checkEmptyList(notes);
+
             if (title.trim().length() > 0) {        // title is already inputted
                 findTitle(ui, notes, title);
+
             } else {
-                ui.showSelectWhichNoteToViewMessage();
+                ui.showSelectWhichNoteToViewPrompt();
 
                 logger.log(Level.INFO, "Start of printing all notes in the list");
-                ui.printAllNotes(notes);
+                ui.showAllNotesMessage(notes);
                 logger.log(Level.INFO, "End of printing all notes in the list");
 
                 int noteNumber = Integer.parseInt(ui.readCommand());
 
-                NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber);
-                System.out.println(notes.get(noteNumber - 1).toString());
-
+                NoteCommandFunctions.checkForIndexBeyondSize(notes, noteNumber);
+                ui.showNotesMessage(notes.get(noteNumber - 1).toString());
             }
-            ui.printSeparator();
             logger.log(Level.INFO, "End of ShowNotesCommand");
+
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
+
         } catch (TitleNotFoundException e) {
             logger.log(Level.SEVERE, "Input title does not match any of the note titles");
-            ui.showNoTitleFoundMessage();
+            ui.showNoTitleFoundError();
+
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
+
         } catch (EmptyNoteListException e) {
             logger.log(Level.SEVERE, "Note List is empty");
             ui.showEmptyNoteListMessage();

@@ -28,7 +28,7 @@ public class AddNotesCommand extends Command {
         if (input.trim().length() > 0) {
             isEmpty = false;
         } else {
-            ui.showEmptyDescriptionMessage();
+            ui.showEmptyDescriptionError();
         }
         logger.log(Level.INFO, "End of checking empty description inputs");
         return input;
@@ -41,7 +41,7 @@ public class AddNotesCommand extends Command {
             isEmpty = false;
             noteTitle = title;
         } else {
-            ui.showNoteTitleMessage();
+            ui.showNoteTitlePrompt();
             while (isEmpty) {
                 noteTitle = checkForEmpty(ui);
             }
@@ -55,13 +55,12 @@ public class AddNotesCommand extends Command {
         logger.log(Level.INFO, "Start of AddNotesCommand");
         String noteDescription = null;
         logger.log(Level.INFO, "Start for assigning noteTitle");
-        ui.printSeparator();
         final String noteTitle = isValidTitle(ui, title);
         logger.log(Level.INFO, "End for assigning noteTitle");
 
         isEmpty = true;
         logger.log(Level.INFO, "IsEmpty set back to true");
-        ui.showNoteDescriptionMessage();
+        ui.showNoteDescriptionPrompt();
 
         logger.log(Level.INFO, "Start for assigning noteDescription");
         while (isEmpty) {
@@ -72,7 +71,6 @@ public class AddNotesCommand extends Command {
         notes.add(new Note(noteTitle,noteDescription));
         logger.log(Level.INFO, "Note is added");
         ui.showNoteAddedMessage();
-        ui.printSeparator();
 
         storage.saveNote();
     }

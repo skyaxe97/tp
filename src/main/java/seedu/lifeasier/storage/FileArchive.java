@@ -59,6 +59,7 @@ public class FileArchive {
             ui.showFileArchiveError();
         }
         ui.showArchiveEndMessage();
+        ui.showArchiveEndInformationMessage();
         logger.log(Level.INFO, "Finish archiving process");
     }
 

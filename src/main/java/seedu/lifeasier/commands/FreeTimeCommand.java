@@ -34,6 +34,8 @@ public class FreeTimeCommand extends Command {
      * @param tasks TaskList containing user's tasks.
      * @param storage Storage object to save tasks and notes to memory.
      * @param parser Parser object to parse user's inputs.
+     * @param noteHistory NoteHistory object to store history of edited and deleted notes.
+     * @param taskHistory TaskHistory object to store history of edited and deleted tasks.
      */
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
@@ -49,8 +51,16 @@ public class FreeTimeCommand extends Command {
         int endHour = longestFreeTime[PARAM_END];
         int duration = endHour - startHour;
 
-        logger.log(Level.INFO, "Showing free time message...");
-        ui.showFreeTimeMessage(startHour, endHour, duration);
+
+
+        if (duration > 0) {
+            logger.log(Level.INFO, "Showing free time message...");
+            ui.showFreeTimeMessage(startHour, endHour, duration);
+        } else {
+            logger.log(Level.INFO, "Showing no free time error...");
+            ui.showNoFreeTimeError();
+        }
+
 
     }
 

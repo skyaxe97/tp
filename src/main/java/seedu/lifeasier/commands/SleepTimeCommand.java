@@ -32,6 +32,8 @@ public class SleepTimeCommand extends Command {
      * @param tasks TaskList containing user's tasks.
      * @param storage Storage object to save tasks and notes to memory.
      * @param parser Parser object to parse user's inputs.
+     * @param noteHistory NoteHistory object to store history of edited and deleted notes.
+     * @param taskHistory TaskHistory object to store history of edited and deleted tasks.
      */
     @Override
     public void execute(Ui ui, NoteList notes, TaskList tasks, FileStorage storage, Parser parser,
@@ -54,7 +56,7 @@ public class SleepTimeCommand extends Command {
         logger.log(Level.INFO, "Showing sleep time message...");
 
         if (earliestSleepTime == HOUR_EARLIEST && latestWakeTime == HOUR_LATEST) {
-            ui.showNothingScheduledMessage();
+            ui.showNothingScheduledMessage("today and tomorrow");
         } else {
             ui.showAvailableSleepTimeMessage(earliestSleepTime, latestWakeTime);
         }
@@ -64,8 +66,6 @@ public class SleepTimeCommand extends Command {
         } else {
             ui.showExcessSleepDurationMessage();
         }
-
-        ui.printSeparator();
     }
 
     /**

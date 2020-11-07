@@ -1,16 +1,19 @@
 package seedu.lifeasier.model.tasks;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
 
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm");
+    private static final String PARAM_EVENT = "event";
 
     protected LocalDateTime start;
     protected LocalDateTime end;
-    private String type = "event";
+    private String type = PARAM_EVENT;
 
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
@@ -72,5 +75,31 @@ public class Event extends Task {
             start = start.plusDays(7);
             end = end.plusDays(7);
         }
+    }
+
+    /**
+     * Returns true if a similar or duplicate Event already exists in the schedule.
+     *
+     * @param description Description of Event to be checked.
+     * @param start Start DateTime of Event to be checked.
+     * @param end End DateTime of Event to be checked.
+     * @param recurrences Recurrences of Event to be checked.
+     * @return True if a similar or duplicate Event already exists in the schedule.
+     */
+    public boolean isDuplicate(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+
+        LocalTime existingStartTime = this.start.toLocalTime();
+        LocalTime existingEndTime = this.end.toLocalTime();
+        DayOfWeek existingDay = this.start.getDayOfWeek();
+
+        LocalTime newStartTime = start.toLocalTime();
+        LocalTime newEndTime = end.toLocalTime();
+        DayOfWeek newDay = start.getDayOfWeek();
+
+        return (this.description.equals(description)
+                && existingStartTime == newStartTime
+                && existingEndTime == newEndTime
+                && existingDay == newDay
+                && ((this.recurrences > 0 && recurrences > 0) || this.start.equals(start)));
     }
 }

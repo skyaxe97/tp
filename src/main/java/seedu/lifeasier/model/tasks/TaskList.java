@@ -2,14 +2,13 @@ package seedu.lifeasier.model.tasks;
 
 
 import seedu.lifeasier.commands.ShowNotesCommand;
-import seedu.lifeasier.parser.Parser;
-import seedu.lifeasier.parser.ParserException;
 import seedu.lifeasier.ui.Ui;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +21,8 @@ public class TaskList {
 
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
-    private int indexOfLastMatch;
+    private int displayIndexOfLastMatch = 0;
+    HashMap<Integer,Integer> taskMap;
 
     public TaskList() {
         taskList = new ArrayList<>();
@@ -48,6 +48,10 @@ public class TaskList {
         taskList.add(task);
     }
 
+    public int getActualIndex(int i) {
+        return taskMap.get(i);
+    }
+
     /**
      * Add new event to taskList.
      *
@@ -56,7 +60,22 @@ public class TaskList {
      * @param end end date/time of event.
      * @param recurrences number of times to repeat.
      */
-    public Task addEvent(String description, LocalDateTime start, LocalDateTime end, int recurrences) {
+    public Task addEvent(String description, LocalDateTime start, LocalDateTime end, int recurrences)
+            throws TaskDuplicateException, TaskPastException {
+
+        LocalDate today = LocalDate.now();
+        if (start.toLocalDate().isBefore(today)) {
+            throw new TaskPastException();
+        }
+
+        for (Task task : taskList) {
+            if (task instanceof Event && (((Event) task).isDuplicate(description, start, end, recurrences))) {
+                throw new TaskDuplicateException();
+            }
+        }
+
+        assert start.isBefore(end) : "Start not before end!";
+
         Event event = new Event(description, start, end, recurrences);
         addTask(event);
         return event;
@@ -70,7 +89,22 @@ public class TaskList {
      * @param end end date/time of lesson.
      * @param recurrences number of times to repeat.
      */
-    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences) {
+    public Task addLesson(String moduleCode, LocalDateTime start, LocalDateTime end, int recurrences)
+            throws TaskDuplicateException, TaskPastException {
+
+        LocalDate today = LocalDate.now();
+        if (start.toLocalDate().isBefore(today)) {
+            throw new TaskPastException();
+        }
+
+        for (Task task : taskList) {
+            if (task instanceof Lesson && (((Lesson) task).isDuplicate(moduleCode, start, end, recurrences))) {
+                throw new TaskDuplicateException();
+            }
+        }
+
+        assert start.isBefore(end) : "Start not before end!";
+
         Lesson lesson = new Lesson(moduleCode, start, end, recurrences);
         addTask(lesson);
         return lesson;
@@ -83,77 +117,94 @@ public class TaskList {
      * @param by deadline of task.
      * @param recurrences number of times to repeat.
      */
-    public Task addDeadline(String description, LocalDateTime by, int recurrences) {
+    public Task addDeadline(String description, LocalDateTime by, int recurrences)
+            throws TaskDuplicateException, TaskPastException {
+
+        LocalDate today = LocalDate.now();
+        if (by.toLocalDate().isBefore(today)) {
+            throw new TaskPastException();
+        }
+
+        for (Task task : taskList) {
+            if (task instanceof Deadline && (((Deadline) task).isDuplicate(description, by, recurrences))) {
+                throw new TaskDuplicateException();
+            }
+        }
+
         Deadline deadline = new Deadline(description, by, recurrences);
         addTask(deadline);
         return deadline;
     }
 
     public void editTaskDescription(int index, Ui ui) {
-        String newDescription = ui.readCommand();
+        String newDescription;
+        while (true) {
+            newDescription = ui.readCommand();
+            if (newDescription.equals("")) {
+                ui.showEmptyNewDescriptionPrompt();
+                continue;
+            }
+            break;
+        }
         getTask(index).setDescription(newDescription);
         ui.showEditConfirmationMessage();
     }
 
-    public void editLessonTime(int index, Ui ui) throws ParserException {
-        Parser parser = new Parser();
-        LocalDateTime[] times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
-        getTask(index).setStart(times[INDEX_START]);
-        getTask(index).setEnd(times[INDEX_END]);
+    public void editModuleCode(int index, Ui ui, String moduleCode) {
+        int actualIndex = taskMap.get(index);
+        getTask(actualIndex).setDescription(moduleCode);
         ui.showEditConfirmationMessage();
     }
 
-    public void editEventTime(int index, Ui ui) throws ParserException {
-        LocalDateTime[] times;
-        Parser parser = new Parser();
-        times = parser.parseNewTimeInput(ui, ui.readCommand(), 2);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
-        getTask(index).setStart(times[INDEX_START]);
-        getTask(index).setEnd(times[INDEX_END]);
+    public void editLessonTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = taskMap.get(displayIndex);
+        getTask(actualIndex).setStart(times[INDEX_START]);
+        getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void editDeadlineTime(int index, Ui ui) throws ParserException {
-        LocalDateTime[] times;
-        Parser parser = new Parser();
-        times = parser.parseNewTimeInput(ui, ui.readCommand(), 1);
-        if (times[0] == null) {
-            logger.log(Level.SEVERE, "Time input is not in the correct format");
-            throw new ParserException();
-        }
-        getTask(index).setStart(times[0]);
+    public void editEventTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = taskMap.get(displayIndex);
+        getTask(actualIndex).setStart(times[INDEX_START]);
+        getTask(actualIndex).setEnd(times[INDEX_END]);
         ui.showEditConfirmationMessage();
     }
 
-    public void deleteTask(int index, Ui ui) {
+    public void editDeadlineTime(int displayIndex, Ui ui, LocalDateTime[] times) {
+        int actualIndex = taskMap.get(displayIndex);
+        getTask(actualIndex).setStart(times[0]);
+        ui.showEditConfirmationMessage();
+    }
+
+    public void deleteTask(int displayIndex, Ui ui) {
         try {
-            taskList.remove(index);
+            int actualIndex = taskMap.get(displayIndex);
+            taskList.remove(actualIndex);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
-            ui.showInvalidNumberMessage();
+            ui.showInvalidNumberError();
         } catch (NumberFormatException e) {
             logger.log(Level.SEVERE, "Input is not a valid number");
-            ui.showNumberFormatMessage();
+            ui.showNumberFormatError();
         }
     }
 
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
+        ui.showMatchingTasksPrompt(type);
         logger.log(Level.INFO, "Start of printing all matching " + type);
-        indexOfLastMatch = 0;
+        taskMap = new HashMap<>();
+        displayIndexOfLastMatch = 0;
+        int firstDisplayIndex = 0;
         boolean noMatches = true;
         for (int i = 0; i < getTaskCount(); i++) {
             if (checkMatchingTasks(i, type, description)) {
+                firstDisplayIndex++;
                 String task = getTask(i).toString();
-                ui.printMatchingTask(i + 1, task);
-                indexOfLastMatch = i;
+                ui.printMatchingTask(firstDisplayIndex, task);
+                displayIndexOfLastMatch = firstDisplayIndex;
+
+                taskMap.put(firstDisplayIndex, i);
                 noMatches = false;
             }
         }
@@ -170,7 +221,7 @@ public class TaskList {
     }
 
     public void checkForIndexOutOfBounds(int userInput) {
-        if (userInput > indexOfLastMatch || userInput < 0) {
+        if (userInput > displayIndexOfLastMatch || userInput <= 0) {
             logger.log(Level.SEVERE, "Index provided out of bounds");
             throw new IndexOutOfBoundsException();
         }

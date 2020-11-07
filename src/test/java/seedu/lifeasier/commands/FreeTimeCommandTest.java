@@ -3,12 +3,14 @@ package seedu.lifeasier.commands;
 import org.junit.jupiter.api.Test;
 import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
-import seedu.lifeasier.parser.Parser;
-import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.model.tasks.Event;
 import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
 import seedu.lifeasier.model.tasks.TaskHistory;
 import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
+import seedu.lifeasier.parser.Parser;
+import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.ByteArrayOutputStream;
@@ -85,15 +87,15 @@ class FreeTimeCommandTest {
     }
 
     @Test
-    void executeFreeTimeCommand_freeDay_6HoursFree() {
+    void executeFreeTimeCommand_freeDay_6HoursFree() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         TaskList tasks = new TaskList();
-        FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
-        Parser parser = new Parser();
         NoteHistory noteHistory = new NoteHistory();
+        FileStorage storage = new FileStorage("saveFileTasks.txt",
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
+        Parser parser = new Parser();
         TaskHistory taskHistory = new TaskHistory();
 
         FreeTimeCommand command = new FreeTimeCommand();
@@ -111,26 +113,28 @@ class FreeTimeCommandTest {
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals((ui.colourTextGreen("You have 6 hours of free time between 12:00 and 18:00!")
-                + System.lineSeparator()
-                + ui.colourTextCyan("You can try scheduling something in this time!") + System.lineSeparator()
+        assertEquals((System.lineSeparator()
                 + "==================================================================================================="
-                + "============" + System.lineSeparator()),
-                outContent.toString());
+                + "============" + System.lineSeparator()
+                + ui.colourTextGreen("You have 6 hours of free time between 12:00 and 18:00!")
+                + System.lineSeparator()
+                + ui.colourTextGreen("You can try scheduling something in this time!") + System.lineSeparator()
+                + "==================================================================================================="
+                + "============" + System.lineSeparator() + System.lineSeparator()), outContent.toString());
 
         restoreStreams();
     }
 
     @Test
-    void executeFreeTimeCommand_busyDay_0HoursFree() {
+    void executeFreeTimeCommand_busyDay_0HoursFree() throws TaskDuplicateException, TaskPastException {
         setUpStreams();
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         TaskList tasks = new TaskList();
-        FileStorage storage = new FileStorage("saveFileTasks.txt",
-                "saveFileNotes.txt", ui, notes, tasks);
-        Parser parser = new Parser();
         NoteHistory noteHistory = new NoteHistory();
+        FileStorage storage = new FileStorage("saveFileTasks.txt",
+                "saveFileNotes.txt", ui, notes, tasks, noteHistory);
+        Parser parser = new Parser();
         TaskHistory taskHistory = new TaskHistory();
 
         FreeTimeCommand command = new FreeTimeCommand();
@@ -142,16 +146,18 @@ class FreeTimeCommandTest {
         LocalDateTime start2 = today.atTime(14, 0);
         LocalDateTime end2 = today.atTime(23, 30);
 
-
         tasks.addEvent("first event", start1, end1, 0);
         tasks.addEvent("second event", start2, end2, 0);
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals((ui.colourTextRed("Unfortunately you have no free time today!") + System.lineSeparator()
-                + ui.colourTextGreen("You might want to relax a little!") + System.lineSeparator()
+        assertEquals((System.lineSeparator()
                 + "==================================================================================================="
-                + "============" + System.lineSeparator()), outContent.toString());
+                + "============" + System.lineSeparator()
+                + ui.colourTextRed("Unfortunately you have no free time today!") + System.lineSeparator()
+                + ui.colourTextRed("You might want to relax a little!") + System.lineSeparator()
+                + "==================================================================================================="
+                + "============" + System.lineSeparator() + System.lineSeparator()), outContent.toString());
 
         restoreStreams();
     }
