@@ -59,6 +59,7 @@ public class Ui {
             + "addLesson /code CS2113 /to 18:00" + ANSI_RESET + " are valid commands\n"
             + " * All dates are in the " + ANSI_CYAN + "DD-MM-YY" + ANSI_RESET + " and times in the "
             + ANSI_CYAN + "HH:MM" + ANSI_RESET + " format\n"
+            + " * For tasks that end at midnight, enter the time as 24:00\n"
             + "\n"
             + ANSI_CYAN + "COMMANDS\n" + ANSI_RESET
             + "******************************************************************************************************"
@@ -89,10 +90,12 @@ public class Ui {
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Edits a selected note\n"
             + "deleteNotes TITLE ------------------------------------------------------------------ "
             + ANSI_CYAN + "[P]" + ANSI_RESET + "Deletes a selected note\n"
-            + "undo TYPE ----------------------------------------------------------"
-            + " Undoes the last edit/deleted task or notes\n"
-            + "display KEYWORD ------------------------------------------------------"
-            + " Displays either weekly or daily schedule\n"
+            + "undo TYPE ------------------------------------------------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET
+            + "Undoes the last edit/deleted task or notes\n"
+            + "display KEYWORD --------------------------------------------------- "
+            + ANSI_CYAN + "[P]" + ANSI_RESET
+            + "Displays either weekly or daily schedule\n"
             + "freeTime ------------------------------------------------------"
             + " Tells you your longest block of free time today\n"
             + "sleepTime -----------------------------------------------------------"
@@ -484,10 +487,8 @@ public class Ui {
 
     public void showEmptyDescriptionError() {
         printBlankLine();
-        printThickSeparator();
-        System.out.println(colourTextRed("Empty description! =O"));
-        printThickSeparator();
-        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("Your input is empty. Please reenter your input:"));
     }
 
     public void showNoMatchesError(String type) {
@@ -669,7 +670,7 @@ public class Ui {
     public void showAddDateTimePrompt() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("What is the date and time? (Enter in the format: DD-MM-YY HH:MM"));
+        System.out.println(colourTextCyan("What is the date and time? (Enter in the format: DD-MM-YY HH:MM)"));
     }
 
     public void showAddRecurrencesPrompt() {
