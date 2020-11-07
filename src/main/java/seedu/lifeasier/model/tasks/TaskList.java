@@ -257,7 +257,7 @@ public class TaskList {
 
         for (Task task : taskList) {
 
-            if ((task.isHappeningBefore(day)) && (task.getRecurrences() == 0)) {
+            if (((task.isHappeningBefore(day)) && (task.getRecurrences() == 0)) || task.getRecurrences() < 0) {
                 tasksToBeRemoved.add(task);
 
             } else if ((task.isHappeningBefore(day)) && (task.getRecurrences() > 0)) {
