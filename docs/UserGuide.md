@@ -90,9 +90,9 @@ The following section expands on the features available for you to use in LifEas
 * Items in square brackets are optional e.g `[TITLE]`
 * **Some** commands can be filled in **partially** and still work. These commands will be stated in the detailed command information below.
 * Command parameters **must** follow the **order stated**, including partial commands. E.g if the command states `addEvent NAME /time START /to END`,  `addEvent NAME /to END /time START` will **NOT** be accepted.
-* However, parameters can be missing, and LifEasier will prompt you for the missing parameters.
 * `DATE` parameters have the format of **DD-MM-YY**.
 * `TIME` parameters follow a 24-hour clock, and have the format of **HH:mm**.
+* Currently, **LifEasier** does not allow tasks to be added that span multiple days. However, this feature will be added in a future version of **LifEasier**.
 
 ### 3.1 Viewing Help: `help`
 This command shows you the available commands and their formats.
@@ -159,6 +159,7 @@ Format: `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES`
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
 * This command accepts **partial commands**. E.g `addLesson /code CS2113 /to 18:00` is a valid command.
 * The program will prompt for the remaining missing parameters when a partial command is input.
+* For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
 ###### Examples:
 
@@ -187,6 +188,7 @@ Format: `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
 * This command accepts **partial commands**. E.g `addEvent Concert /date 05-11-20` is a valid command.
 * The program will prompt for the remaining missing parameters when a partial command is input.
+* For events that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
 ###### Examples:
 
@@ -240,6 +242,7 @@ Format: `editLesson [CODE]`
 * The system will prompt you to choose to edit the `CODE` or the `START/END` time. 
 * If you choose to edit time, System will prompt to input new `TIME` in the format of 
 “`/date DATE /from START /to END`”
+* For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
 ###### Examples:
 
@@ -272,6 +275,7 @@ will be printed.
 * The system will prompt you to choose to edit the `NAME` or the `START/END` time. 
 * If you choose to edit time, System will prompt to input new `TIME` in the format of 
 “`/date DATE /from START /to END`”
+* For events that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
 ###### Examples:
 
@@ -704,7 +708,7 @@ the save files if necessary.
 
 In the event of **corrupted data** arising from either system errors or incorrect formats from you while editing the save file,
 **LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. If you execute
-an **add, delete or edit** action, all corrupted data that has not been corrected will be **removed** from the save file. 
+an **add, delete or edit** action, all corrupted data that has not been corrected will be **permanently removed** from the save file. 
 
 If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
 where you can access your archived files.
@@ -723,10 +727,10 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 
 **The following FAQ section answers some common questions that you may have about the LifEasier application.**
 
-**Q: Can I use my LifEasier saves on another computer?**
+**Q1: Can I use my LifEasier saves on another computer?**
 **A:** Yes you can. You can transfer your files from one computer to another, and place them in a folder called “LifEasierSaves”. Then, run `LifEasier.jar` from the same folder as “LifEasierSaves”. Your saves should be loaded into LifEasier. As long as the “LifEasierSaves” folder is in the same folder as where the LifEasier.jar is being run, the program will read your saved information as per normal.
 
-**Q: Can I edit the information in the save files directly?**
+**Q2: Can I edit the information in the save files directly?**
 **A:** Yes, it is possible but it is not recommended to do so. Directly modifying the save files may result in incorrectly formatted data to be passed into the **LifEasier** program on the next launch, resulting in missing data.
 
 
