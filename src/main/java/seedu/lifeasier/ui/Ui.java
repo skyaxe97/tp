@@ -406,10 +406,8 @@ public class Ui {
 
     public void showInvalidNumberError() {
         printBlankLine();
-        printThickSeparator();
-        System.out.println(colourTextRed("The number you inputted is invalid! Please try again."));
-        printThickSeparator();
-        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("The number you inputted is invalid! Please enter a valid number:"));
     }
 
     public void showNoTitleFoundError() {
@@ -433,8 +431,11 @@ public class Ui {
     }
 
     public void showSaveDataMissingError() {
+        printBlankLine();
+        printThickSeparator();
         System.out.println(colourTextRed("Encountered an error while reading from the save file "
                 + "- Data missing/corrupted"));
+        printBlankLine();
     }
 
     public void showInvalidInputToEditDeadlineTime() {
@@ -447,7 +448,10 @@ public class Ui {
     }
 
     public void showIndeterminableTaskError() {
+        printThickSeparator();
         System.out.println(colourTextRed("Something went wrong while determining the tasks"));
+        printBlankLine();
+        showReadErrorHandlerError();
     }
 
     public void showParseUnknownCommandError() {
@@ -778,10 +782,9 @@ public class Ui {
 
     public void showIndexOutOfBoundsMessage() {
         printBlankLine();
-        printThickSeparator();
-        System.out.println("The number you have input is out of bounds!");
-        printThickSeparator();
-        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("The number you have input is out of bounds, please enter a "
+                + "valid index:"));
     }
 
     public void showInvalidTimeLogicMessage() {
@@ -817,15 +820,12 @@ public class Ui {
     }
 
     public void showReadErrorHandlerError() {
-        printBlankLine();
-        printThickSeparator();
         System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
                 + "read. The rest of your data will continue to be loaded"));
         System.out.println(colourTextRed("This is done to protect your stored data\n"));
         System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
                 + "recommended to undo those changes"));
         printThickSeparator();
-        printBlankLine();
     }
 
     public void showSaveDelimiterError() {
@@ -833,16 +833,18 @@ public class Ui {
         printThickSeparator();
         System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
                 + " in the save file"));
-        printThickSeparator();
         printBlankLine();
     }
 
     public void showLocalDateTimeParseError() {
+        printBlankLine();
+        printThickSeparator();
         System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
-        System.out.println(colourTextCyan("The task will continue to be added with a default date to "
+        System.out.println(colourTextRed("The task will continue to be added with a default date to "
                 + "preserve your data"));
-        System.out.println(colourTextCyan("You can edit the date and times directly from the save file"));
-        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.println(colourTextRed("You can edit the date and times directly from the save file"));
+        printThickSeparator();
+        printBlankLine();
     }
 
     public void showInvalidModuleCodePrompt() {
