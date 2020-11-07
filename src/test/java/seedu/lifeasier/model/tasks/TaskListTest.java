@@ -1,13 +1,16 @@
 package seedu.lifeasier.model.tasks;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import seedu.lifeasier.ui.Ui;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,12 +18,29 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TaskListTest {
-    TaskList taskList;
-    Ui ui;
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
+    private final InputStream originalIn = System.in;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static final LocalDateTime SAMPLE1 = LocalDateTime.parse("12-12-20 12:00", DATE_TIME_FORMATTER);
     private static final LocalDateTime SAMPLE2 = LocalDateTime.parse("12-12-20 13:00", DATE_TIME_FORMATTER);
+    private static final LocalDateTime SAMPLE3 = LocalDateTime.parse("12-12-20 14:00", DATE_TIME_FORMATTER);
+
+    public void setUpStreams(String input) {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+    }
+
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
+        System.setIn(originalIn);
+    }
 
     @Test
     void name() {
@@ -28,28 +48,28 @@ class TaskListTest {
 
     @Test
     void getTaskCount_returnTaskCountAsInt() {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         taskList.addTask(new Event("EXAMPLE", SAMPLE1, SAMPLE2));
         assertEquals(1, taskList.getTaskCount());
     }
 
     @Test
     void getTask_outOfBoundIndex_throwsException() {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         taskList.addTask(new Event("EXAMPLE", SAMPLE1, SAMPLE2));
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.getTask(2));
     }
 
     @Test
     void getTask_invalidIndex_throwsException() {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         taskList.addTask(new Event("EXAMPLE", SAMPLE1, SAMPLE2));
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.getTask(-1));
     }
 
     @Test
     void updateTasks_outdatedRecurringLesson_movedOneWeek() {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         String moduleCode = "cg1111";
 
         LocalDateTime start = LocalDateTime.of(20, 11, 27, 12, 0);
@@ -69,7 +89,7 @@ class TaskListTest {
 
     @Test
     void updateTasks_outdatedTasks_deleted() {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
 
         String moduleCode = "cg1111";
         LocalDateTime start1 = LocalDateTime.of(21, 11, 27, 12, 0);
@@ -98,7 +118,7 @@ class TaskListTest {
 
     @Test
     void getTasksFromOneDay_sameDayTasks_returned() {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
 
         String moduleCode = "cg1111";
         LocalDateTime start1 = LocalDateTime.of(20, 11, 27, 12, 0);
@@ -127,7 +147,7 @@ class TaskListTest {
 
     @Test
     void getTaskList_returnsFullTaskList() {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         taskList.addTask(new Event("EXAMPLE", SAMPLE1, SAMPLE2));
         assertNotNull(taskList.getTaskList());
     }
@@ -135,7 +155,7 @@ class TaskListTest {
 
     @Test
     void addEvent() throws TaskDuplicateException, TaskPastException {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
         Task event = new Event("Event", SAMPLE1, SAMPLE2);
         assertEquals(taskList.getTask(0).toString(), event.toString());
@@ -143,7 +163,7 @@ class TaskListTest {
 
     @Test
     void addLesson() throws TaskDuplicateException, TaskPastException {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         taskList.addLesson("Lesson", SAMPLE1, SAMPLE2, 0);
         Task lesson = new Lesson("Lesson", SAMPLE1, SAMPLE2);
         assertEquals(taskList.getTask(0).toString(), lesson.toString());
@@ -151,43 +171,161 @@ class TaskListTest {
 
     @Test
     void addDeadline() throws TaskDuplicateException, TaskPastException {
-        taskList = new TaskList();
+        TaskList taskList = new TaskList();
         taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
         Task event = new Event("Event", SAMPLE1, SAMPLE2);
         assertEquals(taskList.getTask(0).toString(), event.toString());
     }
 
     @Test
-    void editTaskDescription() throws TaskPastException, TaskDuplicateException {
-        taskList = new TaskList();
-        ui = new Ui();
-        InputStream sysInBackup = System.in;
-        InputStream in = new ByteArrayInputStream("newDescription".getBytes());
-        System.setIn(in);
-        HashMap<Integer,Integer> taskMap = new HashMap<>();
+    void editTaskDescription_validInput_taskDescriptionEdited() throws TaskPastException, TaskDuplicateException,
+            TaskNotFoundException {
+        TaskList taskList = new TaskList();
+
+        String newDescription = "newDescription";
+        setUpStreams(newDescription);
+        Ui ui = new Ui();
 
         taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
-        taskMap.put(1,0);
+        taskList.printMatchingTasks("event", "", ui);
         taskList.editTaskDescription(1, ui);
         Task newEvent = new Event("newDescription", SAMPLE1, SAMPLE2);
         assertEquals(newEvent.toString(), taskList.getTask(0).toString());
-        System.setIn(sysInBackup);
+
+        restoreStreams();
     }
 
     @Test
-    void editLessonTime() {
+    void editTaskDescription_emptyInput_promptForAnotherInput() throws TaskPastException, TaskDuplicateException,
+            TaskNotFoundException {
+        TaskList taskList = new TaskList();
+
+        String newDescription = "\nnewDescription";
+        setUpStreams(newDescription);
+        Ui ui = new Ui();
+
+
+        Task originalEvent = new Event("Event", SAMPLE1, SAMPLE2, 0);
+        Task copyOriginalEvent = new Event("Event", SAMPLE1, SAMPLE2, 0);
+        taskList.addTask(originalEvent);
+        taskList.printMatchingTasks("event", "", ui);
+        taskList.editTaskDescription(1, ui);
+
+        assertEquals(System.lineSeparator()
+                + Ui.THIN_SEPARATOR + System.lineSeparator()
+                + ui.colourTextCyan("Here are all your matching events:") + System.lineSeparator()
+                + "1. " + copyOriginalEvent + System.lineSeparator() + System.lineSeparator()
+                + Ui.THIN_SEPARATOR + System.lineSeparator()
+                + ui.colourTextCyan("Your new description cannot be empty. Please try again!")
+                + System.lineSeparator() + System.lineSeparator()
+                + Ui.THICK_SEPARATOR + System.lineSeparator()
+                + ui.colourTextGreen("Your edit has been saved.") + System.lineSeparator()
+                + Ui.THICK_SEPARATOR + System.lineSeparator()
+                + System.lineSeparator(),
+                outContent.toString());
+
+        restoreStreams();
     }
 
     @Test
-    void editEventTime() {
+    void editModuleCode_validInput_lessonModuleCodeEdited() throws TaskPastException, TaskDuplicateException,
+            TaskNotFoundException {
+        TaskList taskList = new TaskList();
+
+        String newDescription = "CS2040C";
+        setUpStreams(newDescription);
+        Ui ui = new Ui();
+
+        taskList.addLesson("CS1010", SAMPLE1, SAMPLE2, 0);
+        taskList.printMatchingTasks("lesson", "", ui);
+        taskList.editModuleCode(1, ui, newDescription);
+        Task newLesson = new Lesson("CS2040C", SAMPLE1, SAMPLE2);
+        assertEquals(newLesson.toString(), taskList.getTask(0).toString());
+
+        restoreStreams();
     }
 
     @Test
-    void editDeadlineTime() {
+    void editLessonTime_validTimeInput_lessonTimeEdited() throws TaskNotFoundException, TaskPastException,
+            TaskDuplicateException {
+        TaskList taskList = new TaskList();
+
+        LocalDateTime[] newTimes = new LocalDateTime[2];
+        newTimes[0] = SAMPLE1;
+        newTimes[1] = SAMPLE2;
+
+        setUpStreams("");
+        Ui ui = new Ui();
+        taskList.addLesson("CS1231", SAMPLE2, SAMPLE3, 0);
+        taskList.printMatchingTasks("lesson", "", ui);
+        taskList.editLessonTime(1, ui, newTimes);
+
+        Assertions.assertAll(
+                () -> assertEquals(taskList.getTask(0).getStart(), SAMPLE1),
+                () -> assertEquals(taskList.getTask(0).getEnd(), SAMPLE2)
+        );
+
+        restoreStreams();
+    }
+
+
+    @Test
+    void editEventTime_validTimeInput_eventTimeEdited() throws TaskNotFoundException, TaskPastException,
+            TaskDuplicateException {
+        TaskList taskList = new TaskList();
+
+        LocalDateTime[] newTimes = new LocalDateTime[2];
+        newTimes[0] = SAMPLE1;
+        newTimes[1] = SAMPLE2;
+
+        setUpStreams("");
+        Ui ui = new Ui();
+        taskList.addEvent("Concert", SAMPLE2, SAMPLE3, 0);
+        taskList.printMatchingTasks("event", "", ui);
+        taskList.editEventTime(1, ui, newTimes);
+
+        Assertions.assertAll(
+                () -> assertEquals(taskList.getTask(0).getStart(), SAMPLE1),
+                () -> assertEquals(taskList.getTask(0).getEnd(), SAMPLE2)
+        );
+
+        restoreStreams();
     }
 
     @Test
-    void deleteTask() {
+    void editDeadlineTime_validTimeInput_deadlineTimeEdited() throws TaskNotFoundException, TaskPastException,
+            TaskDuplicateException {
+        TaskList taskList = new TaskList();
+
+        LocalDateTime[] newTimes = new LocalDateTime[2];
+        newTimes[0] = SAMPLE1;
+
+        setUpStreams("");
+        Ui ui = new Ui();
+        taskList.addDeadline("Homework", SAMPLE2, 0);
+        taskList.printMatchingTasks("deadline", "", ui);
+        taskList.editDeadlineTime(1, ui, newTimes);
+
+        assertEquals(taskList.getTask(0).getStart(), SAMPLE1);
+
+        restoreStreams();
+    }
+
+    @Test
+    void deleteTask_validIndex_taskDeleted() throws TaskPastException, TaskDuplicateException,
+            TaskNotFoundException {
+        TaskList taskList = new TaskList();
+
+        setUpStreams("");
+        Ui ui = new Ui();
+
+        taskList.addDeadline("Homework", SAMPLE2, 0);
+        taskList.printMatchingTasks("deadline", "", ui);
+        taskList.deleteTask(1, ui);
+
+        assert(taskList.getTaskList().isEmpty());
+
+        restoreStreams();
     }
 
     @Test
@@ -196,6 +334,8 @@ class TaskListTest {
 
     @Test
     void checkForIndexOutOfBounds() {
+        TaskList taskList = new TaskList();
+        assertThrows(IndexOutOfBoundsException.class, () -> taskList.checkForIndexOutOfBounds(-1));
     }
 
     @Test

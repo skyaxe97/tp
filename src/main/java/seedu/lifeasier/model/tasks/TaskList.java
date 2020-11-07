@@ -22,7 +22,7 @@ public class TaskList {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
     private int displayIndexOfLastMatch = 0;
-    HashMap<Integer,Integer> taskMap;
+    private HashMap<Integer,Integer> taskMap;
 
     public TaskList() {
         taskList = new ArrayList<>();
@@ -178,16 +178,9 @@ public class TaskList {
     }
 
     public void deleteTask(int displayIndex, Ui ui) {
-        try {
-            int actualIndex = taskMap.get(displayIndex);
-            taskList.remove(actualIndex);
-        } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.SEVERE, "Index provided out of bounds");
-            ui.showIndexOutOfBoundsError();
-        } catch (NumberFormatException e) {
-            logger.log(Level.SEVERE, "Input is not a valid number");
-            ui.showNumberFormatError();
-        }
+        int actualIndex = taskMap.get(displayIndex);
+        taskList.remove(actualIndex);
+
     }
 
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
