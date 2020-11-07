@@ -53,7 +53,7 @@ public class EditNotesCommand extends Command {
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
+            NoteCommandFunctions.checkForIndexOutOfBounds(noteNumber + 1, noteMatches);
 
             System.out.println(notes.get(noteNumber).toString());
             ui.showEditWhichPartMessage();
