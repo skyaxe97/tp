@@ -504,7 +504,7 @@ Format: addNotes [TITLE]
 
 - Adds and stores a note tagged with  TITLE.
 - If TITLE is not provided, LifEasier will prompt you for a notes title.
-- The word limit of title or description follows the maximum length of String allowed in Java.
+- The word limit of title or description follows the maximum length of input allowed in Command Prompt.
 
 ###### Example:
 
@@ -603,7 +603,7 @@ If no TITLE is inputed, a numbered list of all notes will be displayed.
 displayed in a list for selection.
 * Entering “T” would show the current title and prompt for a new title. Entering “D” would 
 show the current description and prompt for a new description.
-* The word limit of title or description follows the maximum length of String allowed in Java.
+* The word limit of title or description follows the maximum length of input allowed in Command Prompt.
 
 ###### Example:
 
