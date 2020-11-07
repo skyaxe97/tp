@@ -1,10 +1,12 @@
 package seedu.lifeasier.model.tasks;
 
 import org.junit.jupiter.api.Test;
+import seedu.lifeasier.ui.Ui;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TaskListTest {
     TaskList taskList;
+    Ui ui;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
     private static final LocalDateTime SAMPLE1 = LocalDateTime.parse("12-12-20 12:00", DATE_TIME_FORMATTER);
@@ -155,7 +158,20 @@ class TaskListTest {
     }
 
     @Test
-    void editTaskDescription() {
+    void editTaskDescription() throws TaskPastException, TaskDuplicateException {
+        taskList = new TaskList();
+        ui = new Ui();
+        InputStream sysInBackup = System.in;
+        InputStream in = new ByteArrayInputStream("newDescription".getBytes());
+        System.setIn(in);
+        HashMap<Integer,Integer> taskMap = new HashMap<>();
+
+        taskList.addEvent("Event", SAMPLE1, SAMPLE2, 0);
+        taskMap.put(1,0);
+        taskList.editTaskDescription(1, ui);
+        Task newEvent = new Event("newDescription", SAMPLE1, SAMPLE2);
+        assertEquals(newEvent.toString(), taskList.getTask(0).toString());
+        System.setIn(sysInBackup);
     }
 
     @Test
