@@ -776,7 +776,7 @@ public class Ui {
         System.out.println(index + ". " + task);
     }
 
-    public void showIndexOutOfBoundsMessage() {
+    public void showIndexOutOfBoundsError() {
         printBlankLine();
         printThickSeparator();
         System.out.println("The number you have input is out of bounds!");
