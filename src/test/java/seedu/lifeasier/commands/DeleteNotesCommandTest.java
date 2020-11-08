@@ -11,7 +11,6 @@ import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
-import javax.rmi.ssl.SslRMIClientSocketFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -77,9 +76,9 @@ class DeleteNotesCommandTest {
         new DeleteNotesCommand("dogs").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("The title you inputted is not found...") + System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
+                    + THICK_SEPARATOR + System.lineSeparator()
+                    + ui.colourTextRed("The title you inputted is not found...") + System.lineSeparator()
+                    + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
         restoreStreams();
     }
 
@@ -98,14 +97,7 @@ class DeleteNotesCommandTest {
         Ui ui = new Ui();
         new DeleteNotesCommand("cats").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals(note + System.lineSeparator() + System.lineSeparator()
-                + THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
-                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("OK! Note deleted!") + System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
-                + ui.colourTextRed("Something went wrong while saving your data...")
-                + System.lineSeparator(), outContent.toString());
+        assertEquals(note1.toString(), notes.get(0).toString());
 
         restoreStreams();
     }
@@ -124,14 +116,7 @@ class DeleteNotesCommandTest {
         Ui ui = new Ui();
         new DeleteNotesCommand("cats").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals(note + System.lineSeparator() + System.lineSeparator()
-                + THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
-                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("OK! Note not deleted!") + System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
-                + ui.colourTextRed("Something went wrong while saving your data...")
-                + System.lineSeparator(), outContent.toString());
+        assertEquals(note.toString(), notes.get(0).toString());
 
         restoreStreams();
     }
@@ -151,20 +136,8 @@ class DeleteNotesCommandTest {
         Ui ui = new Ui();
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
-        int i = 1;
 
-        assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Multiple matches found! Please select the one you are looking for:")
-                + System.lineSeparator() + i++ + ". " + note.getTitle() + "\n"
-                + System.lineSeparator() + i + ". " + note1.getTitle() + "\n"
-                + System.lineSeparator() + note + System.lineSeparator()
-                + System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
-                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("OK! Note deleted!") + System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
-                + ui.colourTextRed("Something went wrong while saving your data...")
-                + System.lineSeparator(), outContent.toString());
+        assertEquals(note1.toString(), notes.get(0).toString());
         restoreStreams();
     }
 
@@ -183,20 +156,8 @@ class DeleteNotesCommandTest {
         Ui ui = new Ui();
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
-        int i = 1;
 
-        assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Please select the notes you want to delete:")
-                + System.lineSeparator() + i++ + ". " + note.getTitle()
-                + System.lineSeparator() + i + ". " + note1.getTitle() + System.lineSeparator()
-                + System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator() + note + System.lineSeparator()
-                + System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
-                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("OK! Note deleted!") + System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
-                + ui.colourTextRed("Something went wrong while saving your data...")
-                + System.lineSeparator(), outContent.toString());
+        assertEquals(note1.toString(), notes.get(0).toString());
         restoreStreams();
     }
 }

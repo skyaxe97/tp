@@ -27,12 +27,6 @@ class AddNotesCommandTest {
     private Parser parser = new Parser();
     private TaskHistory taskHistory = new TaskHistory();
 
-    public static final String THICK_SEPARATOR = "===================================================================="
-            + "===========================================";
-
-    public static final String THIN_SEPARATOR  = "--------------------------------------------------------------------"
-            + "-------------------------------------------";
-
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final InputStream originalIn = System.in;
@@ -71,13 +65,7 @@ class AddNotesCommandTest {
         Ui ui = new Ui();
         AddNotesCommand command = new AddNotesCommand("Test Title");
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
-        assertEquals(System.lineSeparator() + THIN_SEPARATOR
-                        + System.lineSeparator() + ui.colourTextCyan("Alright! Please fill in your notes:")
-                        + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR
-                        + System.lineSeparator() + ui.colourTextGreen("Ok! I've taken note of this note!")
-                        + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
-                        + ui.colourTextRed("Something went wrong while saving your data...")
-                        + System.lineSeparator(), outContent.toString());
+        assertEquals("Title: " + "Test Title" + "\n\n" + input + "\n", notes.get(0).toString());
 
         restoreStreams();
     }
@@ -91,15 +79,7 @@ class AddNotesCommandTest {
         Ui ui = new Ui();
         AddNotesCommand command = new AddNotesCommand("");
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
-        assertEquals(System.lineSeparator() + THIN_SEPARATOR
-                        + System.lineSeparator() + ui.colourTextCyan("Please put in a title:")
-                        + System.lineSeparator() + System.lineSeparator() + THIN_SEPARATOR
-                        + System.lineSeparator() + ui.colourTextCyan("Alright! Please fill in your notes:")
-                        + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR
-                        + System.lineSeparator() + ui.colourTextGreen("Ok! I've taken note of this note!")
-                        + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
-                        + ui.colourTextRed("Something went wrong while saving your data...")
-                        + System.lineSeparator(), outContent.toString());
+        assertEquals("Title: " + "Test Title" + "\n\n" + "Test Description" + "\n", notes.get(0).toString());
 
         restoreStreams();
     }
