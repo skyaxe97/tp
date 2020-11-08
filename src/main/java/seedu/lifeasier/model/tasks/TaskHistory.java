@@ -79,11 +79,11 @@ public class TaskHistory {
      * Returns a copy of the Task object before it is edited.
      *
      * @param tasks represents the TaskList object.
-     * @param userIndexChoice the index of the Task object the user wants to edit.
+     * @param userListNumChoice the index of the Task object the user wants to edit.
      *
      */
-    public Task getCurrCopyOfTaskToEdit(TaskList tasks, int userIndexChoice) {
-        Task task = tasks.getTask(userIndexChoice);
+    public Task getCurrCopyOfTaskToEdit(TaskList tasks, int userListNumChoice) {
+        Task task = tasks.getTask(tasks.getActualIndex(userListNumChoice));
 
         int taskEditNumber = task.getEditNumber();
         int editID;
@@ -103,11 +103,11 @@ public class TaskHistory {
      * Returns a copy of the Task object before it is deleted.
      *
      * @param tasks represents the TaskList object.
-     * @param userIndexChoice the index of the Task object the user wants to delete.
+     * @param userListNumChoice the index of the Task object the user wants to delete.
      *
      */
-    public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userIndexChoice) {
-        Task task = tasks.getTask(userIndexChoice);
+    public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userListNumChoice) {
+        Task task = tasks.getTask(tasks.getActualIndex(userListNumChoice));
 
         deletePrevCopiesOfThisTask(task);
 
