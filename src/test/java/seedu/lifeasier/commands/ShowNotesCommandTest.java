@@ -119,7 +119,7 @@ class ShowNotesCommandTest {
         assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
                 + ui.colourTextCyan("Multiple matches found! Please select the one you are looking for:")
                 + System.lineSeparator() + i++ + ". " + note.getTitle() + "\n"
-                + System.lineSeparator()+ i + ". " + note1.getTitle() + "\n"
+                + System.lineSeparator() + i + ". " + note1.getTitle() + "\n"
                 + System.lineSeparator()
                 + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextGreen("Here is your note:") + System.lineSeparator()
@@ -131,7 +131,6 @@ class ShowNotesCommandTest {
     @Test
     void testNoTitleInput_emptyTitle_allNotes() {
         setUpStreams();
-        int i = 1;
         Note note = new Note("cats", "i like cats");
         Note note1 = new Note("catJAM", "catjamming");
         NoteList notes = new NoteList();
@@ -144,6 +143,8 @@ class ShowNotesCommandTest {
         Ui ui = new Ui();
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+        int i = 1;
+
         assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
                 + ui.colourTextCyan("Please select the notes you want to view:")
                 + System.lineSeparator() + i++ + ". " + note.getTitle()

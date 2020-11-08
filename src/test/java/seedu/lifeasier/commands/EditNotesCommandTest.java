@@ -88,7 +88,6 @@ class EditNotesCommandTest {
         setUpStreams();
         Note note = new Note("cats", "i like cats");
         Note note1 = new Note("dogs", "dogs are awesome");
-        Note noteToCompare = new Note("cats", "i like cats");
         NoteList notes = new NoteList();
         notes.add(note);
         notes.add(note1);
@@ -97,6 +96,7 @@ class EditNotesCommandTest {
         System.setIn(in);
         Ui ui = new Ui();
         new EditNotesCommand("cats").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+        Note noteToCompare = new Note("cats", "i like cats");
 
         assertEquals(noteToCompare + System.lineSeparator() + System.lineSeparator()
                 + THICK_SEPARATOR + System.lineSeparator()
