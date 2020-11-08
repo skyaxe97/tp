@@ -78,11 +78,11 @@ Hello! What can I do for you today?
 _Figure 2-1: LifEasier’s welcome screen_
 
 1. You are now ready to use **LifEasier.** Type commands into the terminal window and press enter to execute the command. E.g Type  help and press enter to bring up the list of  available commands.
-1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or you have entered invalid information.
+1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or when you have entered invalid information.
 1. Refer to the Features section below to find more details on available commands.
 
 ## 3.0 User Features
-The following section expands on the features available for you to use in LifEasier. The explanation for each feature includes the format to be followed, at least one example, and some further explanation and notes if necessary.
+The following section expands on the features available for you to use in **LifEasier**. The explanation for each feature includes the format to be followed, at least one example, and some further explanation and notes if necessary.
 
 ##### ![Notes](images/UserGuide/post-it.png) Notes on General Command Format:
 
@@ -336,7 +336,7 @@ longer need to take note of.
 
 * Tasks refer to lessons, deadlines and events.
 
-Format: `deleteTask /type TYPE /name NAME`
+Format: `deleteTask /type TYPE [/name NAME]`
 
 ##### ![Notes](images/UserGuide/post-it.png) Notes on deleteTask Command Format:
 
@@ -711,7 +711,7 @@ In the event of **corrupted data** arising from either system errors or incorrec
 an **add, delete or edit** action, all corrupted data that has not been corrected will be **permanently removed** from the save file. 
 
 If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
-where you can access your archived files.
+where you can access your archived files. Archived notes will not show up in **LifEasier** anymore.
 
 ### 4.2 Recurring Tasks and Auto Deletion
 
@@ -728,9 +728,11 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 **The following FAQ section answers some common questions that you may have about the LifEasier application.**
 
 **Q1: Can I use my LifEasier saves on another computer?**
+
 **A:** Yes you can. You can transfer your files from one computer to another, and place them in a folder called “LifEasierSaves”. Then, run `LifEasier.jar` from the same folder as “LifEasierSaves”. Your saves should be loaded into LifEasier. As long as the “LifEasierSaves” folder is in the same folder as where the LifEasier.jar is being run, the program will read your saved information as per normal.
 
 **Q2: Can I edit the information in the save files directly?**
+
 **A:** Yes, it is possible but it is not recommended to do so. Directly modifying the save files may result in incorrectly formatted data to be passed into the **LifEasier** program on the next launch, resulting in missing data.
 
 
@@ -752,9 +754,9 @@ addNotes| `addNotes [TITLE]` | `addNotes AngryTime`
 showNotes| `showNotes [TITLE]` | `showNotes LaughTime`
 deleteNotes| `deleteNotes [TITLE]` | `deleteNotes SadTime`
 editNotes| `editNotes [TITLE]` | `editNotes CryingTime`
-undo| `undo TYPE` | `undo note OR undo task`
+undo| `undo TYPE` | `undo note` OR `undo task`
 archive| `archive` | `archive`
-display| `display [WEEK]` | `display day`
+display| `display KEYWORD` | `display day`
 freeTime| `freeTime` | `freeTime`
 sleepTime| `sleepTime` | `sleepTime`
 help| `help` | `help`
