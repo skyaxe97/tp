@@ -207,6 +207,8 @@ Upon receiving a valid option of parameter to edit, **LifEasier** will prompt th
 ![Figure 4.2-1](images/DeveloperGuide/Figure%204.2-1.png)    
 _Figure 4.2-1: Sequence diagram for editDeadlineCommand execution_
 
+For more information on the reference frames for the getting and pushing of copy of `Task`, refer to Figure 4.6-1 below.
+
 ##### Design Considerations
 
 Due to the difference in the types of tasks and their parameters, this functionality was designed to guide the User
@@ -230,6 +232,8 @@ The User first enters the `deleteTask` command and appends the type of task to b
 
 ![Figure 4.3-1](images/DeveloperGuide/Figure%204.3-1.png)    
 _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
+
+For more information on the reference frames for the getting and pushing of copy of `Task`, refer to Figure 4.6-1 below.
 
 ##### Design Considerations
 
