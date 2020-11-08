@@ -33,7 +33,7 @@
 
 **LifEasier** helps Computer Engineering (CEG) students to manage their classes, social events, deadlines and school notes through the Command Line Interface (CLI). The CLI allows **LifEasier** to deliver this functionality through a lightweight and easy to use interface. If you can type fast, **LifEasier** can get your timetabling needs done faster than a traditional GUI app.
 
-This User Guide serves as an all-in-one document for users to set up and use **LifEasier**. To use this User Guide, simply refer to the Table of Contents to find what you are looking for. The Quick Start section gives instructions on how to set up and start using **LifEasier**. The Features section gives in-depth instructions on how to best use every feature **LifEasier** has to offer. The FAQ section answers some common queries that you might have. Lastly, the Command Summary provides a convenient summary of the commands you have available to use.
+This User Guide serves as an all-in-one document for users to set up and use **LifEasier**. To use this User Guide, simply refer to the Table of Contents to find what you are looking for. The [Quick Start](#20-quick-start) section gives instructions on how to set up and start using **LifEasier**. The [User Features](#30-user-features) and [Other Features](#40-other-features) sections gives in-depth instructions on how to best use every feature **LifEasier** has to offer. The [FAQ](#50-faq) section answers some common queries that you might have. Lastly, the [Command Summary](#60-command-summary) provides a convenient summary of the commands you have available to use.
 
 In order to get the best experience when using this User Guide, please refer to the legend below in Table 1-1.
 
@@ -41,15 +41,15 @@ _Table 1-1: A summary of the special symbols and fonts used in this User Guide_
 
 Item | Meaning
 -----|--------
-![Notes](images/UserGuide/post-it.png) | Sections with this icon contain pointers you should take note of. You'll see these mostly in the Features section.
-`code snippets` | If you see words like this between blocks of normal text, they are probably related to more technical terms. If you see entire sections that appear in this font, they are usually examples of how to use LifEasier. You'll also see the latter mostly in the Features section.
+![Notes](images/UserGuide/post-it.png) | Sections with this icon contain pointers you should take note of. You'll see these mostly in the [User Features](#30-user-features) section.
+`code snippets` | If you see words like this within blocks of normal text, they are probably related to more technical terms. If you see entire sections that appear in this font, they are usually examples of how to use LifEasier. You'll also see the latter mostly in the [User Features](#30-user-features) section.
 
 ## 2.0 Quick Start
 
 This section describes the process of setting up **LifEasier** for use.
 
 1. Ensure you have the latest version of `Java 11` installed on your computer.
-1. Download the latest version of  `LifEasier.jar` from here: https://github.com/AY2021S1-CS2113T-W13-4/tp/releases 
+1. Download the latest version of  `LifEasier.jar` from [here](https://github.com/AY2021S1-CS2113T-W13-4/tp/releases).
 1. Copy the downloaded Jar file  to a suitable location in your computer. *(Note: **LifEasier** will create a folder for save files in the same folder you ran the jar file.)*
 1. Open a new **terminal window**  and navigate to where your `LifEasier.jar` is located on your computer.
 1. Enter the following command into the terminal window to launch the application:
@@ -79,7 +79,8 @@ _Figure 2-1: LifEasier’s welcome screen_
 
 1. You are now ready to use **LifEasier.** Type commands into the terminal window and press enter to execute the command. E.g Type  help and press enter to bring up the list of  available commands.
 1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or when you have entered invalid information. Cyan coloured text is usually displayed when the system needs your input.
-1. Refer to the Features section below to find more details on available commands.
+1. If the colours of the text seem jarring, try changing your CLI to a black background.
+1. Refer to the [User Features](#30-user-features) section below to find more details on available commands.
 
 ## 3.0 User Features
 The following section expands on the features available for you to use in **LifEasier**. The explanation for each feature includes the format to be followed, at least one example, and some further explanation and notes if necessary.
@@ -97,7 +98,7 @@ The following section expands on the features available for you to use in **LifE
 ### 3.1 Viewing Help: `help`
 This command shows you the available commands and their formats.
 
-Format: `help`
+**Format:** `help`
 
 #### Example:
 An example of how to use the help command is shown below in Figure 3.1-1.
@@ -146,19 +147,19 @@ _Figure 3.1-1: An example of using the help command_
 ### 3.2 Adding a Lesson: `addLesson`
 
 Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your schedule.
-Format: `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addLesson Command:
 
-* System will not warn you if there are any clashes in timing with other Tasks. 
+* The program will not warn you if there are any clashes in timing with other Tasks. 
+
+**Format:** `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addLesson Command Format:
 
 * Adds a `Lesson` coded `MODULE`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
-* The system will prompt you for parameters if they are not provided. 
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
 * This command accepts **partial commands**. E.g `addLesson /code CS2113 /to 18:00` is a valid command.
-* The program will prompt for the remaining missing parameters when a partial command is input.
+* The program will prompt you for the remaining missing parameters if you input a partial command.
 * For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
 #### Example:
@@ -170,24 +171,24 @@ Done! I've added "Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), rep
 your calendar
 =========================================================================
 ```
-*Figure 3.2-1: An example of using the addLesson command*
+_Figure 3.2-1: An example of using the addLesson command_
 
 ### 3.3 Adding an Event: `addEvent`
 
 Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
-Format: `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command:
 
-* System will not warn you if there are any clashes in timing with other Tasks.
+* The program will not warn you if there are any clashes in timing with other Tasks.
+
+**Format:** `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command Format:
 
 * Adds an `Event` called `NAME`, that runs from `START` to `END`, and repeats weekly for `TIMES`.
-* The system will prompt you for parameters if they are not provided. 
 * Parameters `START`, `END` must be logical. The `END` time must not be before the `START` time. 
 * This command accepts **partial commands**. E.g `addEvent Concert /date 05-11-20` is a valid command.
-* The program will prompt for the remaining missing parameters when a partial command is input.
+* The program will prompt you for the remaining missing parameters if you input a partial command.
 * For events that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
 #### Example:
@@ -199,7 +200,7 @@ Done! I've added "Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), rep
 your calendar
 =========================================================================
 ```
-*Figure 3.3-1: An example of using the addEvent command*
+_Figure 3.3-1: An example of using the addEvent command_
 
 ### 3.4 Adding a Deadline: `addDeadline`
 
@@ -207,17 +208,16 @@ Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to y
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addDeadline Command:
 
-* System will not warn you if there are any clashes in timing with other Tasks.
+* The program will not warn you if there are any clashes in timing with other Tasks.
 
-Format: `addDeadline NAME /by DATETIME /repeats TIMES`
+**Format:** `addDeadline NAME /by DATETIME /repeats TIMES`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command Format:
 
 * Adds a `Deadline` called `NAME`, that has to be completed by `DATETIME`, and repeats weekly for `TIMES`.
-* The system will prompt you for parameters if they are not provided. 
 * `DATETIME` has the format of **DD-MM-YY HH:MM**, where the time is in 24-hour clock format. _E.g 7:30pm should be input as 19:30._ 
 * This command accepts **partial commands**. E.g `addDeadline Return books` is a valid command.
-* The program will prompt for the remaining missing parameters when a partial command is input.
+* The program will prompt you for the remaining missing parameters if you input a partial command.
 
 #### Example:
 
@@ -228,18 +228,19 @@ Done! I've added "Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly
 your calendar
 =========================================================================
 ```
-*Figure 3.4-1: An example of using the addDeadline command*
+_Figure 3.4-1: An example of using the addDeadline command_
 
 ### 3.5 Editing a Lesson: `editLesson`
 
 Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos in the lessons you have already added.
-Format: `editLesson [CODE]`
+
+**Format:** `editLesson [CODE]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on editLesson Command Format:
 
 * If `CODE` is provided, all lessons that contain the `CODE` will be printed.
-* The system will prompt you to choose a lesson to be edited.
-* The system will prompt you to choose to edit the `CODE` or the `START/END` time. 
+* The program will prompt you to choose a lesson to be edited.
+* The program will prompt you to choose to edit the `CODE` or the `START/END` time. 
 * If you choose to edit time, System will prompt to input new `TIME` in the format of 
 “`/date DATE /from START /to END`”
 * For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
@@ -260,20 +261,21 @@ Please input your new time in this format: /date DATE /from START /to END
 /date 22-10-20 /from 14:00 /to 15:45
 Your edit has been saved.
 ```
-*Figure 3.5-1: An example of using the editLesson command*
+_Figure 3.5-1: An example of using the editLesson command_
 
 ### 3.6 Editing an Event: `editEvent`
 
 Edits an event in your schedule. Use this command to fix mistakes like typos in the events you have already added.
-Format: `editEvent [NAME]`
+
+**Format:** `editEvent [NAME]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on editEvent Command Format:
 
 * If `NAME` is provided, all events that contain the `NAME` will be printed. Else, all events
 will be printed.
-* The system will prompt you to choose an `Event` to be edited.
-* The system will prompt you to choose to edit the `NAME` or the `START/END` time. 
-* If you choose to edit time, System will prompt to input new `TIME` in the format of 
+* The program will prompt you to choose an `Event` to be edited.
+* The program will prompt you to choose to edit the `NAME` or the `START/END` time. 
+* If you choose to edit time, the program will prompt to input new `TIME` in the format of 
 “`/date DATE /from START /to END`”
 * For events that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
@@ -293,20 +295,21 @@ Please input your new Event name
 My favourite band's concert
 Your edit has been saved.
 ```
-*Figure 3.6-1: An example of using the editEvent command*
+_Figure 3.6-1: An example of using the editEvent command_
 
 ### 3.7 Editing a Deadline: `editDeadline`
 
 Edits a `Deadline` in your schedule. Use this command to fix mistakes like typos in the deadlines you have already added.
-Format: `editDeadline [NAME]`
+
+**Format:** `editDeadline [NAME]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on editDeadline Command Format:
 
 * If `NAME` is provided, all deadlines that contain the `NAME` will be printed. Else, all deadlines
 will be printed.
-* The system will prompt you to choose an `Deadline` to be edited.
-* The system will prompt you to choose to edit the `NAME` or the `BY` time. 
-* If you choose to edit time, System will prompt to input new `BY` time in the format of 
+* The program will prompt you to choose an `Deadline` to be edited.
+* The program will prompt you to choose to edit the `NAME` or the `BY` time. 
+* If you choose to edit time, the program will prompt to input new `BY` time in the format of 
 “`/by DATETIME`”.
 
 #### Example:
@@ -325,7 +328,7 @@ Please input your new time in this format: /by DATETIME
 /by 24-12-20 23:59
 Your edit has been saved.
 ```
-*Figure 3.7-1: An example of using the editDeadline command*
+_Figure 3.7-1: An example of using the editDeadline command_
 
 ### 3.8 Deleting a Task: `deleteTask`
 
@@ -336,13 +339,13 @@ longer need to take note of.
 
 * Tasks refer to lessons, deadlines and events.
 
-Format: `deleteTask /type TYPE [/name NAME]`
+**Format:** `deleteTask /type TYPE [/name NAME]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on deleteTask Command Format:
 
 * If `NAME` is provided, all tasks that match the type and contain the `NAME` will be printed. 
 Else, all `Task` that match the type will be printed.
-* The system will prompt you to choose a `Task` to be deleted.
+* The program will prompt you to choose a `Task` to be deleted.
 
 #### Example:
 
@@ -355,7 +358,7 @@ Please select the deadline you want to delete.
 2
 The task you selected has been deleted.
 ```
-*Figure 3.8-1: An example of using the deleteTask command*
+_Figure 3.8-1: An example of using the deleteTask command_
 
 ### 3.9 Undoing an Edit or Deletion:  `undo`
 
@@ -364,17 +367,17 @@ Undoes the most recent edits or deletions made on tasks or notes.
 #### ![Notes](images/UserGuide/post-it.png) Notes on undo Command:
 
 * Tasks refer to lessons, deadlines and events.
-* Once a task/note is deleted, edits made prior cannot be undone. For example, if a particular object goes through 
-_edit1-edit2-delete1>edit3_, you will only be able to undo _edit3_ and then _delete1_.
+* Once a task/note is deleted, edits made prior to the deletion cannot be undone. For example, if a particular object goes through 
+_edit1 -> edit2 -> delete1 -> edit3_, you will only be able to undo _edit3_ and then _delete1_.
 * The history of any edits and deletions are only available for the current session. Once the program is closed, all 
 history is discarded and you will not be able to undo those changes the next time you run the application.
 
-Format: `undo TYPE`
+**Format:** `undo TYPE`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on undo Command Format:
 
 * The `TYPE` can either be `task` or `note`.
-* If not specified, the system will prompt you to enter `task` or `note`.
+* If not specified, the program will prompt you to enter `task` or `note`.
 
 #### Example:
 
@@ -404,18 +407,19 @@ Yay for cats!
 ===============================================================================================================
 ```
 
-Figure 3.9-1: An example of using the undo command
+_Figure 3.9-1: An example of using the undo command_
 
 ### 3.10 Displaying Schedule: `display`
 
 Displays your current schedule. Use this command to view what your schedule is like for today, tomorrow or for the 
 whole week.
-Format: `display KEYWORD`
+
+**Format:** `display KEYWORD`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on display Command Format:
 
 * The `KEYWORD` can either be `today`, `tomorrow` or `week`.
-* If not specified, the system will prompt you to enter `today`, `tomorrow` or `week`.
+* If not specified, the program will prompt you to enter `today`, `tomorrow` or `week`.
 * The `display week` command displays the schedule of the upcoming week, in 1 hour intervals. 
 * The entire row with all tasks that fall in the current hour will be coloured in cyan for your ease of reference. 
 
@@ -436,7 +440,7 @@ Here is your schedule for today:
 14:00-17:00  CG2028
 ```
 
-*Figure 3.10-1: An example of using the display command to view your daily schedule*
+_Figure 3.10-1: An example of using the display command to view your daily schedule_
 
 `display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.10-2.
 
@@ -474,7 +478,7 @@ Here are your upcoming deadlines this week:
 ===============================================================================================================
 ```
 
-*Figure 3.10-2: An example of using the display week command to view your weekly schedule*
+_Figure 3.10-2: An example of using the display week command to view your weekly schedule_
 
 ### 3.11 Viewing Available Free Time: `freeTime`
 
@@ -483,8 +487,9 @@ Use this command to find out when is a good time to schedule something.
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on freeTime Command:
 
-- The system only searches for free time between 7:00 and 24:00. This is to promote a healthy sleep cycle.
-Format: `freeTime`
+- The program only searches for free time between 7:00 and 24:00. This is to promote a healthy sleep cycle.
+
+**Format:** `freeTime`
 
 #### Example:
 
@@ -507,12 +512,12 @@ Use this command to find out if you can have a good rest after a long day.
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on sleepTime Command:
 
-* The system recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
-* The system will also count the hour before your first activity in the day as busy,
+* The program recommends 8 hours of sleep a day. Anything more, and the extra duration will not be displayed.
+* The program will also count the hour before your first activity in the day as busy,
 to give you time to wake up and get ready. E.g. if your first activity is at 9:00, 
-the system will tell you that you have nothing on only until 8:00.
+the program will tell you that you have nothing on only until 8:00.
 
-Format: sleepTime
+**Format:** `sleepTime`
 
 #### Example:
 
@@ -531,13 +536,14 @@ _Figure 3.12-1: An example of using sleepTime command_
 ### 3.13 Adding a New Note: `addNotes`
 
 Adds and stores a note. Use this command to take notes from your classes or events.
-Format: addNotes [TITLE]
+
+**Format:** `addNotes [TITLE]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addNotes Command Format:
 
-- Adds and stores a note tagged with  TITLE.
-- If TITLE is not provided, LifEasier will prompt you for a notes title.
-- The word limit of title or description follows the maximum length of input allowed in Command Prompt.
+* Adds and stores a note tagged with `TITLE`.
+* If `TITLE` is not provided, the program will prompt you for a notes title.
+* The word limit of title or description follows the maximum length of input allowed in Command Prompt.
 
 #### Example:
 
@@ -558,14 +564,15 @@ _Figure 3.13-1: An example of using the addNotes command_
 ### 3.14 Showing Notes: `showNotes`
 
 Displays a note/list of notes. Use this command to view the notes you have taken before.
-Format: showNotes [TITLE] 
+
+**Format:** `showNotes [TITLE]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on showNotes Command Format:
 
-* If TITLE is specified, the specific note is displayed. If not, a numbered list of all notes 
+* If `TITLE` is specified, the specific note is displayed. If not, a numbered list of all notes 
 will be displayed.
-* TITLE can be a partial title. If there is one match, that note will be shown.
-* If multiple notes with the same TITLE are found, all note titles containing the input will be 
+* `TITLE` can be a partial title. If there is one match, that note will be shown.
+* If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
 displayed in a list for selection. 
 
 #### Example:
@@ -587,16 +594,17 @@ _Figure 3.14-1: An example of using the showNotes command_
 ### 3.15 Deleting a Note: `deleteNotes`
 
 Deletes a note from the list. Use this command to remove the notes you no longer need.
-Format: deleteNotes [TITLE] 
+
+**Format:** `deleteNotes [TITLE]` 
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on deleteNotes Command Format:
 
-* If TITLE is specified, the specific note is displayed and confirmation of delete will be prompted. 
-If no TITLE is inputed, a numbered list of all notes will be displayed.
-* TITLE can be a partial title. If there is one match, that note will be shown.
-* If multiple notes with the same TITLE are found, all note titles containing the input will be 
+* If `TITLE` is specified, the specific note is displayed and confirmation of delete will be prompted. 
+If no `TITLE` is inputed, a numbered list of all notes will be displayed.
+* `TITLE` can be a partial title. If there is one match, that note will be shown.
+* If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
 displayed in a list for selection.
-* Entering “Y” would delete the note from the list. Entering “N” would exit the command without deletion. 
+* Entering `Y` would delete the note from the list. Entering `N` would exit the command without deletion. 
 
 #### Example:
 An example of how to use the deleteNotes command is shown in Figure 3.15-1.
@@ -625,18 +633,19 @@ _Figure 3.15-1: An example of using the deleteNotes command_
 ### 3.16 Editing a Note: `editNotes`
 
 Edits a note from the list. Use this command to make changes to notes you have taken before.
-Format: editNotes [TITLE] 
+
+**Format:** `editNotes [TITLE]` 
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on editNotes Command Format:
 
-* If TITLE is specified, the specific note is displayed and confirmation of edit will be prompted. 
-If no TITLE is inputed, a numbered list of all notes will be displayed.
-* TITLE can be a partial title. If there is one match, that note will be shown.
-* If multiple notes with the same TITLE are found, all note titles containing the input will be 
+* If `TITLE` is specified, the specific note is displayed and confirmation of edit will be prompted. 
+If no `TITLE` is inputted, a numbered list of all notes will be displayed.
+* `TITLE` can be a partial title. If there is one match, only that note will be shown.
+* If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
 displayed in a list for selection.
-* Entering “T” would show the current title and prompt for a new title. Entering “D” would 
+* Entering `T` would show the current title and prompt for a new title. Entering `D` would 
 show the current description and prompt for a new description.
-* The word limit of title or description follows the maximum length of input allowed in Command Prompt.
+* The word limit of title or description follows the maximum length of input allowed in your Command Prompt.
 
 #### Example:
 
@@ -671,13 +680,13 @@ _Figure 3.16-1: An example of using the editNotes command_
 Archives all existing notes. Use this command to store all your notes in a separate save file. These notes will no 
 longer be displayed anywhere.
 
-Format: `archive`
+**Format:** `archive`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on archive Command Format:
 
-* **All** current notes existing in **LifEasier** will be archived into the “Archives” folder found inside the 
-“LifEasierSaves” save folder.
-* Archive files are automatically named in the format of **DD-MM-YY HH:MM.txt** format.
+* **All** current notes existing in **LifEasier** will be archived into the `Archives` folder found inside the 
+`LifEasierSaves` save folder.
+* Archive files are automatically named in the format of **DD-MM-YY HH:MM.txt**, based on the time you run the command.
 * Upon archiving, all saved notes will be **removed** and placed in the archive instead - Using the `showNotes` command 
 immediately after `archive` will result in **no notes** being shown.
 * There is no way to undo this action, so use the `archive` command with care.
@@ -706,7 +715,7 @@ future implementation, the ability for you to specifically choose which notes to
 
 Exits the programme. Use this command when you are done using LifEasier.
 
-Format: `exit`
+**Format:** `exit`
 
 #### Example:
 
@@ -722,18 +731,17 @@ _Figure 3.18-1: An example of using the exit command_
 ## 4.0 Other Features
 
 This section covers some of the features which do not rely on your input to be executed. Rather, they happen in the 
-background without any input from you necessary.
+background to ensure the program runs smoothly.
 
 ### 4.1 Storing Data
 
-By default, **LifEasier** creates a save folder named “LifEasierSaves” in the same folder `LifEasier.jar` is run. 
-**LifEasier** data is saved automatically to the hard disk when a new `event`, `deadline`, `lesson` or `note` is **added**, 
+By default, **LifEasier** creates a save folder named `LifEasierSaves` in the same folder `LifEasier.jar` is run. 
+**LifEasier** data is saved automatically to the hard disk when a new `Event`, `Deadline`, `Lesson` or `Note` is **added**, 
 **deleted** or **edited**. Data is stored in text files, in plaintext. This allows you to edit your data directly through 
 the save files if necessary.
 
 In the event of **corrupted data** arising from either system errors or incorrect formats from you while editing the save file,
-**LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. If you execute
-an **add, delete or edit** action, all corrupted data that has not been corrected will be **permanently removed** from the save file. 
+**LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. 
 
 If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
 where you can access your archived files. Archived notes will not show up in **LifEasier** anymore.
@@ -741,11 +749,11 @@ where you can access your archived files. Archived notes will not show up in **L
 ### 4.2 Recurring Tasks and Auto Deletion
 
 **LifEasier** automatically updates the dates of recurring tasks and deletes old tasks.
-It will load your save files and update your tasks automatically every time it starts up.
+It will load your save files and update your tasks automatically every time it starts up, and every time you add a `Task` to your schedule.
 Here are some examples of what might happen if you start up **LifEasier** on 24th October:
 
-1. If you had a lesson that last occurred on 22nd October, and it is set to repeat 3 more times, it will be updated to occur again on 29th October, and updated to repeat 2 more times.
-2. If you had an event that last occurred on 21st October, and it is set to repeat 0 more times, it will be deleted from your schedule.
+1. If you had a lesson that last occurred on 22nd October, and it is set to repeat 3 more times, it will be **updated** to occur again on 29th October, and **updated** to repeat 2 more times.
+2. If you had an event that last occurred on 21st October, and it is set to repeat 0 more times, it will be **deleted** from your schedule.
 
 
 ## 5.0 FAQ
@@ -754,7 +762,7 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 
 **Q1: Can I use my LifEasier saves on another computer?**
 
-**A:** Yes you can. You can transfer your files from one computer to another, and place them in a folder called “LifEasierSaves”. Then, run `LifEasier.jar` from the same folder as “LifEasierSaves”. Your saves should be loaded into LifEasier. As long as the “LifEasierSaves” folder is in the same folder as where the LifEasier.jar is being run, the program will read your saved information as per normal.
+**A:** Yes you can. You can transfer your files from one computer to another, and place them in a folder called `LifEasierSaves`. Then, run `LifEasier.jar` from the same folder as `LifEasierSaves`. Your saves should be loaded into **LifEasier**. As long as the `LifEasierSaves` folder is in the same folder as where the `LifEasier.jar` is being run, the program will read your saved information as per normal.
 
 **Q2: Can I edit the information in the save files directly?**
 
@@ -769,19 +777,19 @@ for reference.
 Action | Format | Example
 --------|-----------------|----------------------------------------------------------------------------------
 addLesson| `addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES` | `addLesson /code cg1111 /date 04-10-20 /from 09:00 /to 12:00 /repeats 10`
-addEvent| `addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES` | `addEvent HappyTime /date 04-10-20 /from 09:00 /to 12:00 /repeats 0`
-addDeadline| `addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES` | `addDeadline CryTime /by 04-10-20 09:00 /repeats 0`
+addEvent| `addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES` | `addEvent Party /date 04-10-20 /from 09:00 /to 12:00 /repeats 0`
+addDeadline| `addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES` | `addDeadline User Guide /by 04-10-20 09:00 /repeats 0`
 editLesson| `editLesson [CODE]` | `editLesson CS2101`
 editEvent| `editEvent [NAME]` | `editEvent BlackPink Concert`
 editDeadline| `editDeadline [NAME]` | `editDeadline Finish Work`
 deleteTask| `deleteTask /type TYPE [/name NAME]` | `deleteTask /type event`
-addNotes| `addNotes [TITLE]` | `addNotes AngryTime`
-showNotes| `showNotes [TITLE]` | `showNotes LaughTime`
-deleteNotes| `deleteNotes [TITLE]` | `deleteNotes SadTime`
-editNotes| `editNotes [TITLE]` | `editNotes CryingTime`
-undo| `undo TYPE` | `undo note` OR `undo task`
+addNotes| `addNotes [TITLE]` | `addNotes CS2101`
+showNotes| `showNotes [TITLE]` | `showNotes CS2113T`
+deleteNotes| `deleteNotes [TITLE]` | `deleteNotes CS1231`
+editNotes| `editNotes [TITLE]` | `editNotes CG2271`
+undo| `undo TYPE` | `undo note` or `undo task`
 archive| `archive` | `archive`
-display| `display KEYWORD` | `display day`
+display| `display KEYWORD` | `display today`
 freeTime| `freeTime` | `freeTime`
 sleepTime| `sleepTime` | `sleepTime`
 help| `help` | `help`
