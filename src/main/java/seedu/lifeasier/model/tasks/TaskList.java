@@ -36,7 +36,8 @@ public class TaskList {
     public HashMap<Integer, Integer> createTaskMap() {
         return this.taskMap = new HashMap<>();
     }
-    public void setMap (int displayIndex, int actualIndex) {
+
+    public void setMap(int displayIndex, int actualIndex) {
         taskMap.put(displayIndex, actualIndex);
     }
 

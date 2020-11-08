@@ -432,7 +432,8 @@ public class Parser {
     }
 
     private String addTypeParam(Ui ui, String input) {
-        String type, name;
+        String type;
+        String name;
         ui.showAddTypePrompt();
         while (true) {
             try {
