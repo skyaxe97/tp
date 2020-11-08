@@ -50,19 +50,18 @@ class DeleteTaskCommandTest {
     void execute_validIndex_taskDeleted() throws TaskPastException, TaskDuplicateException {
         setUpStreams("1");
 
-        Ui ui = new Ui();
-        NoteList notes = new NoteList();
-        NoteHistory noteHistory = new NoteHistory();
         TaskList testTaskList = new TaskList();
-        TaskHistory testTaskHistory = new TaskHistory();
-        FileStorage storage = new FileStorage(TEST_FILEPATH, TEST_FILEPATH, ui, notes, testTaskList, noteHistory);
-        Parser parser = new Parser();
-
-        DeleteTaskCommand command = new DeleteTaskCommand("event", "testEvent");
         testTaskList.addEvent("testEvent", sampleTime1, sampleTime2, 1);
         testTaskList.createTaskMap();
         testTaskList.setMap(1,0);
 
+        Ui ui = new Ui();
+        NoteList notes = new NoteList();
+        NoteHistory noteHistory = new NoteHistory();
+        TaskHistory testTaskHistory = new TaskHistory();
+        Parser parser = new Parser();
+        FileStorage storage = new FileStorage(TEST_FILEPATH, TEST_FILEPATH, ui, notes, testTaskList, noteHistory);
+        DeleteTaskCommand command = new DeleteTaskCommand("event", "testEvent");
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
         assert (testTaskList.getTaskList().isEmpty());
 
