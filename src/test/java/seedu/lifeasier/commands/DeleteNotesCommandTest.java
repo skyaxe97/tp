@@ -103,7 +103,8 @@ class DeleteNotesCommandTest {
                 + ui.colourTextCyan("Is this the note you want to delete? (Y/N)")
                 + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextGreen("OK! Note deleted!") + System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
+                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
+                + ui.colourTextRed("Something went wrong while saving your data..."), outContent.toString());
 
         restoreStreams();
     }
