@@ -54,10 +54,10 @@ public class DisplayScheduleCommand extends Command {
         if (taskCountForThisDate > 0) {
             ui.showDayScheduleMessage(displayKeyword);
             scheduleUi.displayDaySchedule(date, tasks);
-            ui.printThickSeparator();
-            ui.printBlankLine();
         } else {
             ui.showNothingScheduledMessage(displayKeyword);
         }
+        ui.printThickSeparator();
+        ui.printBlankLine();
     }
 }

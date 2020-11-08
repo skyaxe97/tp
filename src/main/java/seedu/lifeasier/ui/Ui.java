@@ -391,8 +391,6 @@ public class Ui {
 
     public void showArchiveEndMessage() {
         System.out.println(colourTextGreen("Archiving successful!"));
-        printThickSeparator();
-        printBlankLine();
     }
 
     public void showFileReadError() {
@@ -924,6 +922,7 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println("Here is your schedule for " + displayKeyword + ":");
+
     }
 
     public void showNotesMessage(String note) {
