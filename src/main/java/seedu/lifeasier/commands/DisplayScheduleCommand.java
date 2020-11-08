@@ -35,13 +35,9 @@ public class DisplayScheduleCommand extends Command {
             break;
         case "today":
             displayScheduleFor(currDate, tasks, ui);
-            ui.printThickSeparator();
-            ui.printBlankLine();
             break;
         case "tomorrow":
             displayScheduleFor(currDate.plus(1, ChronoUnit.DAYS), tasks, ui);
-            ui.printThickSeparator();
-            ui.printBlankLine();
             break;
         default:
             ui.showInvalidDisplayKeywordError();
