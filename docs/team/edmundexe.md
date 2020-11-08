@@ -36,13 +36,14 @@ I have written sections that were relevant to what enhancements I have implement
 I have written sections that were relevant to what enhancements I have implemented in the project, including related UML diagrams.
 These includes the Sequence diagram found in [Section 3.1](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#31-architecture),
 contents in [Section 4.4](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#44-adding-notes-edmund), 
-contents in [Section 4.5](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#45-editing-and-deleting-notes-edmund),
-contents in [Section 4.10](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#410-parsing-commands-edmund).
+[Section 4.5](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#45-editing-and-deleting-notes-edmund),
+[Section 4.6](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#46-showing-notes-edmund),
+[Section 4.11](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#411-parsing-commands-edmund).
 
 ### Contributions to Team-Based Tasks
 
 In terms of contributions, I felt that I have played a part in improving the code quality and in minor non-specific areas in UG/DG such as
-Setting Up and the Command Summary alongside with my team members.
+**Setting Up** and the **Command Summary** alongside with my team members.
 
 ### Review/Mentoring Contributions
 
