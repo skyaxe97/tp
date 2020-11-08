@@ -55,7 +55,7 @@ class AddLessonCommandTest {
         AddLessonCommand command = new AddLessonCommand("testLesson", pastSampleTime1, pastSampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assert(testTaskList.getTaskList().isEmpty());
+        assert (testTaskList.getTaskList().isEmpty());
     }
 
     @Test

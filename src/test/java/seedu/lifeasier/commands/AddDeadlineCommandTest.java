@@ -53,7 +53,7 @@ class AddDeadlineCommandTest {
         AddDeadlineCommand command = new AddDeadlineCommand("testDeadline", pastSampleTime1, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assert(testTaskList.getTaskList().isEmpty());
+        assert (testTaskList.getTaskList().isEmpty());
     }
 
     @Test

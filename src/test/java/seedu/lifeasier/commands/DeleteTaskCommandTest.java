@@ -3,7 +3,12 @@ package seedu.lifeasier.commands;
 import org.junit.jupiter.api.Test;
 import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
-import seedu.lifeasier.model.tasks.*;
+import seedu.lifeasier.model.tasks.Lesson;
+import seedu.lifeasier.model.tasks.Task;
+import seedu.lifeasier.model.tasks.TaskDuplicateException;
+import seedu.lifeasier.model.tasks.TaskHistory;
+import seedu.lifeasier.model.tasks.TaskList;
+import seedu.lifeasier.model.tasks.TaskPastException;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
@@ -80,7 +85,7 @@ class DeleteTaskCommandTest {
         Task testLesson = new Lesson("CS2040C", sampleTime1, sampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals (testTaskList.getTask(0).toString(), testLesson.toString());
+        assertEquals(testTaskList.getTask(0).toString(), testLesson.toString());
 
         restoreStreams();
     }

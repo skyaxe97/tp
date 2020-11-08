@@ -56,7 +56,7 @@ class AddEventCommandTest {
         AddEventCommand command = new AddEventCommand("testEvent", pastSampleTime1, pastSampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assert(testTaskList.getTaskList().isEmpty());
+        assert (testTaskList.getTaskList().isEmpty());
     }
 
     @Test
