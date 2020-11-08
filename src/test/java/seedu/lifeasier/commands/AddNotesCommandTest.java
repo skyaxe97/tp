@@ -35,7 +35,7 @@ class AddNotesCommandTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final InputStream OriginalIn = System.in;
+    private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
 
@@ -47,7 +47,7 @@ class AddNotesCommandTest {
     public void restoreStreams() {
         System.setOut(originalOut);
         System.setErr(originalErr);
-        System.setIn(OriginalIn);
+        System.setIn(originalIn);
     }
 
     @Test

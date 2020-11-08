@@ -73,8 +73,8 @@ class ShowNotesCommandTest {
         notes.add(note);
         new ShowNotesCommand("dogs").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals(System.lineSeparator() +
-                THICK_SEPARATOR + System.lineSeparator()
+        assertEquals(System.lineSeparator()
+                + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextRed("The title you inputted is not found...") + System.lineSeparator()
                 + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
         restoreStreams();
@@ -103,7 +103,6 @@ class ShowNotesCommandTest {
     @Test
     void testMultipleMatch_searchTitle_allNotesWithMatchingTitle() {
         setUpStreams();
-        int i = 1;
         Note note = new Note("cats", "i like cats");
         Note note1 = new Note("catJAM", "catjamming");
         NoteList notes = new NoteList();
@@ -116,6 +115,7 @@ class ShowNotesCommandTest {
         Ui ui = new Ui();
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+        int i = 1;
         assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
                 + ui.colourTextCyan("Multiple matches found! Please select the one you are looking for:")
                 + System.lineSeparator() + i++ + ". " + note.getTitle() + "\n"

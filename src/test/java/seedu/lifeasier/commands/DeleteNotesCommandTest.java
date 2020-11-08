@@ -17,7 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeleteNotesCommandTest {
     private Ui ui = new Ui();
@@ -37,7 +37,7 @@ class DeleteNotesCommandTest {
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final InputStream OriginalIn = System.in;
+    private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
 
@@ -49,7 +49,7 @@ class DeleteNotesCommandTest {
     public void restoreStreams() {
         System.setOut(originalOut);
         System.setErr(originalErr);
-        System.setIn(OriginalIn);
+        System.setIn(originalIn);
     }
 
     @Test
@@ -76,8 +76,8 @@ class DeleteNotesCommandTest {
         notes.add(note);
         new DeleteNotesCommand("dogs").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
-        assertEquals(System.lineSeparator() +
-                THICK_SEPARATOR + System.lineSeparator()
+        assertEquals(System.lineSeparator()
+                + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextRed("The title you inputted is not found...") + System.lineSeparator()
                 + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
         restoreStreams();
@@ -135,7 +135,6 @@ class DeleteNotesCommandTest {
     @Test
     void testMultipleMatch_searchTitle_noteDeleted() {
         setUpStreams();
-        int i = 1;
         Note note = new Note("cats", "i like cats");
         Note note1 = new Note("catJAM", "catjamming");
         NoteList notes = new NoteList();
@@ -148,6 +147,8 @@ class DeleteNotesCommandTest {
         Ui ui = new Ui();
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+        int i = 1;
+
         assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
                 + ui.colourTextCyan("Multiple matches found! Please select the one you are looking for:")
                 + System.lineSeparator() + i++ + ". " + note.getTitle() + "\n"
@@ -164,7 +165,6 @@ class DeleteNotesCommandTest {
     @Test
     void testNoTitleInput_emptyTitle_noteDeleted() {
         setUpStreams();
-        int i = 1;
         Note note = new Note("cats", "i like cats");
         Note note1 = new Note("catJAM", "catjamming");
         NoteList notes = new NoteList();
@@ -177,6 +177,8 @@ class DeleteNotesCommandTest {
         Ui ui = new Ui();
 
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
+        int i = 1;
+
         assertEquals(System.lineSeparator() + THIN_SEPARATOR + System.lineSeparator()
                 + ui.colourTextCyan("Please select the notes you want to delete:")
                 + System.lineSeparator() + i++ + ". " + note.getTitle()
