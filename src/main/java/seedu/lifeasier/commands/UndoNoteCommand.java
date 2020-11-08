@@ -9,7 +9,12 @@ import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class UndoNoteCommand extends Command {
+    private static Logger logger = Logger.getLogger(UndoNoteCommand.class.getName());
+
     private static final int DEFAULT_EDIT_NUMBER = -999999;
 
     @Override
@@ -21,14 +26,17 @@ public class UndoNoteCommand extends Command {
 
             if (lastNoteEditNumber > 0) {
                 for (int i = 0; i < notes.size(); i++) {
+                    logger.log(Level.INFO, "Iterating through NoteHistory...");
                     int editNumOfCurrNote =  notes.get(i).getEditNumber();
                     if (editNumOfCurrNote == lastNoteEditNumber) {
+                        logger.log(Level.INFO, "Revert Note to its previous copy");
                         notes.setNote(i, oldCopyOfNote);
                     }
                 }
                 ui.showUndoNoteEditMessage();
 
             } else if (lastNoteEditNumber < 0) {
+                logger.log(Level.INFO, "Start restoring a deleted Note");
                 Note noteToRestore = new Note(oldCopyOfNote, DEFAULT_EDIT_NUMBER);
                 notes.add(noteToRestore);
                 ui.showUndoNoteDeleteMessage();

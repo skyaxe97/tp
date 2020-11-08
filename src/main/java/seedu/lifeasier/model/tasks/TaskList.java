@@ -22,6 +22,7 @@ public class TaskList {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
     private int displayIndexOfLastMatch = 0;
+
     HashMap<Integer,Integer> taskMap;
 
     public TaskList() {
@@ -272,6 +273,14 @@ public class TaskList {
             taskList.remove(task);
         }
 
+    }
+
+    public HashMap<Integer, Integer> createTaskMap() {
+        return this.taskMap = new HashMap<>();
+    }
+
+    public void setMap(int displayIndex, int actualIndex) {
+        taskMap.put(displayIndex, actualIndex);
     }
 
 }
