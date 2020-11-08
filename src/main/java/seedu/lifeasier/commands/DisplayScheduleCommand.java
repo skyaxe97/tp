@@ -35,9 +35,13 @@ public class DisplayScheduleCommand extends Command {
             break;
         case "today":
             displayScheduleFor(currDate, tasks, ui);
+            ui.printThickSeparator();
+            ui.printBlankLine();
             break;
         case "tomorrow":
             displayScheduleFor(currDate.plus(1, ChronoUnit.DAYS), tasks, ui);
+            ui.printThickSeparator();
+            ui.printBlankLine();
             break;
         default:
             ui.showInvalidDisplayKeywordError();
@@ -50,10 +54,10 @@ public class DisplayScheduleCommand extends Command {
         if (taskCountForThisDate > 0) {
             ui.showDayScheduleMessage(displayKeyword);
             scheduleUi.displayDaySchedule(date, tasks);
-            ui.printThickSeparator();
-            ui.printBlankLine();
         } else {
             ui.showNothingScheduledMessage(displayKeyword);
         }
+        ui.printThickSeparator();
+        ui.printBlankLine();
     }
 }

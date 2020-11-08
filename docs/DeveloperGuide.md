@@ -19,12 +19,13 @@
     * [4.3 Deleting Lessons, Events, Deadlines (Fairuz)](#43-deleting-of-lessons-events-deadlines-fairuz)
     * [4.4 Adding Notes (Edmund)](#44-adding-notes-edmund)
     * [4.5 Editing and Deleting Notes (Edmund)](#45-editing-and-deleting-notes-edmund)
-    * [4.6 Undoing Changes Made to Tasks and Notes (Johannine)](#46-undoing-changes-made-to-tasks-and-notes-johannine)
-    * [4.7 Storing and Archiving Notes (Danzel)](#47-storing-and-archiving-notes-danzel)
-    * [4.8 Displaying Schedule (Johannine)](#48-displaying-schedule-johannine)
-    * [4.9 Displaying Free Time and Sleep Time (Daniel)](#49-displaying-free-time-and-sleep-time-daniel)
-    * [4.10 Parsing Commands (Edmund)](#410-parsing-commands-edmund)
-    * [4.11 Recurring Tasks and Auto Deletion (Daniel)](#411-recurring-tasks-and-auto-deletion-daniel)
+    * [4.6 Showing Notes (Edmund)](#46-showing-notes-edmund)
+    * [4.7 Undoing Changes Made to Tasks and Notes (Johannine)](#47-undoing-changes-made-to-tasks-and-notes-johannine)
+    * [4.8 Storing and Archiving Notes (Danzel)](#48-storing-and-archiving-notes-danzel)
+    * [4.9 Displaying Schedule (Johannine)](#49-displaying-schedule-johannine)
+    * [4.10 Displaying Free Time and Sleep Time (Daniel)](#410-displaying-free-time-and-sleep-time-daniel)
+    * [4.11 Parsing Commands (Edmund)](#411-parsing-commands-edmund)
+    * [4.12 Recurring Tasks and Auto Deletion (Daniel)](#412-recurring-tasks-and-auto-deletion-daniel)
 * [5.0 Product Scope](#50-product-scope)
     * [5.1 Target user profile](#51-target-user-profile)
     * [5.2 Value proposition](#52-value-proposition)
@@ -331,7 +332,33 @@ in any of the notes nor can he input an invalid title such as an empty string.
 * In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
 an exception caught.
 
-### 4.6 Undoing Changes Made to Tasks and Notes (Johannine)
+### 4.6 Showing Notes (Edmund)
+
+The `showNotes` command allows the user to select a note to view.
+
+##### Implementation
+
+The `showNotes` command first starts with a check for an empty list before branching into 2 paths: with or without title. If a title is added alongside the 
+“showNotes” (ie. the user inputs “showNotes cats”) then the title would be passed on to a method `findTitle` that would 
+look for the titles containing 'cats' in the list, before returning the note content with the matching title. 
+Conversely, if no title is appended, then a whole list of title of the notes will be printed out for selection.
+The user would input the corresponding number of the note and it would return the note contents.
+
+Figure 4.6-1 illustrates the above steps via a Sequence Diagram.
+
+![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
+_Figure 4.6-1: Sequence diagram for showNotesCommand_
+
+##### Design Considerations
+
+* In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
+an exception caught.
+* The function must deal with incorrect title inputs by the user. If the user input a title that is not found 
+in any of the notes, a `TitleNotFoundException` will be caught.
+* The user would be continuously prompted for a valid input if he enters an empty string when prompted for an input.
+* If multiple notes contains the title, then the user would be asked to input the corresponding number to the note he wishes to view.
+
+### 4.7 Undoing Changes Made to Tasks and Notes (Johannine)
 
 The undo feature allows the user to undo any changes made to Task or Note objects, particularly edits and deletions.
 
@@ -349,11 +376,11 @@ The copy made is stored as a new `Task` (or `Note`) object temporarily. Once the
 copy of the old unchanged `Task` (or `Note`) is then pushed into an array called `taskHistory` (or `noteHistory`), 
 which holds all the previous copies of the object.
 
-Figure 4.6-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
+Figure 4.7-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
 works in a similar manner for `Note` objects.
 
-![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
-_Figure 4.6-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
+![Figure 4.7-1](images/DeveloperGuide/Figure 4.7-1.png)
+_Figure 4.7-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
 When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the 
 stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which 
@@ -362,8 +389,8 @@ old copy, and then the old copy is removed from the `Tasklist`.
 
 The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
 
-![Figure 4.6-2](images/DeveloperGuide/Figure 4.6-2.png)
-_Figure 4.6-2: Sequence Diagram for undoing edits or deletions of Tasks_
+![Figure 4.7-2](images/DeveloperGuide/Figure 4.7-2.png)
+_Figure 4.7-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 A new `taskHistory` (or `noteHistory`) is created at every startup of the application. Therefore, the history of any 
 edits and deletions are only available for the current session. Once the program is closed, all information is discarded.
@@ -382,7 +409,7 @@ previous (positive) editID. Therefore, if an object is deleted, all other previo
 (or `noteHistory`) are discarded. For example, if a particular object goes through _edit1-edit2-delete1-edit3_, the 
 user will only be able to undo _edit3_ and _delete1_. The copies related to _edit1_ and _edit2_ are removed from history.
 
-### 4.7 Storing and Archiving Notes (Danzel)
+### 4.8 Storing and Archiving Notes (Danzel)
 
 The storing and saving of data in the **LifEasier** app is done automatically after every change such as adding, editing, 
 deleting a component such as a lesson, deadline, event or note. The following section documents how the data storing 
@@ -390,46 +417,46 @@ and archiving system of **LifEasier** was implemented, followed by the considera
 
 ##### Implementation - Data saving and storing
 
-Figure 4.7-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
+Figure 4.8-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
 that exist then as shown in the class diagram. These have been omitted for simplicity.
 
 ![Class Diagram Image](images/DeveloperGuide/StorageClassDiagram.png)
-_Figure 4.7-1: Class Diagram for all storage components_
+_Figure 4.8-1: Class Diagram for all storage components_
 
-Figure 4.7-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
+Figure 4.8-2 shows the sequence diagram of the save data reading process which runs whenever **LifEasier** is run. Upon app startup, 
 the main `LifEasier` class creates a new `FileStorage` object, which starts the save reading process to load in all the previously stored 
 data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
-![Startup file load sequence diagram](images/DeveloperGuide/Figure 4.7-2.png)
-_Figure 4.7-2: Sequence diagram for save data reading on startup_
+![Startup file load sequence diagram](images/DeveloperGuide/Figure 4.8-2.png)
+_Figure 4.8-2: Sequence diagram for save data reading on startup_
 
 By default, the save directory is set as _LifEasierSaves_ under the `DIRECTORY_PATH` constant found in the `FileStorage` class. 
 The names of the tasks and notes save files are passed in as arguments from the main method in the `LifEasier` class, where the first 
 argument dictates the resulting name of the tasks save file, while the second determines the name of the notes save file, as seen from the 
-code snippet in figure 4.7-3. Save directory names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
+code snippet in figure 4.8-3. Save directory names and paths are **editable**, along with the save file names by changing the values in the locations as stated.
 
 ````java
 public static void main(String[] args) {
     new LifEasier("saveFileTasks.txt", "saveFileNotes.txt").run(false);
 }
 ````
-_Figure 4.7-3: Code snippet for where save file names are set_
+_Figure 4.8-3: Code snippet for where save file names are set_
 
 Whenever a new task or note is added, edited or deleted, the `saveTask()` or `saveNote()` methods in the `FileStorage` class is called depending 
-on whether the changed item was a task or a note, to begin the data saving process. Figure 4.7-4 shows the sequence diagram taken by the program 
+on whether the changed item was a task or a note, to begin the data saving process. Figure 4.8-4 shows the sequence diagram taken by the program 
 to save the user’s notes data. The saving process for tasks and notes are implemented in similar ways, with the saving process for tasks 
 requiring a few more additional steps to correctly convert the tasks’ `LocalDateTime` information into formatted Strings to allow for more 
 readable save files. The format in which the `LocalDateTime` objects are converted to can be found in the `DateTimeFormatter` object in the 
 `FileCommand` class.
 
 ![Save sequence diagram](images/DeveloperGuide/StorageSaveSequenceDiagram.png)
-_Figure 4.7-4: Sequence diagram for saving of user note data_
+_Figure 4.8-4: Sequence diagram for saving of user note data_
 
 ##### Implementation - Note Archiving
 
 The `archive` command immediately moves all currently loaded notes into a newly generated text file in the `Archives` directory found within the 
-_LifEasierSaves_ directory. The main code snippet which drives the `archive` command is shown in figure 4.7-5. 
+_LifEasierSaves_ directory. The main code snippet which drives the `archive` command is shown in figure 4.8-5. 
 If no `Archives` directory is found, it is automatically created. Archive save files are automatically named as the 
 current date in the **DD-MM-YY** format, and the time the archive command was run in the **HH:MM** format, separated by a **T**. The current save 
 file for notes will be automatically cleared with the `clearSaveFile()` command found in the `FileCommand` class, and the current `noteList` as well as `noteHistory` are  
@@ -451,7 +478,7 @@ cleared. All errors are handled in `handleDataArchiving()`.
         noteHistory.clearNoteHistory();
     }
 ````
-_Figure 4.7-5: Code snippet for main driver of archive command_
+_Figure 4.8-5: Code snippet for main driver of archive command_
 
 The `archive` command checks for the size of the current `noteList` before execution, and as such, when an empty `noteList` is detected, 
 the archiving process will not be started. Archived notes will **not** be read by the program anymore and any changes can be made to the created archive save file.
@@ -470,14 +497,14 @@ In the event of **corrupted or missing data**, the `storage` component defends a
 reading in this data by throwing exceptions to stop prevent the current data from being read. Any data read up to that point is **untouched**, and the app will 
 continue to read in the remaining data and run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
 
-### 4.8 Displaying Schedule (Johannine)
+### 4.9 Displaying Schedule (Johannine)
 
 The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to 
 display the full week. Otherwise, it displays the current day’s schedule in a list form, with the `Task` items sorted 
 by date.
 
-![Figure 4.8-1](images/DeveloperGuide/Figure 4.8-1.png)
-_Figure 4.8-1: Sequence diagram for displaying week or day schedule_
+![Figure 4.9-1](images/DeveloperGuide/Figure 4.9-1.png)
+_Figure 4.9-1: Sequence diagram for displaying week or day schedule_
 
 ##### Implementation
 
@@ -505,7 +532,7 @@ Because of the way the timetable time slots increment on an hourly basis, functi
 timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not 
 overloaded with too many details.
 
-### 4.9 Displaying Free Time and Sleep Time (Daniel)
+### 4.10 Displaying Free Time and Sleep Time (Daniel)
 
 ##### Implementation
 
@@ -514,15 +541,15 @@ The `freeTime` command displays to the user their longest block of free time for
  next day’s schedule. Both commands are implemented similarly. They both find the longest uninterrupted block
  of free time within a certain time period by checking if individual hour-long time blocks in this time period
  are free. The commands then use the start and end time values found to calculate a duration, and pass all
- three values to the `Ui` to display to the user. Figure 4.9-1 shows the sequence diagram for the `freeTimeCommand`,
- and Figure 4.9-2 shows the sequence diagram for the `sleepTimeCommand`.
+ three values to the `Ui` to display to the user. Figure 4.10-1 shows the sequence diagram for the `freeTimeCommand`,
+ and Figure 4.10-2 shows the sequence diagram for the `sleepTimeCommand`.
 
-![Figure 4.9-1](images/DeveloperGuide/Figure%204.9-1.png)  
-_Figure 4.9-1: Sequence diagram for freeTimeCommand execution_
+![Figure 4.10-1](images/DeveloperGuide/Figure%204.10-1.png)  
+_Figure 4.10-1: Sequence diagram for freeTimeCommand execution_
 
 
-![Figure 4.9-2](images/DeveloperGuide/Figure%204.9-2.png)  
-_Figure 4.9-2: Sequence diagram for sleepTimeCommand execution_
+![Figure 4.10-2](images/DeveloperGuide/Figure%204.10-2.png)  
+_Figure 4.10-2: Sequence diagram for sleepTimeCommand execution_
 
 ##### Design Considerations
 
@@ -536,7 +563,7 @@ _Figure 4.9-2: Sequence diagram for sleepTimeCommand execution_
  command, this was an intentional design choice to not overload the user with too many unnecessary details. 
 
 
-### 4.10 Parsing Commands (Edmund)
+### 4.11 Parsing Commands (Edmund)
 
 The `Parser` determines what command is to be executed given by the user input. If the user input does not match any of 
 the specified commands, an unknown command message would be returned.
@@ -555,7 +582,7 @@ parameters filled, the corresponding parser would pass them to their command fun
 The user cannot input an empty string as a parameter. This would avoid issues of invalid parameters passing on to the 
 commands, which can result in error in the program. As such, checks are to be done on the user input.  
 
-### 4.11 Recurring Tasks and Auto Deletion (Daniel)
+### 4.12 Recurring Tasks and Auto Deletion (Daniel)
 
 ##### Implementation
 

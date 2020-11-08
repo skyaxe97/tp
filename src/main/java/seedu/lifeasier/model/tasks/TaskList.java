@@ -22,14 +22,24 @@ public class TaskList {
     private static Logger logger = Logger.getLogger(ShowNotesCommand.class.getName());
     protected static ArrayList<Task> taskList;
     private int displayIndexOfLastMatch = 0;
-    HashMap<Integer,Integer> taskMap;
+    private HashMap<Integer,Integer> taskMap;
+
 
     public TaskList() {
         taskList = new ArrayList<>();
+        taskMap = new HashMap<>();
     }
 
     public ArrayList<Task> getTaskList() {
         return taskList;
+    }
+
+    public HashMap<Integer, Integer> createTaskMap() {
+        return this.taskMap = new HashMap<>();
+    }
+
+    public void setMap(int displayIndex, int actualIndex) {
+        taskMap.put(displayIndex, actualIndex);
     }
 
     public int getTaskCount() {
@@ -178,23 +188,16 @@ public class TaskList {
     }
 
     public void deleteTask(int displayIndex, Ui ui) {
-        try {
-            int actualIndex = taskMap.get(displayIndex);
-            taskList.remove(actualIndex);
-        } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.SEVERE, "Index provided out of bounds");
-            ui.showIndexOutOfBoundsError();
-        } catch (NumberFormatException e) {
-            logger.log(Level.SEVERE, "Input is not a valid number");
-            ui.showNumberFormatError();
-        }
+        int actualIndex = taskMap.get(displayIndex);
+        taskList.remove(actualIndex);
+
     }
 
     public void printMatchingTasks(String type, String description, Ui ui) throws TaskNotFoundException {
 
         ui.showMatchingTasksPrompt(type);
         logger.log(Level.INFO, "Start of printing all matching " + type);
-        taskMap = new HashMap<>();
+        createTaskMap();
         displayIndexOfLastMatch = 0;
         int firstDisplayIndex = 0;
         boolean noMatches = true;
@@ -205,7 +208,7 @@ public class TaskList {
                 ui.printMatchingTask(firstDisplayIndex, task);
                 displayIndexOfLastMatch = firstDisplayIndex;
 
-                taskMap.put(firstDisplayIndex, i);
+                setMap(firstDisplayIndex, i);
                 noMatches = false;
             }
         }
@@ -273,5 +276,4 @@ public class TaskList {
         }
 
     }
-
 }

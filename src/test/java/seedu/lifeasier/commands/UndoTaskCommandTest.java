@@ -16,6 +16,7 @@ import seedu.lifeasier.ui.Ui;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,6 +28,7 @@ class UndoTaskCommandTest {
 
     private final TaskList testTaskList = new TaskList();
     private final TaskHistory testTaskHistory = new TaskHistory();
+    private final HashMap<Integer,Integer> taskMap = new HashMap<>();
 
     public static final String TEST_FILEPATH = "testSave.txt";
 
@@ -94,9 +96,14 @@ class UndoTaskCommandTest {
         setUpStreams();
         setUpTaskList();
 
-        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 0);
+        testTaskList.createTaskMap();
+
+        testTaskList.setMap(1, 0);
+        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
+        testTaskList.setMap(1, 1);
         Task copyTestEvent = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 1);
-        Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 2);
+        testTaskList.setMap(1, 2);
+        Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
 
         testTaskHistory.pushOldCopy(copyTestDeadline);
         testTaskHistory.pushOldCopy(copyTestEvent);

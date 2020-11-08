@@ -375,21 +375,24 @@ public class Parser {
         return new EditDeadlineCommand(deadlineName);
     }
 
-    private Command parseDeleteTaskCommand(String input) {
+    private Command parseDeleteTaskCommand(Ui ui, String input) {
         String type = "";
         String name = "";
         try {
             logger.log(Level.INFO, "Parsing deleteTask command...");
+
             int firstIndexOfTypeCommand = input.indexOf(PARAM_TYPE);
-            int lastIndexOfTypeCommand = input.indexOf(PARAM_TYPE) + PARAM_TYPE.length();
+
             if (firstIndexOfTypeCommand == -1) {
                 logger.log(Level.SEVERE, "deleteTask command missing TYPE keyword");
-                throw new ParserException();
+                input = addTypeParam(ui);
             }
 
             int firstIndexOfNameCommand = input.indexOf(PARAM_NAME);
+            int lastIndexOfTypeCommand = input.indexOf(PARAM_TYPE) + PARAM_TYPE.length();
             if (firstIndexOfNameCommand == -1) {
                 type = input.substring(lastIndexOfTypeCommand).trim();
+                checkValidType(type);
                 name = "";
             } else {
                 int lastIndexOfNameCommand = input.indexOf(PARAM_NAME) + PARAM_NAME.length();
@@ -398,10 +401,56 @@ public class Parser {
                 name = input.substring(lastIndexOfNameCommand).trim();
             }
         } catch (ParserException e) {
-            logger.log(Level.SEVERE, "Invalid command...");
-
+            logger.log(Level.SEVERE, "Empty type description...");
+            input = addTypeParam(ui, input);
+            int firstIndexOfNameCommand = input.indexOf(PARAM_NAME);
+            int lastIndexOfTypeCommand = input.indexOf(PARAM_TYPE) + PARAM_TYPE.length();
+            int lastIndexOfNameCommand = input.indexOf(PARAM_NAME) + PARAM_NAME.length();
+            type = input.substring(lastIndexOfTypeCommand, firstIndexOfNameCommand).trim();
+            name = input.substring(lastIndexOfNameCommand).trim();
         }
         return new DeleteTaskCommand(type, name);
+    }
+
+    private String addTypeParam(Ui ui) {
+        String input;
+        String type;
+        ui.showAddTypePrompt();
+        while (true) {
+            try {
+                type = checkIfEmpty(ui, ui.readCommand());
+                checkValidType(type);
+                break;
+            } catch (ParserException e) {
+                ui.showInvalidTypeError();
+            }
+        }
+        input = PARAM_DELETE_TASK + " " + PARAM_TYPE  + " " + type;
+        logger.log(Level.INFO, "End of adding Type to string.");
+
+        return input;
+    }
+
+    private String addTypeParam(Ui ui, String input) {
+        String type;
+        String name;
+        ui.showAddTypePrompt();
+        while (true) {
+            try {
+                type = checkIfEmpty(ui, ui.readCommand());
+                checkValidType(type);
+                break;
+            } catch (ParserException e) {
+                ui.showInvalidTypeError();
+            }
+        }
+
+        int lastIndexOfNameCommand = input.indexOf(PARAM_NAME) + PARAM_NAME.length();
+        name = input.substring(lastIndexOfNameCommand).trim();
+        input = PARAM_DELETE_TASK + " " + PARAM_TYPE  + " " + type + " " + PARAM_NAME + name;
+        logger.log(Level.INFO, "End of adding Type to string.");
+
+        return input;
     }
 
     private void checkValidType(String type) throws ParserException {
@@ -922,6 +971,7 @@ public class Parser {
 
     public int checkIfValidInput(Ui ui, String input) {
         while (isNotNumeric(input)) {
+            logger.log(Level.SEVERE, "User input is invalid");
             ui.showInvalidNumberError();
             input = ui.readCommand();
         }
@@ -1064,6 +1114,8 @@ public class Parser {
                 break;
             } catch (IndexOutOfBoundsException e) {
                 ui.showIndexOutOfBoundsError();
+            } catch (NumberFormatException e) {
+                ui.showInvalidNumberError();
             }
         }
         return userParamChoice;
@@ -1172,7 +1224,7 @@ public class Parser {
                 return parseEditDeadlineCommand(input);
 
             case (PARAM_DELETE_TASK):
-                return parseDeleteTaskCommand(input);
+                return parseDeleteTaskCommand(ui, input);
 
             case (PARAM_UNDO):
                 return parseUndoCommand(input);
