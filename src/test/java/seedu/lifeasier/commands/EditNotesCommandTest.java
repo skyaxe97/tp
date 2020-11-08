@@ -108,6 +108,7 @@ class EditNotesCommandTest {
                 + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextGreen("OK! Your title is now: \"" + notes.get(0).getTitle() + "\"")
                 + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
+                + System.lineSeparator() + ui.colourTextRed("Something went wrong while saving your data...")
                 + System.lineSeparator(), outContent.toString());
 
         restoreStreams();
@@ -139,6 +140,7 @@ class EditNotesCommandTest {
                 + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextGreen("OK! Your description is now: \"" + notes.get(0).getDescription() + "\"")
                 + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
+                + System.lineSeparator() + ui.colourTextRed("Something went wrong while saving your data...")
                 + System.lineSeparator(), outContent.toString());
 
         restoreStreams();
@@ -176,6 +178,7 @@ class EditNotesCommandTest {
                 + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextGreen("OK! Your title is now: \"" + notes.get(0).getTitle() + "\"")
                 + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
+                + System.lineSeparator() + ui.colourTextRed("Something went wrong while saving your data...")
                 + System.lineSeparator(), outContent.toString());
         restoreStreams();
     }
@@ -214,6 +217,7 @@ class EditNotesCommandTest {
                 + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
                 + ui.colourTextGreen("OK! Your title is now: \"" + notes.get(0).getTitle() + "\"")
                 + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator()
+                + System.lineSeparator() + ui.colourTextRed("Something went wrong while saving your data...")
                 + System.lineSeparator(), outContent.toString());
         restoreStreams();
     }

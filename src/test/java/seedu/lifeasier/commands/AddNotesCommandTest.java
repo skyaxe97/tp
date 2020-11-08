@@ -72,11 +72,12 @@ class AddNotesCommandTest {
         AddNotesCommand command = new AddNotesCommand("Test Title");
         command.execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
         assertEquals(System.lineSeparator() + THIN_SEPARATOR
-                + System.lineSeparator() + ui.colourTextCyan("Alright! Please fill in your notes:")
-                + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR
-                + System.lineSeparator() + ui.colourTextGreen("Ok! I've taken note of this note!")
-                + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(),
-                outContent.toString());
+                        + System.lineSeparator() + ui.colourTextCyan("Alright! Please fill in your notes:")
+                        + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR
+                        + System.lineSeparator() + ui.colourTextGreen("Ok! I've taken note of this note!")
+                        + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
+                        + ui.colourTextRed("Something went wrong while saving your data...")
+                        + System.lineSeparator(), outContent.toString());
 
         restoreStreams();
     }
@@ -96,8 +97,9 @@ class AddNotesCommandTest {
                         + System.lineSeparator() + ui.colourTextCyan("Alright! Please fill in your notes:")
                         + System.lineSeparator() + System.lineSeparator() + THICK_SEPARATOR
                         + System.lineSeparator() + ui.colourTextGreen("Ok! I've taken note of this note!")
-                        + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(),
-                outContent.toString());
+                        + System.lineSeparator() + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator()
+                        + ui.colourTextRed("Something went wrong while saving your data...")
+                        + System.lineSeparator(), outContent.toString());
 
         restoreStreams();
     }
