@@ -78,11 +78,11 @@ Hello! What can I do for you today?
 _Figure 2-1: LifEasier’s welcome screen_
 
 1. You are now ready to use **LifEasier.** Type commands into the terminal window and press enter to execute the command. E.g Type  help and press enter to bring up the list of  available commands.
-1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or you have entered invalid information. Cyan coloured text is usually displayed when the system needs your input.
+1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or when you have entered invalid information. Cyan coloured text is usually displayed when the system needs your input.
 1. Refer to the Features section below to find more details on available commands.
 
 ## 3.0 User Features
-The following section expands on the features available for you to use in LifEasier. The explanation for each feature includes the format to be followed, at least one example, and some further explanation and notes if necessary.
+The following section expands on the features available for you to use in **LifEasier**. The explanation for each feature includes the format to be followed, at least one example, and some further explanation and notes if necessary.
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on General Command Format:
 
@@ -336,7 +336,7 @@ longer need to take note of.
 
 * Tasks refer to lessons, deadlines and events.
 
-Format: `deleteTask /type TYPE /name NAME`
+Format: `deleteTask /type TYPE [/name NAME]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on deleteTask Command Format:
 
@@ -364,8 +364,8 @@ Undoes the most recent edits or deletions made on tasks or notes.
 #### ![Notes](images/UserGuide/post-it.png) Notes on undo Command:
 
 * Tasks refer to lessons, deadlines and events.
-* Multiple undos are allowed until a particular object is deleted. For example, if a particular object goes through 
-_edit1-edit2-delete1-edit3_, you will only be able to undo _edit3_ and _delete1_.
+* Once a task/note is deleted, edits made prior cannot be undone. For example, if a particular object goes through 
+_edit1-edit2-delete1>edit3_, you will only be able to undo _edit3_ and then _delete1_.
 * The history of any edits and deletions are only available for the current session. Once the program is closed, all 
 history is discarded and you will not be able to undo those changes the next time you run the application.
 
@@ -382,12 +382,26 @@ An example of how to use the undo command is shown in Figure 3.9-1.
 
 ```
 undo
-=========================================================================
+
+---------------------------------------------------------------------------------------------------------------
 To undo a change in tasks, please enter: task
 To undo a change in notes, please enter: note
 task
+
+===============================================================================================================
 This task has been reverted back to its previous version!
 Deadline: homework by (28 Oct 2020, 09:00), repeats weekly 0 times
+===============================================================================================================
+
+undo note
+
+===============================================================================================================
+This note has been reverted back to its previous version!
+Title: We love cats!
+
+Yay for cats!
+
+===============================================================================================================
 ```
 
 Figure 3.9-1: An example of using the undo command
@@ -411,8 +425,15 @@ Format: `display KEYWORD`
 
 ```
 display
+
+---------------------------------------------------------------------------------------------------------------
+To see your schedule, please enter: week/today/tomorrow:
+today
+
+===============================================================================================================
 Here is your schedule for today:
 13:00-14:00  CS2113T
+14:00-17:00  CG2028
 ```
 
 *Figure 3.10-1: An example of using the display command to view your daily schedule*
@@ -421,6 +442,9 @@ Here is your schedule for today:
 
 ```
 display week
+
+===============================================================================================================
+NOTE: The row corresponding to the current hour is coloured for easy reference!
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 |TIME       | WEDNESDAY       | THURSDAY        | FRIDAY          | SATURDAY        | SUNDAY          | MONDAY          | TUESDAY         |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
@@ -447,6 +471,7 @@ display week
 Here are your upcoming deadlines this week:
 1. Deadline: ABC Project by (3 Nov 2020, 14:00), repeats weekly 0 times
 2. Deadline: weekly XYZ quiz by (5 Nov 2020, 13:00), repeats weekly 3 times
+===============================================================================================================
 ```
 
 *Figure 3.10-2: An example of using the display week command to view your weekly schedule*
@@ -711,7 +736,7 @@ In the event of **corrupted data** arising from either system errors or incorrec
 an **add, delete or edit** action, all corrupted data that has not been corrected will be **permanently removed** from the save file. 
 
 If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
-where you can access your archived files.
+where you can access your archived files. Archived notes will not show up in **LifEasier** anymore.
 
 ### 4.2 Recurring Tasks and Auto Deletion
 
@@ -728,9 +753,11 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 **The following FAQ section answers some common questions that you may have about the LifEasier application.**
 
 **Q1: Can I use my LifEasier saves on another computer?**
+
 **A:** Yes you can. You can transfer your files from one computer to another, and place them in a folder called “LifEasierSaves”. Then, run `LifEasier.jar` from the same folder as “LifEasierSaves”. Your saves should be loaded into LifEasier. As long as the “LifEasierSaves” folder is in the same folder as where the LifEasier.jar is being run, the program will read your saved information as per normal.
 
 **Q2: Can I edit the information in the save files directly?**
+
 **A:** Yes, it is possible but it is not recommended to do so. Directly modifying the save files may result in incorrectly formatted data to be passed into the **LifEasier** program on the next launch, resulting in missing data.
 
 
@@ -752,9 +779,9 @@ addNotes| `addNotes [TITLE]` | `addNotes AngryTime`
 showNotes| `showNotes [TITLE]` | `showNotes LaughTime`
 deleteNotes| `deleteNotes [TITLE]` | `deleteNotes SadTime`
 editNotes| `editNotes [TITLE]` | `editNotes CryingTime`
-undo| `undo TYPE` | `undo note OR undo task`
+undo| `undo TYPE` | `undo note` OR `undo task`
 archive| `archive` | `archive`
-display| `display [WEEK]` | `display day`
+display| `display KEYWORD` | `display day`
 freeTime| `freeTime` | `freeTime`
 sleepTime| `sleepTime` | `sleepTime`
 help| `help` | `help`

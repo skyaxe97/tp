@@ -2,12 +2,15 @@ package seedu.lifeasier.model.notes;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The NoteHistory class represents the list of changes made to Note objects,
  * edits or deletions in particular.
  */
 public class NoteHistory {
+    private static Logger logger = Logger.getLogger(NoteHistory.class.getName());
 
     private int changeCount;
     private int editCount;
@@ -69,6 +72,7 @@ public class NoteHistory {
         int indexOfLastNote = changeCount - 1;
 
         int editNumOfLastNote = noteHistory.get(indexOfLastNote).getEditNumber();
+        logger.log(Level.INFO, "Change editCount/deleteCount accordingly");
         if (!containsSameEditNumber(editNumOfLastNote)) {
             if (editNumOfLastNote > 0) {
                 editCount--;
@@ -77,6 +81,7 @@ public class NoteHistory {
             }
         }
 
+        logger.log(Level.INFO, "Popping the last note of noteHistory");
         noteHistory.remove(indexOfLastNote);
         decrementChangeCount();
     }
@@ -106,6 +111,7 @@ public class NoteHistory {
             editID = noteEditNumber;
         }
 
+        logger.log(Level.INFO, "Make a deep copy of Task with a specific editID");
         return new Note(note, editID);
     }
 
@@ -126,9 +132,16 @@ public class NoteHistory {
 
         deleteCount--;
 
+        logger.log(Level.INFO, "Make a deep copy of Task with a specific deleteID");
         return new Note(note, deleteID);
     }
 
+    /**
+     * Removes existing copies with the same editNumber of a particular Note
+     * that was saved in the NoteHistory.
+     *
+     * @param noteToDelete reference Note to be deleted.
+     */
     private void deletePrevCopiesOfThisNote(Note noteToDelete) {
         int editNumber = noteToDelete.getEditNumber();
         Iterator<Note> iterator = noteHistory.iterator();

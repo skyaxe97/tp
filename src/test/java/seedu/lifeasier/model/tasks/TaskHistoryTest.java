@@ -43,8 +43,10 @@ class TaskHistoryTest {
     @Test
     void getLastTask_TaskHistoryWithOneItem_Deadline() {
         setUpTaskList();
+        testTaskList.createTaskMap();
 
-        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 0);
+        testTaskList.setMap(1, 0);
+        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
         int testEditNumber = copyTestDeadline.editNumber;
 
         testTaskHistory.pushOldCopy(copyTestDeadline);
@@ -59,10 +61,14 @@ class TaskHistoryTest {
     @Test
     void getEditNumber_TaskHistoryWithDistinctEditedItems_PositiveInts() {
         setUpTaskList();
+        testTaskList.createTaskMap();
 
-        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 0);
+        testTaskList.setMap(1, 0);
+        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
+        testTaskList.setMap(1, 1);
         Task copyTestEvent = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
-        Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 2);
+        testTaskList.setMap(1, 2);
+        Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
 
         final int testEditNumber1 = copyTestDeadline.getEditNumber();
         final int testEditNumber2 = copyTestEvent.getEditNumber();
@@ -87,10 +93,14 @@ class TaskHistoryTest {
     @Test
     void getEditNumber_TaskHistoryWithDistinctDeletedItems_NegativeInts() {
         setUpTaskList();
+        testTaskList.createTaskMap();
 
-        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 0);
+        testTaskList.setMap(1, 0);
+        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 1);
+        testTaskList.setMap(1, 1);
         Task copyTestEvent = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 1);
-        Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 2);
+        testTaskList.setMap(1, 2);
+        Task copyTestLesson = testTaskHistory.getCurrCopyOfTaskToDelete(testTaskList, 1);
 
         final int testEditNumber1 = copyTestDeadline.getEditNumber();
         final int testEditNumber2 = copyTestEvent.getEditNumber();
@@ -115,9 +125,12 @@ class TaskHistoryTest {
     @Test
     void getEditNumber_TaskHistoryWithNonDistinctEditedItems_sameEditNumber() {
         setUpTaskList();
+        testTaskList.createTaskMap();
 
-        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 0);
-        Task copyTestDeadline2 = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 0);
+        testTaskList.setMap(1, 0);
+        Task copyTestDeadline = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
+        testTaskList.setMap(1, 0);
+        Task copyTestDeadline2 = testTaskHistory.getCurrCopyOfTaskToEdit(testTaskList, 1);
 
         int testEditNumber1 = copyTestDeadline.getEditNumber();
         int testEditNumber1again = copyTestDeadline2.getEditNumber();
