@@ -410,7 +410,8 @@ public class Ui {
     public void showInvalidNumberError() {
         printBlankLine();
         printThinSeparator();
-        System.out.println(colourTextCyan("The number you inputted is invalid! Please enter a valid number:"));
+        System.out.println(colourTextCyan("The number you inputted is invalid!"));
+        printThickSeparator();
     }
 
     public void showNoTitleFoundError() {
@@ -423,7 +424,7 @@ public class Ui {
 
     public void showNumberFormatError() {
         printBlankLine();
-        printThickSeparator();
+        printThinSeparator();
         System.out.println(colourTextRed("Oops! The input must be a number!"));
         printThickSeparator();
         printBlankLine();
@@ -585,7 +586,7 @@ public class Ui {
 
     public void showNoteNotDeletedMessage() {
         printBlankLine();
-        printThickSeparator();
+        printThinSeparator();
         System.out.println(colourTextGreen("OK! Note not deleted!"));
         printThickSeparator();
         printBlankLine();
@@ -593,7 +594,7 @@ public class Ui {
 
     public void showNoteDeletedMessage() {
         printBlankLine();
-        printThickSeparator();
+        printThinSeparator();
         System.out.println(colourTextGreen("OK! Note deleted!"));
         printThickSeparator();
         printBlankLine();
@@ -601,7 +602,7 @@ public class Ui {
 
     public void showEditWhichPartMessage() {
         printBlankLine();
-        printThickSeparator();
+        printThinSeparator();
         System.out.println(colourTextCyan("Do you want to change the title or description? (Enter T/D)"));
     }
     
@@ -899,7 +900,7 @@ public class Ui {
 
     public void showTitleChangedMessage(String title) {
         printBlankLine();
-        printThickSeparator();
+        printThinSeparator();
         System.out.println(colourTextGreen("OK! Your title is now: \"" + title + "\""));
         printThickSeparator();
         printBlankLine();
@@ -914,7 +915,7 @@ public class Ui {
 
     public void showDescriptionChangedMessage(String description) {
         printBlankLine();
-        printThickSeparator();
+        printThinSeparator();
         System.out.println(colourTextGreen("OK! Your description is now: \"" + description + "\""));
         printThickSeparator();
         printBlankLine();
