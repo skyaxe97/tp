@@ -43,7 +43,7 @@ class EventTest {
     @Test
     void testToString() {
         Event event = new Event("event", sampleTime1, sampleTime2, 2);
-        assertEquals(event.toString(), "Event: event (11 Nov 2020, 11:11 to 12 Dec 2020, 12:12)"
+        assertEquals(event.toString(), "Event: event (11 Nov 2020, 11:11 to 12 Dec 2020, 12:12),"
             + " repeats weekly 2 times");
     }
 
