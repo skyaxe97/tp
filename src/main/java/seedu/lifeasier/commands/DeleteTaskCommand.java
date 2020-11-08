@@ -44,7 +44,7 @@ public class DeleteTaskCommand extends Command {
                 tasks.checkForIndexOutOfBounds(newIndex);
                 return newIndex;
             } catch (IndexOutOfBoundsException e) {
-                ui.showIndexOutOfBoundsMessage();
+                ui.showIndexOutOfBoundsError();
             }
         }
     }
@@ -107,7 +107,7 @@ public class DeleteTaskCommand extends Command {
             ui.showNoMatchesError(type);
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "User input is out of bounds");
-            ui.showIndexOutOfBoundsMessage();
+            ui.showIndexOutOfBoundsError();
         }
         logger.log(Level.INFO, "End of DeleteTaskCommand");
     }
