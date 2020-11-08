@@ -1107,6 +1107,19 @@ public class Parser {
     }
 
     /**
+     * Checks if the given input contains more than one word.
+     *
+     * @param input String containing the user's input.
+     * @throws ParserException When a string has more than one word in the input.
+     */
+    protected void checkForSingleWordInput(String input) throws ParserException {
+        String[] splitInputs = input.split(" ");
+        if (splitInputs.length != 1) {
+            throw new ParserException();
+        }
+    }
+
+    /**
      * Parses the user's input into a Command object that can later be executed.
      *
      * @param ui Input and output interaction with the user.
@@ -1148,18 +1161,23 @@ public class Parser {
                 return parseDisplayScheduleCommand(ui, input);
 
             case (PARAM_HELP):
+                checkForSingleWordInput(input);
                 return new HelpCommand();
 
             case (PARAM_FREE_TIME):
+                checkForSingleWordInput(input);
                 return new FreeTimeCommand();
 
             case (PARAM_SLEEP_TIME):
+                checkForSingleWordInput(input);
                 return new SleepTimeCommand();
 
             case (PARAM_ARCHIVE):
+                checkForSingleWordInput(input);
                 return new ArchiveCommand();
 
             case (PARAM_EXIT):
+                checkForSingleWordInput(input);
                 return new ExitCommand();
 
             case (PARAM_EDIT_LESSON):
@@ -1191,10 +1209,12 @@ public class Parser {
             resetBoolean();
             logger.log(Level.SEVERE, "Time input is invalid");
             ui.showParseIncorrectDateTimeError();
+
         } catch (NumberFormatException e) {
             resetBoolean();
             logger.log(Level.SEVERE, "/repeats input is an invalid number");
             ui.showNumberFormatError();
+
         }
 
         return new InvalidCommand();
