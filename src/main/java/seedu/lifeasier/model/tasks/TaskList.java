@@ -26,10 +26,18 @@ public class TaskList {
 
     public TaskList() {
         taskList = new ArrayList<>();
+        taskMap = new HashMap<>();
     }
 
     public ArrayList<Task> getTaskList() {
         return taskList;
+    }
+
+    public HashMap<Integer, Integer> createTaskMap() {
+        return this.taskMap = new HashMap<>();
+    }
+    public void setMap (int displayIndex, int actualIndex) {
+        taskMap.put(displayIndex, actualIndex);
     }
 
     public int getTaskCount() {
@@ -187,7 +195,7 @@ public class TaskList {
 
         ui.showMatchingTasksPrompt(type);
         logger.log(Level.INFO, "Start of printing all matching " + type);
-        taskMap = new HashMap<>();
+        createTaskMap();
         displayIndexOfLastMatch = 0;
         int firstDisplayIndex = 0;
         boolean noMatches = true;
@@ -198,7 +206,7 @@ public class TaskList {
                 ui.printMatchingTask(firstDisplayIndex, task);
                 displayIndexOfLastMatch = firstDisplayIndex;
 
-                taskMap.put(firstDisplayIndex, i);
+                setMap(firstDisplayIndex, i);
                 noMatches = false;
             }
         }
