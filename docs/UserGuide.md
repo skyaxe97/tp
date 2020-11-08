@@ -364,8 +364,8 @@ Undoes the most recent edits or deletions made on tasks or notes.
 #### ![Notes](images/UserGuide/post-it.png) Notes on undo Command:
 
 * Tasks refer to lessons, deadlines and events.
-* Multiple undos are allowed until a particular object is deleted. For example, if a particular object goes through 
-_edit1-edit2-delete1-edit3_, you will only be able to undo _edit3_ and _delete1_.
+* Once a task/note is deleted, edits made prior cannot be undone. For example, if a particular object goes through 
+_edit1-edit2-delete1>edit3_, you will only be able to undo _edit3_ and then _delete1_.
 * The history of any edits and deletions are only available for the current session. Once the program is closed, all 
 history is discarded and you will not be able to undo those changes the next time you run the application.
 
@@ -382,12 +382,26 @@ An example of how to use the undo command is shown in Figure 3.9-1.
 
 ```
 undo
-=========================================================================
+
+---------------------------------------------------------------------------------------------------------------
 To undo a change in tasks, please enter: task
 To undo a change in notes, please enter: note
 task
+
+===============================================================================================================
 This task has been reverted back to its previous version!
 Deadline: homework by (28 Oct 2020, 09:00), repeats weekly 0 times
+===============================================================================================================
+
+undo note
+
+===============================================================================================================
+This note has been reverted back to its previous version!
+Title: We love cats!
+
+Yay for cats!
+
+===============================================================================================================
 ```
 
 Figure 3.9-1: An example of using the undo command
@@ -411,8 +425,15 @@ Format: `display KEYWORD`
 
 ```
 display
+
+---------------------------------------------------------------------------------------------------------------
+To see your schedule, please enter: week/today/tomorrow:
+today
+
+===============================================================================================================
 Here is your schedule for today:
 13:00-14:00  CS2113T
+14:00-17:00  CG2028
 ```
 
 *Figure 3.10-1: An example of using the display command to view your daily schedule*
@@ -421,6 +442,9 @@ Here is your schedule for today:
 
 ```
 display week
+
+===============================================================================================================
+NOTE: The row corresponding to the current hour is coloured for easy reference!
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
 |TIME       | WEDNESDAY       | THURSDAY        | FRIDAY          | SATURDAY        | SUNDAY          | MONDAY          | TUESDAY         |
 +-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
@@ -447,6 +471,7 @@ display week
 Here are your upcoming deadlines this week:
 1. Deadline: ABC Project by (3 Nov 2020, 14:00), repeats weekly 0 times
 2. Deadline: weekly XYZ quiz by (5 Nov 2020, 13:00), repeats weekly 3 times
+===============================================================================================================
 ```
 
 *Figure 3.10-2: An example of using the display week command to view your weekly schedule*
