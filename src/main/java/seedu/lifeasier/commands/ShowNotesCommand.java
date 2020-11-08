@@ -44,11 +44,12 @@ public class ShowNotesCommand extends Command {
             ui.showMultipleMatchesFoundPrompt();
 
             logger.log(Level.INFO, "Start of printing all matching notes");
-            noteMatches = ui.showMultipleNoteMatchesMessage(notes, title, noteMatches);
+            ui.showMultipleNoteMatchesMessage(notes, title);
+            noteMatches = NoteCommandFunctions.storeNoteMatches(notes, title, noteMatches);
             logger.log(Level.INFO, "End of printing all matching notes");
 
             noteNumber = Integer.parseInt(ui.readCommand()) - 1;
-            NoteCommandFunctions.checkForIndexOutOfBounds(notes, noteNumber + 1, noteMatches);
+            NoteCommandFunctions.checkForIndexOutOfBounds(noteNumber + 1, noteMatches);
             ui.showNotesMessage(notes.get(noteNumber).toString());
         }
 

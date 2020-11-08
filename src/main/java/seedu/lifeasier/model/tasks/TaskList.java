@@ -24,6 +24,7 @@ public class TaskList {
     private int displayIndexOfLastMatch = 0;
     private HashMap<Integer,Integer> taskMap;
 
+
     public TaskList() {
         taskList = new ArrayList<>();
         taskMap = new HashMap<>();
@@ -275,5 +276,4 @@ public class TaskList {
         }
 
     }
-
 }

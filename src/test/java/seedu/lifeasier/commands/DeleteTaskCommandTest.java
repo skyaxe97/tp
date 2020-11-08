@@ -60,6 +60,8 @@ class DeleteTaskCommandTest {
 
         DeleteTaskCommand command = new DeleteTaskCommand("event", "testEvent");
         testTaskList.addEvent("testEvent", sampleTime1, sampleTime2, 1);
+        testTaskList.createTaskMap();
+        testTaskList.setMap(1,0);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
         assert (testTaskList.getTaskList().isEmpty());

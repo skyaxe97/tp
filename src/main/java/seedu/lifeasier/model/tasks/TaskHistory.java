@@ -2,12 +2,15 @@ package seedu.lifeasier.model.tasks;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The TaskHistory class represents the list of changes made to Task objects,
  * edits or deletions in particular.
  */
 public class TaskHistory {
+    private static Logger logger = Logger.getLogger(TaskHistory.class.getName());
 
     private int changeCount;
     private int editCount;
@@ -59,6 +62,7 @@ public class TaskHistory {
         int indexOfLastTask = changeCount - 1;
 
         int editNumOfLastTask = taskHistory.get(indexOfLastTask).getEditNumber();
+        logger.log(Level.INFO, "Change editCount/deleteCount accordingly");
         if (!containsSameEditNumber(editNumOfLastTask)) {
             if (editNumOfLastTask > 0) {
                 editCount--;
@@ -67,6 +71,7 @@ public class TaskHistory {
             }
         }
 
+        logger.log(Level.INFO, "Popping the last task of taskHistory");
         taskHistory.remove(indexOfLastTask);
         decrementChangeCount();
     }
@@ -79,11 +84,12 @@ public class TaskHistory {
      * Returns a copy of the Task object before it is edited.
      *
      * @param tasks represents the TaskList object.
-     * @param userIndexChoice the index of the Task object the user wants to edit.
+     * @param userListNumChoice the list number of the Task object the user wants to edit.
      *
      */
-    public Task getCurrCopyOfTaskToEdit(TaskList tasks, int userIndexChoice) {
-        Task task = tasks.getTask(tasks.getActualIndex(userIndexChoice));
+
+    public Task getCurrCopyOfTaskToEdit(TaskList tasks, int userListNumChoice) {
+        Task task = tasks.getTask(tasks.getActualIndex(userListNumChoice));
 
         int taskEditNumber = task.getEditNumber();
         int editID;
@@ -95,7 +101,7 @@ public class TaskHistory {
         } else {
             editID = taskEditNumber;
         }
-
+        logger.log(Level.INFO, "Make a deep copy of Task with a specific editID");
         return copyTask(task, editID);
     }
 
@@ -103,11 +109,11 @@ public class TaskHistory {
      * Returns a copy of the Task object before it is deleted.
      *
      * @param tasks represents the TaskList object.
-     * @param userIndexChoice the index of the Task object the user wants to delete.
+     * @param userListNumChoice the list number of the Task object the user wants to delete.
      *
      */
-    public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userIndexChoice) {
-        Task task = tasks.getTask(userIndexChoice);
+    public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userListNumChoice) {
+        Task task = tasks.getTask(userListNumChoice);
 
         deletePrevCopiesOfThisTask(task);
 
@@ -116,9 +122,16 @@ public class TaskHistory {
 
         deleteCount--;
 
+        logger.log(Level.INFO, "Make a deep copy of Task with a specific deleteID");
         return copyTask(task, deleteID);
     }
 
+    /**
+     * Removes existing copies with the same editNumber of a particular Task
+     * that was saved in the TaskHistory.
+     *
+     * @param taskToDelete reference Task to be deleted.
+     */
     private void deletePrevCopiesOfThisTask(Task taskToDelete) {
         int editNumber = taskToDelete.getEditNumber();
         Iterator<Task> iterator = taskHistory.iterator();
