@@ -87,6 +87,7 @@ public class TaskHistory {
      * @param userListNumChoice the list number of the Task object the user wants to edit.
      *
      */
+
     public Task getCurrCopyOfTaskToEdit(TaskList tasks, int userListNumChoice) {
         Task task = tasks.getTask(tasks.getActualIndex(userListNumChoice));
 
@@ -112,7 +113,7 @@ public class TaskHistory {
      *
      */
     public Task getCurrCopyOfTaskToDelete(TaskList tasks, int userListNumChoice) {
-        Task task = tasks.getTask(tasks.getActualIndex(userListNumChoice));
+        Task task = tasks.getTask(userListNumChoice);
 
         deletePrevCopiesOfThisTask(task);
 

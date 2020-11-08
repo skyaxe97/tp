@@ -25,7 +25,7 @@ public class EditDeadlineCommand extends Command {
         this.deadlineName = deadlineName;
     }
 
-    public void printMatchingDeadlines(TaskList tasks, Ui ui, String code) throws TaskNotFoundException {
+    private void printMatchingDeadlines(TaskList tasks, Ui ui, String code) throws TaskNotFoundException {
         tasks.printMatchingTasks(Ui.PARAM_DEADLINE, code, ui);
     }
 
@@ -60,12 +60,6 @@ public class EditDeadlineCommand extends Command {
             logger.log(Level.INFO, "Push old copy of Deadline into taskHistory");
             storage.saveTasks();
 
-        } catch (IndexOutOfBoundsException e) {
-            logger.log(Level.SEVERE, "Input number is out of bounds");
-            ui.showIndexOutOfBoundsError();
-        } catch (NumberFormatException e) {
-            logger.log(Level.SEVERE, "Input is not a number");
-            ui.showNumberFormatError();
         } catch (TaskNotFoundException e) {
             logger.log(Level.SEVERE, "Input Deadline name does not match any of the existing Deadline names.");
             ui.showNoMatchesError(Ui.PARAM_DEADLINE);
@@ -93,8 +87,6 @@ public class EditDeadlineCommand extends Command {
             break;
 
         default:
-            throw new IndexOutOfBoundsException();
         }
     }
-
 }
