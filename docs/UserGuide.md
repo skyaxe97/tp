@@ -78,7 +78,7 @@ Hello! What can I do for you today?
 _Figure 2-1: LifEasier’s welcome screen_
 
 1. You are now ready to use **LifEasier.** Type commands into the terminal window and press enter to execute the command. E.g Type  help and press enter to bring up the list of  available commands.
-1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or you have entered invalid information.
+1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or you have entered invalid information. Cyan coloured text is usually displayed when the system needs your input.
 1. Refer to the Features section below to find more details on available commands.
 
 ## 3.0 User Features
@@ -89,7 +89,7 @@ The following section expands on the features available for you to use in LifEas
 * Words in `UPPER_CASE` are parameters to be supplied by the user.
 * Items in square brackets are optional e.g `[TITLE]`
 * **Some** commands can be filled in **partially** and still work. These commands will be stated in the detailed command information below.
-* Command parameters **must** follow the **order stated**, including partial commands. E.g if the command states `addEvent NAME /time START /to END`,  `addEvent NAME /to END /time START` will **NOT** be accepted.
+* Command parameters **must** follow the **order stated**, including partial commands. E.g if the command states `addEvent NAME /from START /to END`,  `addEvent NAME /to END /from START` will **NOT** be accepted.
 * `DATE` parameters have the format of **DD-MM-YY**.
 * `TIME` parameters follow a 24-hour clock, and have the format of **HH:mm**.
 * Currently, **LifEasier** does not allow tasks to be added that span multiple days. However, this feature will be added in a future version of **LifEasier**.
@@ -161,7 +161,7 @@ Format: `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES`
 * The program will prompt for the remaining missing parameters when a partial command is input.
 * For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
-#### Examples:
+#### Example:
 
 An example of how to use the addLesson command is shown in Figure 3.2-1.
 ```
@@ -177,7 +177,7 @@ your calendar
 Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
 Format: `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 
-#### ![Notes](images/UserGuide/post-it.png) Notes on addEvent command:
+#### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command:
 
 * System will not warn you if there are any clashes in timing with other Tasks.
 
@@ -190,7 +190,7 @@ Format: `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 * The program will prompt for the remaining missing parameters when a partial command is input.
 * For events that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
-#### Examples:
+#### Example:
 
 An example of how to use the addEvent command is shown in Figure 3.3-1.
 ```
@@ -205,7 +205,7 @@ your calendar
 
 Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to your schedule.
 
-#### ![Notes](images/UserGuide/post-it.png) Notes on addDeadline command:
+#### ![Notes](images/UserGuide/post-it.png) Notes on addDeadline Command:
 
 * System will not warn you if there are any clashes in timing with other Tasks.
 
@@ -219,7 +219,7 @@ Format: `addDeadline NAME /by DATETIME /repeats TIMES`
 * This command accepts **partial commands**. E.g `addDeadline Return books` is a valid command.
 * The program will prompt for the remaining missing parameters when a partial command is input.
 
-#### Examples:
+#### Example:
 
 An example of how to use the addDeadline command is shown in Figure 3.4-1.
 ```
@@ -244,7 +244,7 @@ Format: `editLesson [CODE]`
 “`/date DATE /from START /to END`”
 * For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
-#### Examples:
+#### Example:
 
 An example of how to use the editLesson command is shown in Figure 3.5-1.
 ```
@@ -277,7 +277,7 @@ will be printed.
 “`/date DATE /from START /to END`”
 * For events that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
 
-#### Examples:
+#### Example:
 
 An example of how to use the editEvent command is shown in Figure 3.6-1.
 ```
@@ -309,7 +309,7 @@ will be printed.
 * If you choose to edit time, System will prompt to input new `BY` time in the format of 
 “`/by DATETIME`”.
 
-#### Examples:
+#### Example:
 
 An example of how to use the editDeadline command is shown in Figure 3.7-1.
 ```
@@ -344,7 +344,7 @@ Format: `deleteTask /type TYPE /name NAME`
 Else, all `Task` that match the type will be printed.
 * The system will prompt you to choose a `Task` to be deleted.
 
-#### Examples:
+#### Example:
 
 An example of how to use the deleteTask command is shown in Figure 3.8-1.
 ```
