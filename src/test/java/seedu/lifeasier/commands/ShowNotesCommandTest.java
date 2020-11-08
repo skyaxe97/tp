@@ -74,9 +74,9 @@ class ShowNotesCommandTest {
         new ShowNotesCommand("dogs").execute(ui, notes, tasks, storage, parser, noteHistory, taskHistory);
 
         assertEquals(System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("The title you inputted is not found...") + System.lineSeparator()
-                + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
+                    + THICK_SEPARATOR + System.lineSeparator()
+                    + ui.colourTextRed("The title you inputted is not found...") + System.lineSeparator()
+                    + THICK_SEPARATOR + System.lineSeparator() + System.lineSeparator(), outContent.toString());
         restoreStreams();
     }
 
