@@ -677,6 +677,14 @@ public class Ui {
         System.out.println(colourTextCyan("How many times do you want this to be repeated?"));
     }
 
+
+    public void showAddTypePrompt() {
+        printBlankLine();
+        printThinSeparator();
+        System.out.println(colourTextCyan("What type of task do you want to delete?"));
+    }
+
+
     public void showMultipleNoteMatchesMessage(NoteList notes, String title) {
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getTitle().contains(title)) {
@@ -702,6 +710,14 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextRed("Invalid undo type, please try again!"));
+        printThickSeparator();
+        printBlankLine();
+    }
+
+    public void showInvalidTypeError() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("Invalid type of task, please try again!"));
         printThickSeparator();
         printBlankLine();
     }
