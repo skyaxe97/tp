@@ -3,10 +3,7 @@ package seedu.lifeasier.commands;
 import org.junit.jupiter.api.Test;
 import seedu.lifeasier.model.notes.NoteHistory;
 import seedu.lifeasier.model.notes.NoteList;
-import seedu.lifeasier.model.tasks.TaskDuplicateException;
-import seedu.lifeasier.model.tasks.TaskHistory;
-import seedu.lifeasier.model.tasks.TaskList;
-import seedu.lifeasier.model.tasks.TaskPastException;
+import seedu.lifeasier.model.tasks.*;
 import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.storage.FileStorage;
 import seedu.lifeasier.ui.Ui;
@@ -30,8 +27,6 @@ class DeleteTaskCommandTest {
 
     private final LocalDateTime sampleTime1 = LocalDateTime.parse("2020-11-11T11:11");
     private final LocalDateTime sampleTime2 = LocalDateTime.parse("2020-12-12T12:12");
-    private final LocalDateTime pastSampleTime1 = LocalDateTime.parse("2019-11-11T11:11");
-    private final LocalDateTime pastSampleTime2 = LocalDateTime.parse("2019-12-12T12:12");
 
     public void setUpStreams(String input) {
         System.setOut(new PrintStream(outContent));
@@ -82,18 +77,10 @@ class DeleteTaskCommandTest {
 
         DeleteTaskCommand command = new DeleteTaskCommand("event", "testEvent");
         testTaskList.addLesson("CS2040C", sampleTime1, sampleTime2, 1);
+        Task testLesson = new Lesson("CS2040C", sampleTime1, sampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Here are all your matching events:") + System.lineSeparator()
-                + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("Sorry! There is no event matching your query. Please "
-                + "re-enter your command.") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
+        assertEquals (testTaskList.getTask(0).toString(), testLesson.toString());
 
         restoreStreams();
     }

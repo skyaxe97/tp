@@ -18,11 +18,6 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddLessonCommandTest {
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-    private final PrintStream originalErr = System.err;
-
     public static final String TEST_FILEPATH = "testSave.txt";
 
     private final LocalDateTime sampleTime1 = LocalDateTime.parse("2020-11-11T11:11");
@@ -30,20 +25,8 @@ class AddLessonCommandTest {
     private final LocalDateTime pastSampleTime1 = LocalDateTime.parse("2019-11-11T11:11");
     private final LocalDateTime pastSampleTime2 = LocalDateTime.parse("2019-12-12T12:12");
 
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
-    }
-
-    public void restoreStreams() {
-        System.setOut(originalOut);
-        System.setErr(originalErr);
-    }
-
     @Test
     void execute_validLesson_lessonAddedToTaskList() {
-        setUpStreams();
-
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         NoteHistory noteHistory = new NoteHistory();
@@ -56,22 +39,11 @@ class AddLessonCommandTest {
         Task testLesson = new Lesson("testLesson", sampleTime1, sampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Done! I've added") + System.lineSeparator()
-                + ui.colourTextGreen("\"" + testLesson + "\" ") + System.lineSeparator()
-                + ui.colourTextGreen("to your schedule!") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
-
-        restoreStreams();
+        assertEquals(testTaskList.getTask(0).toString(), testLesson.toString());
     }
 
     @Test
     void execute_dateTimeInThePast_lessonNotAdded() {
-        setUpStreams();
-
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         NoteHistory noteHistory = new NoteHistory();
@@ -83,20 +55,11 @@ class AddLessonCommandTest {
         AddLessonCommand command = new AddLessonCommand("testLesson", pastSampleTime1, pastSampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("The timing of this lesson is already in the past!") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
-
-        restoreStreams();
+        assert(testTaskList.getTaskList().isEmpty());
     }
 
     @Test
     void execute_duplicateLesson_lessonNotAdded() {
-        setUpStreams();
-
         Ui ui = new Ui();
         NoteList notes = new NoteList();
         NoteHistory noteHistory = new NoteHistory();
@@ -106,25 +69,9 @@ class AddLessonCommandTest {
         Parser parser = new Parser();
 
         AddLessonCommand command = new AddLessonCommand("testLesson", sampleTime1, sampleTime2, 1);
-        Task testLesson = new Lesson("testLesson", sampleTime1, sampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Done! I've added") + System.lineSeparator()
-                + ui.colourTextGreen("\"" + testLesson + "\" ") + System.lineSeparator()
-                + ui.colourTextGreen("to your schedule!") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator()
-                + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("This lesson or something very similar already exists in your schedule!")
-                + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
-
-        restoreStreams();
+        assertEquals(testTaskList.getTaskList().size(), 1);
     }
 }

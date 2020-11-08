@@ -104,18 +104,10 @@ class EditDeadlineCommandTest {
 
         EditDeadlineCommand command = new EditDeadlineCommand("garbage");
         testTaskList.addDeadline("oldDeadline", sampleTime1, 1);
+        Task testDeadline = new Deadline("oldDeadline", sampleTime1, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Here are all your matching deadlines:") + System.lineSeparator()
-                + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("Sorry! There is no deadline matching your query. Please "
-                + "re-enter your command.") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
+        assertEquals(testTaskList.getTask(0).toString(), testDeadline.toString());
 
         restoreStreams();
     }

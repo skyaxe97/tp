@@ -193,8 +193,7 @@ class TaskListTest {
     }
 
     @Test
-    void editTaskDescription_emptyInput_promptForAnotherInput() throws TaskPastException, TaskDuplicateException,
-        TaskNotFoundException {
+    void editTaskDescription_emptyInput_promptForAnotherInput() throws TaskNotFoundException {
 
         String newDescription = "\nnewDescription";
         setUpStreams(newDescription);
@@ -205,19 +204,8 @@ class TaskListTest {
         taskList.addTask(originalEvent);
         taskList.printMatchingTasks("event", "", ui);
         taskList.editTaskDescription(1, ui);
-        Task copyOriginalEvent = new Event("Event", SAMPLE1, SAMPLE2, 0);
-        assertEquals(System.lineSeparator()
-                + Ui.THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Here are all your matching events:") + System.lineSeparator()
-                + "1. " + copyOriginalEvent + System.lineSeparator() + System.lineSeparator()
-                + Ui.THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Your new description cannot be empty. Please try again!")
-                + System.lineSeparator() + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextGreen("Your edit has been saved.") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
+        Task changedEvent = new Event("newDescription", SAMPLE1, SAMPLE2, 0);
+        assertEquals(taskList.getTask(0).toString(), changedEvent.toString());
 
         restoreStreams();
     }

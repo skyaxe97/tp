@@ -106,18 +106,10 @@ class EditEventCommandTest {
 
         EditEventCommand command = new EditEventCommand("garbage");
         testTaskList.addEvent("oldEvent", sampleTime1, sampleTime2, 1);
+        Task testEvent = new Event("oldEvent", sampleTime1, sampleTime2, 1);
 
         command.execute(ui, notes, testTaskList, storage, parser, noteHistory, testTaskHistory);
-        assertEquals(System.lineSeparator()
-                + Ui.THIN_SEPARATOR + System.lineSeparator()
-                + ui.colourTextCyan("Here are all your matching events:") + System.lineSeparator()
-                + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + ui.colourTextRed("Sorry! There is no event matching your query. Please "
-                + "re-enter your command.") + System.lineSeparator()
-                + Ui.THICK_SEPARATOR + System.lineSeparator()
-                + System.lineSeparator(),
-            outContent.toString());
+        assertEquals(testTaskList.getTask(0).toString(), testEvent.toString());
 
         restoreStreams();
     }
