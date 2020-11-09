@@ -102,8 +102,6 @@ The following section expands on the features available for you to use in **LifE
 * **LifEasier** does not support `00:00` as a valid time for midnight. Instead, use `24:00`, which will automatically be converted to `23:59` by the program.
 * Currently, **LifEasier** does not allow tasks to be added that span multiple days. However, this feature will be added in a future version of **LifEasier**.
 
-<div style="page-break-after: always;"></div>
-
 ### 3.1 Viewing Help: `help`
 This command shows you the available commands and their formats.
 
@@ -112,6 +110,8 @@ This command shows you the available commands and their formats.
 #### Example:
 An example of how to use the help command is shown below in Figure 3.1-1.
 
+
+<font size = "10">
 ````
 help
 
@@ -153,6 +153,7 @@ For more detailed information, please visit the online user guide at:
 https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide
 ==============================================================================================
 ````
+</font>
 
 _Figure 3.1-1: An example of using the help command_
 
@@ -484,6 +485,8 @@ history is discarded and you will not be able to undo those changes the next tim
 * The `TYPE` can either be `task` or `note`.
 * If not specified, the program will prompt you to enter `task` or `note`.
 
+<div style="page-break-after: always;"></div>
+
 #### Example:
 
 An example of how to use the undo command is shown in Figure 3.9-1.
@@ -553,6 +556,7 @@ _Figure 3.10-1: An example of using the display command to view your daily sched
 
 `display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.10-2.
 
+<font size="10">
 ```
 display week
 
@@ -586,6 +590,7 @@ Here are your upcoming deadlines this week:
 2. Deadline: weekly XYZ quiz by (5 Nov 2020, 13:00), repeats weekly 3 times
 ================================================================================================
 ```
+</font>
 
 _Figure 3.10-2: An example of using the display week command to view your weekly schedule_
 
@@ -790,7 +795,6 @@ Title: Cats are the best!
 
 Cats are the cutest in the world :D
 
-
 ===============================================================================================================
 Do you want to change the title or description? (Enter T/D)
 D
@@ -920,8 +924,6 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 **Q3: Why is my event/lesson not showing up/getting deleted after I edited the save file?**
 
 **A:** You may have set the end time for your event/lesson as `00:00` or `24:00` in the save file, which **LifEasier** does not support currently. As such, please enter `23:59` as the time if you want to modify the task to end at midnight directly from the save file.
-
-<div style="page-break-after: always;"></div>
 
 ## 6.0 Command Summary
 
