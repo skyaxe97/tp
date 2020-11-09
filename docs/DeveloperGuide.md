@@ -228,9 +228,7 @@ For more information on the reference frames for the getting and pushing of copy
 Due to the difference in the types of tasks and their parameters, this functionality was designed to guide the user
  explicitly to ensure accurate inputs and thus efficiency. This will have minimal impact on the efficiency of the program,
  while improving the quality of use for the user.
- 
- <div style="page-break-after: always;"></div>
- 
+  
 ### 4.3 Deleting of Lessons, Events, Deadlines
 
 The `deleteTaskCommand` allows the user to delete any `Task` (lesson, event or deadline) from the `TaskList`.
@@ -252,13 +250,13 @@ _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 
 For more information on the reference frames for the getting and pushing of copy of `Task`, refer to Figure 4.7-1 below.
 
-<div style="page-break-after: always;"></div>
-
 #### Design Considerations
 
 The command has to handle separate types of tasks as printing all tasks and forcing the user to look up the whole table
  would be impractical in the long run. The enhanced capability with `TaskHistory` to allow the user to undo any action is 
  crucial as its initial functionality did not have the ability to restore any accidentally deleted `Tasks`.
+
+<div style="page-break-after: always;"></div>
 
 ### 4.4 Adding Notes
 
@@ -483,7 +481,10 @@ has been deemed as corrupted, an appropriate error will be thrown, and the task 
 
 The save file will be updated at the end of file reading.
 
-<br></br>
+<br>
+<br>
+<br>
+<br>
 
 ![Startup file load sequence diagram](images/DeveloperGuide/Figure 4.8-2.png)
 
@@ -816,9 +817,7 @@ At any point, feel free to try out the undo command after an edit or delete has 
 * `undo task`
 * `undo note`
 
-Once again, use the `display` and `showNotes` commands to view the updated tasks and notes contents.
-
-At any point, feel free to quit the app using `exit` and relaunch the app to view that **LifEasier** has saved all input data.
+Once again, use the `display` and `showNotes` commands to view the updated tasks and notes contents. At any point, feel free to quit the app using `exit` and relaunch the app to view that **LifEasier** has saved all input data.
 
 Test deletion of tasks and notes with the following commands.
 * `deleteTask /type lesson /CS2113T`
