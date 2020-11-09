@@ -21,10 +21,13 @@ The remaining half is split roughly equally between documentation and test code,
 I contributed the following functionalities to the project:
 1. The sleepTime command. This command allows users to find out how much time they have to sleep based on their schedules.
 1. The freeTime command. This command allows users to find out how much free time they have in their day based on their schedules.
-1. Recurring tasks and auto deletion of expired tasks. I implemented the functionality to allow users to add recurring tasks. I also implemented the functionality to update tasks based on their remaining recurrences, and to also delete tasks that are expired in the past. <div style="page-break-after: always;"></div>
-1. Handling of duplicate tasks. I implemented the functionality to stop users from adding duplicate tasks or very similar tasks into their schedule.
-1. Overhauling of User Interface. I overhauled the user interface of the project for v2.1 of the project. This was after user feedback that it was quite difficult to differentiate inputs and different types of outputs. Behind the scenes, this also involved ensuring that all printing was only done in the `Ui` class, and not scattered in the other classes.
-1. Initial parsing functionality. I worked on the initial parsing of commands for v1.0 of the project. However, this was later overhauled by other group members to greatly improve the user-friendliness of the project.
+1. Recurring tasks and auto deletion of expired tasks. I implemented the functionality to allow users to add recurring tasks. I also implemented the functionality to update tasks based on their remaining recurrences, and to also delete tasks that are expired in the past.
+
+<div style="page-break-after: always;"></div>
+
+4. Handling of duplicate tasks. I implemented the functionality to stop users from adding duplicate tasks or very similar tasks into their schedule.
+5. Overhauling of User Interface. I overhauled the user interface of the project for v2.1 of the project. This was after user feedback that it was quite difficult to differentiate inputs and different types of outputs. Behind the scenes, this also involved ensuring that all printing was only done in the `Ui` class, and not scattered in the other classes.
+6. Initial parsing functionality. I worked on the initial parsing of commands for v1.0 of the project. However, this was later overhauled by other group members to greatly improve the user-friendliness of the project.
 
 ### Contributions to the User Guide
 
