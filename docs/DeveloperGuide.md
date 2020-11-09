@@ -318,10 +318,10 @@ If an empty list is detected, the command would terminate with a prompt of empty
 find the title. If the input title does not match any of the titles in the list, the command would terminate with 
 a message: “title is not found”. If a match is found, the system prints out the note and asks for confirmation 
 for deletion. In the case of multiple matches, the system would print all matching cases and ask the user to select 
-amongst them. Following the confirmation, a `N` would terminate the command while a `Y` would proceed to remove 
+amongst them. After the selection, the corresponding note will be printed out and ask the user for confirmation for deletion. A `N` would terminate the command while a `Y` would proceed to remove 
 the note from the list.
     * If the user did not pre-input the title, the system would print all notes currently in the list and ask 
-for the user to select which note to delete among them. Following the confirmation for deletion, a `N` would terminate 
+for the user to select which note to delete among them. After the selection, the corresponding note will be printed out and ask the user for confirmation for deletion. A `N` would terminate 
 the command while a `Y` would proceed to remove the note from the list.
 
 1. The current note list would then be saved by the `Storage` class.
@@ -334,8 +334,8 @@ _Figure 4.5-2: Sequence diagram for deleteNotesCommand_
 
 #### Design Considerations
 
-* Any number inputs by the user must be checked through to ensure that it is not out of the available indexes 
-in the array. 
+* Any number inputs by the user must be checked through to ensure that it is within the available indexes 
+in the list shown.
 * The function must deal with incorrect title inputs by the user. The user cannot input a title that is not found 
 in any of the notes nor can he input an invalid title such as an empty string.
 * In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
@@ -347,11 +347,12 @@ The `showNotes` command allows the user to select a note to view.
 
 #### Implementation
 
-The `showNotes` command first starts with a check for an empty list before branching into 2 paths: with or without title. If a title is added alongside the 
+The `showNotes` command first starts with `checkEmptyList()` to check if the note list is empty before branching into 2 paths: with or without title. If a title is added alongside
 `showNotes` (ie. the user inputs “showNotes cats”) then the title would be passed on to a method `findTitle()` that would 
 look for the titles containing 'cats' in the list, before returning the note content with the matching title. 
 Conversely, if no title is appended, then a whole list of title of the notes will be printed out for selection.
-The user would input the corresponding number of the note and it would return the note contents.
+The user would input the corresponding number of the note and it would return the note contents. If there are no matching titles,
+then it would return that the title cannot be found.
 
 Figure 4.6-1 illustrates the above steps via a Sequence Diagram.
 
@@ -383,7 +384,7 @@ At every instance where a particular `Task` or `Note` is edited or deleted, usin
 negative value if it has been deleted.
 
 The copy made is stored as a new `Task` or `Note` object temporarily. Once the edit or deletion is successful, the 
-copy of the old unchanged `Task` or `Note` is then pushed into an array called `taskHistory` (or `noteHistory`), 
+copy of the old unchanged `Task` or `Note` is then pushed into an array called `taskHistory` or `noteHistory`, 
 which holds all the previous copies of the object.
 
 Figure 4.7-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
@@ -393,9 +394,9 @@ works in a similar manner for `Note` objects.
 
 _Figure 4.7-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
-When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the 
-stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which 
-`Task` (or `Note`) has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the 
+When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` or `Note` at the top of the 
+stack in `taskHistory` or `noteHistory`, and iterates through the existing `TaskList` or `NoteList` to see which 
+`Task` or `Note` has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the 
 old copy, and then the old copy is removed from the `Tasklist`.
 
 The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
@@ -412,7 +413,7 @@ edits and deletions are only available for the current session. Once the program
 To allow for multiple undos on the same `Task` or `Note` object, the `editNumber` of `Tasks` or `Notes` that have 
 been edited before must be checked. If it is anything but the _default assigned value (-999999)_, then its existing 
 `editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the 
-application to always find the same instance of the `Task` or `Note` inside the `TaskList` (or `NoteList`) when 
+application to always find the same instance of the `Task` or `Note` inside the `TaskList` or `NoteList` when 
 restoring previous versions.
 
 However, multiple undos are only allowed until a particular object is deleted. Because of how each `Task` or `Note` only 
@@ -514,8 +515,8 @@ continue to read in the remaining data and run as per normal. **Manual intervent
 ### 4.9 Displaying Schedule (Johannine)
 
 The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to 
-display the full week. Otherwise, it displays the day’s schedule for today or tomorrow in a list form, with the `Task` items sorted 
-by date. Figure 4.9-1 below provides the sequence diagram for the logic.
+display the full week. Otherwise, it simply displays the day’s schedule for today or tomorrow in a list form in 1 hour intervals, 
+with the `Task` items sorted by (starting) time. Figure 4.9-1 below provides the sequence diagram for the logic.
 
 ![Figure 4.9-1](images/DeveloperGuide/Figure 4.9-1.png)
 

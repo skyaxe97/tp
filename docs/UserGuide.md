@@ -105,6 +105,7 @@ An example of how to use the help command is shown below in Figure 3.1-1.
 
 ````
 help
+
 ===============================================================================================================
 These are the commands that are available:
 IMPORTANT INFORMATION:
@@ -115,28 +116,30 @@ IMPORTANT INFORMATION:
  * Commands with the [P] can take partial commands
    e.g addLesson and addLesson /code CS2113 /to 18:00 are valid commands
  * All dates are in the DD-MM-YY and times in the HH:MM format
+ * For tasks that end at midnight, enter the time as 24:00
 
 COMMANDS
-*****************************************************************************************************
-help -------------------------------------------------------------------- Displays available commands
-addLesson /code MODULE_CODE /date DATE /time START /to END /repeats ---------------- [P]Adds a lesson
-addEvent EVENT_NAME /date DATE /time START /to END /repeats ------------------------ [P]Adds an event
-addDeadline DEADLINE_NAME /by DATETIME /repeats----------------------------------- [P]Adds a deadline
-editLesson MODULE_CODE ------------------------------------------------------------ [P]Edits a lesson
-editEvent EVENT_NAME -------------------------------------------------------------- [P]Edits an event
-editDeadline DEADLINE_NAME ------------------------------------------------------ [P]Edits a deadline
-deleteTask /type TYPE /name NAME ----------------------------------------------------- Deletes a task
-addNotes TITLE ------------------------------------------------------------------- [P]Adds a new note
-showNotes TITLE -------------------------------------------------------------- [P]Shows selected note
-archive ----------------------------------------------------------------- Archives all existing notes
-editNotes TITLE ------------------------------------------------------------ [P]Edits a selected note
-deleteNotes TITLE -------------------------------------------------------- [P]Deletes a selected note
-undo TYPE ------------------------------------------------ Undoes the last edit/deleted task or notes
-display [WEEK] --------------------------------------------- Displays either weekly or daily schedule
-freeTime -------------------------------------------- Tells you your longest block of free time today
-sleepTime ------------------------------------------------- Tells you how much time you have to sleep
-exit ------------------------------------------------------------------- Closes the LifEasier program
-*****************************************************************************************************
+***************************************************************************************************************
+help ------------------------------------------------------------------------------ Displays available commands
+addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES -------------------- [P]Adds a lesson
+addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ---------------------------- [P]Adds an event
+addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES -------------------------------------- [P]Adds a deadline
+editLesson MODULE_CODE ---------------------------------------------------------------------- [P]Edits a lesson
+editEvent EVENT_NAME ------------------------------------------------------------------------ [P]Edits an event
+editDeadline DEADLINE_NAME ---------------------------------------------------------------- [P]Edits a deadline
+deleteTask /type TYPE /name NAME --------------------------------------------------------------- Deletes a task
+addNotes TITLE ----------------------------------------------------------------------------- [P]Adds a new note
+showNotes TITLE ------------------------------------------------------------------------ [P]Shows selected note
+archive --------------------------------------------------------------------------- Archives all existing notes
+editNotes TITLE ---------------------------------------------------------------------- [P]Edits a selected note
+deleteNotes TITLE ------------------------------------------------------------------ [P]Deletes a selected note
+undo TYPE ------------------------------------------------------- [P]Undoes the last edit/deleted task or notes
+display KEYWORD --------------------------------------------------- [P]Displays either weekly or daily schedule
+freeTime ------------------------------------------------------ Tells you your longest block of free time today
+sleepTime ----------------------------------------------------------- Tells you how much time you have to sleep
+exit ----------------------------------------------------------------------------- Closes the LifEasier program
+***************************************************************************************************************
+
 For more detailed information, please visit the online user guide at:
 https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide
 ===============================================================================================================
@@ -151,6 +154,7 @@ Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addLesson Command:
 
 * The program will not warn you if there are any clashes in timing with other Tasks. 
+* If you indicate that a Lesson ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
 **Format:** `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES`
 
@@ -166,10 +170,13 @@ Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your 
 
 An example of how to use the addLesson command is shown in Figure 3.2-1.
 ```
-addLesson /code CS2101 /date 22-10-20 /from 14:00 /to 16:00 /repeats 30
-Done! I've added "Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), repeats weekly 30 times" to 
-your calendar
-=========================================================================
+addLesson /code CS2101 /date 22-11-20 /from 14:00 /to 16:00 /repeats 30
+
+===============================================================================================================
+Done! I've added
+"Lesson: CS2101 (22 Nov 2020, 14:00 to 22 Nov 2020, 16:00), repeats weekly 30 times" 
+to your schedule!
+===============================================================================================================
 ```
 _Figure 3.2-1: An example of using the addLesson command_
 
@@ -180,6 +187,7 @@ Adds an `Event` to your schedule. Use this command to add your `Event` to your s
 #### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command:
 
 * The program will not warn you if there are any clashes in timing with other Tasks.
+* If you indicate that an Event ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
 **Format:** `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 
@@ -195,10 +203,13 @@ Adds an `Event` to your schedule. Use this command to add your `Event` to your s
 
 An example of how to use the addEvent command is shown in Figure 3.3-1.
 ```
-addEvent Concert /date 13-07-19 /from 17:00 /to 21:00 /repeats 0
-Done! I've added "Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), repeats weekly 0 times" to 
-your calendar
-=========================================================================
+addEvent Concert /date 13-07-21 /from 17:00 /to 21:00 /repeats 0
+
+===============================================================================================================
+Done! I've added
+"Event: Concert (13 Jul 2021, 17:00 to 13 Jul 2021, 21:00), repeats weekly 0 times" 
+to your schedule!
+===============================================================================================================
 ```
 _Figure 3.3-1: An example of using the addEvent command_
 
@@ -224,15 +235,23 @@ Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to y
 An example of how to use the addDeadline command is shown in Figure 3.4-1.
 ```
 addDeadline Return books /by 31-12-20 23:59 /repeats 0
-Done! I've added "Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times" to 
-your calendar
-=========================================================================
+
+===============================================================================================================
+Done! I've added
+"Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times" 
+to your schedule!
+===============================================================================================================
 ```
 _Figure 3.4-1: An example of using the addDeadline command_
 
 ### 3.5 Editing a Lesson: `editLesson`
 
 Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos in the lessons you have already added.
+
+#### ![Notes](images/UserGuide/post-it.png) Notes on editLesson Command:
+
+* The program will not warn you if there are any clashes in timing with other Tasks. 
+* If you indicate that a Lesson ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
 **Format:** `editLesson [CODE]`
 
@@ -250,22 +269,39 @@ Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos i
 An example of how to use the editLesson command is shown in Figure 3.5-1.
 ```
 editLesson CS2101
-4. Lesson: CS2101 (22 Oct 2020, 14:00 to 22 Oct 2020, 16:00), repeats weekly 30 times
-Please select the lesson you want to edit.
-4
-Please select the parameter you want to edit.
+
+---------------------------------------------------------------------------------------------------------------
+Here are all your matching lessons:
+1. Lesson: CS2101 (22 Nov 2020, 14:00 to 22 Nov 2020, 16:00), repeats weekly 30 times
+
+---------------------------------------------------------------------------------------------------------------
+Please select the lesson you want to edit:
+1
+
+---------------------------------------------------------------------------------------------------------------
+Please select the parameter you want to edit:
 1. Module Code
 2. Time
 2
+
+---------------------------------------------------------------------------------------------------------------
 Please input your new time in this format: /date DATE /from START /to END
-/date 22-10-20 /from 14:00 /to 15:45
+/date 23-11-20 /from 14:00 /to 15:45
+
+===============================================================================================================
 Your edit has been saved.
+===============================================================================================================
 ```
 _Figure 3.5-1: An example of using the editLesson command_
 
 ### 3.6 Editing an Event: `editEvent`
 
 Edits an event in your schedule. Use this command to fix mistakes like typos in the events you have already added.
+
+#### ![Notes](images/UserGuide/post-it.png) Notes on editEvent Command:
+
+* The program will not warn you if there are any clashes in timing with other Tasks. 
+* If you indicate that an Event ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
 **Format:** `editEvent [NAME]`
 
@@ -284,22 +320,39 @@ will be printed.
 An example of how to use the editEvent command is shown in Figure 3.6-1.
 ```
 editEvent
-5. Event: Concert (13 Jul 2019, 17:00 to 13 Jul 2019, 21:00), repeats weekly 0 times
-Please select the event you want to edit.
-5
-Please select the parameter you want to edit.
+
+---------------------------------------------------------------------------------------------------------------
+Here are all your matching events:
+1. Event: Housewarming (11 Nov 2020, 11:11 to 12 Dec 2020, 12:12), repeats weekly 1 times
+2. Event: Concert (13 Jul 2021, 17:00 to 13 Jul 2021, 21:00), repeats weekly 0 times
+
+---------------------------------------------------------------------------------------------------------------
+Please select the event you want to edit:
+2
+
+---------------------------------------------------------------------------------------------------------------
+Please select the parameter you want to edit:
 1. Event Name
 2. Time
 1
-Please input your new Event name
+
+---------------------------------------------------------------------------------------------------------------
+Please input your new Event name:
 My favourite band's concert
+
+===============================================================================================================
 Your edit has been saved.
+===============================================================================================================
 ```
 _Figure 3.6-1: An example of using the editEvent command_
 
 ### 3.7 Editing a Deadline: `editDeadline`
 
 Edits a `Deadline` in your schedule. Use this command to fix mistakes like typos in the deadlines you have already added.
+
+#### ![Notes](images/UserGuide/post-it.png) Notes on editDeadline Command:
+
+* The program will not warn you if there are any clashes in timing with other Tasks. 
 
 **Format:** `editDeadline [NAME]`
 
@@ -317,16 +370,29 @@ will be printed.
 An example of how to use the editDeadline command is shown in Figure 3.7-1.
 ```
 editDeadline
-6. Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times
-Please select the deadline you want to edit.
-6
-Please select the parameter you want to edit.
+
+---------------------------------------------------------------------------------------------------------------
+Here are all your matching deadlines:
+1. Deadline: Submit report by (19 Nov 2020, 14:00), repeats weekly 0 times
+2. Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times
+
+---------------------------------------------------------------------------------------------------------------
+Please select the deadline you want to edit:
+2
+
+---------------------------------------------------------------------------------------------------------------
+Please select the parameter you want to edit:
 1. Deadline Name
 2. Time
 2
+
+---------------------------------------------------------------------------------------------------------------
 Please input your new time in this format: /by DATETIME
 /by 24-12-20 23:59
+
+===============================================================================================================
 Your edit has been saved.
+===============================================================================================================
 ```
 _Figure 3.7-1: An example of using the editDeadline command_
 
@@ -351,12 +417,20 @@ Else, all `Task` that match the type will be printed.
 
 An example of how to use the deleteTask command is shown in Figure 3.8-1.
 ```
-deleteTask /type deadline /name homework
-=========================================================================
-Deadline: homework by (12 Dec 2012, 12:00), repeats weekly 2 times
-Please select the deadline you want to delete.
-2
+deleteTask /type deadline /name Submit report
+
+---------------------------------------------------------------------------------------------------------------
+Here are all your matching deadlines:
+1. Deadline: Submit report by (19 Nov 2020, 14:00), repeats weekly 0 times
+2. Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times
+
+---------------------------------------------------------------------------------------------------------------
+Please select the deadline you want to delete:
+1
+
+===============================================================================================================
 The task you selected has been deleted.
+===============================================================================================================
 ```
 _Figure 3.8-1: An example of using the deleteTask command_
 
@@ -392,8 +466,8 @@ To undo a change in notes, please enter: note
 task
 
 ===============================================================================================================
-This task has been reverted back to its previous version!
-Deadline: homework by (28 Oct 2020, 09:00), repeats weekly 0 times
+This deleted task has been successfully restored!
+Deadline: Submit report by (19 Nov 2020, 14:00), repeats weekly 0 times
 ===============================================================================================================
 
 undo note
@@ -497,9 +571,11 @@ An example of how to use the freeTime command is shown in Figure 3.11-1.
 
 ```
 freeTime
+
+===============================================================================================================
 You have 10 hours of free time between 14:00 and 24:00!
 You can try scheduling something in this time!
-=========================================================================
+===============================================================================================================
 ```
 
 _Figure 3.11-1: An example of using the freeTime command._
@@ -525,9 +601,11 @@ An example of how to use the sleepTime command is shown in Figure 3.12-1.
 
 ```
 sleepTime
+
+===============================================================================================================
 You have nothing on from 14:00 today to 8:00 tomorrow!
 You can sleep for the recommended 8 hours or longer!
-=========================================================================
+===============================================================================================================
 ```
 
 _Figure 3.12-1: An example of using sleepTime command_
@@ -535,14 +613,14 @@ _Figure 3.12-1: An example of using sleepTime command_
 
 ### 3.13 Adding a New Note: `addNotes`
 
-Adds and stores a note. Use this command to take notes from your classes or events.
+Adds and stores a note with a title and description. Use this command to take notes from your classes or events.
 
 **Format:** `addNotes [TITLE]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addNotes Command Format:
 
 * Adds and stores a note tagged with `TITLE`.
-* If `TITLE` is not provided, the program will prompt you for a notes title.
+* If `TITLE` is not provided, the program will prompt you for title.
 * The word limit of title or description follows the maximum length of input allowed in Command Prompt.
 
 #### Example:
@@ -551,12 +629,14 @@ An example of how to use the addNotes command is shown in Figure 3.13-1.
 
 ```
 addNotes Cats are the best!
-=========================================================================
-Alright! Please fill in your notes.
 
+---------------------------------------------------------------------------------------------------------------
+Alright! Please fill in your notes:
 Cats are the cutest in the world :D
+
+===============================================================================================================
 Ok! I've taken note of this note!
-=========================================================================
+===============================================================================================================
 ```
 
 _Figure 3.13-1: An example of using the addNotes command_
@@ -571,9 +651,9 @@ Displays a note/list of notes. Use this command to view the notes you have taken
 
 * If `TITLE` is specified, the specific note is displayed. If not, a numbered list of all notes 
 will be displayed.
-* `TITLE` can be a partial title. If there is one match, that note will be shown.
+* `TITLE` can be an incomplete title. If there is one match, that note will be shown.
 * If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
-displayed in a list for selection. 
+displayed in a list. You would then have to select the note you want to view. 
 
 #### Example:
 
@@ -581,12 +661,14 @@ An example of how to use the showNotes command is shown in Figure 3.14-1.
 
 ```
 showNotes Cats
-=========================================================================
+
+===============================================================================================================
+Here is your note:
 Title: Cats are the best!
 
 Cats are the cutest in the world :D
 
-=========================================================================
+===============================================================================================================
 ```
 
 _Figure 3.14-1: An example of using the showNotes command_
@@ -600,8 +682,8 @@ Deletes a note from the list. Use this command to remove the notes you no longer
 #### ![Notes](images/UserGuide/post-it.png) Notes on deleteNotes Command Format:
 
 * If `TITLE` is specified, the specific note is displayed and confirmation of delete will be prompted. 
-If no `TITLE` is inputed, a numbered list of all notes will be displayed.
-* `TITLE` can be a partial title. If there is one match, that note will be shown.
+If no `TITLE` is inputted, a numbered list of all notes will be displayed.
+* `TITLE` can be a incomplete title. If there is one match, that note will be shown.
 * If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
 displayed in a list for selection.
 * Entering `Y` would delete the note from the list. Entering `N` would exit the command without deletion. 
@@ -611,21 +693,27 @@ An example of how to use the deleteNotes command is shown in Figure 3.15-1.
 
 ```
 deleteNotes
-=========================================================================
+
+---------------------------------------------------------------------------------------------------------------
 Please select the notes you want to delete:
-
-1. Cats are the best!
-
+1. cats!
+2. alphabet
+3. Cats are the best!
 1
-Title: Cats are the best!
 
-Cats are the cutest in the world :D
+---------------------------------------------------------------------------------------------------------------
+Title: cats!
 
+yay for cats!
+
+
+---------------------------------------------------------------------------------------------------------------
 Is this the note you want to delete? (Y/N)
-
 Y
+
+===============================================================================================================
 OK! Note deleted!
-=========================================================================
+===============================================================================================================
 ```
 
 _Figure 3.15-1: An example of using the deleteNotes command_
@@ -640,7 +728,7 @@ Edits a note from the list. Use this command to make changes to notes you have t
 
 * If `TITLE` is specified, the specific note is displayed and confirmation of edit will be prompted. 
 If no `TITLE` is inputted, a numbered list of all notes will be displayed.
-* `TITLE` can be a partial title. If there is one match, only that note will be shown.
+* `TITLE` can be a incomplete title. If there is one match, only that note will be shown.
 * If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
 displayed in a list for selection.
 * Entering `T` would show the current title and prompt for a new title. Entering `D` would 
@@ -653,24 +741,26 @@ An example of how to use the editNotes command is shown in Figure 3.16-1.
 
 ```
 editNotes Cats
-=========================================================================
 Title: Cats are the best!
 
 Cats are the cutest in the world :D
 
-Do you want to change the title or description? (T/D)
 
-T for title and D for Description
-
+===============================================================================================================
+Do you want to change the title or description? (Enter T/D)
 D
-Current description:
+
+---------------------------------------------------------------------------------------------------------------
+Current Description: 
 Cats are the cutest in the world :D
 
+---------------------------------------------------------------------------------------------------------------
 Please input the description you want to change to:
-
 I really love cats!
-OK! Your description is now: I really love cats!
-=========================================================================
+
+===============================================================================================================
+OK! Your description is now: "I really love cats!"
+===============================================================================================================
 ```
 
 _Figure 3.16-1: An example of using the editNotes command_
@@ -697,6 +787,7 @@ An example of how to use the archive command is shown in Figure 3.17-1.
 
 ````
 archive
+
 ===============================================================================================================
 Starting archiving...
 Archiving successful!
@@ -723,7 +814,10 @@ An example of how to use the exit command is shown in Figure 3.18-1.
 
 ````
 exit
+
+===============================================================================================================
 Goodbye, hope to see you again soon!
+===============================================================================================================
 ````
 
 _Figure 3.18-1: An example of using the exit command_
