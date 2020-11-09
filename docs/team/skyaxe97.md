@@ -34,7 +34,7 @@ I also implemented the functionality that allows the program to prompt the User 
 ### Contributions to the User Guide
 
 In the User Guide, I contributed mainly to the features that I implemented as above.
-Namely, these are:
+Namely, these are:<br>
 <br>
 [Section 3.2](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#32-adding-a-lesson-addlesson)<br>
 [Section 3.3](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#33-adding-an-event-addevent)<br>
