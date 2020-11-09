@@ -26,6 +26,12 @@ public class TimetableUi {
 
     private static final String ROW_FORMAT = "|%-11s| %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |";
     private static final String ROW_SEPARATOR = "+-----------+" + "-----------------+".repeat(DAYS_COLUMN_COUNT);
+    public static final String TIME_DELIMITER = ":";
+    public static final String ROW_COMPONENT_DELIMITER = "-";
+    public static final String ROW_DELIMITER = "\\|";
+    public static final int MIDNIGHT_HOUR = 24;
+    public static final int VALID_TIME_LENGTH = 2;
+    public static final String MIDNIGHT_TIME = "00:00";
 
     private static TimetableUi timetableUi = null;
     private static ArrayList<String> timetableRows;
@@ -185,10 +191,10 @@ public class TimetableUi {
      * @return true when current time falls within the timetable slot.
      */
     private boolean determineIfCurrentHour(String row, LocalTime currentTime) {
-        String[] rowComponents = row.split("\\|");
-        String[] timeRange = rowComponents[1].split("-");
+        String[] rowComponents = row.split(ROW_DELIMITER);
+        String[] timeRange = rowComponents[1].split(ROW_COMPONENT_DELIMITER);
 
-        if (timeRange.length < 2) {
+        if (timeRange.length < VALID_TIME_LENGTH) {
             return false;
         }
 
@@ -197,13 +203,13 @@ public class TimetableUi {
             boolean isAfterStartTime = currentTime.compareTo(startTime) > 0;
 
             LocalTime endTime = LocalTime.parse(timeRange[1]);
-            LocalTime midnight = LocalTime.parse("00:00");
+            LocalTime midnight = LocalTime.parse(MIDNIGHT_TIME);
             boolean isBeforeEndTime = false;
 
             if (endTime.equals(midnight)) {
-                String[] timeComponents = timeRange[1].split(":");
+                String[] timeComponents = timeRange[1].split(TIME_DELIMITER);
                 int hour = Integer.parseInt(timeComponents[0]);
-                if (hour < 24) {
+                if (hour < MIDNIGHT_HOUR) {
                     isBeforeEndTime = true;
                 }
             } else {

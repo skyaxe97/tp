@@ -987,6 +987,7 @@ public class Parser {
         return false;
     }
 
+    //@@author dojh111
     /**
      * Checks if the input module code is in a valid format.
      *
@@ -1098,6 +1099,7 @@ public class Parser {
         }
         return moduleCode;
     }
+    //@@author
 
     private void checkValidIndexOfParameter(int userInput) {
         if (userInput != 1 && userInput != 2) {
