@@ -143,4 +143,14 @@ class ParserTest {
         );
     }
 
+    @Test
+    void checkForSingleWordInput_invalidInput_InvalidCommandException() {
+        Parser parser = new Parser();
+
+        Assertions.assertAll(
+            () -> assertThrows(ParserException.class, () -> {
+                parser.checkForSingleWordInput("help me");
+            })
+        );
+    }
 }
