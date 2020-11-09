@@ -613,14 +613,14 @@ _Figure 3.12-1: An example of using sleepTime command_
 
 ### 3.13 Adding a New Note: `addNotes`
 
-Adds and stores a note. Use this command to take notes from your classes or events.
+Adds and stores a note with a title and description. Use this command to take notes from your classes or events.
 
 **Format:** `addNotes [TITLE]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addNotes Command Format:
 
 * Adds and stores a note tagged with `TITLE`.
-* If `TITLE` is not provided, the program will prompt you for a notes title.
+* If `TITLE` is not provided, the program will prompt you for title.
 * The word limit of title or description follows the maximum length of input allowed in Command Prompt.
 
 #### Example:
@@ -651,9 +651,9 @@ Displays a note/list of notes. Use this command to view the notes you have taken
 
 * If `TITLE` is specified, the specific note is displayed. If not, a numbered list of all notes 
 will be displayed.
-* `TITLE` can be a partial title. If there is one match, that note will be shown.
+* `TITLE` can be an incomplete title. If there is one match, that note will be shown.
 * If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
-displayed in a list for selection. 
+displayed in a list. You would then have to select the note you want to view. 
 
 #### Example:
 
@@ -682,8 +682,8 @@ Deletes a note from the list. Use this command to remove the notes you no longer
 #### ![Notes](images/UserGuide/post-it.png) Notes on deleteNotes Command Format:
 
 * If `TITLE` is specified, the specific note is displayed and confirmation of delete will be prompted. 
-If no `TITLE` is inputed, a numbered list of all notes will be displayed.
-* `TITLE` can be a partial title. If there is one match, that note will be shown.
+If no `TITLE` is inputted, a numbered list of all notes will be displayed.
+* `TITLE` can be a incomplete title. If there is one match, that note will be shown.
 * If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
 displayed in a list for selection.
 * Entering `Y` would delete the note from the list. Entering `N` would exit the command without deletion. 
@@ -728,7 +728,7 @@ Edits a note from the list. Use this command to make changes to notes you have t
 
 * If `TITLE` is specified, the specific note is displayed and confirmation of edit will be prompted. 
 If no `TITLE` is inputted, a numbered list of all notes will be displayed.
-* `TITLE` can be a partial title. If there is one match, only that note will be shown.
+* `TITLE` can be a incomplete title. If there is one match, only that note will be shown.
 * If multiple notes with the same `TITLE` are found, all note titles containing the input will be 
 displayed in a list for selection.
 * Entering `T` would show the current title and prompt for a new title. Entering `D` would 
