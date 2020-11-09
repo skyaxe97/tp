@@ -841,7 +841,7 @@ In the event of **corrupted data** arising from either system errors or incorrec
 For invalid module codes, **LifEasier** will continue to load in the lesson instead of discarding it. This is to allow you to enter more information manually into the module code 
 field through the save file directly if needed.
 
-If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
+If a successful `archive` command was executed, a folder called `Archives` will be created in the `LifEasierSaves` folder 
 where you can access your archived files. Archived notes will not show up in **LifEasier** anymore.
 
 ### 4.2 Recurring Tasks and Auto Deletion

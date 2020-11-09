@@ -14,18 +14,18 @@
         * [3.2.5 Model Component](#325-model-component)
         * [3.2.6 Storage Component](#326-storage-component)
 * [4.0 Implementation](#40-implementation)
-    * [4.1 Adding Lessons, Events, Deadlines (Fairuz)](#41-adding-lessons-events-deadlines-fairuz)
-    * [4.2 Editing Lessons, Events, Deadlines (Fairuz)](#42-editing-lessons-events-deadlines-fairuz)
-    * [4.3 Deleting Lessons, Events, Deadlines (Fairuz)](#43-deleting-of-lessons-events-deadlines-fairuz)
-    * [4.4 Adding Notes (Edmund)](#44-adding-notes-edmund)
-    * [4.5 Editing and Deleting Notes (Edmund)](#45-editing-and-deleting-notes-edmund)
-    * [4.6 Showing Notes (Edmund)](#46-showing-notes-edmund)
-    * [4.7 Undoing Changes Made to Tasks and Notes (Johannine)](#47-undoing-changes-made-to-tasks-and-notes-johannine)
-    * [4.8 Storing and Archiving Notes (Danzel)](#48-storing-and-archiving-notes-danzel)
-    * [4.9 Displaying Schedule (Johannine)](#49-displaying-schedule-johannine)
-    * [4.10 Displaying Free Time and Sleep Time (Daniel)](#410-displaying-free-time-and-sleep-time-daniel)
-    * [4.11 Parsing Commands (Edmund)](#411-parsing-commands-edmund)
-    * [4.12 Recurring Tasks and Auto Deletion (Daniel)](#412-recurring-tasks-and-auto-deletion-daniel)
+    * [4.1 Adding Lessons, Events, Deadlines](#41-adding-lessons-events-deadlines)
+    * [4.2 Editing Lessons, Events, Deadlines](#42-editing-lessons-events-deadlines)
+    * [4.3 Deleting Lessons, Events, Deadlines](#43-deleting-of-lessons-events-deadlines)
+    * [4.4 Adding Notes ](#44-adding-notes)
+    * [4.5 Editing and Deleting Notes](#45-editing-and-deleting-notes)
+    * [4.6 Showing Notes](#46-showing-notes)
+    * [4.7 Undoing Changes Made to Tasks and Notes](#47-undoing-changes-made-to-tasks-and-notes)
+    * [4.8 Storing and Archiving Notes](#48-storing-and-archiving-notes)
+    * [4.9 Displaying Schedule](#49-displaying-schedule)
+    * [4.10 Displaying Free Time and Sleep Time](#410-displaying-free-time-and-sleep-time)
+    * [4.11 Parsing Commands](#411-parsing-commands)
+    * [4.12 Recurring Tasks and Auto Deletion](#412-recurring-tasks-and-auto-deletion)
 * [5.0 Product Scope](#50-product-scope)
     * [5.1 Target User Profile](#51-target-user-profile)
     * [5.2 Value Proposition](#52-value-proposition)
@@ -99,7 +99,7 @@ _Figure 3.1-1 Architecture diagram for LifEasier_
 
 Each of these components are expanded on in more detail in their respective sections.
 
-Figure 3.1-2 illustrates the Sequence diagram for how each class interacts with one another through an example  “addDeadline” command.
+Figure 3.1-2 illustrates the Sequence diagram for how each class interacts with one another through an example  `addDeadline` command.
 
 ![Figure 3.1-2](images/DeveloperGuide/Figure 3.1-2.png)  
 
@@ -160,7 +160,7 @@ The `Storage` component handles saving of the users’ notes and tasks to persis
 
 The following section will go into further details on how the different features of **LifEasier** are implemented.
 
-### 4.1 Adding Lessons, Events, Deadlines (Fairuz)
+### 4.1 Adding Lessons, Events, Deadlines
 
 The `addLesson`, `addEvent` and `addDeadline` commands adds the specific task into the `TaskList`.
 
@@ -186,7 +186,7 @@ When the command is called, the class invokes the `TaskList` class method to add
 The success and accuracy of the command is heavily dependent on the values passed to the command by the `Parser` class.
  Thus, checks have to be thoroughly conducted by the `Parser` class before the `Command` class is invoked.
 
-### 4.2 Editing Lessons, Events, Deadlines (Fairuz)
+### 4.2 Editing Lessons, Events, Deadlines
 
 The `editEventCommand`, `editDeadlineCommand` and `editLessonCommand` allows the user to edit existing
  tasks in the `TaskList` according to the type of task.
@@ -221,7 +221,7 @@ Due to the difference in the types of tasks and their parameters, this functiona
  explicitly to ensure accurate inputs and thus efficiency. This will have minimal impact on the efficiency of the program,
  while improving the quality of use for the user.
  
-### 4.3 Deleting of Lessons, Events, Deadlines (Fairuz)
+### 4.3 Deleting of Lessons, Events, Deadlines
 
 The `deleteTaskCommand` allows the user to delete any `Task` (lesson, event or deadline) from the `TaskList`.
 
@@ -248,7 +248,7 @@ The command has to handle separate types of tasks as printing all tasks and forc
  would be impractical in the long run. The enhanced capability with `TaskHistory` to allow the user to undo any action is 
  crucial as its initial functionality did not have the ability to restore any accidentally deleted `Tasks`.
 
-### 4.4 Adding Notes (Edmund)
+### 4.4 Adding Notes
 
 The `addNotes` command adds user’s notes to the NoteList with a specified title and description. 
 
@@ -278,7 +278,7 @@ An empty string is defined clearly as a long string of spaces/no string and must
 by the user, as it affects the usability and searchability of the `NoteList`. As such, the above checks are implemented to prevent any hiccups by the user.
 
 
-### 4.5 Editing and Deleting Notes (Edmund)
+### 4.5 Editing and Deleting Notes
 
 The `editNotes` command allows the user to change the title or description of their notes stored in the `NoteList`.
 The `deleteNotes` command allows the user to remove the specified notes completely from the `NoteList`.
@@ -341,7 +341,7 @@ in any of the notes nor can he input an invalid title such as an empty string.
 * In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
 an exception caught.
 
-### 4.6 Showing Notes (Edmund)
+### 4.6 Showing Notes
 
 The `showNotes` command allows the user to select a note to view.
 
@@ -369,7 +369,7 @@ in any of the notes, a `TitleNotFoundException` will be caught.
 * The user would be continuously prompted for a valid input if he enters an empty string when prompted for an input.
 * If multiple notes contains the title, then the user would be asked to input the corresponding number to the note he wishes to view.
 
-### 4.7 Undoing Changes Made to Tasks and Notes (Johannine)
+### 4.7 Undoing Changes Made to Tasks and Notes
 
 The undo feature allows the user to undo any changes made to `Task` or `Note` objects, particularly edits and deletions.
 
@@ -422,7 +422,7 @@ previous (positive) `editID`. Therefore, if an object is deleted, all other prev
 or `noteHistory` are discarded. For example, if a particular object goes through _edit1 -> edit2 -> delete1 -> edit3_, the 
 user will only be able to undo _edit3_ and _delete1_. The copies related to _edit1_ and _edit2_ are removed from history.
 
-### 4.8 Storing and Archiving Notes (Danzel)
+### 4.8 Storing and Archiving Notes
 
 The storing and saving of data in the **LifEasier** app is done automatically after every change such as adding, editing, 
 deleting a component such as a lesson, deadline, event or note. The following section documents how the data storing 
@@ -518,7 +518,7 @@ the save files directly and easily, if required.
 reading in this data by throwing exceptions to stop prevent the current data from being read. Any data read up to that point is **untouched**, corrupted data discarded, and the app will 
 continue to read in the remaining data and run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
 
-### 4.9 Displaying Schedule (Johannine)
+### 4.9 Displaying Schedule
 
 The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to 
 display the full week. Otherwise, it simply displays the day’s schedule for today or tomorrow in a list form in 1 hour intervals, 
@@ -553,7 +553,7 @@ entire `TaskList` every time it is called, in order to arrange the `Tasks` accor
 timings of `Tasks` were rounded to the hour. This was an intentional design choice to keep the timetable neat and not 
 overloaded with too many details.
 
-### 4.10 Displaying Free Time and Sleep Time (Daniel)
+### 4.10 Displaying Free Time and Sleep Time
 
 #### Implementation
 
@@ -585,7 +585,7 @@ _Figure 4.10-2: Sequence diagram for sleepTimeCommand execution_
  command, this was an intentional design choice to not overload the user with too many unnecessary details. 
 
 
-### 4.11 Parsing Commands (Edmund)
+### 4.11 Parsing Commands
 
 The `Parser` determines what command is to be executed given by the user input. If the user input does not match any of 
 the specified commands, an unknown command message would be returned.
@@ -604,7 +604,7 @@ With the required parameters filled, the parser would then initialise the respec
 The user cannot input an empty string as a parameter. This would avoid issues of invalid parameters passing on to the 
 commands, which can result in errors in the program. As such, checks are done on the user input.  
 
-### 4.12 Recurring Tasks and Auto Deletion (Daniel)
+### 4.12 Recurring Tasks and Auto Deletion
 
 #### Implementation
 
