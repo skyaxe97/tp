@@ -110,12 +110,10 @@ This command shows you the available commands and their formats.
 #### Example:
 An example of how to use the help command is shown below in Figure 3.1-1.
 
-
-<font size = "10">
 ````
 help
 
-==============================================================================================
+==========================================================================================
 These are the commands that are available:
 IMPORTANT INFORMATION:
  * Words in UPPER_CASE are the parameters to be supplied by the user
@@ -128,32 +126,32 @@ IMPORTANT INFORMATION:
  * For tasks that end at midnight, enter the time as 24:00
 
 COMMANDS
-**********************************************************************************************
-help ------------------------------------------------------------- Displays available commands
-addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES --- [P]Adds a lesson
-addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ----------- [P]Adds an event
-addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES --------------------- [P]Adds a deadline
-editLesson MODULE_CODE ----------------------------------------------------- [P]Edits a lesson
-editEvent EVENT_NAME ------------------------------------------------------- [P]Edits an event
-editDeadline DEADLINE_NAME ----------------------------------------------- [P]Edits a deadline
-deleteTask /type TYPE /name NAME ---------------------------------------------- Deletes a task
-addNotes TITLE ------------------------------------------------------------ [P]Adds a new note
-showNotes TITLE ------------------------------------------------------- [P]Shows selected note
-archive ---------------------------------------------------------- Archives all existing notes
-editNotes TITLE ----------------------------------------------------- [P]Edits a selected note
-deleteNotes TITLE ------------------------------------------------- [P]Deletes a selected note
-undo TYPE -------------------------------------- [P]Undoes the last edit/deleted task or notes
-display KEYWORD ---------------------------------- [P]Displays either weekly or daily schedule
-freeTime ------------------------------------- Tells you your longest block of free time today
-sleepTime ------------------------------------------ Tells you how much time you have to sleep
-exit ------------------------------------------------------------ Closes the LifEasier program
-**********************************************************************************************
+****************************************************************************************
+help ------------------------------------------------------- Displays available commands
+addLesson /code MODULE /date DATE /from START /to END /repeats TIMES -- [P]Adds a lesson
+addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ----- [P]Adds an event
+addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES --------------- [P]Adds a deadline
+editLesson MODULE ---------------------------------------------------- [P]Edits a 
+
+editEvent EVENT_NAME ------------------------------------------------- [P]Edits an event
+editDeadline DEADLINE_NAME ----------------------------------------- [P]Edits a deadline
+deleteTask /type TYPE /name NAME ---------------------------------------- Deletes a task
+addNotes TITLE ------------------------------------------------------ [P]Adds a new note
+showNotes TITLE ------------------------------------------------- [P]Shows selected note
+archive ---------------------------------------------------- Archives all existing notes
+editNotes TITLE ----------------------------------------------- [P]Edits a selected note
+deleteNotes TITLE ------------------------------------------- [P]Deletes a selected note
+undo TYPE -------------------------------- [P]Undoes the last edit/deleted task or notes
+display KEYWORD ---------------------------- [P]Displays either weekly or daily schedule
+freeTime ------------------------------- Tells you your longest block of free time today
+sleepTime ------------------------------------ Tells you how much time you have to sleep
+exit ------------------------------------------------------ Closes the LifEasier program
+****************************************************************************************
 
 For more detailed information, please visit the online user guide at:
 https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide
-==============================================================================================
+========================================================================================
 ````
-</font>
 
 _Figure 3.1-1: An example of using the help command_
 
@@ -271,13 +269,13 @@ Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos i
 * The program will not warn you if there are any clashes in timing with other Tasks. 
 * If you indicate that a Lesson ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
-**Format:** `editLesson [CODE]`
+**Format:** `editLesson [MODULE]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on editLesson Command Format:
 
-* If `CODE` is provided, all lessons that contain the `CODE` will be printed.
+* If `MODULE` is provided, all lessons that contain the `MODULE` will be printed.
 * The program will prompt you to choose a lesson to be edited.
-* The program will prompt you to choose to edit the `CODE` or the `START/END` time. 
+* The program will prompt you to choose to edit the `MODULE` or the `START/END` time. 
 * If you choose to edit time, System will prompt to input new `TIME` in the format of 
 “`/date DATE /from START /to END`”
 * For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
@@ -556,41 +554,39 @@ _Figure 3.10-1: An example of using the display command to view your daily sched
 
 `display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.10-2.
 
-<font size="10">
 ```
 display week
 
-================================================================================================
+==================================================================================
 NOTE: The row corresponding to the current hour is coloured for easy reference!
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|TIME       | WEDNESDAY | THURSDAY | FRIDAY    | SATURDAY  | SUNDAY    | MONDAY    | TUESDAY   |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|08:00-09:00|           |          |           |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|09:00-10:00|           |          |           |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|10:00-11:00|           | CG1111   |           |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|11:00-12:00|           | CG1111   |           |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|12:00-13:00|           |          | ST2334    |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|13:00-14:00| CS2113T   |          | ST2334    |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|14:00-15:00|           | CS2101   |           |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|15:00-16:00|           | CS2101   | CS2113T   |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|16:00-17:00|           |          | CS2113T   |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
-|17:00-18:00|           |          |           |           |           |           |           |
-+-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|TIME       |WEDNESDAY|THURSDAY|FRIDAY   |SATURDAY |SUNDAY   |MONDAY   |TUESDAY  |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|08:00-09:00|         |        |         |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|09:00-10:00|         |        |         |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|10:00-11:00|         | CG1111 |         |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|11:00-12:00|         | CG1111 |         |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|12:00-13:00|         |        | ST2334  |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|13:00-14:00| CS2113T |        | ST2334  |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|14:00-15:00|         | CS2101 |         |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|15:00-16:00|         | CS2101 | CS2113T |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|16:00-17:00|         |        | CS2113T |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
+|17:00-18:00|         |        |         |         |         |         |         |
++-----------+---------+--------+---------+---------+---------+---------+---------+
 Here are your upcoming deadlines this week:
 1. Deadline: ABC Project by (3 Nov 2020, 14:00), repeats weekly 0 times
 2. Deadline: weekly XYZ quiz by (5 Nov 2020, 13:00), repeats weekly 3 times
-================================================================================================
+==================================================================================
 ```
-</font>
 
 _Figure 3.10-2: An example of using the display week command to view your weekly schedule_
 
@@ -932,10 +928,10 @@ for reference.
 
 Action | Format | Example
 --------|-----------------|----------------------------------------------------------------------------------
-addLesson| `addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES` | `addLesson /code cg1111 /date 04-10-20 /from 09:00 /to 12:00 /repeats 10`
+addLesson| `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES` | `addLesson /code cg1111 /date 04-10-20 /from 09:00 /to 12:00 /repeats 10`
 addEvent| `addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES` | `addEvent Party /date 04-10-20 /from 09:00 /to 12:00 /repeats 0`
 addDeadline| `addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES` | `addDeadline User Guide /by 04-10-20 09:00 /repeats 0`
-editLesson| `editLesson [CODE]` | `editLesson CS2101`
+editLesson| `editLesson [MODULE]` | `editLesson CS2101`
 editEvent| `editEvent [NAME]` | `editEvent BlackPink Concert`
 editDeadline| `editDeadline [NAME]` | `editDeadline Finish Work`
 deleteTask| `deleteTask /type TYPE [/name NAME]` | `deleteTask /type event`
