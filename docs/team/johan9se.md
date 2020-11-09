@@ -25,6 +25,8 @@ For enhancements, I implemented the following functionalities:
 * The UI for timetable display
 * Undo command, coordinated with another team member to discuss implementation and algorithm to use
 
+<div style="page-break-after: always;"></div>
+
 ### Contributions to the User Guide
 
 In the User Guide, I wrote the sections related to the features and enhancements I implemented.
