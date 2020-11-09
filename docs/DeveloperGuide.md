@@ -69,6 +69,8 @@ Click `New...` and find the directory of the JDK.
 
 1. Click `OK` to accept the default settings.
 
+<div style="page-break-after: always;"></div>
+
 ### 2.3 Verifying Setup
 
 1. Run `seedu.LifEasier.Main` and try a few commands. If you want to do further manual testing, please refer to [this section](#appendix-a-guidelines-on-manual-testing).
@@ -88,6 +90,8 @@ This section elaborates on the high-level architecture of the **LifEasier** appl
 
 _Figure 3.1-1 Architecture diagram for LifEasier_
 
+<div style="page-break-after: always;"></div>
+
 **LifEasier** is comprised of 7 components, which are listed below together with their functions:
 
 1. `LifEasier`: The main class of the application.
@@ -105,10 +109,11 @@ Figure 3.1-2 illustrates the Sequence diagram for how each class interacts with 
 
 _Figure 3.1-2. Sequence diagram of “addDeadline”._
 
+<div style="page-break-after: always;"></div>
+
 ### 3.2 Components
 
 This section expands on the various components that were first seen in the [Architecture section](#31-architecture).
-
 
 #### 3.2.1 LifEasier Component
 
@@ -131,6 +136,7 @@ The `Parser` component takes the user’s inputs from the `Ui` component, and ma
  the parameters required to execute. Once this condition is fulfilled, it returns a `Command` object to **LifEasier**
   for the commands to be executed.
   
+<div style="page-break-after: always;"></div>
   
 #### 3.2.4 Command Component
 
@@ -142,6 +148,8 @@ The `Command` component consists of an abstract `Command` class and the many dif
  ![Figure 3.2.4-1](images/DeveloperGuide/Figure%203.2.4-1.png)  
  
  _Figure 3.2.4-1: The classes that inherit from the Command class_
+ 
+<div style="page-break-after: always;"></div> 
  
 #### 3.2.5 Model Component
 
@@ -221,6 +229,8 @@ Due to the difference in the types of tasks and their parameters, this functiona
  explicitly to ensure accurate inputs and thus efficiency. This will have minimal impact on the efficiency of the program,
  while improving the quality of use for the user.
  
+ <div style="page-break-after: always;"></div>
+ 
 ### 4.3 Deleting of Lessons, Events, Deadlines
 
 The `deleteTaskCommand` allows the user to delete any `Task` (lesson, event or deadline) from the `TaskList`.
@@ -241,6 +251,8 @@ The User first enters the `deleteTask` command and appends the type of task to b
 _Figure 4.3-1: Sequence diagram for deleteTaskCommand execution_
 
 For more information on the reference frames for the getting and pushing of copy of `Task`, refer to Figure 4.7-1 below.
+
+<div style="page-break-after: always;"></div>
 
 #### Design Considerations
 
@@ -271,6 +283,7 @@ Figure 4.4-1 below illustrates the flow of `addNotes` through a sequence diagram
 
 _Figure 4.4-1: Sequence diagram for addNotesCommand_
 
+<div style="page-break-after: always;"></div>
 
 #### Design Considerations
 
@@ -305,9 +318,13 @@ while `D` would mean editing the description.
 
 Figure 4.5-1 illustrates the above steps via a sequence diagram.
 
+<div style="page-break-after: always;"></div>
+
 ![Figure 4.5-1](images/DeveloperGuide/Figure 4.5-1.png)
 
 _Figure 4.5-1: Sequence diagram for editNotesCommand_
+
+<div style="page-break-after: always;"></div>
 
 ##### deleteNotes
 
@@ -328,6 +345,8 @@ the command while a `Y` would proceed to remove the note from the list.
 
 Figure 4.5-2 illustrates the above steps via a Sequence Diagram.
 
+<div style="page-break-after: always;"></div>
+
 ![Figure 4.5-2](images/DeveloperGuide/Figure 4.5-2.png)
 
 _Figure 4.5-2: Sequence diagram for deleteNotesCommand_
@@ -340,6 +359,8 @@ in the list shown.
 in any of the notes nor can he input an invalid title such as an empty string.
 * In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
 an exception caught.
+
+<div style="page-break-after: always;"></div>
 
 ### 4.6 Showing Notes
 
@@ -356,9 +377,13 @@ then it would return that the title cannot be found.
 
 Figure 4.6-1 illustrates the above steps via a Sequence Diagram.
 
+<div style="page-break-after: always;"></div>
+
 ![Figure 4.6-1](images/DeveloperGuide/Figure 4.6-1.png)
 
 _Figure 4.6-1: Sequence diagram for showNotesCommand_
+
+<div style="page-break-after: always;"></div>
 
 #### Design Considerations
 
@@ -390,6 +415,8 @@ which holds all the previous copies of the object.
 Figure 4.7-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
 works in a similar manner for `Note` objects.
 
+<div style="page-break-after: always;"></div>
+
 ![Figure 4.7-1](images/DeveloperGuide/Figure 4.7-1.png)
 
 _Figure 4.7-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
@@ -401,12 +428,16 @@ old copy, and then the old copy is removed from the `Tasklist`.
 
 The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
 
+<div style="page-break-after: always;"></div>
+
 ![Figure 4.7-2](images/DeveloperGuide/Figure 4.7-2.png)
 
 _Figure 4.7-2: Sequence Diagram for undoing edits or deletions of Tasks_
 
 A new `taskHistory` or `noteHistory` is created at every startup of the application. Therefore, the history of any 
 edits and deletions are only available for the current session. Once the program is closed, all information is discarded.
+
+<div style="page-break-after: always;"></div>
 
 #### Design Considerations
 
@@ -433,6 +464,8 @@ and archiving system of **LifEasier** was implemented, followed by the considera
 Figure 4.8-1 shows the simplified class diagram of all the components in the storage package. There are far more methods 
 that exist then as shown in the class diagram. These have been omitted for simplicity.
 
+<div style="page-break-after: always;"></div>
+
 ![Class Diagram Image](images/DeveloperGuide/StorageClassDiagram.png)
 
 _Figure 4.8-1: Class Diagram for all storage components_
@@ -442,11 +475,15 @@ the main `LifEasier` class creates a new `FileStorage` object, which starts the 
 data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
+<div style="page-break-after: always;"></div>
+
 During the creation of the new `Task` and `Note` objects, checks are also done on the validity of the module code, logical flow of time _(Start time cannot be after end time)_,
 and whether the dates of both times are the same, through the `checkForValidSaveInformation()` method found in `TaskStorage`. With the exception of module code, whenever data read 
 has been deemed as corrupted, an appropriate error will be thrown, and the task will **not** be added to the program.
 
 The save file will be updated at the end of file reading.
+
+<br></br>
 
 ![Startup file load sequence diagram](images/DeveloperGuide/Figure 4.8-2.png)
 
@@ -464,6 +501,8 @@ public static void main(String[] args) {
 ````
 _Figure 4.8-3: Code snippet for where save file names are set_
 
+<div style="page-break-after: always;"></div>
+
 Whenever a new task or note is added, edited or deleted, the `saveTask()` or `saveNote()` methods in the `FileStorage` class is called depending 
 on whether the changed item was a task or a note, to begin the data saving process. Figure 4.8-4 shows the sequence diagram taken by the program 
 to save the user’s notes data. The saving process for tasks and notes are implemented in similar ways, with the saving process for tasks 
@@ -474,6 +513,8 @@ readable save files. The format in which the `LocalDateTime` objects are convert
 ![Save sequence diagram](images/DeveloperGuide/StorageSaveSequenceDiagram.png)
 
 _Figure 4.8-4: Sequence diagram for saving of user note data_
+
+<div style="page-break-after: always;"></div>
 
 #### Implementation - Note Archiving
 
@@ -506,6 +547,8 @@ _Figure 4.8-5: Code snippet for main driver of archive command_
 The `archive` command checks for the size of the current `noteList` before execution, and as such, when an empty `noteList` is detected, 
 the archiving process will not be started. Archived notes will **not** be read by the program anymore and any changes can be made to the created archive save file.
 
+<div style="page-break-after: always;"></div>
+
 #### Design Considerations
 
 * In order to ensure users get the best hassle free and user-friendly experience while using **LifEasier**, saves are automatically done after any change 
@@ -524,9 +567,13 @@ The `displaySchedule` command presents the `TaskList` contents in a timetable fo
 display the full week. Otherwise, it simply displays the day’s schedule for today or tomorrow in a list form in 1 hour intervals, 
 with the `Task` items sorted by (starting) time. Figure 4.9-1 below provides the sequence diagram for the logic.
 
+<div style="page-break-after: always;"></div>
+
 ![Figure 4.9-1](images/DeveloperGuide/Figure 4.9-1.png)
 
 _Figure 4.9-1: Sequence diagram for displaying week or day schedule_
+
+<div style="page-break-after: always;"></div>
 
 #### Implementation
 
@@ -565,10 +612,13 @@ The `freeTime` command displays to the user their longest block of free time for
  three values to the `Ui` to display to the user. Figure 4.10-1 shows the sequence diagram for the `freeTimeCommand`,
  and Figure 4.10-2 shows the sequence diagram for the `sleepTimeCommand`.
 
+<div style="page-break-after: always;"></div>
+
 ![Figure 4.10-1](images/DeveloperGuide/Figure%204.10-1.png)  
 
 _Figure 4.10-1: Sequence diagram for freeTimeCommand execution_
 
+<div style="page-break-after: always;"></div>
 
 ![Figure 4.10-2](images/DeveloperGuide/Figure%204.10-2.png)  
 
@@ -584,6 +634,7 @@ _Figure 4.10-2: Sequence diagram for sleepTimeCommand execution_
 * The functions also only provide an accuracy resolution which is rounded to the hour. Similar to the `displaySchedule`
  command, this was an intentional design choice to not overload the user with too many unnecessary details. 
 
+<div style="page-break-after: always;"></div>
 
 ### 4.11 Parsing Commands
 
@@ -622,6 +673,8 @@ decremented by 1 until the date of `start` is on or after the current date, or `
 that each command does not take too much time to run. However, if a user keeps **LifEasier** open over the course of a
 few days without adding any new tasks to their schedule, they might need to restart it to ensure that their tasks are updated.
 
+<div style="page-break-after: always;"></div>
+
 ## 5.0 Product Scope
 
 This section highlights the scope of **LifEasier**, particularly the features that characterise it and who it is made for.
@@ -642,6 +695,8 @@ It is designed to help students keep track of everything that they need to do. T
  
 This will make their lives easier as they can more accurately keep track of what they are supposed to do, and what they 
 have already completed.
+
+<div style="page-break-after: always;"></div>
 
 ## 6.0 User Stories
 
@@ -681,6 +736,7 @@ However, the versions available in the `/docs` folder should be the most updated
 
 The project uses GitHub Pages and Jekyll to generate formatted static websites to host the User Guide and Developer Guide.
 
+<div style="page-break-after: always;"></div>
 
 ## 9.0 Testing / Logging
 
@@ -719,6 +775,8 @@ The following section will give the definition of some commonly used words in **
 * _taskList_ - An array list of `Task` objects used by **LifEasier** to temporarily store lessons, events and deadlines while the program is running.
 * _noteList_ - An array list of `Note` objects used by **LifEasier** to temporarily store current notes while the program is running.
 * _Task_ - Refers to Lessons, Events and Deadlines
+
+<div style="page-break-after: always;"></div>
 
 ## Appendix A: Guidelines on Manual Testing
 
@@ -779,7 +837,6 @@ To show free time and sleep time, use the following commands.
 
 Following the above path for manual testing will bring you through all the features implemented in the current version 
 of **LifEasier**. Please feel free to try out other combinations of inputs to fully test the program.
-
 
 ## Appendix B: Effort
 
