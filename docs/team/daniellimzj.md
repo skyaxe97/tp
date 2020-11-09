@@ -30,7 +30,7 @@ I contributed the following functionalities to the project:
 
 In the User Guide, I wrote the sections related to the features and enhancements I implemented.
 Namely, these are [Section 3.11](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#311-viewing-available-free-time-freetime),
-[Section 3.12](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#312-viewing-available-sleep-time-sleeptime)
+[Section 3.12](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#312-viewing-available-sleep-time-sleeptime),
  and [Section 4.2](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#42-recurring-tasks-and-auto-deletion).
 I also contributed to the formatting and ensuring consistency across the User Guide, and added some graphics.
 ### Contributions to the Developer Guide
