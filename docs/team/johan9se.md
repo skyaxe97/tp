@@ -50,7 +50,7 @@ For example, I helped in writing the Project Scope section as well as the Append
 Throughout the development process, I helped review some pull requests of the other members, as well as communicating 
 with them any suggestions as to how might improve their development of features.
 
-#### Contributions beyond the Project Team
+### Contributions beyond the Project Team
 
 I participated actively during peer review exercises and did my best to give constructive and meaningful feedback to 
 the other teams.
