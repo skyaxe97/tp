@@ -318,10 +318,10 @@ If an empty list is detected, the command would terminate with a prompt of empty
 find the title. If the input title does not match any of the titles in the list, the command would terminate with 
 a message: “title is not found”. If a match is found, the system prints out the note and asks for confirmation 
 for deletion. In the case of multiple matches, the system would print all matching cases and ask the user to select 
-amongst them. Following the confirmation, a `N` would terminate the command while a `Y` would proceed to remove 
+amongst them. After the selection, the corresponding note will be printed out and ask the user for confirmation for deletion. A `N` would terminate the command while a `Y` would proceed to remove 
 the note from the list.
     * If the user did not pre-input the title, the system would print all notes currently in the list and ask 
-for the user to select which note to delete among them. Following the confirmation for deletion, a `N` would terminate 
+for the user to select which note to delete among them. After the selection, the corresponding note will be printed out and ask the user for confirmation for deletion. A `N` would terminate 
 the command while a `Y` would proceed to remove the note from the list.
 
 1. The current note list would then be saved by the `Storage` class.
@@ -334,8 +334,8 @@ _Figure 4.5-2: Sequence diagram for deleteNotesCommand_
 
 #### Design Considerations
 
-* Any number inputs by the user must be checked through to ensure that it is not out of the available indexes 
-in the array. 
+* Any number inputs by the user must be checked through to ensure that it is within the available indexes 
+in the list shown.
 * The function must deal with incorrect title inputs by the user. The user cannot input a title that is not found 
 in any of the notes nor can he input an invalid title such as an empty string.
 * In the event of an empty list, the user cannot delete any more notes from the list. Hence this would result in 
@@ -347,11 +347,12 @@ The `showNotes` command allows the user to select a note to view.
 
 #### Implementation
 
-The `showNotes` command first starts with a check for an empty list before branching into 2 paths: with or without title. If a title is added alongside the 
+The `showNotes` command first starts with `checkEmptyList()` to check if the note list is empty before branching into 2 paths: with or without title. If a title is added alongside
 `showNotes` (ie. the user inputs “showNotes cats”) then the title would be passed on to a method `findTitle()` that would 
 look for the titles containing 'cats' in the list, before returning the note content with the matching title. 
 Conversely, if no title is appended, then a whole list of title of the notes will be printed out for selection.
-The user would input the corresponding number of the note and it would return the note contents.
+The user would input the corresponding number of the note and it would return the note contents. If there are no matching titles,
+then it would return that the title cannot be found.
 
 Figure 4.6-1 illustrates the above steps via a Sequence Diagram.
 
