@@ -37,8 +37,8 @@ and [Section 3.10](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#310-dis
 
 In the Developer Guide, I also wrote the sections related to the features and enhancements I implemented, as well as the
 corresponding UML diagrams of these sections.
-These can be found in [Section 4.6](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#46-undoing-changes-made-to-tasks-and-notes) 
-and [Section 4.8](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#48-displaying-schedule).
+These can be found in [Section 4.7](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#47-undoing-changes-made-to-tasks-and-notes) 
+and [Section 4.9](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#49-displaying-schedule).
 
 ### Contributions to Team-Based Tasks
 
