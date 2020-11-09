@@ -75,7 +75,8 @@ public class TaskStorage {
 
                 String[] taskComponents = taskInformation.split(SAVE_DELIMITER);
                 checkForMissingDataInSave(taskComponents, taskInformation);
-                String taskType = taskComponents[0].trim();
+                String taskType = taskComponents[0];
+                taskType = taskType.trim();
                 String taskDescription = taskComponents[1];
                 switch (taskType) {
                 case "deadline":
@@ -174,7 +175,7 @@ public class TaskStorage {
         LocalDateTime lessonEndTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
         int recurrence = Integer.parseInt(taskComponents[4].trim());
 
-        checkForValidSaveInformation(taskComponents, description);
+        checkForValidSaveInformation(taskComponents, description, true);
 
         //Create new event in tasks
         taskList.add(new Lesson(description, lessonStartTime, lessonEndTime, recurrence));
@@ -196,14 +197,23 @@ public class TaskStorage {
         LocalDateTime eventEndTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
         int recurrence = Integer.parseInt(taskComponents[4].trim());
 
-        checkForValidSaveInformation(taskComponents, description);
+        checkForValidSaveInformation(taskComponents, description, false);
 
         //Create new event in tasks
         taskList.add(new Event(description, eventStartTime, eventEndTime, recurrence));
     }
 
 
-    private void checkForValidSaveInformation(String[] taskComponents, String description)
+    /**
+     * Checks for validity of read save data.
+     *
+     * @param taskComponents String array of read save data after separator has been removed.
+     * @param description The description of the task.
+     * @param isLesson True when the data we are checking belongs to a lesson class.
+     * @throws UnequalSaveDateException When the save dates are not equal.
+     * @throws LogicalTimeException When the start time comes after the end time.
+     */
+    private void checkForValidSaveInformation(String[] taskComponents, String description, boolean isLesson)
             throws UnequalSaveDateException, LogicalTimeException {
         String[] taskStartTimeComponents = taskComponents[2].split(" ");
         String[] startTimeComponents = taskStartTimeComponents[1].split(":");
@@ -213,7 +223,16 @@ public class TaskStorage {
         int endHour = Integer.parseInt(endTimeComponents[0]);
         fileCommand.checkForTaskSameDate(taskStartTimeComponents[0], taskEndTimeComponents[0]);
         fileCommand.checkForLogicalTime(startHour, endHour);
-        fileCommand.checkForValidModuleCode(description);
+
+        boolean isStartMidnight = fileCommand.checkForInvalidMidnight(taskStartTimeComponents[1]);
+        boolean isEndMidnight = fileCommand.checkForInvalidMidnight(taskEndTimeComponents[1]);
+        if (isStartMidnight || isEndMidnight) {
+            ui.showSaveInvalidMidnightTimePrompt();
+        }
+
+        if (isLesson) {
+            fileCommand.checkForValidModuleCode(description);
+        }
     }
 
     /**

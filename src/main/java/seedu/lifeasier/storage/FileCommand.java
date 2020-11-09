@@ -141,4 +141,17 @@ public class FileCommand {
         }
     }
 
+    /**
+     * Checks if midnight times have been input.
+     *
+     * @param time The string to be checked for whether it is a midnight time.
+     * @return True when the time is midnight.
+     */
+    public boolean checkForInvalidMidnight(String time) {
+        if (time.equals("00:00") || time.equals("24:00")) {
+            return true;
+        }
+        return false;
+    }
+
 }

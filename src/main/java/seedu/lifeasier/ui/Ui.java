@@ -836,8 +836,6 @@ public class Ui {
                 + "read and will be deleted"));
         System.out.println(colourTextRed("The rest of your data will continue to be loaded"));
         System.out.println(colourTextRed("This is done to protect your stored data\n"));
-        System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
-                + "recommended to undo those changes"));
         printThickSeparator();
     }
 
@@ -852,7 +850,7 @@ public class Ui {
     public void showSaveInvalidStartEndTimeError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("LifEasier has detected that your start time is before the end time"));
+        System.out.println(colourTextRed("LifEasier has detected that your start time is after the end time"));
         printBlankLine();
     }
 
@@ -875,15 +873,23 @@ public class Ui {
         printThickSeparator();
     }
 
+    public void showSaveInvalidMidnightTimePrompt() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("LifEasier has detected an invalid midnight time"));
+        printBlankLine();
+        System.out.println(colourTextCyan("LifEasier does not support 00:00 and 24:00 as midnight timings"));
+        System.out.println(colourTextCyan("Please change your time to be 23:59 tasks that end at midnight "
+                + "to allow LifEasier to display these events in your schedule"));
+        printThickSeparator();
+    }
+
     public void showLocalDateTimeParseError() {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
-        System.out.println(colourTextRed("The task will continue to be added with a default date to "
-                + "preserve your data"));
-        System.out.println(colourTextRed("You can edit the date and times directly from the save file"));
-        printThickSeparator();
         printBlankLine();
+        showReadErrorHandlerError();
     }
 
     public void showInvalidModuleCodePrompt() {
