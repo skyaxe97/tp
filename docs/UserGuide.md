@@ -743,6 +743,9 @@ the save files if necessary.
 
 In the event of **corrupted data** arising from either system errors or incorrect formats from you while editing the save file,
 **LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. The corrupted data will be removed immediately from the save file as well.
+**LifEasier** currently checks the format of dates and times, if start times are after end times, module codes, and other formatting errors in the save file.
+For invalid module codes, **LifEasier** will continue to load in the lesson instead of discarding it. This is to allow you to enter more information manually into the module code 
+field through the save file directly if needed.
 
 If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
 where you can access your archived files. Archived notes will not show up in **LifEasier** anymore.
