@@ -384,7 +384,7 @@ At every instance where a particular `Task` or `Note` is edited or deleted, usin
 negative value if it has been deleted.
 
 The copy made is stored as a new `Task` or `Note` object temporarily. Once the edit or deletion is successful, the 
-copy of the old unchanged `Task` or `Note` is then pushed into an array called `taskHistory` (or `noteHistory`), 
+copy of the old unchanged `Task` or `Note` is then pushed into an array called `taskHistory` or `noteHistory`, 
 which holds all the previous copies of the object.
 
 Figure 4.7-1 illustrates the sequence diagram of the concept above, applied on changes made to a `Task`. The concept 
@@ -394,9 +394,9 @@ works in a similar manner for `Note` objects.
 
 _Figure 4.7-1: Sequence Diagram for creating and pushing old copies of Tasks_ 
 
-When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` (or `Note`) at the top of the 
-stack in `taskHistory` (or `noteHistory`), and iterates through the existing `TaskList` (or `NoteList`) to see which 
-`Task` (or `Note`) has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the 
+When the `undo` command is called, it retrieves the `editNumber` of the copied `Task` or `Note` at the top of the 
+stack in `taskHistory` or `noteHistory`, and iterates through the existing `TaskList` or `NoteList` to see which 
+`Task` or `Note` has the corresponding `editNumber`. If there is a match, the existing `Task` is replaced with the 
 old copy, and then the old copy is removed from the `Tasklist`.
 
 The corresponding confirmation message to be displayed is determined by whether the `editNumber` is positive or negative.
@@ -413,7 +413,7 @@ edits and deletions are only available for the current session. Once the program
 To allow for multiple undos on the same `Task` or `Note` object, the `editNumber` of `Tasks` or `Notes` that have 
 been edited before must be checked. If it is anything but the _default assigned value (-999999)_, then its existing 
 `editNumber` will be taken and used as the `editID` for all successive copies made of it. This is to allow the 
-application to always find the same instance of the `Task` or `Note` inside the `TaskList` (or `NoteList`) when 
+application to always find the same instance of the `Task` or `Note` inside the `TaskList` or `NoteList` when 
 restoring previous versions.
 
 However, multiple undos are only allowed until a particular object is deleted. Because of how each `Task` or `Note` only 
@@ -515,8 +515,8 @@ continue to read in the remaining data and run as per normal. **Manual intervent
 ### 4.9 Displaying Schedule (Johannine)
 
 The `displaySchedule` command presents the `TaskList` contents in a timetable format, given that it is specified to 
-display the full week. Otherwise, it displays the day’s schedule for today or tomorrow in a list form, with the `Task` items sorted 
-by date. Figure 4.9-1 below provides the sequence diagram for the logic.
+display the full week. Otherwise, it simply displays the day’s schedule for today or tomorrow in a list form in 1 hour intervals, 
+with the `Task` items sorted by (starting) time. Figure 4.9-1 below provides the sequence diagram for the logic.
 
 ![Figure 4.9-1](images/DeveloperGuide/Figure 4.9-1.png)
 
