@@ -154,6 +154,7 @@ Adds a `Lesson` to your schedule. Use this command to add your `Lesson` to your 
 #### ![Notes](images/UserGuide/post-it.png) Notes on addLesson Command:
 
 * The program will not warn you if there are any clashes in timing with other Tasks. 
+* If you indicate that a Lesson ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
 **Format:** `addLesson /code MODULE /date DATE /from START /to END /repeats TIMES`
 
@@ -186,6 +187,7 @@ Adds an `Event` to your schedule. Use this command to add your `Event` to your s
 #### ![Notes](images/UserGuide/post-it.png) Notes on addEvent Command:
 
 * The program will not warn you if there are any clashes in timing with other Tasks.
+* If you indicate that an Event ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
 **Format:** `addEvent NAME /date DATE /from START /to END /repeats TIMES`
 
