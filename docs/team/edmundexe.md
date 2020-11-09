@@ -31,6 +31,8 @@ I have written sections that were relevant to what enhancements I have implement
 [Section 3.15](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#315-deleting-a-note-deletenotes),
 [Section 3.16](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#316-editing-a-note-editnotes).
 
+<div style="page-break-after: always;"></div>
+
 ### Contributions to the Developer Guide
 
 I have written sections that were relevant to what enhancements I have implemented in the project, including related UML diagrams.
