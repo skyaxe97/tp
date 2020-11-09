@@ -35,20 +35,14 @@ I also implemented the functionality that allows the program to prompt the User 
 
 In the User Guide, I contributed mainly to the features that I implemented as above.
 Namely, these are:
+<br>
 [Section 3.2](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#32-adding-a-lesson-addlesson)
-
 [Section 3.3](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#33-adding-an-event-addevent)
-
 [Section 3.4](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#34-adding-a-deadline-adddeadline) 
-
 [Section 3.5](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#35-editing-a-lesson-editlesson)
-
 [Section 3.6](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#36-editing-an-event-editevent)
-
 [Section 3.7](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#37-editing-a-deadline-editdeadline) 
-
 [Section 3.8](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#38-deleting-a-task-deletetask).
-
 
 ### Contributions to the Developer Guide
 
