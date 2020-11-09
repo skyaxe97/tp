@@ -248,6 +248,11 @@ _Figure 3.4-1: An example of using the addDeadline command_
 
 Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos in the lessons you have already added.
 
+#### ![Notes](images/UserGuide/post-it.png) Notes on editLesson Command:
+
+* The program will not warn you if there are any clashes in timing with other Tasks. 
+* If you indicate that a Lesson ends at midnight (24:00), the end time will be automatically converted to 23:59.
+
 **Format:** `editLesson [CODE]`
 
 #### ![Notes](images/UserGuide/post-it.png) Notes on editLesson Command Format:
@@ -292,6 +297,11 @@ _Figure 3.5-1: An example of using the editLesson command_
 ### 3.6 Editing an Event: `editEvent`
 
 Edits an event in your schedule. Use this command to fix mistakes like typos in the events you have already added.
+
+#### ![Notes](images/UserGuide/post-it.png) Notes on editEvent Command:
+
+* The program will not warn you if there are any clashes in timing with other Tasks. 
+* If you indicate that an Event ends at midnight (24:00), the end time will be automatically converted to 23:59.
 
 **Format:** `editEvent [NAME]`
 
@@ -339,6 +349,10 @@ _Figure 3.6-1: An example of using the editEvent command_
 ### 3.7 Editing a Deadline: `editDeadline`
 
 Edits a `Deadline` in your schedule. Use this command to fix mistakes like typos in the deadlines you have already added.
+
+#### ![Notes](images/UserGuide/post-it.png) Notes on editDeadline Command:
+
+* The program will not warn you if there are any clashes in timing with other Tasks. 
 
 **Format:** `editDeadline [NAME]`
 
@@ -408,6 +422,7 @@ deleteTask /type deadline /name Submit report
 ---------------------------------------------------------------------------------------------------------------
 Here are all your matching deadlines:
 1. Deadline: Submit report by (19 Nov 2020, 14:00), repeats weekly 0 times
+2. Deadline: Return books by (31 Dec 2020, 23:59), repeats weekly 0 times
 
 ---------------------------------------------------------------------------------------------------------------
 Please select the deadline you want to delete:
@@ -451,8 +466,8 @@ To undo a change in notes, please enter: note
 task
 
 ===============================================================================================================
-This task has been reverted back to its previous version!
-Deadline: homework by (28 Oct 2020, 09:00), repeats weekly 0 times
+This deleted task has been successfully restored!
+Deadline: Submit report by (19 Nov 2020, 14:00), repeats weekly 0 times
 ===============================================================================================================
 
 undo note
