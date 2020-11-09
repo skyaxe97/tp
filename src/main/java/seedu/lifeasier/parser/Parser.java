@@ -585,6 +585,7 @@ public class Parser {
         }
     }
 
+    // @@author johan9se
     private String handleMissingDisplayParam(Ui ui) {
         boolean isValidField = false;
         String userInput = "";
@@ -606,6 +607,7 @@ public class Parser {
     private boolean isValidDisplayParam(String userInput) {
         return userInput.equals("week") || userInput.equals("today") || userInput.equals("tomorrow");
     }
+    //@@author
 
     /**
      * Parses the undo command that the user inputs.
@@ -787,7 +789,8 @@ public class Parser {
             return MissingParam.COMPLETED;
         }
     }
-    
+
+    //@@author johan9se
     /**
      * Checks if the end time for Lessons and Events inputted by user is 24:00
      * and adjust it to become 23:59.
@@ -801,6 +804,7 @@ public class Parser {
         }
         return endTimeString;
     }
+    //@@author
 
     /**
      * Adds the event description to the string.
