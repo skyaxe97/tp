@@ -226,6 +226,8 @@ public class Ui {
                 }
                 isCommandWithDelimiter = false;
             } catch (SaveDelimiterException e) {
+                printBlankLine();
+                printThinSeparator();
                 System.out.println(colourTextRed("Inputs cannot contain the character sequence: =-="));
                 System.out.println(colourTextCyan("Please re-enter your input:"));
             }
@@ -436,7 +438,7 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextRed("Encountered an error while reading from the save file "
-                + "- Data missing/corrupted"));
+                + "- Data missing/corrupted for current task"));
         printBlankLine();
     }
 
@@ -451,7 +453,8 @@ public class Ui {
 
     public void showIndeterminableTaskError() {
         printThickSeparator();
-        System.out.println(colourTextRed("Something went wrong while determining the tasks"));
+        System.out.println(colourTextRed("Something went wrong while determining the task type for the "
+                + "current task"));
         printBlankLine();
         showReadErrorHandlerError();
     }
@@ -777,9 +780,7 @@ public class Ui {
     public void showIndeterminableRecurrenceError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("There was an error reading the task recurrence"));
-        printThickSeparator();
-        printBlankLine();
+        System.out.println(colourTextRed("There was an error reading the task recurrence for the current task"));
     }
 
     public void showRecurrencesNumberFormatPrompt() {
@@ -819,11 +820,6 @@ public class Ui {
         System.out.println(colourTextCyan("Your new description cannot be empty. Please try again!"));
     }
 
-    public void showInvalidRecurrencesError() {
-        System.out.println(colourTextRed("Recurrences must be a positive integer!"));
-        printThickSeparator();
-    }
-
     public void showArchiveEndInformationMessage() {
         System.out.println(colourTextYellow("Note: All current notes have been archived and will no longer be "
                 + "read by the program"));
@@ -832,8 +828,8 @@ public class Ui {
     }
 
     public void showReadErrorHandlerError() {
-        System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
-                + "read and will be deleted"));
+        System.out.println(colourTextRed("LifEasier will continue to run, but the currently affected data "
+                + "will not be read and will be deleted"));
         System.out.println(colourTextRed("The rest of your data will continue to be loaded"));
         System.out.println(colourTextRed("This is done to protect your stored data"));
         printThickSeparator();
@@ -843,14 +839,15 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
-                + " in the save file"));
+                + " in the currently read item"));
         printBlankLine();
     }
 
     public void showSaveInvalidStartEndTimeError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("LifEasier has detected that your start time is after the end time"));
+        System.out.println(colourTextRed("LifEasier has detected that your start time is after the end time "
+                + "in the currently read item"));
         System.out.println(colourTextRed("If you have edited a task timing to 00:00, please note that LifEasier "
                 + "does not support 00:00 as midnight"));
         printBlankLine();
@@ -859,14 +856,16 @@ public class Ui {
     public void showSaveDateUnequalError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("LifEasier has detected that the start and end dates are not similar"));
+        System.out.println(colourTextRed("LifEasier has detected that the start and end dates are not similar"
+                + "in the currently read item"));
         printBlankLine();
     }
 
     public void showSaveInvalidModuleCodePrompt() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("LifEasier has detected an invalid module code"));
+        System.out.println(colourTextRed("LifEasier has detected an invalid module code in the currently "
+                + "read item"));
         printBlankLine();
         System.out.println(colourTextCyan("However, LifEasier will continue to add this task in, provided there "
                 + "are no further errors"));
@@ -878,18 +877,20 @@ public class Ui {
     public void showSaveInvalidMidnightTimePrompt() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("LifEasier has detected an invalid midnight time"));
+        System.out.println(colourTextRed("LifEasier has detected an invalid midnight time in the "
+                + "currently read item"));
         printBlankLine();
         System.out.println(colourTextCyan("LifEasier does not support 00:00 and 24:00 as midnight timings"));
         System.out.println(colourTextCyan("Please change your time to be 23:59 tasks that end at midnight "
-                + "to allow LifEasier to display these events in your schedule"));
+                + "to allow LifEasier to display these events in your schedule, else it will be deleted"));
         printThickSeparator();
     }
 
     public void showLocalDateTimeParseError() {
         printBlankLine();
         printThickSeparator();
-        System.out.println(colourTextRed("Encountered a problem reading the date and time of the task\n"));
+        System.out.println(colourTextRed("Encountered a problem reading the date and time of the "
+                + "currently read task"));
         printBlankLine();
         showReadErrorHandlerError();
     }

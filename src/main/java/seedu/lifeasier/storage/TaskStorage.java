@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 public class TaskStorage {
 
     public static final String BLANK_STRING = "";
+    public static final String BLANK_SPACE = " ";
+    public static final String TIME_DELIMITER = ":";
     private static Logger logger = Logger.getLogger(TaskStorage.class.getName());
     private static final String SAVE_DELIMITER = "=-=";
     public static final String DEFAULT_DATA = "\n";
@@ -215,11 +217,11 @@ public class TaskStorage {
      */
     private void checkForValidSaveInformation(String[] taskComponents, String description, boolean isLesson)
             throws UnequalSaveDateException, LogicalTimeException {
-        String[] taskStartTimeComponents = taskComponents[2].split(" ");
-        String[] startTimeComponents = taskStartTimeComponents[1].split(":");
+        String[] taskStartTimeComponents = taskComponents[2].split(BLANK_SPACE);
+        String[] startTimeComponents = taskStartTimeComponents[1].split(TIME_DELIMITER);
         int startHour = Integer.parseInt(startTimeComponents[0]);
-        String[] taskEndTimeComponents = taskComponents[3].split(" ");
-        String[] endTimeComponents = taskEndTimeComponents[1].split(":");
+        String[] taskEndTimeComponents = taskComponents[3].split(BLANK_SPACE);
+        String[] endTimeComponents = taskEndTimeComponents[1].split(TIME_DELIMITER);
         int endHour = Integer.parseInt(endTimeComponents[0]);
         fileCommand.checkForTaskSameDate(taskStartTimeComponents[0], taskEndTimeComponents[0]);
         fileCommand.checkForLogicalTime(startHour, endHour);
