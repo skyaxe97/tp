@@ -26,8 +26,8 @@ On top of that, as users are able to edit the save files directly, a robust syst
 save files had to be implemented.
 
 #### Contributions to Documentation (UG)
-For the user guide, I contributed mainly to the features I implemented, which are sections [3.17](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#317-archiving-notes-archive) 
-and [4.1](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#41-storing-data). Apart from that, I also contributed to the 
+For the user guide, I contributed mainly to the features I implemented, which are sections [3.17 Archiving Notes](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#317-archiving-notes-archive),
+and [4.1 Storing Data](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#41-storing-data). Apart from that, I also contributed to the 
 Section **2.0 Quick Start**, **5.0 FAQ** and the **6.0 Command Summary**, which can be found from the user guide [here](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide).
 
 #### Contributions to the DG
