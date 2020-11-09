@@ -33,10 +33,10 @@ IMPORTANT INFORMATION:
 COMMANDS
 ***************************************************************************************************************
 help ------------------------------------------------------------------------------ Displays available commands
-addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES -------------------- [P]Adds a lesson
+addLesson /code MODULE /date DATE /from START /to END /repeats TIMES ------------------------- [P]Adds a lesson
 addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ---------------------------- [P]Adds an event
 addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES -------------------------------------- [P]Adds a deadline
-editLesson MODULE_CODE ---------------------------------------------------------------------- [P]Edits a lesson
+editLesson MODULE --------------------------------------------------------------------------- [P]Edits a lesson
 editEvent EVENT_NAME ------------------------------------------------------------------------ [P]Edits an event
 editDeadline DEADLINE_NAME ---------------------------------------------------------------- [P]Edits a deadline
 deleteTask /type TYPE /name NAME --------------------------------------------------------------- Deletes a task
