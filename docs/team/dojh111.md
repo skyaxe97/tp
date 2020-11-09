@@ -31,9 +31,7 @@ and [4.1 Storing Data](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide#41-
 Section **2.0 Quick Start**, **5.0 FAQ** and the **6.0 Command Summary**, which can be found from the user guide [here](https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide).
 
 #### Contributions to the DG
-Similar to the UG, I contributed UML diagrams and content related to storage and archiving, which falls under section 
-[4.8 Storing and Archiving Notes](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#48-storing-and-archiving-notes), 
-and the architecture diagram in [3.1 Architecture](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#31-architecture). Finally, I also contributed to 
+Similar to the UG, I contributed UML diagrams such as the architecture diagram in [3.1 Architecture](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#31-architecture), and content related to storage and archiving, which falls under section [4.8 Storing and Archiving Notes](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#48-storing-and-archiving-notes). Finally, I also contributed to 
 [Appendix A: Guidelines on Manual Testing](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#appendix-a-guidelines-on-manual-testing). 
 The developer guide can be found [here](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide).
 
