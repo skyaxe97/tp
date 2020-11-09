@@ -48,9 +48,9 @@ Namely, these are
 
 In the Developer Guide, I also wrote the sections related to the features and enhancements I implemented. The UML diagrams in these sections were also contributed by me.
 These can be found in 
-[Section 4.1](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#41-adding-lessons-events-deadlines-fairuz), 
-[Section 4.2](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#42-editing-lessons-events-deadlines-fairuz) and 
-[Section 4.3](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#43-deleting-of-lessons-events-deadlines-fairuz). 
+[Section 4.1](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#41-adding-lessons-events-deadlines), 
+[Section 4.2](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#42-editing-lessons-events-deadlines) and 
+[Section 4.3](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#43-deleting-of-lessons-events-deadlines). 
 
 ### Contributions to Team-Based Tasks
 
