@@ -39,6 +39,7 @@ I also contributed to the formatting and ensuring consistency across the User Gu
 In the Developer Guide, I also wrote the sections related to the features and enhancements I implemented. The UML diagrams in these sections were also contributed by me.
 These can be found in [Section 4.9](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#410-displaying-free-time-and-sleep-time-daniel) and [Section 4.11](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#412-recurring-tasks-and-auto-deletion-daniel).
 I also contributed [Section 3.2](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#32-components).
+I also contributed much of some of the non-specific sections, such as Sections [8.0](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#80-documentation), [9.0](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#90-testing--logging), [10.0](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#100-dev-ops) and [Appendix B](https://ay2021s1-cs2113t-w13-4.github.io/tp/DeveloperGuide#appendix-b-effort).
 
 ### Contributions to Team-Based Tasks
 
