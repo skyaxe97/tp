@@ -57,6 +57,8 @@ public class LifEasier {
 
         tasks.updateTasks(LocalDate.now());
 
+        storage.saveTasks();
+
         showStartupSequence();
 
         boolean isFinished = false;

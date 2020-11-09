@@ -64,6 +64,8 @@ class TaskListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.getTask(-1));
     }
 
+    //@@author daniellimzj
+
     @Test
     void updateTasks_outdatedRecurringLesson_movedOneWeek() {
         TaskList taskList = new TaskList();
@@ -141,6 +143,8 @@ class TaskListTest {
 
         assertEquals(3, tasksFromOneDay.size());
     }
+
+    //@@author
 
     @Test
     void getTaskList_returnsFullTaskList() {

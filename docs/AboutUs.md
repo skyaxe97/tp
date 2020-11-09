@@ -2,10 +2,10 @@
 
  Name | Github Profile | Portfolio 
 :----:|:--------------:|:---------:
-Danzel Ong | [Github](https://github.com/dojh111) | [Portfolio](/docs/team/dojh111.md)
-Daniel | [Github](https://github.com/daniellimzj) | [Portfolio](/docs/team/daniellimzj.md)
-Edmund | [Github](https://github.com/EdmundEXE) | [Portfolio](/docs/team/edmundexe.md)
-Fairuz| [Github](https://github.com/skyaxe97) | [Portfolio](/docs/team/skyaxe97.md)
-Johannine | [Github](https://github.com/johan9se) | [Portfolio](/docs/team/johan9se.md)
+Danzel Ong Jing Hern| [Github](https://github.com/dojh111) | [Portfolio](https://ay2021s1-cs2113t-w13-4.github.io/tp/team/dojh111)
+Daniel Lim Zi-Jie | [Github](https://github.com/daniellimzj) | [Portfolio](https://ay2021s1-cs2113t-w13-4.github.io/tp/team/daniellimzj)
+Edmund Tan Wei Jie| [Github](https://github.com/EdmundEXE) | [Portfolio](https://ay2021s1-cs2113t-w13-4.github.io/tp/team/edmundexe)
+Muhammad Fairuz B Amirhamzah| [Github](https://github.com/skyaxe97) | [Portfolio](https://ay2021s1-cs2113t-w13-4.github.io/tp/team/skyaxe97)
+Enerio Johannine Salvilla | [Github](https://github.com/johan9se) | [Portfolio](https://ay2021s1-cs2113t-w13-4.github.io/tp/team/johan9se)
 
 
