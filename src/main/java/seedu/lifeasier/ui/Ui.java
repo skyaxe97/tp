@@ -835,7 +835,7 @@ public class Ui {
         System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
                 + "read and will be deleted"));
         System.out.println(colourTextRed("The rest of your data will continue to be loaded"));
-        System.out.println(colourTextRed("This is done to protect your stored data\n"));
+        System.out.println(colourTextRed("This is done to protect your stored data"));
         printThickSeparator();
     }
 
@@ -851,6 +851,8 @@ public class Ui {
         printBlankLine();
         printThickSeparator();
         System.out.println(colourTextRed("LifEasier has detected that your start time is after the end time"));
+        System.out.println(colourTextRed("If you have edited a task timing to 00:00, please note that LifEasier "
+                + "does not support 00:00 as midnight"));
         printBlankLine();
     }
 
