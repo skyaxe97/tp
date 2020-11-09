@@ -29,6 +29,8 @@
 * [5.0 FAQ](#50-faq)
 * [6.0 Command Summary](#60-command-summary)
 
+<div style="page-break-after: always;"></div>
+
 ## 1.0 Introduction
 
 **LifEasier** helps Computer Engineering (CEG) students to manage their classes, social events, deadlines and school notes through the Command Line Interface (CLI). The CLI allows **LifEasier** to deliver this functionality through a lightweight and easy to use interface. If you can type fast, **LifEasier** can get your timetabling needs done faster than a traditional GUI app.
@@ -43,6 +45,8 @@ Item | Meaning
 -----|--------
 ![Notes](images/UserGuide/post-it.png) | Sections with this icon contain pointers you should take note of. You'll see these mostly in the [User Features](#30-user-features) section.
 `code snippets` | If you see words like this within blocks of normal text, they are probably related to more technical terms. If you see entire sections that appear in this font, they are usually examples of how to use LifEasier. You'll also see the latter mostly in the [User Features](#30-user-features) section.
+
+<div style="page-break-after: always;"></div>
 
 ## 2.0 Quick Start
 
@@ -77,6 +81,8 @@ Hello! What can I do for you today?
 
 _Figure 2-1: LifEasier’s welcome screen_
 
+<div style="page-break-after: always;"></div>
+
 1. You are now ready to use **LifEasier.** Type commands into the terminal window and press enter to execute the command. E.g Type  help and press enter to bring up the list of  available commands.
 1. Generally, green coloured text is displayed when commands have been completed successfully, or contains helpful information for you. Red coloured text is displayed when unexpected errors have occurred, or when you have entered invalid information. Cyan coloured text is usually displayed when the system needs your input.
 1. If the colours of the text seem jarring, try changing your CLI to a black background.
@@ -96,6 +102,8 @@ The following section expands on the features available for you to use in **LifE
 * **LifEasier** does not support `00:00` as a valid time for midnight. Instead, use `24:00`, which will automatically be converted to `23:59` by the program.
 * Currently, **LifEasier** does not allow tasks to be added that span multiple days. However, this feature will be added in a future version of **LifEasier**.
 
+<div style="page-break-after: always;"></div>
+
 ### 3.1 Viewing Help: `help`
 This command shows you the available commands and their formats.
 
@@ -107,7 +115,7 @@ An example of how to use the help command is shown below in Figure 3.1-1.
 ````
 help
 
-===============================================================================================================
+==============================================================================================
 These are the commands that are available:
 IMPORTANT INFORMATION:
  * Words in UPPER_CASE are the parameters to be supplied by the user
@@ -120,33 +128,35 @@ IMPORTANT INFORMATION:
  * For tasks that end at midnight, enter the time as 24:00
 
 COMMANDS
-***************************************************************************************************************
-help ------------------------------------------------------------------------------ Displays available commands
-addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES -------------------- [P]Adds a lesson
-addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ---------------------------- [P]Adds an event
-addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES -------------------------------------- [P]Adds a deadline
-editLesson MODULE_CODE ---------------------------------------------------------------------- [P]Edits a lesson
-editEvent EVENT_NAME ------------------------------------------------------------------------ [P]Edits an event
-editDeadline DEADLINE_NAME ---------------------------------------------------------------- [P]Edits a deadline
-deleteTask /type TYPE /name NAME --------------------------------------------------------------- Deletes a task
-addNotes TITLE ----------------------------------------------------------------------------- [P]Adds a new note
-showNotes TITLE ------------------------------------------------------------------------ [P]Shows selected note
-archive --------------------------------------------------------------------------- Archives all existing notes
-editNotes TITLE ---------------------------------------------------------------------- [P]Edits a selected note
-deleteNotes TITLE ------------------------------------------------------------------ [P]Deletes a selected note
-undo TYPE ------------------------------------------------------- [P]Undoes the last edit/deleted task or notes
-display KEYWORD --------------------------------------------------- [P]Displays either weekly or daily schedule
-freeTime ------------------------------------------------------ Tells you your longest block of free time today
-sleepTime ----------------------------------------------------------- Tells you how much time you have to sleep
-exit ----------------------------------------------------------------------------- Closes the LifEasier program
-***************************************************************************************************************
+**********************************************************************************************
+help ------------------------------------------------------------- Displays available commands
+addLesson /code MODULE_CODE /date DATE /from START /to END /repeats TIMES --- [P]Adds a lesson
+addEvent EVENT_NAME /date DATE /from START /to END /repeats TIMES ----------- [P]Adds an event
+addDeadline DEADLINE_NAME /by DATETIME /repeats TIMES --------------------- [P]Adds a deadline
+editLesson MODULE_CODE ----------------------------------------------------- [P]Edits a lesson
+editEvent EVENT_NAME ------------------------------------------------------- [P]Edits an event
+editDeadline DEADLINE_NAME ----------------------------------------------- [P]Edits a deadline
+deleteTask /type TYPE /name NAME ---------------------------------------------- Deletes a task
+addNotes TITLE ------------------------------------------------------------ [P]Adds a new note
+showNotes TITLE ------------------------------------------------------- [P]Shows selected note
+archive ---------------------------------------------------------- Archives all existing notes
+editNotes TITLE ----------------------------------------------------- [P]Edits a selected note
+deleteNotes TITLE ------------------------------------------------- [P]Deletes a selected note
+undo TYPE -------------------------------------- [P]Undoes the last edit/deleted task or notes
+display KEYWORD ---------------------------------- [P]Displays either weekly or daily schedule
+freeTime ------------------------------------- Tells you your longest block of free time today
+sleepTime ------------------------------------------ Tells you how much time you have to sleep
+exit ------------------------------------------------------------ Closes the LifEasier program
+**********************************************************************************************
 
 For more detailed information, please visit the online user guide at:
 https://ay2021s1-cs2113t-w13-4.github.io/tp/UserGuide
-===============================================================================================================
+==============================================================================================
 ````
 
 _Figure 3.1-1: An example of using the help command_
+
+<div style="page-break-after: always;"></div>
 
 ### 3.2 Adding a Lesson: `addLesson`
 
@@ -181,6 +191,8 @@ to your schedule!
 ```
 _Figure 3.2-1: An example of using the addLesson command_
 
+<div style="page-break-after: always;"></div>
+
 ### 3.3 Adding an Event: `addEvent`
 
 Adds an `Event` to your schedule. Use this command to add your `Event` to your schedule.
@@ -214,6 +226,8 @@ to your schedule!
 ```
 _Figure 3.3-1: An example of using the addEvent command_
 
+<div style="page-break-after: always;"></div>
+
 ### 3.4 Adding a Deadline: `addDeadline`
 
 Adds a `Deadline` to your schedule. Use this command to add your `Deadline` to your schedule.
@@ -245,6 +259,8 @@ to your schedule!
 ```
 _Figure 3.4-1: An example of using the addDeadline command_
 
+<div style="page-break-after: always;"></div>
+
 ### 3.5 Editing a Lesson: `editLesson`
 
 Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos in the lessons you have already added.
@@ -264,6 +280,8 @@ Edits a `Lesson` in your schedule. Use this command to fix mistakes like typos i
 * If you choose to edit time, System will prompt to input new `TIME` in the format of 
 “`/date DATE /from START /to END`”
 * For lessons that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
+
+<div style="page-break-after: always;"></div>
 
 #### Example:
 
@@ -295,6 +313,8 @@ Your edit has been saved.
 ```
 _Figure 3.5-1: An example of using the editLesson command_
 
+<div style="page-break-after: always;"></div>
+
 ### 3.6 Editing an Event: `editEvent`
 
 Edits an event in your schedule. Use this command to fix mistakes like typos in the events you have already added.
@@ -315,6 +335,8 @@ will be printed.
 * If you choose to edit time, the program will prompt to input new `TIME` in the format of 
 “`/date DATE /from START /to END`”
 * For events that end at **midnight**, please use `24:00` as the command does not accept `00:00`. 
+
+<div style="page-break-after: always;"></div>
 
 #### Example:
 
@@ -347,6 +369,8 @@ Your edit has been saved.
 ```
 _Figure 3.6-1: An example of using the editEvent command_
 
+<div style="page-break-after: always;"></div>
+
 ### 3.7 Editing a Deadline: `editDeadline`
 
 Edits a `Deadline` in your schedule. Use this command to fix mistakes like typos in the deadlines you have already added.
@@ -365,6 +389,8 @@ will be printed.
 * The program will prompt you to choose to edit the `NAME` or the `BY` time. 
 * If you choose to edit time, the program will prompt to input new `BY` time in the format of 
 “`/by DATETIME`”.
+
+<div style="page-break-after: always;"></div>
 
 #### Example:
 
@@ -396,6 +422,8 @@ Your edit has been saved.
 ===============================================================================================================
 ```
 _Figure 3.7-1: An example of using the editDeadline command_
+
+<div style="page-break-after: always;"></div>
 
 ### 3.8 Deleting a Task: `deleteTask`
 
@@ -434,6 +462,8 @@ The task you selected has been deleted.
 ===============================================================================================================
 ```
 _Figure 3.8-1: An example of using the deleteTask command_
+
+<div style="page-break-after: always;"></div>
 
 ### 3.9 Undoing an Edit or Deletion:  `undo`
 
@@ -484,6 +514,8 @@ Yay for cats!
 
 _Figure 3.9-1: An example of using the undo command_
 
+<div style="page-break-after: always;"></div>
+
 ### 3.10 Displaying Schedule: `display`
 
 Displays your current schedule. Use this command to view what your schedule is like for today, tomorrow or for the 
@@ -517,43 +549,47 @@ Here is your schedule for today:
 
 _Figure 3.10-1: An example of using the display command to view your daily schedule_
 
+<div style="page-break-after: always;"></div>
+
 `display week` displays the schedule of the upcoming 7 days, including the current day. Another  example of how to use the edit lesson command is shown below in Figure 3.10-2.
 
 ```
 display week
 
-===============================================================================================================
+================================================================================================
 NOTE: The row corresponding to the current hour is coloured for easy reference!
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|TIME       | WEDNESDAY       | THURSDAY        | FRIDAY          | SATURDAY        | SUNDAY          | MONDAY          | TUESDAY         |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|08:00-09:00|                 |                 |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|09:00-10:00|                 |                 |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|10:00-11:00|                 | CG1111          |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|11:00-12:00|                 | CG1111          |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|12:00-13:00|                 |                 | ST2334          |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|13:00-14:00| CS2113T         |                 | ST2334          |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|14:00-15:00|                 | CS2101          |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|15:00-16:00|                 | CS2101          | CS2113T         |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|16:00-17:00|                 |                 | CS2113T         |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
-|17:00-18:00|                 |                 |                 |                 |                 |                 |                 |
-+-----------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|TIME       | WEDNESDAY | THURSDAY | FRIDAY    | SATURDAY  | SUNDAY    | MONDAY    | TUESDAY   |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|08:00-09:00|           |          |           |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|09:00-10:00|           |          |           |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|10:00-11:00|           | CG1111   |           |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|11:00-12:00|           | CG1111   |           |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|12:00-13:00|           |          | ST2334    |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|13:00-14:00| CS2113T   |          | ST2334    |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|14:00-15:00|           | CS2101   |           |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|15:00-16:00|           | CS2101   | CS2113T   |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|16:00-17:00|           |          | CS2113T   |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
+|17:00-18:00|           |          |           |           |           |           |           |
++-----------+-----------+----------+-----------+-----------+-----------+-----------+-----------+
 Here are your upcoming deadlines this week:
 1. Deadline: ABC Project by (3 Nov 2020, 14:00), repeats weekly 0 times
 2. Deadline: weekly XYZ quiz by (5 Nov 2020, 13:00), repeats weekly 3 times
-===============================================================================================================
+================================================================================================
 ```
 
 _Figure 3.10-2: An example of using the display week command to view your weekly schedule_
+
+<div style="page-break-after: always;"></div>
 
 ### 3.11 Viewing Available Free Time: `freeTime`
 
@@ -581,6 +617,7 @@ You can try scheduling something in this time!
 
 _Figure 3.11-1: An example of using the freeTime command._
 
+<div style="page-break-after: always;"></div>
 
 ### 3.12 Viewing Available Sleep Time: `sleepTime`
 
@@ -611,6 +648,7 @@ You can sleep for the recommended 8 hours or longer!
 
 _Figure 3.12-1: An example of using sleepTime command_
 
+<div style="page-break-after: always;"></div>
 
 ### 3.13 Adding a New Note: `addNotes`
 
@@ -641,6 +679,8 @@ Ok! I've taken note of this note!
 ```
 
 _Figure 3.13-1: An example of using the addNotes command_
+
+<div style="page-break-after: always;"></div>
 
 ### 3.14 Showing Notes: `showNotes`
 
@@ -673,6 +713,8 @@ Cats are the cutest in the world :D
 ```
 
 _Figure 3.14-1: An example of using the showNotes command_
+
+<div style="page-break-after: always;"></div>
 
 ### 3.15 Deleting a Note: `deleteNotes`
 
@@ -718,6 +760,8 @@ OK! Note deleted!
 ```
 
 _Figure 3.15-1: An example of using the deleteNotes command_
+
+<div style="page-break-after: always;"></div>
 
 ### 3.16 Editing a Note: `editNotes`
 
@@ -766,6 +810,8 @@ OK! Your description is now: "I really love cats!"
 
 _Figure 3.16-1: An example of using the editNotes command_
 
+<div style="page-break-after: always;"></div>
+
 ### 3.17 Archiving Notes: `archive`
 
 Archives all existing notes. Use this command to store all your notes in a separate save file. These notes will no 
@@ -803,6 +849,8 @@ _Figure 3.17-1: An example of using the archive command_
 The current implementation of `archive` only allows for archiving of **all** notes currently present in the program. In a 
 future implementation, the ability for you to specifically choose which notes to be archived will be added.
 
+<div style="page-break-after: always;"></div>
+
 ### 3.18 Exiting: `exit`
 
 Exits the programme. Use this command when you are done using LifEasier.
@@ -822,6 +870,8 @@ Goodbye, hope to see you again soon!
 ````
 
 _Figure 3.18-1: An example of using the exit command_
+
+<div style="page-break-after: always;"></div>
 
 ## 4.0 Other Features
 
@@ -853,6 +903,7 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 1. If you had a lesson that last occurred on 22nd October, and it is set to repeat 3 more times, it will be **updated** to occur again on 29th October, and **updated** to repeat 2 more times.
 2. If you had an event that last occurred on 21st October, and it is set to repeat 0 more times, it will be **deleted** from your schedule.
 
+<div style="page-break-after: always;"></div>
 
 ## 5.0 FAQ
 
@@ -870,6 +921,7 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 
 **A:** You may have set the end time for your event/lesson as `00:00` or `24:00` in the save file, which **LifEasier** does not support currently. As such, please enter `23:59` as the time if you want to modify the task to end at midnight directly from the save file.
 
+<div style="page-break-after: always;"></div>
 
 ## 6.0 Command Summary
 
