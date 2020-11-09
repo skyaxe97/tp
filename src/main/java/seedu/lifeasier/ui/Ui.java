@@ -171,6 +171,7 @@ public class Ui {
     }
 
     public void showLogo() {
+        printBlankLine();
         printThickSeparator();
         printThickSeparator();
         printLogo();
@@ -832,7 +833,8 @@ public class Ui {
 
     public void showReadErrorHandlerError() {
         System.out.println(colourTextRed("LifEasier will continue to run, but the current data will not be "
-                + "read. The rest of your data will continue to be loaded"));
+                + "read and will be deleted"));
+        System.out.println(colourTextRed("The rest of your data will continue to be loaded"));
         System.out.println(colourTextRed("This is done to protect your stored data\n"));
         System.out.println(colourTextRed("If you have made changes directly to the save file, you are "
                 + "recommended to undo those changes"));
@@ -845,6 +847,32 @@ public class Ui {
         System.out.println(colourTextRed("LifEasier has detected either missing or additional save delimiters"
                 + " in the save file"));
         printBlankLine();
+    }
+
+    public void showSaveInvalidStartEndTimeError() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("LifEasier has detected that your start time is before the end time"));
+        printBlankLine();
+    }
+
+    public void showSaveDateUnequalError() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("LifEasier has detected that the start and end dates are not similar"));
+        printBlankLine();
+    }
+
+    public void showSaveInvalidModuleCodePrompt() {
+        printBlankLine();
+        printThickSeparator();
+        System.out.println(colourTextRed("LifEasier has detected an invalid module code"));
+        printBlankLine();
+        System.out.println(colourTextCyan("However, LifEasier will continue to add this task in, provided there "
+                + "are no further errors"));
+        System.out.println(colourTextCyan("If your module code has been affected, you can either change it "
+                + "with the edit command, or undo your change in the LifEasier save file"));
+        printThickSeparator();
     }
 
     public void showLocalDateTimeParseError() {

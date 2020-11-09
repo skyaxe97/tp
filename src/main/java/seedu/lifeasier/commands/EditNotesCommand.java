@@ -118,7 +118,7 @@ public class EditNotesCommand extends Command {
                 changeTitleOrDescription(ui, parser, notes, noteNumber - 1, ui.readCommand(), noteHistory);
 
             }
-            storage.saveNote();
+            storage.saveNotes();
             logger.log(Level.INFO, "End of EditNotesCommand");
         } catch (IndexOutOfBoundsException e) {
             logger.log(Level.SEVERE, "Input number is out of bounds");

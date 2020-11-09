@@ -83,6 +83,9 @@ public class FileStorage {
             noteStorage.readNotesSave();
             taskStorage.readTasksSave();
         }
+        
+        saveNotes();
+        saveTasks();
 
         logger.log(Level.INFO, "Startup file read end");
     }
@@ -214,7 +217,7 @@ public class FileStorage {
     /**
      * Saves all notes in the current task list.
      */
-    public void saveNote() {
+    public void saveNotes() {
         noteStorage.writeToNoteSaveFile();
     }
 

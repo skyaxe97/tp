@@ -72,7 +72,7 @@ public class AddNotesCommand extends Command {
         logger.log(Level.INFO, "Note is added");
         ui.showNoteAddedMessage();
 
-        storage.saveNote();
+        storage.saveNotes();
     }
 
 }

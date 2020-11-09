@@ -97,7 +97,6 @@ class TaskStorageTest {
                     + System.lineSeparator());
             fileWriter.write("lesson=-==-=20-10-20 09:00=-=20-10-20 12:00=-=0" //Corrupted save
                     + System.lineSeparator());
-            //Still creates with default date time
             fileWriter.write("lesson=-=CS2101=-=200-10-20 09:00=-=20-10-20 12:00=-=0"
                     + System.lineSeparator());
             fileWriter.close();
@@ -107,7 +106,7 @@ class TaskStorageTest {
             taskStorage.createTaskList(fileScanner);
 
             //Only first 3 tasks will be added. Upon detected missing data, file reading will stop
-            assertEquals(3, tasks.getTaskList().size());
+            assertEquals(2, tasks.getTaskList().size());
 
         } catch (IOException e) {
             System.out.println("Testing error - Unable to read/write to file");
@@ -143,6 +142,10 @@ class TaskStorageTest {
 
         } catch (IOException e) {
             System.out.println("Testing error - Unable to read/write to file");
+        } catch (LogicalTimeException e) {
+            System.out.println("Testing error - Invalid Time");
+        } catch (UnequalSaveDateException e) {
+            System.out.println("Testing error - Invalid Date");
         }
     }
 
@@ -152,7 +155,13 @@ class TaskStorageTest {
         String[] taskComponents = {"event", "Concert", "09-04-21 09:00", "09-04-21 12:00", "0"};
 
         taskList.clear();
-        taskStorage.rebuildEvent(taskComponents, taskList, taskComponents[1]);
+        try {
+            taskStorage.rebuildEvent(taskComponents, taskList, taskComponents[1]);
+        } catch (LogicalTimeException e) {
+            System.out.println("Testing error - Invalid Time");
+        } catch (UnequalSaveDateException e) {
+            System.out.println("Testing error - Invalid Date");
+        }
 
         assertTrue(taskList.size() == 1 && taskList.get(0).getType().equals("event"));
     }
@@ -174,7 +183,13 @@ class TaskStorageTest {
         String[] taskComponents = {"lesson", "CS1231", "09-04-21 09:00", "09-04-21 12:00", "0"};
 
         taskList.clear();
-        taskStorage.rebuildLesson(taskComponents, taskList, taskComponents[1]);
+        try {
+            taskStorage.rebuildLesson(taskComponents, taskList, taskComponents[1]);
+        } catch (LogicalTimeException e) {
+            System.out.println("Testing error - Invalid Time");
+        } catch (UnequalSaveDateException e) {
+            System.out.println("Testing error - Invalid Date");
+        }
 
         assertTrue(taskList.size() == 1 && taskList.get(0).getType().equals("lesson"));
     }
