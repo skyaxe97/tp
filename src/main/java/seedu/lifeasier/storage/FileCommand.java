@@ -1,5 +1,6 @@
 package seedu.lifeasier.storage;
 
+import seedu.lifeasier.parser.Parser;
 import seedu.lifeasier.ui.Ui;
 
 import java.io.FileWriter;
@@ -95,6 +96,62 @@ public class FileCommand {
         } while (isStillContainingDelimiter);
 
         return delimiterCount == baseDelimiterCount;
+    }
+
+    /**
+     * Checks if times read from save file are in logical order, where start time is before end time.
+     *
+     * @param startTime Task start time.
+     * @param endTime Task end time.
+     * @throws LogicalTimeException When the start time comes before the end time.
+     */
+    public void checkForLogicalTime(int startTime, int endTime) throws LogicalTimeException {
+        logger.log(Level.INFO, "Checking for logical time");
+        if (startTime > endTime) {
+            logger.log(Level.SEVERE, "Start time after end time detected");
+            throw new LogicalTimeException();
+        }
+    }
+
+    /**
+     * Checks if the dates in the save file for lessons and events have the same date.
+     *
+     * @param startDate First date parameter in save file.
+     * @param endDate Second date parameter in save file.
+     */
+    public void checkForTaskSameDate(String startDate, String endDate) throws UnequalSaveDateException {
+        logger.log(Level.INFO, "Checking for same date");
+        if (!startDate.equals(endDate)) {
+            logger.log(Level.INFO, "Unequal dates found");
+            throw new UnequalSaveDateException();
+        }
+    }
+
+    /**
+     * Checks if the module code for lessons in the save file are valid on read.
+     *
+     * @param moduleCode String to be checked for valid module code.
+     */
+    public void checkForValidModuleCode(String moduleCode) {
+        Parser parser = new Parser();
+
+        if (!parser.checkIfValidModuleCode(moduleCode)) {
+            logger.log(Level.INFO, "Invalid module code found");
+            ui.showSaveInvalidModuleCodePrompt();
+        }
+    }
+
+    /**
+     * Checks if midnight times have been input.
+     *
+     * @param time The string to be checked for whether it is a midnight time.
+     * @return True when the time is midnight.
+     */
+    public boolean checkForInvalidMidnight(String time) {
+        if (time.equals("00:00") || time.equals("24:00")) {
+            return true;
+        }
+        return false;
     }
 
 }

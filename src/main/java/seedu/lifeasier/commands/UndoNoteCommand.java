@@ -44,7 +44,7 @@ public class UndoNoteCommand extends Command {
 
             ui.showOldNoteMessage(noteHistory);
             noteHistory.popLastNote();
-            storage.saveNote();
+            storage.saveNotes();
 
         } else {
             ui.showInvalidUndoActionError();

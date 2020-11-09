@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 public class TaskStorage {
 
     public static final String BLANK_STRING = "";
+    public static final String BLANK_SPACE = " ";
+    public static final String TIME_DELIMITER = ":";
     private static Logger logger = Logger.getLogger(TaskStorage.class.getName());
     private static final String SAVE_DELIMITER = "=-=";
     public static final String DEFAULT_DATA = "\n";
@@ -76,6 +78,7 @@ public class TaskStorage {
                 String[] taskComponents = taskInformation.split(SAVE_DELIMITER);
                 checkForMissingDataInSave(taskComponents, taskInformation);
                 String taskType = taskComponents[0];
+                taskType = taskType.trim();
                 String taskDescription = taskComponents[1];
                 switch (taskType) {
                 case "deadline":
@@ -111,6 +114,15 @@ public class TaskStorage {
                 ui.showReadErrorHandlerError();
                 logger.log(Level.SEVERE, "Detected additional/missing save delimiters");
 
+            } catch (LogicalTimeException e) {
+                ui.showSaveInvalidStartEndTimeError();
+                ui.showReadErrorHandlerError();
+                logger.log(Level.SEVERE, "Detected start time comes before end time");
+
+            } catch (UnequalSaveDateException e) {
+                ui.showSaveDateUnequalError();
+                ui.showReadErrorHandlerError();
+                logger.log(Level.SEVERE, "Detected different dates in single task in save");
             }
         }
     }
@@ -158,11 +170,14 @@ public class TaskStorage {
      * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildLesson(String[] taskComponents, ArrayList<Task> taskList, String description)
-            throws ArrayIndexOutOfBoundsException, NumberFormatException {
+            throws ArrayIndexOutOfBoundsException, NumberFormatException, LogicalTimeException,
+            UnequalSaveDateException {
 
         LocalDateTime lessonStartTime = fileCommand.convertToLocalDateTime(taskComponents[2]);
         LocalDateTime lessonEndTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
-        int recurrence = Integer.parseInt(taskComponents[4]);
+        int recurrence = Integer.parseInt(taskComponents[4].trim());
+
+        checkForValidSaveInformation(taskComponents, description, true);
 
         //Create new event in tasks
         taskList.add(new Lesson(description, lessonStartTime, lessonEndTime, recurrence));
@@ -177,13 +192,49 @@ public class TaskStorage {
      * @throws ArrayIndexOutOfBoundsException When data is missing.
      */
     protected void rebuildEvent(String[] taskComponents, ArrayList<Task> taskList, String description)
-            throws ArrayIndexOutOfBoundsException, NumberFormatException {
+            throws ArrayIndexOutOfBoundsException, NumberFormatException, LogicalTimeException,
+            UnequalSaveDateException {
+
         LocalDateTime eventStartTime = fileCommand.convertToLocalDateTime(taskComponents[2]);
         LocalDateTime eventEndTime = fileCommand.convertToLocalDateTime(taskComponents[3]);
-        int recurrence = Integer.parseInt(taskComponents[4]);
+        int recurrence = Integer.parseInt(taskComponents[4].trim());
+
+        checkForValidSaveInformation(taskComponents, description, false);
 
         //Create new event in tasks
         taskList.add(new Event(description, eventStartTime, eventEndTime, recurrence));
+    }
+
+
+    /**
+     * Checks for validity of read save data.
+     *
+     * @param taskComponents String array of read save data after separator has been removed.
+     * @param description The description of the task.
+     * @param isLesson True when the data we are checking belongs to a lesson class.
+     * @throws UnequalSaveDateException When the save dates are not equal.
+     * @throws LogicalTimeException When the start time comes after the end time.
+     */
+    private void checkForValidSaveInformation(String[] taskComponents, String description, boolean isLesson)
+            throws UnequalSaveDateException, LogicalTimeException {
+        String[] taskStartTimeComponents = taskComponents[2].split(BLANK_SPACE);
+        String[] startTimeComponents = taskStartTimeComponents[1].split(TIME_DELIMITER);
+        int startHour = Integer.parseInt(startTimeComponents[0]);
+        String[] taskEndTimeComponents = taskComponents[3].split(BLANK_SPACE);
+        String[] endTimeComponents = taskEndTimeComponents[1].split(TIME_DELIMITER);
+        int endHour = Integer.parseInt(endTimeComponents[0]);
+        fileCommand.checkForTaskSameDate(taskStartTimeComponents[0], taskEndTimeComponents[0]);
+        fileCommand.checkForLogicalTime(startHour, endHour);
+
+        boolean isStartMidnight = fileCommand.checkForInvalidMidnight(taskStartTimeComponents[1]);
+        boolean isEndMidnight = fileCommand.checkForInvalidMidnight(taskEndTimeComponents[1]);
+        if (isStartMidnight || isEndMidnight) {
+            ui.showSaveInvalidMidnightTimePrompt();
+        }
+
+        if (isLesson) {
+            fileCommand.checkForValidModuleCode(description);
+        }
     }
 
     /**
@@ -197,7 +248,7 @@ public class TaskStorage {
     protected void rebuildDeadline(String[] taskComponents, ArrayList<Task> taskList, String description)
             throws ArrayIndexOutOfBoundsException, NumberFormatException {
         LocalDateTime deadlineTimeInfo = fileCommand.convertToLocalDateTime(taskComponents[2]);
-        int recurrence = Integer.parseInt(taskComponents[3]);
+        int recurrence = Integer.parseInt(taskComponents[3].trim());
 
         //Create new deadline in tasks
         taskList.add(new Deadline(description, deadlineTimeInfo, recurrence));

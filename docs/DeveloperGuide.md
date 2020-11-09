@@ -442,6 +442,12 @@ the main `LifEasier` class creates a new `FileStorage` object, which starts the 
 data of the user, if available. Else, new save directories and save files are created in the same directory which the `LifEasier.jar` was run. 
 Tasks and notes data read from the save file are used to create new `Task` and `Note` objects respectively, and added into `TaskList` and `NoteList`.
 
+During the creation of the new `Task` and `Note` objects, checks are also done on the validity of the module code, logical flow of time _(Start time cannot be after end time)_,
+and whether the dates of both times are the same, through the `checkForValidSaveInformation()` method found in `TaskStorage`. With the exception of module code, whenever data read 
+has been deemed as corrupted, an appropriate error will be thrown, and the task will **not** be added to the program.
+
+The save file will be updated at the end of file reading.
+
 ![Startup file load sequence diagram](images/DeveloperGuide/Figure 4.8-2.png)
 
 _Figure 4.8-2: Sequence diagram for save data reading on startup_
@@ -509,7 +515,7 @@ granted to users that their data is constantly saved without needing their manua
 * Saves were also designed to be stored in simple plain text and easily accessible to users to allow experienced users to modify 
 the save files directly and easily, if required. 
 * In the event of **corrupted or missing data**, the `storage` component defends and protects the app from potential issues that might arise from 
-reading in this data by throwing exceptions to stop prevent the current data from being read. Any data read up to that point is **untouched**, and the app will 
+reading in this data by throwing exceptions to stop prevent the current data from being read. Any data read up to that point is **untouched**, corrupted data discarded, and the app will 
 continue to read in the remaining data and run as per normal. **Manual intervention from the user** is required to remove improperly formatted and/or missing data.  
 
 ### 4.9 Displaying Schedule (Johannine)

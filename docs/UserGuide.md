@@ -93,6 +93,7 @@ The following section expands on the features available for you to use in **LifE
 * Command parameters **must** follow the **order stated**, including partial commands. E.g if the command states `addEvent NAME /from START /to END`,  `addEvent NAME /to END /from START` will **NOT** be accepted.
 * `DATE` parameters have the format of **DD-MM-YY**.
 * `TIME` parameters follow a 24-hour clock, and have the format of **HH:mm**.
+* **LifEasier** does not support `00:00` as a valid time for midnight. Instead, use `24:00`, which will automatically be converted to `23:59` by the program.
 * Currently, **LifEasier** does not allow tasks to be added that span multiple days. However, this feature will be added in a future version of **LifEasier**.
 
 ### 3.1 Viewing Help: `help`
@@ -835,7 +836,10 @@ By default, **LifEasier** creates a save folder named `LifEasierSaves` in the sa
 the save files if necessary.
 
 In the event of **corrupted data** arising from either system errors or incorrect formats from you while editing the save file,
-**LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. 
+**LifEasier** will give you a general warning during startup, but will continue to load remaining uncorrupted data. The corrupted data will be removed immediately from the save file as well.
+**LifEasier** currently checks the format of dates and times, if start times are after end times, module codes, and other formatting errors in the save file.
+For invalid module codes, **LifEasier** will continue to load in the lesson instead of discarding it. This is to allow you to enter more information manually into the module code 
+field through the save file directly if needed.
 
 If a successful `archive` command was executed, a folder called "Archives" will be created in the "LifEasierSaves" folder 
 where you can access your archived files. Archived notes will not show up in **LifEasier** anymore.
@@ -860,7 +864,11 @@ Here are some examples of what might happen if you start up **LifEasier** on 24t
 
 **Q2: Can I edit the information in the save files directly?**
 
-**A:** Yes, it is possible but it is not recommended to do so. Directly modifying the save files may result in incorrectly formatted data to be passed into the **LifEasier** program on the next launch, resulting in missing data.
+**A:** Yes, it is possible but it is not recommended to do so. Directly modifying the save files may result in incorrectly formatted data to be passed into the **LifEasier** program on the next launch, resulting in missing data as the program automatically deletes improperly formatted/corrupted data.
+
+**Q3: Why is my event/lesson not showing up/getting deleted after I edited the save file?**
+
+**A:** You may have set the end time for your event/lesson as `00:00` or `24:00` in the save file, which **LifEasier** does not support currently. As such, please enter `23:59` as the time if you want to modify the task to end at midnight directly from the save file.
 
 
 ## 6.0 Command Summary
