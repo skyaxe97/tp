@@ -485,6 +485,10 @@ The save file will be updated at the end of file reading.
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
 
 ![Startup file load sequence diagram](images/DeveloperGuide/Figure 4.8-2.png)
 
